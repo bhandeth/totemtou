@@ -1,0 +1,2809 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Annapurna Base Camp — Totemtou</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..600;1,8..60,300..600&family=Lora:ital,wght@0,400..600;1,400..600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --paper: #f6f3ec;
+  --paper-deep: #ebe6da;
+  --ink: #1c1917;
+  --ink-soft: #44403c;
+  --ink-mute: #78716c;
+  --rule: #d6cfbf;
+  --accent: #854513;       /* totem orange, sampled from logo */
+  --accent-soft: #b06a3a;
+  --accent-deep: #5e3010;
+  --serif-display: "Source Serif 4", Georgia, serif;
+  --serif-body: "Lora", Georgia, serif;
+  --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif-body);
+  font-size: 19px;
+  line-height: 1.65;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
+
+/* ----- header ------------------------------------------------------ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.2rem 2.5rem;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 400;
+  z-index: 100;
+  transition: background 0.35s ease, backdrop-filter 0.35s ease;
+}
+.nav.is-over-dark {
+  background: linear-gradient(to bottom, rgba(28,25,23,0.4), rgba(28,25,23,0));
+}
+.nav.is-over-paper {
+  background: linear-gradient(to bottom, rgba(246,243,236,0.95), rgba(246,243,236,0));
+  backdrop-filter: blur(8px);
+}
+.nav.is-over-dark .mark { color: var(--paper); }
+.nav.is-over-dark .mark::before { color: var(--accent-soft); }
+.nav.is-over-dark a { color: rgba(246,243,236,0.8); }
+.nav.is-over-dark a:hover { color: var(--paper); }
+.nav .mark {
+  font-family: var(--serif-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--ink);
+}
+.nav .mark::before {
+  content: "●";
+  color: var(--accent);
+  margin-right: 0.5rem;
+  font-size: 0.7rem;
+  vertical-align: middle;
+}
+.nav ul { display: flex; gap: 2.5rem; list-style: none; }
+.nav a { color: var(--ink-soft); text-decoration: none; }
+.nav a:hover { color: var(--ink); }
+
+/* ----- hero -------------------------------------------------------- */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: end;
+  padding: 0 2.5rem 5rem;
+  position: relative;
+  overflow: hidden;
+  background: var(--ink);
+}
+.hero-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  filter: grayscale(0.9) contrast(1.05) brightness(0.85);
+}
+.hero::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom,
+    rgba(28,25,23,0.15) 0%,
+    rgba(28,25,23,0.35) 50%,
+    rgba(246,243,236,0.05) 75%,
+    var(--paper) 100%);
+  z-index: 1;
+}
+.hero-inner {
+  position: relative; z-index: 2;
+  max-width: 1300px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end;
+  color: var(--paper);
+}
+.hero-meta {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(246,243,236,0.7);
+  margin-bottom: 1.5rem;
+}
+.hero-meta span { color: var(--accent-soft); }
+.hero h1 {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: clamp(3rem, 7vw, 6.4rem);
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  color: var(--paper);
+  margin-bottom: 2rem;
+}
+.hero h1 em {
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(246,243,236,0.65);
+}
+.hero-sub {
+  font-family: var(--serif-body);
+  font-size: 1.25rem;
+  line-height: 1.55;
+  color: rgba(246,243,236,0.85);
+  max-width: 32ch;
+  font-style: italic;
+  font-weight: 400;
+}
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem 3rem;
+  align-self: end;
+  padding-bottom: 0.5rem;
+}
+.stat-label {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(246,243,236,0.55);
+  margin-bottom: 0.4rem;
+}
+.stat-value {
+  font-family: var(--serif-display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--paper);
+}
+.stat-value small {
+  font-size: 0.85rem;
+  color: rgba(246,243,236,0.65);
+  font-weight: 400;
+  margin-left: 0.2rem;
+}
+
+/* ----- section frame ---------------------------------------------- */
+.section {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 8rem 2.5rem;
+}
+.kicker {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.kicker::before {
+  content: ""; width: 28px; height: 1px; background: var(--accent);
+}
+.section-title {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  line-height: 1.05;
+  letter-spacing: -0.018em;
+  margin-bottom: 3rem;
+  max-width: 18ch;
+}
+.section-title em { font-style: italic; color: var(--ink-soft); }
+
+/* ----- the valley (parallel spine) -------------------------------- */
+.valley {
+  background: var(--paper-deep);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.valley-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 6rem;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 8rem 2.5rem;
+}
+.valley-intro p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin-bottom: 1.4rem;
+  max-width: 38ch;
+}
+.valley-intro p:first-of-type::first-letter {
+  font-family: var(--serif-display);
+  font-size: 4.5rem;
+  font-weight: 400;
+  float: left;
+  line-height: 0.9;
+  margin: 0.2rem 0.6rem 0 -0.3rem;
+  color: var(--accent);
+}
+
+.valley-notes {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+.vnote {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 2rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid var(--rule);
+}
+.vnote:last-child { border-bottom: none; padding-bottom: 0; }
+.vnote-num {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--accent);
+  font-weight: 400;
+}
+.vnote h3 {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  font-size: 1.45rem;
+  line-height: 1.2;
+  margin-bottom: 0.8rem;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.vnote p {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+.vnote p + p { margin-top: 0.8rem; }
+
+/* ----- days ------------------------------------------------------- */
+.days-intro {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 8rem 2.5rem 4rem;
+}
+.days-intro p {
+  font-size: 1.2rem;
+  color: var(--ink-soft);
+  max-width: 50ch;
+  line-height: 1.6;
+}
+
+.day {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 5rem 2.5rem;
+  border-top: 1px solid var(--rule);
+}
+.day-head {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+  align-items: baseline;
+}
+.day-num {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: 5.5rem;
+  line-height: 0.85;
+  color: var(--ink);
+  letter-spacing: -0.04em;
+}
+.day-num small {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 0.8rem;
+  font-weight: 400;
+}
+.day-title {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  margin-bottom: 1rem;
+}
+.day-title em { font-style: italic; color: var(--ink-soft); }
+.day-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 2.5rem;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.day-meta span strong {
+  color: var(--ink);
+  font-weight: 500;
+  margin-right: 0.4em;
+}
+
+.day-body {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+.day-route p {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  margin-bottom: 1.3rem;
+}
+.day-route p:first-child::first-letter {
+  font-family: var(--serif-display);
+  font-size: 3rem;
+  float: left;
+  line-height: 0.9;
+  margin: 0.15rem 0.5rem 0 -0.2rem;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.day-aside {
+  display: grid;
+  gap: 3rem;
+  position: sticky;
+  top: 6rem;
+}
+
+.place-fragment {
+  border-left: 2px solid var(--accent);
+  padding-left: 1.5rem;
+}
+.place-label {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.8rem;
+}
+.place-fragment h4 {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 1.2;
+  margin-bottom: 0.7rem;
+  letter-spacing: -0.01em;
+}
+.place-fragment p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.place-fragment p + p { margin-top: 0.7rem; }
+
+.field-notes {
+  background: var(--paper-deep);
+  padding: 2rem 1.8rem;
+  border-radius: 2px;
+}
+.field-notes-label {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.field-notes-label::before {
+  content: ""; width: 20px; height: 1px; background: var(--ink-mute);
+}
+.fn-empty {
+  font-family: var(--serif-body);
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ink-mute);
+}
+
+.fn-entry {
+  padding: 1.3rem 0;
+  border-bottom: 1px dashed var(--rule);
+}
+.fn-entry:last-child { border-bottom: none; padding-bottom: 0; }
+.fn-entry:first-child { padding-top: 0; }
+.fn-entry blockquote {
+  font-family: var(--serif-body);
+  font-style: italic;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: var(--ink);
+  margin-bottom: 0.7rem;
+}
+.fn-attr {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.fn-attr strong { color: var(--ink-soft); font-weight: 500; }
+
+.day-image {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+.day-image figure { margin: 0; }
+.day-image figcaption {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 0.8rem;
+}
+
+/* ----- full-bleed pause ------------------------------------------ */
+.pause {
+  width: 100%;
+  height: 80vh;
+  min-height: 480px;
+  max-height: 760px;
+  overflow: hidden;
+  position: relative;
+  background: var(--ink);
+}
+.pause video, .pause img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.85) contrast(1.04) brightness(0.92);
+}
+.pause-caption {
+  position: absolute;
+  bottom: 2.5rem; left: 2.5rem;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(246,243,236,0.75);
+}
+
+/* ----- editorial photo (single, full-width-ish) ------------------ */
+.editorial-photo {
+  max-width: 1300px;
+  margin: 5rem auto;
+  padding: 0 2.5rem;
+}
+.editorial-photo figure { margin: 0; }
+.editorial-photo img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.editorial-photo figcaption {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 1rem;
+}
+
+/* ----- shape of the walk ------------------------------------------ */
+.shape {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 4rem 2.5rem 2rem;
+}
+.shape-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1.2rem;
+}
+.shape-head h3 {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  font-style: italic;
+  font-size: 1.6rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.shape-head .legend {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  display: flex;
+  gap: 2rem;
+}
+.shape-head .legend strong {
+  color: var(--ink);
+  font-weight: 500;
+  margin-right: 0.5em;
+}
+
+.elevation { width: 100%; height: auto; display: block; }
+.elevation .grid-line { stroke: var(--rule); stroke-width: 0.5; stroke-dasharray: 2 4; }
+.elevation .y-label, .elevation .day-label {
+  font-family: var(--sans);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  fill: var(--ink-mute);
+}
+.elevation .alt-label {
+  font-family: var(--serif-display);
+  font-size: 11px;
+  font-style: italic;
+  fill: var(--ink-soft);
+}
+.elevation .place-label {
+  font-family: var(--serif-display);
+  font-size: 12px;
+  fill: var(--ink);
+}
+.elevation .profile-fill { fill: var(--accent); fill-opacity: 0.06; }
+.elevation .profile-line { fill: none; stroke: var(--accent); stroke-width: 1.4; }
+.elevation .day-tick { stroke: var(--ink-soft); stroke-width: 0.8; }
+.elevation .day-dot { fill: var(--paper); stroke: var(--accent); stroke-width: 1.5; }
+.elevation .day-dot.peak { fill: var(--accent); }
+
+/* ----- interactive elevation pointer ------------------------------ */
+.elev-wrap {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+.elev-canvas {
+  position: relative;
+  cursor: ew-resize;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+}
+.elev-canvas svg { display: block; }
+.elev-pointer-line {
+  stroke: var(--ink);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  pointer-events: none;
+}
+.elev-pointer-dot {
+  fill: var(--accent);
+  stroke: var(--paper);
+  stroke-width: 2;
+  pointer-events: none;
+}
+.elev-handle {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: transparent;
+  pointer-events: none;
+}
+.elev-hint {
+  position: absolute;
+  bottom: -1.8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.4s;
+}
+.elev-canvas.touched .elev-hint { opacity: 0; }
+
+.elev-card {
+  background: var(--paper-deep);
+  padding: 2rem 2rem 2.2rem;
+  border-left: 2px solid var(--accent);
+  position: sticky;
+  top: 6rem;
+  min-height: 360px;
+}
+.elev-card .place-name {
+  font-family: var(--serif-display);
+  font-size: 1.7rem;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.4rem;
+}
+.elev-card .place-name em { font-style: italic; color: var(--ink-soft); }
+.elev-card .place-km {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 1.8rem;
+}
+.elev-stats-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 1.6rem;
+}
+.elev-stat {
+  padding: 0.9rem 0.8rem 0.9rem 0;
+}
+.elev-stat:first-child {
+  border-right: 1px solid var(--rule);
+  padding-right: 0.8rem;
+  padding-left: 0;
+}
+.elev-stat:last-child {
+  padding-left: 0.8rem;
+}
+.elev-stat-label {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+.elev-stat-value {
+  font-family: var(--serif-display);
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.elev-stat-value small {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--ink-mute);
+  margin-left: 0.2rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.elev-fact-label {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.7rem;
+  display: block;
+}
+.elev-fact {
+  font-family: var(--serif-body);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* ----- placeholder boxes for missing imagery --------------------- */
+.placeholder-img {
+  background: var(--paper-deep);
+  border: 1px dashed var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  padding: 1.5rem;
+  line-height: 1.6;
+  min-height: 180px;
+  width: 100%;
+}
+.placeholder-img.tall { aspect-ratio: 3 / 4; min-height: 280px; }
+.placeholder-img.wide { aspect-ratio: 16 / 9; min-height: 200px; }
+.placeholder-img.square { aspect-ratio: 1 / 1; min-height: 220px; }
+
+/* ----- valley imagery strip -------------------------------------- */
+.valley-images {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 2.5rem 5rem;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 1.2rem;
+}
+.valley-images figure { margin: 0; }
+.valley-images figcaption {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 0.7rem;
+}
+
+/* ----- per-day photo (single) ------------------------------------ */
+.day-photo-single {
+  margin: 2.5rem 0 0;
+}
+.day-photo-single figure { margin: 0; }
+.day-photo-single img,
+.day-photo-single .placeholder-img {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  object-fit: cover;
+}
+.day-photo-single figcaption {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 0.8rem;
+}
+
+@media (max-width: 880px) {
+  .elev-wrap { grid-template-columns: 1fr; }
+  .elev-card { position: static; min-height: 0; }
+  .valley-images { grid-template-columns: 1fr; }
+}
+
+/* ----- seven-day summary strip ------------------------------------ */
+.strip {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 3rem 2.5rem 6rem;
+}
+.strip-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.strip-day {
+  padding: 1.6rem 1rem;
+  border-right: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-height: 180px;
+}
+.strip-day:last-child { border-right: none; }
+.strip-day.peak { background: var(--paper-deep); }
+.strip-num {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--accent);
+}
+.strip-title {
+  font-family: var(--serif-display);
+  font-size: 1.05rem;
+  line-height: 1.15;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.strip-alt {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: auto;
+}
+.strip-alt strong {
+  color: var(--ink);
+  font-weight: 400;
+  font-family: var(--serif-display);
+  font-size: 1rem;
+  letter-spacing: 0;
+  text-transform: none;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+@media (max-width: 880px) {
+  .shape, .strip { padding-left: 1.2rem; padding-right: 1.2rem; }
+  .strip-grid { grid-template-columns: 1fr; }
+  .strip-day {
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
+    min-height: 0;
+  }
+  .strip-day:last-child { border-bottom: none; }
+  .shape-head { flex-direction: column; align-items: flex-start; }
+}
+
+/* ----- per-day stat bar ------------------------------------------- */
+.day-stats {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0;
+  margin: 1.5rem 0 2.5rem;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.day-stat {
+  padding: 1rem 0.6rem;
+  border-right: 1px solid var(--rule);
+  text-align: left;
+}
+.day-stat:last-child { border-right: none; }
+.day-stat-label {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+.day-stat-value {
+  font-family: var(--serif-display);
+  font-size: 1.1rem;
+  color: var(--ink);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.day-stat-value small {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  color: var(--ink-mute);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 400;
+  margin-left: 0.15rem;
+}
+
+/* ----- pull quote (sparingly, on key days) ------------------------ */
+.pull-quote {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 2.5rem 0;
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--accent);
+  max-width: 28ch;
+}
+
+/* ----- "is this for you" panel ----------------------------------- */
+.fitness {
+  background: var(--paper-deep);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.fitness-grid {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 7rem 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 5rem;
+}
+.fitness-left h2 {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.018em;
+  margin-bottom: 1.6rem;
+  max-width: 14ch;
+}
+.fitness-left h2 em { font-style: italic; color: var(--ink-soft); }
+
+.diff-scale {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.4rem;
+  margin: 2rem 0 1.2rem;
+}
+.diff-bar {
+  flex: 1;
+  height: 22px;
+  background: var(--rule);
+  border-radius: 1px;
+}
+.diff-bar.active { background: var(--accent); height: 36px; }
+.diff-bar.passed { background: var(--accent-soft); }
+.diff-meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.diff-meta strong {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+  font-size: 1rem;
+  letter-spacing: 0;
+  text-transform: none;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.fitness-right p {
+  font-size: 1.1rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin-bottom: 1.2rem;
+}
+.fitness-right p:first-of-type::first-letter {
+  font-family: var(--serif-display);
+  font-size: 3.2rem;
+  font-weight: 400;
+  float: left;
+  line-height: 0.9;
+  margin: 0.15rem 0.5rem 0 -0.2rem;
+  color: var(--accent);
+}
+.fitness-right .signal {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+}
+.fitness-right .signal-label {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 1rem;
+  display: block;
+}
+.signal-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem 2rem;
+  list-style: none;
+}
+.signal-list li {
+  font-family: var(--serif-body);
+  font-size: 1.02rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  padding-left: 1.2rem;
+  position: relative;
+}
+.signal-list li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+/* ----- leader card ------------------------------------------------ */
+.leader {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 8rem 2.5rem;
+}
+.leader-grid {
+  display: grid;
+  grid-template-columns: 0.8fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+.leader-photo {
+  position: relative;
+}
+.leader-photo img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  filter: grayscale(0.85) contrast(1.04);
+}
+.leader-photo .caption {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 1rem;
+}
+.leader-name {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+}
+.leader-role {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--ink-soft);
+  margin-bottom: 2rem;
+}
+.leader-bio p {
+  font-size: 1.15rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin-bottom: 1.2rem;
+}
+.leader-creds {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.cred-label {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.cred-value {
+  font-family: var(--serif-display);
+  font-size: 1.05rem;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.cred-value em { font-style: italic; color: var(--ink-soft); }
+
+/* ----- preparation flow ------------------------------------------ */
+.prep {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 8rem 2.5rem;
+}
+.prep-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.prep-head {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 5rem;
+  margin-bottom: 5rem;
+  align-items: end;
+}
+.prep .kicker { color: var(--accent-soft); }
+.prep .kicker::before { background: var(--accent-soft); }
+.prep h2 {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  max-width: 16ch;
+}
+.prep h2 em { font-style: italic; color: rgba(246,243,236,0.55); }
+.prep-lede {
+  font-family: var(--serif-body);
+  font-style: italic;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: rgba(246,243,236,0.8);
+  max-width: 42ch;
+}
+
+.prep-steps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  border-top: 1px solid rgba(246,243,236,0.18);
+}
+.prep-step {
+  padding: 2.5rem 1.5rem 2rem;
+  border-right: 1px solid rgba(246,243,236,0.18);
+  position: relative;
+}
+.prep-step:last-child { border-right: none; }
+.prep-step .num {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--accent-soft);
+  margin-bottom: 1.2rem;
+  display: block;
+}
+.prep-step h4 {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.9rem;
+  color: var(--paper);
+}
+.prep-step p {
+  font-family: var(--serif-body);
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: rgba(246,243,236,0.7);
+}
+.prep-step.expand .pillars {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(246,243,236,0.18);
+  display: grid;
+  gap: 0.5rem;
+}
+.pillars span {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(246,243,236,0.55);
+}
+.pillars span::before {
+  content: "·";
+  margin-right: 0.5rem;
+  color: var(--accent-soft);
+}
+
+/* ----- operational substance (medical + plan b) ------------------ */
+.ops {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 8rem 2.5rem;
+}
+.ops-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 3.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1.5rem;
+}
+.ops-head h2 {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.7rem;
+  letter-spacing: -0.01em;
+}
+.ops-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+}
+.ops-block h3 {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  font-size: 1.4rem;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.01em;
+}
+.ops-block > p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin-bottom: 1.5rem;
+}
+.kit-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem 2rem;
+  margin-top: 1.2rem;
+}
+.kit-list li {
+  font-family: var(--serif-body);
+  font-size: 1rem;
+  color: var(--ink-soft);
+  padding-left: 1rem;
+  position: relative;
+}
+.kit-list li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+.plan-b {
+  list-style: none;
+  display: grid;
+  gap: 1.4rem;
+}
+.plan-b li {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.plan-b li strong {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 1.08rem;
+  letter-spacing: -0.005em;
+}
+
+/* ----- price anchor in close section ----------------------------- */
+.price-block {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2.5rem;
+  align-items: end;
+  margin: 3.5rem 0 0;
+  padding-top: 2.5rem;
+  border-top: 1px solid rgba(255,255,255,0.18);
+}
+.price-from {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(246,243,236,0.55);
+  margin-bottom: 0.5rem;
+}
+.price-amount {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: 3.2rem;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: var(--paper);
+}
+.price-amount small {
+  font-size: 1.2rem;
+  color: rgba(246,243,236,0.65);
+  margin-left: 0.4rem;
+  font-weight: 400;
+}
+.price-fineprint {
+  font-family: var(--serif-body);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: rgba(246,243,236,0.65);
+  font-style: italic;
+  max-width: 38ch;
+  padding-bottom: 0.4rem;
+}
+
+@media (max-width: 880px) {
+  .day-stats { grid-template-columns: repeat(3, 1fr); }
+  .day-stat:nth-child(3n) { border-right: none; }
+  .day-stat { border-bottom: 1px solid var(--rule); }
+  .fitness-grid, .leader-grid, .ops-grid, .prep-head { grid-template-columns: 1fr; gap: 3rem; padding-left: 1.2rem; padding-right: 1.2rem; }
+  .fitness-grid { padding: 5rem 1.2rem; }
+  .leader, .ops, .prep { padding-left: 1.2rem; padding-right: 1.2rem; }
+  .leader { padding-top: 5rem; padding-bottom: 5rem; }
+  .ops { padding-top: 5rem; padding-bottom: 5rem; }
+  .prep { padding-top: 5rem; padding-bottom: 5rem; }
+  .prep-steps { grid-template-columns: 1fr; }
+  .prep-step { border-right: none; border-bottom: 1px solid rgba(246,243,236,0.18); }
+  .prep-step:last-child { border-bottom: none; }
+  .signal-list, .leader-creds, .kit-list { grid-template-columns: 1fr; }
+  .price-block { grid-template-columns: 1fr; gap: 1rem; }
+}
+
+.close {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 10rem 2.5rem;
+  margin-top: 8rem;
+}
+.close-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left;
+}
+.close .kicker { color: var(--accent-soft); }
+.close .kicker::before { background: var(--accent-soft); }
+.close h2 {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 2rem;
+  max-width: 18ch;
+}
+.close h2 em { font-style: italic; color: var(--paper-deep); opacity: 0.7; }
+.close p {
+  font-size: 1.2rem;
+  color: var(--paper-deep);
+  margin-bottom: 1.4rem;
+  max-width: 50ch;
+  line-height: 1.6;
+}
+.apply {
+  display: inline-block;
+  margin-top: 3rem;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--paper);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-soft);
+  padding-bottom: 0.5rem;
+  transition: color 0.2s;
+}
+.apply:hover { color: var(--accent-soft); }
+.close-foot {
+  margin-top: 6rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ----- trip calendar / departures CTA ----------------------------- */
+.calendar {
+  background: var(--paper-deep);
+  padding: 9rem 2.5rem 9rem;
+  border-top: 1px solid var(--rule);
+}
+.calendar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.calendar-head {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 4rem;
+  align-items: end;
+  margin-bottom: 4.5rem;
+}
+.calendar-head h2 {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: clamp(2rem, 4.2vw, 3.2rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  max-width: 16ch;
+}
+.calendar-head h2 em { font-style: italic; color: var(--ink-soft); }
+.calendar-head .lede {
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  max-width: 42ch;
+}
+
+.departure-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 4.5rem;
+}
+.departure-card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 1.6rem 1.4rem 1.4rem;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.2s, background 0.2s;
+  position: relative;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.departure-card:hover:not(.is-full) {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.departure-card.is-selected {
+  border-color: var(--accent);
+  background: var(--ink);
+  color: var(--paper);
+}
+.departure-card.is-selected .departure-month,
+.departure-card.is-selected .departure-status { color: var(--accent-soft); }
+.departure-card.is-selected .departure-spots { color: rgba(246,243,236,0.6); }
+.departure-card.is-full {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.departure-month {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.departure-dates {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: 1.6rem;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+}
+.departure-dates small {
+  display: block;
+  font-family: var(--serif-body);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--ink-mute);
+  font-weight: 400;
+  margin-top: 0.35rem;
+  letter-spacing: 0;
+}
+.departure-card.is-selected .departure-dates small { color: rgba(246,243,236,0.55); }
+.departure-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.departure-card.is-selected .departure-foot { border-top-color: rgba(246,243,236,0.18); }
+.departure-spots { color: var(--ink-mute); }
+.departure-status { color: var(--accent); }
+.departure-status.is-filling { color: #8a6d2a; }
+.departure-status.is-full { color: var(--ink-mute); }
+
+.application {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem 2rem;
+  padding-top: 3.5rem;
+  border-top: 1px solid var(--rule);
+}
+.application-intro {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+.application-intro h3 {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: 1.7rem;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+.application-intro h3 em { font-style: italic; color: var(--accent); }
+.application-intro .selected-readout {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  text-align: right;
+}
+.application-intro .selected-readout strong {
+  color: var(--accent);
+  font-weight: 500;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.field.full { grid-column: 1 / -1; }
+.field label {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.field input,
+.field textarea,
+.field select {
+  font-family: var(--serif-body);
+  font-size: 1rem;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  padding: 0.6rem 0;
+  color: var(--ink);
+  transition: border-color 0.2s;
+  outline: none;
+  width: 100%;
+}
+.field textarea {
+  resize: vertical;
+  min-height: 90px;
+  line-height: 1.55;
+}
+.field input:focus,
+.field textarea:focus,
+.field select:focus { border-bottom-color: var(--accent); }
+.field input::placeholder, .field textarea::placeholder { color: var(--ink-mute); opacity: 0.6; }
+
+.application-submit-row {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding-top: 1.8rem;
+  border-top: 1px solid var(--rule);
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.application-submit {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  padding: 1.1rem 2.2rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.application-submit:hover { background: var(--accent); }
+.application-submit:disabled { background: var(--ink-mute); cursor: not-allowed; }
+.application-fineprint {
+  font-family: var(--serif-body);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--ink-mute);
+  max-width: 38ch;
+}
+
+.application-confirmation {
+  grid-column: 1 / -1;
+  display: none;
+  padding: 2.5rem;
+  background: var(--paper);
+  border: 1px solid var(--accent-soft);
+  text-align: center;
+}
+.application-confirmation.is-visible { display: block; }
+.application-confirmation h4 {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: 1.6rem;
+  margin-bottom: 0.6rem;
+}
+.application-confirmation p {
+  color: var(--ink-soft);
+  max-width: 50ch;
+  margin: 0 auto;
+}
+
+/* ----- responsive -------------------------------------------------- */
+@media (max-width: 880px) {
+  .nav { padding: 1rem 1.2rem; }
+  .nav ul { display: none; }
+  .hero { padding: 0 1.2rem 3rem; }
+  .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .section, .valley-grid, .days-intro, .day { padding-left: 1.2rem; padding-right: 1.2rem; }
+  .valley-grid { grid-template-columns: 1fr; gap: 4rem; padding-top: 5rem; padding-bottom: 5rem; }
+  .day-head { grid-template-columns: 1fr; gap: 1.5rem; }
+  .day-num { font-size: 4rem; }
+  .day-body { grid-template-columns: 1fr; gap: 3rem; }
+  .day-aside { position: static; }
+  .close { padding: 6rem 1.2rem; }
+  .day-image { grid-template-columns: 1fr; }
+  .calendar { padding: 5rem 1.2rem; }
+  .calendar-head { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 3rem; }
+  .departure-grid { grid-template-columns: 1fr 1fr; }
+  .application { grid-template-columns: 1fr; }
+  .application-intro { flex-direction: column; align-items: flex-start; }
+  .application-intro .selected-readout { text-align: left; }
+}
+@media (max-width: 540px) {
+  .departure-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="mark" href="index.html">Totemtou</a>
+  <ul>
+    <li><a href="index.html#journeys">Journeys</a></li>
+    <li><a href="index.html#leaders">Leaders</a></li>
+    <li><a href="index.html#apply">Apply</a></li>
+  </ul>
+</nav>
+
+<!-- ============================================== HERO -->
+<header class="hero">
+  <video class="hero-video" autoplay muted loop playsinline preload="auto"
+         poster="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-ARS9.jpg">
+    <source src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-Z5N5.webm" type="video/webm">
+  </video>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-meta">Walk the Land &nbsp;·&nbsp; Annapurna &nbsp;·&nbsp; <span>Seven days</span></div>
+      <h1>Annapurna<br>Base Camp<br><em>4,130 m</em></h1>
+      <p class="hero-sub">A walk into the sanctuary, through Gurung country, bamboo and rhododendron, to the amphitheatre of Annapurna.</p>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-label">Distance</div>
+        <div class="stat-value">~48 <small>km</small></div>
+      </div>
+      <div>
+        <div class="stat-label">High point</div>
+        <div class="stat-value">4,130 <small>m</small></div>
+      </div>
+      <div>
+        <div class="stat-label">Difficulty</div>
+        <div class="stat-value">Moderate</div>
+      </div>
+      <div>
+        <div class="stat-label">Group</div>
+        <div class="stat-value">Small</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================== THE VALLEY (parallel spine) -->
+<section class="valley">
+  <div class="valley-grid">
+    <div class="valley-intro">
+      <div class="kicker">The Valley</div>
+      <h2 class="section-title">Before <em>the days,</em><br>the place.</h2>
+      <p>Most operators will hand you the itinerary and assume the rest is your problem. We think the rest is the trek.</p>
+      <p>What follows is the frame the walk sits inside: the people whose home you are walking through, the mountains and the names they go by, the rules of the sanctuary you are entering. Read it before the days. The days will read differently.</p>
+    </div>
+
+    <div class="valley-notes">
+      <article class="vnote">
+        <div class="vnote-num">i.</div>
+        <div>
+          <h3>Gurung country</h3>
+          <p>The trail belongs to the Gurung. Their language is its own, neither Nepali nor Tibetan. Their villages along the lower Modi Khola grow barley, buckwheat, and potato on hand-cut terraces. The teahouses are theirs, the porters are theirs, the millet alcohol on the table at the end of a long day is theirs.</p>
+          <p>You are not passing through someone's backdrop. You are walking through a working community that has chosen to share its trail with you.</p>
+        </div>
+      </article>
+
+      <article class="vnote">
+        <div class="vnote-num">ii.</div>
+        <div>
+          <h3>The Annapurna Conservation Area</h3>
+          <p>The sanctuary you enter at Chomrong is the largest protected area in Nepal, and the country's first. The trail's ethic comes from there. No open fires. No left-behind plastic. Vegetarian above Dovan, because the mountain is sacred to both Hindus and Buddhists and meat is not permitted in its presence.</p>
+          <p>The cleanest trek in Nepal isn't a slogan. It's an outcome of the Gurung community deciding, year by year, that it would be.</p>
+        </div>
+      </article>
+
+      <article class="vnote">
+        <div class="vnote-num">iii.</div>
+        <div>
+          <h3>Annapurna I, the first eight-thousander</h3>
+          <p>In June 1950, Maurice Herzog and Louis Lachenal stood on the summit of Annapurna I — the first eight-thousand-metre peak ever climbed, three years before Everest. They came down with severe frostbite and lost most of their fingers and toes on the descent.</p>
+          <p>The peak you see from base camp is the one that opened the era of high-altitude mountaineering. The Sherpas and porters who made that climb possible were rarely named in the history. We name them on the trail.</p>
+        </div>
+      </article>
+
+      <article class="vnote">
+        <div class="vnote-num">iv.</div>
+        <div>
+          <h3>Machhapuchhre, the unclimbed</h3>
+          <p>The fishtail peak rises above every photograph of this trek. It is sacred to Shiva, and by the request of the Nepali government and local communities, it has never been summited. A British expedition in 1957 stopped fifty metres short of the top out of respect.</p>
+          <p>You will see it for seven days. It is the only major Himalayan peak no human has stood on. That fact, kept by everyone, is part of what the sanctuary means.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Valley imagery strip — placeholder boxes pending real teahouse / community / sanctuary photography -->
+<div class="valley-images">
+  <figure>
+    <img src="https://v3b.fal.media/files/b/0a97b900/loEJkIMctORVtUcOIuZfK_oeHTtKYi.png" alt="Teahouse interior — Gurung family kitchen, Chomrong">
+    <figcaption>Teahouse · Gurung community life</figcaption>
+  </figure>
+  <figure>
+    <img src="https://v3b.fal.media/files/b/0a97b902/6nUna0AEEGgXKfpHqpwZD_vL351Hlf.png" alt="Annapurna Conservation Area — trail signage and ranger post">
+    <figcaption>Annapurna Conservation Area</figcaption>
+  </figure>
+  <figure>
+    <img src="https://v3b.fal.media/files/b/0a97b91c/-qvdeJC89r71wFiytAopx_iLwjl6sV.png" alt="Machhapuchhre at first light from MBC">
+    <figcaption>The fishtail · unclimbed</figcaption>
+  </figure>
+</div>
+
+<!-- ============================================== FULL-BLEED PAUSE -->
+<section class="pause" aria-label="The trail">
+  <video autoplay muted loop playsinline preload="auto"
+         poster="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-OZ5X.jpeg">
+    <source src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-15FQ.webm" type="video/webm">
+  </video>
+  <div class="pause-caption">The Modi Khola valley · between Sinuwa and Dovan</div>
+</section>
+
+<!-- ============================================== THE SHAPE OF THE WALK -->
+<section class="shape">
+  <div class="shape-head">
+    <h3>The shape of the walk.</h3>
+    <div class="legend">
+      <span><strong>48 km</strong> total distance</span>
+      <span><strong>4,130 m</strong> high point</span>
+      <span><strong>+3,300 m</strong> ascent over four days</span>
+    </div>
+  </div>
+
+  <div class="elev-wrap">
+    <div class="elev-canvas" id="elev-canvas">
+      <svg class="elevation" viewBox="0 0 1200 320" xmlns="http://www.w3.org/2000/svg" aria-label="Elevation profile of the Annapurna Base Camp trek">
+
+        <!-- altitude grid lines + labels -->
+        <line class="grid-line" x1="60" y1="30"  x2="1180" y2="30"/>
+        <line class="grid-line" x1="60" y1="95"  x2="1180" y2="95"/>
+        <line class="grid-line" x1="60" y1="161" x2="1180" y2="161"/>
+        <line class="grid-line" x1="60" y1="227" x2="1180" y2="227"/>
+        <line class="grid-line" x1="60" y1="260" x2="1180" y2="260"/>
+
+        <text class="y-label" x="14" y="33">4,300 m</text>
+        <text class="y-label" x="14" y="98">3,300 m</text>
+        <text class="y-label" x="14" y="164">2,300 m</text>
+        <text class="y-label" x="14" y="230">1,300 m</text>
+        <text class="y-label" x="14" y="263">800 m</text>
+
+        <!-- profile area fill -->
+        <path class="profile-fill"
+              d="M 60,247
+                 L 118,210
+                 L 284,184
+                 L 459,116
+                 L 564,83
+                 L 622,30
+                 L 947,200
+                 L 1180,235
+                 L 1180,260
+                 L 60,260 Z"/>
+
+        <!-- profile line -->
+        <path class="profile-line" id="profile-path"
+              d="M 60,247
+                 L 118,210
+                 L 284,184
+                 L 459,116
+                 L 564,83
+                 L 622,30
+                 L 947,200
+                 L 1180,235"/>
+
+        <!-- day stops -->
+        <line class="day-tick" x1="118" y1="210" x2="118" y2="290"/>
+        <circle class="day-dot" cx="118" cy="210" r="3.5"/>
+        <text class="day-label" x="118" y="305" text-anchor="middle">Day 1</text>
+
+        <line class="day-tick" x1="284" y1="184" x2="284" y2="290"/>
+        <circle class="day-dot" cx="284" cy="184" r="3.5"/>
+        <text class="day-label" x="284" y="305" text-anchor="middle">Day 2</text>
+
+        <line class="day-tick" x1="459" y1="116" x2="459" y2="290"/>
+        <circle class="day-dot" cx="459" cy="116" r="3.5"/>
+        <text class="day-label" x="459" y="305" text-anchor="middle">Day 3</text>
+
+        <line class="day-tick" x1="622" y1="30" x2="622" y2="290"/>
+        <circle class="day-dot peak" cx="622" cy="30" r="5"/>
+        <text class="day-label" x="622" y="305" text-anchor="middle">Day 4</text>
+
+        <line class="day-tick" x1="947" y1="200" x2="947" y2="290"/>
+        <circle class="day-dot" cx="947" cy="200" r="3.5"/>
+        <text class="day-label" x="947" y="305" text-anchor="middle">Day 5</text>
+
+        <line class="day-tick" x1="1180" y1="235" x2="1180" y2="290"/>
+        <circle class="day-dot" cx="1180" cy="235" r="3.5"/>
+        <text class="day-label" x="1180" y="305" text-anchor="end">Day 6</text>
+
+        <!-- interactive pointer (positioned by JS) -->
+        <line class="elev-pointer-line" id="elev-pointer-line" x1="622" y1="30" x2="622" y2="260"/>
+        <circle class="elev-pointer-dot" id="elev-pointer-dot" cx="622" cy="30" r="6"/>
+      </svg>
+      <div class="elev-hint">Move along the trail</div>
+    </div>
+
+    <aside class="elev-card" id="elev-card">
+      <div class="place-name" id="ec-name">Annapurna Base Camp</div>
+      <div class="place-km" id="ec-km">Day 4 &nbsp;·&nbsp; km 24</div>
+
+      <div class="elev-stats-row">
+        <div class="elev-stat">
+          <span class="elev-stat-label">Altitude</span>
+          <span class="elev-stat-value" id="ec-alt">4,130<small>m</small></span>
+        </div>
+        <div class="elev-stat">
+          <span class="elev-stat-label">Oxygen</span>
+          <span class="elev-stat-value" id="ec-ox">57<small>%</small></span>
+        </div>
+      </div>
+
+      <span class="elev-fact-label" id="ec-fact-label">View</span>
+      <p class="elev-fact" id="ec-fact">A complete circle of peaks. Annapurna I rises to 8,091 m on the western edge, Annapurna South to 7,219 m beside it, Hiunchuli to 6,441 m closer in. Machhapuchhre, the unclimbed, sits east at 6,993 m.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- ============================================== SEVEN-DAY STRIP -->
+<section class="strip">
+  <div class="strip-grid">
+    <div class="strip-day">
+      <span class="strip-num">i.</span>
+      <span class="strip-title">Drive in, walk to Chomrong</span>
+      <span class="strip-alt"><strong>2,170 m</strong>2.5 km · 2–3 hrs</span>
+    </div>
+    <div class="strip-day">
+      <span class="strip-num">ii.</span>
+      <span class="strip-title">Through bamboo and oak to Dovan</span>
+      <span class="strip-alt"><strong>2,600 m</strong>9.6 km · 6–7 hrs</span>
+    </div>
+    <div class="strip-day">
+      <span class="strip-num">iii.</span>
+      <span class="strip-title">Up the Modi Khola to Deurali</span>
+      <span class="strip-alt"><strong>3,200 m</strong>5 km · 4–5 hrs</span>
+    </div>
+    <div class="strip-day peak">
+      <span class="strip-num">iv.</span>
+      <span class="strip-title">Into the sanctuary &nbsp;— ABC</span>
+      <span class="strip-alt"><strong>4,130 m</strong>7 km · 6–7 hrs</span>
+    </div>
+    <div class="strip-day">
+      <span class="strip-num">v.</span>
+      <span class="strip-title">Long descent to Bamboo</span>
+      <span class="strip-alt"><strong>2,310 m</strong>14 km · 6–7 hrs</span>
+    </div>
+    <div class="strip-day">
+      <span class="strip-num">vi.</span>
+      <span class="strip-title">Down to Jhinu &nbsp;— hot springs</span>
+      <span class="strip-alt"><strong>1,780 m</strong>10 km · 5–6 hrs</span>
+    </div>
+    <div class="strip-day">
+      <span class="strip-num">vii.</span>
+      <span class="strip-title">Drive back to Pokhara</span>
+      <span class="strip-alt"><strong>822 m</strong>4–5 hrs drive</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================== DAYS INTRO -->
+<div class="days-intro">
+  <div class="kicker">The Days</div>
+  <h2 class="section-title">Day by day, <em>walked.</em></h2>
+  <p>The frame above runs underneath all of them. Each day below tells you only what that day adds — what changes underfoot, where the place reveals something new, what past walkers have left behind.</p>
+</div>
+
+<!-- ============================================== DAY 1 (collapsed view, indicative) -->
+<article class="day">
+  <div class="day-head">
+    <div class="day-num">01<small>Pokhara → Chomrong</small></div>
+    <div>
+      <h2 class="day-title">Drive in. <em>The trail begins where the road ends.</em></h2>
+    </div>
+  </div>
+  <div class="day-stats">
+    <div class="day-stat"><span class="day-stat-label">Walk</span><span class="day-stat-value">2.5<small>km</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Time</span><span class="day-stat-value">2–3<small>hrs</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Ascent</span><span class="day-stat-value">+520<small>m</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Descent</span><span class="day-stat-value">—</span></div>
+    <div class="day-stat"><span class="day-stat-label">Sleep at</span><span class="day-stat-value">2,170<small>m</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Stay</span><span class="day-stat-value">Teahouse</span></div>
+  </div>
+  <div class="day-body">
+    <div class="day-route">
+      <p>The drive from Pokhara follows the Modi Khola north into the foothills. Annapurna South and the fishtail rise on the right as the road climbs. We start walking at Jhinu and reach Chomrong by late afternoon — a Gurung village on a steep ridge, with terraced barley fields and a view of the sanctuary you will enter tomorrow.</p>
+      <p>First night in a teahouse. Wholesome dinner. Early sleep.</p>
+    </div>
+    <aside class="day-aside">
+      <div class="field-notes">
+        <div class="field-notes-label">Field notes</div>
+
+        <div class="fn-entry">
+          <blockquote>"Reached Chomrong by four. The light was already off the western faces but Annapurna South was still gold on its eastern shoulder. The teahouse owner remembered Swapnil from a previous walk. He asked, in Nepali, whether the dog he'd seen last time was still alive."</blockquote>
+          <div class="fn-attr"><strong>Deepak</strong> &nbsp;·&nbsp; founder &nbsp;·&nbsp; October 2024</div>
+        </div>
+
+        <div class="fn-entry">
+          <blockquote>"The drive from Pokhara is rougher than people expect. The last hour to Jhinu is dirt road, then steel suspension bridge, then the walk. The body has not started yet, but the head has."</blockquote>
+          <div class="fn-attr"><strong>Swapnil</strong> &nbsp;·&nbsp; founder &nbsp;·&nbsp; October 2024</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="day-photo-single">
+    <figure>
+      <img src="https://v3b.fal.media/files/b/0a97b921/CUyzyekqZ-eXRX3qiZJUx_IpKWwGaV.png" alt="Chomrong village at last light">
+      <figcaption>Chomrong · arrival, Day 1</figcaption>
+    </figure>
+  </div>
+</article>
+
+<!-- ============================================== DAY 2 -->
+<article class="day">
+  <div class="day-head">
+    <div class="day-num">02<small>Chomrong → Dovan</small></div>
+    <div>
+      <h2 class="day-title">Down to the river, then up. <em>Bamboo, oak, rhododendron.</em></h2>
+    </div>
+  </div>
+  <div class="day-stats">
+    <div class="day-stat"><span class="day-stat-label">Walk</span><span class="day-stat-value">9.6<small>km</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Time</span><span class="day-stat-value">6–7<small>hrs</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Ascent</span><span class="day-stat-value">+800<small>m</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Descent</span><span class="day-stat-value">−370<small>m</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Sleep at</span><span class="day-stat-value">2,600<small>m</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Stay</span><span class="day-stat-value">Teahouse</span></div>
+  </div>
+  <div class="day-body">
+    <div class="day-route">
+      <p>The trail leaves Chomrong with a long, steep descent to the Chomrong Khola, a river crossing on a steel suspension bridge, and then a longer, steeper climb out the other side to Sinuwa. From Sinuwa the gradient settles. Through Khuldigar the forest closes in: bamboo first, then oak, then rhododendron, the trees twisted and lichen-hung where the air stays damp.</p>
+      <p>Tea-stop refills are at every settlement. By mid-afternoon you reach Dovan, a clutch of teahouses where the river runs loud and the trees keep most of the sky. The walk has been long. The body is starting to know it's on a trek.</p>
+    </div>
+    <aside class="day-aside">
+      <div class="place-fragment">
+        <div class="place-label">Place — the rule above Dovan</div>
+        <h4>Why dinner becomes vegetarian tonight</h4>
+        <p>From Dovan onward the trail is considered to enter the inner sanctuary, sacred to both Hindus and Buddhists. The Gurung community and the Annapurna Conservation Area Project keep meat off the trail above this point. The teahouse menus shift accordingly. Dal bhat with greens, fried potatoes, vegetable thukpa, the occasional egg — and tea, always tea.</p>
+      </div>
+      <div class="field-notes">
+        <div class="field-notes-label">Field notes</div>
+
+        <div class="fn-entry">
+          <blockquote>"The descent from Chomrong to the Khola is the unkind start to Day 2: three hundred metres down, knees only, before the trail starts climbing again. We tell the group at breakfast. They appreciate knowing."</blockquote>
+          <div class="fn-attr"><strong>Deepak</strong> &nbsp;·&nbsp; founder &nbsp;·&nbsp; March 2025</div>
+        </div>
+
+        <div class="fn-entry">
+          <blockquote>"Lunch at Sinuwa, dal bhat. The rule above Dovan does not yet apply here. Sinuwa serves chicken. But most of us order the dal anyway. The body knows what it needs at altitude before the brain catches up."</blockquote>
+          <div class="fn-attr"><strong>Swapnil</strong> &nbsp;·&nbsp; founder &nbsp;·&nbsp; March 2025</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="day-photo-single">
+    <figure>
+      <img src="https://v3b.fal.media/files/b/0a97b923/wilWQSauq4WqjpTE3cTVo_7NnXIhTG.png" alt="Bamboo, oak and rhododendron forest above Sinuwa">
+      <figcaption>The forest above Sinuwa · Day 2</figcaption>
+    </figure>
+  </div>
+</article>
+
+<!-- ============================================== DAY 3 -->
+<article class="day">
+  <div class="day-head">
+    <div class="day-num">03<small>Dovan → Deurali</small></div>
+    <div>
+      <h2 class="day-title">Up the narrow valley. <em>The treeline thins.</em></h2>
+    </div>
+  </div>
+  <div class="day-stats">
+    <div class="day-stat"><span class="day-stat-label">Walk</span><span class="day-stat-value">5<small>km</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Time</span><span class="day-stat-value">4–5<small>hrs</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Ascent</span><span class="day-stat-value">+600<small>m</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Descent</span><span class="day-stat-value">—</span></div>
+    <div class="day-stat"><span class="day-stat-label">Sleep at</span><span class="day-stat-value">3,200<small>m</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Stay</span><span class="day-stat-value">Teahouse</span></div>
+  </div>
+  <div class="day-body">
+    <div class="day-route">
+      <p>A shorter day by distance, but the walk steepens and the air begins to thin. The trail follows the Modi Khola through a narrow glacial valley, the cliffs close on both sides. Past the Himalaya teahouse settlement, the forest gives way to scrub and the first long views open up — Machhapuchhre directly ahead, Annapurna South to the left.</p>
+      <p>By early afternoon you reach Deurali. The treeline is below you now. Layer up before sunset; this is the first night the cold makes itself felt.</p>
+    </div>
+    <aside class="day-aside">
+      <div class="place-fragment">
+        <div class="place-label">Place — the bamboo forest</div>
+        <h4>108 sacred waterfalls</h4>
+        <p>The stretch between Dovan and Deurali passes through a forest the Gurung call the place of one hundred and eight waterfalls. 108 is a sacred number in both Hindu and Buddhist tradition. They are not all running at once, and counting is the wrong way to meet them. After rain, the forest sounds like a single instrument.</p>
+      </div>
+      <div class="field-notes">
+        <div class="field-notes-label">Field notes</div>
+
+        <div class="fn-entry">
+          <blockquote>"At the Himalaya teahouse, the one between Dovan and Deurali, the kitchen is run by two sisters from Ghandruk. They have a portable solar panel that charges phones for fifty rupees per device. Most of us declined; the disconnect is the point."</blockquote>
+          <div class="fn-attr"><strong>Deepak</strong> &nbsp;·&nbsp; founder &nbsp;·&nbsp; October 2024</div>
+        </div>
+
+        <div class="fn-entry">
+          <blockquote>"First time we saw Machhapuchhre in full above the cliffs. The valley is so narrow before Deurali that the peaks come and go behind cloud and stone. Then they reveal. The reaction was the same on both my walks: nobody speaks for a minute."</blockquote>
+          <div class="fn-attr"><strong>Deepak</strong> &nbsp;·&nbsp; founder &nbsp;·&nbsp; March 2025</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="day-photo-single">
+    <figure>
+      <img src="https://v3b.fal.media/files/b/0a97b92e/t5KpQZrP7NDf8ECf1iMAX_OWMoZl3p.png" alt="Narrow valley between Himalaya and Deurali, Machhapuchhre above cliff line">
+      <figcaption>The valley narrows · Day 3</figcaption>
+    </figure>
+  </div>
+</article>
+
+<!-- ============================================== DAY 4 — the test unit -->
+<article class="day" id="day-4">
+  <div class="day-head">
+    <div class="day-num">04<small>Deurali → ABC</small></div>
+    <div>
+      <h2 class="day-title">Into the sanctuary. <em>The amphitheatre opens.</em></h2>
+    </div>
+  </div>
+  <div class="day-stats">
+    <div class="day-stat"><span class="day-stat-label">Walk</span><span class="day-stat-value">7<small>km</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Time</span><span class="day-stat-value">6–7<small>hrs</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Ascent</span><span class="day-stat-value">+930<small>m</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Descent</span><span class="day-stat-value">—</span></div>
+    <div class="day-stat"><span class="day-stat-label">Sleep at</span><span class="day-stat-value">4,130<small>m</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Stay</span><span class="day-stat-value">Teahouse</span></div>
+  </div>
+
+  <div class="day-body">
+    <div class="day-route">
+      <p>The treeline thins above Deurali. The air is colder and drier; the rhododendron and oak give way to scrub, then to nothing. Just glacial moraine and the river, narrowing. The walk is steady rather than steep. Pacing matters more than effort.</p>
+      <p>By mid-morning the valley turns and Machhapuchhre Base Camp comes into view, a flat shoulder at 3,700 metres with the fishtail peak almost directly overhead. Most groups stop here for tea. From MBC the trail bends west into the sanctuary itself, and the peaks begin to circle you: Annapurna South on the left, Hiunchuli behind, Annapurna I straight ahead. There is no horizon. There is only mountain.</p>
+
+      <blockquote class="pull-quote">The 360° view does not need to be described; it does need to be earned.</blockquote>
+
+      <p>You arrive at Annapurna Base Camp by early afternoon. Drop your pack. Drink water. Walk the ten minutes to the prayer-flag cairn and sit down. The four days were for this.</p>
+      <p>Dinner is in the teahouse. Lights out early. The stars at 4,130 metres are the kind that change what you thought stars were.</p>
+    </div>
+
+    <aside class="day-aside">
+      <div class="place-fragment">
+        <div class="place-label">Place — the sanctuary</div>
+        <h4>An amphitheatre of glaciers</h4>
+        <p>The Annapurna Sanctuary is a near-perfect bowl, ringed by Annapurna I, Annapurna South, Hiunchuli, Gangapurna, and Machhapuchhre. It opens only to the south, where the Modi Khola escapes — the river you have been walking beside since Day One.</p>
+        <p>Geologically, it is what is left after a glacier carved a circle and the ice retreated. Culturally, the Gurung consider the sanctuary the home of their old gods. Before tourism, it was rarely entered.</p>
+      </div>
+
+      <div class="place-fragment">
+        <div class="place-label">Place — the unclimbed peak</div>
+        <h4>Why no one has stood on Machhapuchhre</h4>
+        <p>The mountain you have been watching for four days is sacred to Shiva. In 1957, the only expedition ever permitted, a British team led by Wilfrid Noyce, turned back fifty metres below the summit out of respect for the request of the Nepali king and the Gurung community. Climbing has been formally forbidden ever since.</p>
+        <p>From Base Camp it sits to your east, sharper than any other peak in the bowl. It is the closest thing in the Himalaya to an absolute.</p>
+      </div>
+
+      <div class="field-notes">
+        <div class="field-notes-label">Field notes</div>
+
+        <div class="fn-entry">
+          <blockquote>"Got to ABC just before two. The bowl is not what photographs show. Photographs flatten it. Standing inside it, the peaks lean over you. I sat for an hour and didn't notice."</blockquote>
+          <div class="fn-attr"><strong>Deepak</strong> &nbsp;·&nbsp; founder &nbsp;·&nbsp; March 2025</div>
+        </div>
+
+        <div class="fn-entry">
+          <blockquote>"The dal bhat at ABC is the best dal bhat on the trail. The teahouse owner is from Chomrong; he walks up for the season and walks down in November. We talked, he and I, in his kitchen, about how the route changed after the 2014 avalanche."</blockquote>
+          <div class="fn-attr"><strong>Deepak</strong> &nbsp;·&nbsp; founder &nbsp;·&nbsp; October 2024</div>
+        </div>
+
+        <div class="fn-entry">
+          <blockquote>"The cold at base camp comes off the glacier. You can stand in the sun in a t-shirt at noon and need a down jacket the moment cloud passes. Sunset is brutal and beautiful. Most of the group walks out to the cairn and sits."</blockquote>
+          <div class="fn-attr"><strong>Swapnil</strong> &nbsp;·&nbsp; founder &nbsp;·&nbsp; October 2024</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="day-image">
+    <figure>
+      <img src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg" alt="The Annapurna Sanctuary">
+      <figcaption>The bowl, mid-morning · ABC</figcaption>
+    </figure>
+    <figure>
+      <img src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-0D0E.jpeg" alt="Machhapuchhre">
+      <figcaption>Machhapuchhre · the unclimbed peak</figcaption>
+    </figure>
+  </div>
+</article>
+
+<!-- ============================================== DAY 5 -->
+<article class="day">
+  <div class="day-head">
+    <div class="day-num">05<small>ABC → Bamboo</small></div>
+    <div>
+      <h2 class="day-title">Down into the forest. <em>The valley closes again.</em></h2>
+    </div>
+  </div>
+  <div class="day-stats">
+    <div class="day-stat"><span class="day-stat-label">Walk</span><span class="day-stat-value">14<small>km</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Time</span><span class="day-stat-value">6–7<small>hrs</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Ascent</span><span class="day-stat-value">—</span></div>
+    <div class="day-stat"><span class="day-stat-label">Descent</span><span class="day-stat-value">−1,820<small>m</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Sleep at</span><span class="day-stat-value">2,310<small>m</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Stay</span><span class="day-stat-value">Teahouse</span></div>
+  </div>
+  <div class="day-body">
+    <div class="day-route">
+      <p>The sanctuary releases you. The day is long but downhill — back through Deurali and the Himalaya teahouses, retracing the river. The bamboo and rhododendron return. By Bamboo it is warm again and the air is thick with green.</p>
+      <p>This is also the day, somewhere on the descent, where the valley you walked into reveals itself as a place you have actually entered. Walking out, you notice what walking in did not have time to show.</p>
+    </div>
+    <aside class="day-aside">
+      <div class="field-notes">
+        <div class="field-notes-label">Field notes</div>
+
+        <div class="fn-entry">
+          <blockquote>"Fourteen kilometres downhill. The lungs recover, the knees do not. We slowed the second half, took a longer break at Deurali. Trekking poles earned their place today."</blockquote>
+          <div class="fn-attr"><strong>Deepak</strong> &nbsp;·&nbsp; founder &nbsp;·&nbsp; March 2025</div>
+        </div>
+
+        <div class="fn-entry">
+          <blockquote>"Saw a flock of blood pheasants, about ten of them, slowly crossing the trail above Himalaya. They scattered when the lead group came round the bend. The second group, walking quieter and a few minutes behind, watched them for almost a minute."</blockquote>
+          <div class="fn-attr"><strong>Swapnil</strong> &nbsp;·&nbsp; founder &nbsp;·&nbsp; October 2024</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="day-photo-single">
+    <figure>
+      <img src="https://v3b.fal.media/files/b/0a97b96b/b2t0FWKe-5QE2jPpqV6Dq_BU3c9pWh.png" alt="Long descent through bamboo and rhododendron forest">
+      <figcaption>Walking out · Day 5</figcaption>
+    </figure>
+  </div>
+</article>
+
+<!-- ============================================== DAY 6 -->
+<article class="day">
+  <div class="day-head">
+    <div class="day-num">06<small>Bamboo → Jhinu Danda</small></div>
+    <div>
+      <h2 class="day-title">A long descent and a hot spring. <em>The body remembers it has been working.</em></h2>
+    </div>
+  </div>
+  <div class="day-stats">
+    <div class="day-stat"><span class="day-stat-label">Walk</span><span class="day-stat-value">10<small>km</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Time</span><span class="day-stat-value">5–6<small>hrs</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Ascent</span><span class="day-stat-value">+250<small>m</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Descent</span><span class="day-stat-value">−780<small>m</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Sleep at</span><span class="day-stat-value">1,780<small>m</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Stay</span><span class="day-stat-value">Teahouse</span></div>
+  </div>
+  <div class="day-body">
+    <div class="day-route">
+      <p>The morning drops to the Kimrong Khola, knee-work, not lung-work, and then climbs again through forest, bamboo and oak and rhododendron one last time. By early afternoon you are at Jhinu Danda, a small ridge village with terraced fields, prayer flags, and a stone trail running down to the Modi Khola.</p>
+      <p>Ten minutes below the village sit the hot springs — three pools, fed from the cliff, looking onto the river. You sit in them. You stop talking. The walk has been six days; the heat undoes most of what it did.</p>
+    </div>
+    <aside class="day-aside">
+      <div class="field-notes">
+        <div class="field-notes-label">Field notes</div>
+
+        <div class="fn-entry">
+          <blockquote>"The hot springs at Jhinu are not a tourist amenity. They are a tradition. Local families come down on weekends. The water is around forty degrees, fed straight from the cliff. Nobody talks much in there."</blockquote>
+          <div class="fn-attr"><strong>Deepak</strong> &nbsp;·&nbsp; founder &nbsp;·&nbsp; October 2024</div>
+        </div>
+
+        <div class="fn-entry">
+          <blockquote>"The Kimrong Khola crossing is the only real climb left in the trek. Three hundred metres up, the legs protest, the head says there is one cold beer in Jhinu. Both are true."</blockquote>
+          <div class="fn-attr"><strong>Swapnil</strong> &nbsp;·&nbsp; founder &nbsp;·&nbsp; March 2025</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="day-photo-single">
+    <figure>
+      <img src="https://v3b.fal.media/files/b/0a97b939/TN8_-V06JIviwlrfdUr91_TukgsXGT.png" alt="Hot springs at Jhinu Danda — three pools by the Modi Khola">
+      <figcaption>Hot springs · Day 6</figcaption>
+    </figure>
+  </div>
+</article>
+
+<!-- ============================================== DAY 7 -->
+<article class="day">
+  <div class="day-head">
+    <div class="day-num">07<small>Jhinu → Pokhara</small></div>
+    <div>
+      <h2 class="day-title">Out. <em>The road, then the lake.</em></h2>
+    </div>
+  </div>
+  <div class="day-stats">
+    <div class="day-stat"><span class="day-stat-label">Walk</span><span class="day-stat-value">~3<small>km</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Drive</span><span class="day-stat-value">4–5<small>hrs</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Ascent</span><span class="day-stat-value">—</span></div>
+    <div class="day-stat"><span class="day-stat-label">Descent</span><span class="day-stat-value">−960<small>m</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Arrive</span><span class="day-stat-value">822<small>m</small></span></div>
+    <div class="day-stat"><span class="day-stat-label">Stay</span><span class="day-stat-value">Hostel</span></div>
+  </div>
+  <div class="day-body">
+    <div class="day-route">
+      <p>A short walk down a dirt road to the jeep pickup, then the long, scenic drive back to Pokhara through hill villages and river valleys. By late afternoon you are by Phewa Lake. The mountains you walked through are visible from your dinner table.</p>
+      <p>Last night together. Goodbyes the next morning, by ten.</p>
+    </div>
+    <aside class="day-aside">
+      <div class="field-notes">
+        <div class="field-notes-label">Field notes</div>
+
+        <div class="fn-entry">
+          <blockquote>"By Pokhara the trek already feels like something that happened. The body is sore in specific places (left calf, right knee, both shoulders) that you will not notice for two days, then notice for a week."</blockquote>
+          <div class="fn-attr"><strong>Deepak</strong> &nbsp;·&nbsp; founder &nbsp;·&nbsp; March 2025</div>
+        </div>
+
+        <div class="fn-entry">
+          <blockquote>"Last dinner by Phewa Lake, with the same group that started as strangers seven days ago. The mountains we walked through are visible from the table. Almost nobody talks about the trek; everyone is already talking about coming back for Khopra."</blockquote>
+          <div class="fn-attr"><strong>Swapnil</strong> &nbsp;·&nbsp; founder &nbsp;·&nbsp; October 2024</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="day-photo-single">
+    <figure>
+      <img src="https://v3b.fal.media/files/b/0a97b93b/zYroWsuFprE-Fzr80bQXj_z2JnDlmF.png" alt="Phewa Lake at last light, Annapurna range across the water">
+      <figcaption>Pokhara, last evening · Day 7</figcaption>
+    </figure>
+  </div>
+</article>
+
+<!-- ============================================== IS THIS FOR YOU -->
+<section class="fitness">
+  <div class="fitness-grid">
+    <div class="fitness-left">
+      <div class="kicker">Is this for you?</div>
+      <h2>A grade, <em>and an honest answer.</em></h2>
+      <p style="font-family: var(--serif-body); font-size: 1.05rem; color: var(--ink-soft); line-height: 1.6;">We grade our journeys on a 1–6 scale. ABC sits at three: a full multi-day walk, real altitude, but no technical terrain.</p>
+
+      <div class="diff-scale">
+        <div class="diff-bar passed"></div>
+        <div class="diff-bar passed"></div>
+        <div class="diff-bar active"></div>
+        <div class="diff-bar"></div>
+        <div class="diff-bar"></div>
+        <div class="diff-bar"></div>
+      </div>
+      <div class="diff-meta">
+        <span><strong>Level 3 — Moderate</strong>Multi-day walk, sustained effort</span>
+        <span style="text-align: right;">1 → 6</span>
+      </div>
+    </div>
+
+    <div class="fitness-right">
+      <p>The walk is not technical. There is no scrambling, no fixed rope, no glacier travel. What it asks is sustained, day-after-day effort: six to seven hours of walking on stepped trails, four days of climbing, three days of descent, with one night at 4,130 m.</p>
+      <p>Day 4 is the day to plan for. Nine hundred and thirty metres of ascent, ending at the highest sleep of the trek, with the final hour above 4,000 m. If you've not slept above 3,500 m before, that night will be unfamiliar — colder, drier, with an unsettled first-time sleep that almost everyone has and almost everyone sleeps through by morning.</p>
+      <p>The descent on Day 5 is the part most people underestimate. Fourteen kilometres downhill, mostly on stone steps, can be harder on the knees than the ascent was on the lungs. Trekking poles help. So does pacing it slow.</p>
+
+      <div class="signal">
+        <span class="signal-label">If you're ready, you can —</span>
+        <ul class="signal-list">
+          <li>Walk 5 km in under 45 minutes without stopping</li>
+          <li>Climb ten flights of stairs without your breath catching for long</li>
+          <li>Carry a 5–7 kg daypack for a full day</li>
+          <li>Be six to eight weeks out from the departure with time to train</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================== LEADER CARD -->
+<section class="leader">
+  <div class="leader-grid">
+    <div class="leader-photo">
+      <img src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-FOP0.jpeg" alt="Deepak — trip leader, Annapurna Base Camp">
+      <div class="caption">Deepak · above Muktinath, Mustang · 2025</div>
+    </div>
+    <div>
+      <div class="kicker">Walking with you</div>
+      <h2 class="leader-name">Deepak</h2>
+      <div class="leader-role">Trip leader · Annapurna Base Camp</div>
+      <div class="leader-bio">
+        <p>Deepak has walked the Annapurna Sanctuary trail more times than he keeps count of, in every season the route runs. He is the person making the calls when weather turns above MBC, when someone in the group is moving too slow, when a teahouse on the planned route is unexpectedly full, when the descent on Day 5 has to be paced differently for someone whose knees are protesting. The work of leadership on a trek is mostly invisible — it is the absence of problems you didn't know to worry about.</p>
+        <p>He is also the person you eat with. The brand is built around the idea that the leader is not a service provider; the leader is the journey.</p>
+      </div>
+
+      <div class="leader-creds">
+        <div>
+          <span class="cred-label">Mountaineering</span>
+          <div class="cred-value">NMA-certified <em>Nepal Mountaineering Association</em></div>
+        </div>
+        <div>
+          <span class="cred-label">Medical</span>
+          <div class="cred-value">Wilderness First Responder <em>WFR-certified</em></div>
+        </div>
+        <div>
+          <span class="cred-label">Summit record</span>
+          <div class="cred-value">Multiple peaks <em>6,000 m+</em></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================== OPERATIONAL SUBSTANCE -->
+<section class="ops">
+  <div class="ops-head">
+    <h2>What we carry, and what we plan for.</h2>
+    <span style="font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-mute);">Logistics &nbsp;·&nbsp; Safety</span>
+  </div>
+
+  <div class="ops-grid">
+    <div class="ops-block">
+      <h3>The medical kit on the trail</h3>
+      <p>Carried by the lead guide every day. Re-stocked between departures. Used rarely; designed to be ready when it isn't.</p>
+      <ul class="kit-list">
+        <li>Portable oxygen cylinder</li>
+        <li>Pulse oximeter</li>
+        <li>Blood pressure monitor</li>
+        <li>Stethoscope</li>
+        <li>Folding stretcher</li>
+        <li>AMS protocol kit (Diamox, Dexamethasone)</li>
+        <li>Trauma kit · splints, dressings, sutures</li>
+        <li>Standard medications · GI, pain, allergy</li>
+        <li>Hand-warmers, emergency bivy</li>
+        <li>Satellite communicator</li>
+      </ul>
+    </div>
+
+    <div class="ops-block">
+      <h3>If something doesn't go to plan</h3>
+      <p>Three of the failure modes we plan for, and how the day works when they happen.</p>
+      <ul class="plan-b">
+        <li>
+          <strong>Weather closes the route above MBC</strong>
+          We hold at MBC, not Deurali — better teahouses, better acclimatisation. If the window doesn't open in 24 hours we descend. ABC is the goal; getting back is the priority.
+        </li>
+        <li>
+          <strong>Altitude affects a member of the group</strong>
+          The lead guide makes the call. Mild AMS: rest day, hydration, monitoring. Moderate or worsening: descent, no negotiation. The kit covers stabilisation; the trail covers the rest.
+        </li>
+        <li>
+          <strong>A teahouse is full or closed</strong>
+          The trail has redundancies: Sinuwa instead of Bamboo on the descent, Himalaya instead of Deurali. Days flex by an hour either way; the journey doesn't.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================== PREPARATION FLOW -->
+<section class="prep">
+  <div class="prep-inner">
+    <div class="prep-head">
+      <div>
+        <div class="kicker">From application to arrival</div>
+        <h2>A six-week <em>preparation,</em> not a booking confirmation.</h2>
+      </div>
+      <p class="prep-lede">An application is the start of a relationship, not a transaction. Between confirmation and your flight to Pokhara is six weeks of conversation: health, fitness, gear, logistics. The trail is not where the trek begins.</p>
+    </div>
+
+    <div class="prep-steps">
+      <div class="prep-step">
+        <span class="num">i.</span>
+        <h4>Apply &amp; talk</h4>
+        <p>You apply. We schedule a video call, by name, within days — not a bot, not an auto-reply. We talk about the trek, about you, about whether the fit is right both ways.</p>
+      </div>
+
+      <div class="prep-step">
+        <span class="num">ii.</span>
+        <h4>Confirm the cohort</h4>
+        <p>If we go ahead, you join the group. The WhatsApp circle opens as soon as the first two or three are in. Early signups become informal hosts for later joiners.</p>
+      </div>
+
+      <div class="prep-step expand">
+        <span class="num">iii.</span>
+        <h4>Six weeks of preparation</h4>
+        <p>The substance of it. Four pillars, weekly check-ins, real conversation. The trail begins here.</p>
+        <div class="pillars">
+          <span>Health &amp; fitness intake</span>
+          <span>Personalised gear list</span>
+          <span>Week-by-week training plan</span>
+          <span>Weekly group check-ins</span>
+        </div>
+      </div>
+
+      <div class="prep-step">
+        <span class="num">iv.</span>
+        <h4>Logistics briefing</h4>
+        <p>Permits, transfers, domestic flights, teahouse etiquette, tipping, trail-day expectations. The practical knowledge that separates a confident traveller from an anxious one.</p>
+      </div>
+
+      <div class="prep-step">
+        <span class="num">v.</span>
+        <h4>On the ground</h4>
+        <p>Every intake, flag, and note from six weeks of conversation is handed to the guide team before you arrive. They know who has been to altitude, who has asthma, who is nervous, who is quietly experienced.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================== TRIP CALENDAR / DEPARTURES -->
+<section class="calendar" id="departures">
+  <div class="calendar-inner">
+    <div class="calendar-head">
+      <div>
+        <div class="kicker">Scheduled departures</div>
+        <h2>Pick a date. <em>Apply to reserve.</em></h2>
+      </div>
+      <p class="lede">Departures run in the dry windows — late winter and post-monsoon. Each cohort caps at twelve. We confirm by hand after a short conversation; a place is held the moment we both agree.</p>
+    </div>
+
+    <div class="departure-grid" id="departure-grid">
+      <!-- populated by script -->
+    </div>
+
+    <form class="application" id="application-form" novalidate>
+      <div class="application-intro">
+        <h3>Send an <em>application.</em></h3>
+        <div class="selected-readout" id="selected-readout">No date selected</div>
+      </div>
+
+      <div class="field">
+        <label for="app-name">Full name</label>
+        <input type="text" id="app-name" name="name" required placeholder="As on your passport" />
+      </div>
+      <div class="field">
+        <label for="app-email">Email</label>
+        <input type="email" id="app-email" name="email" required placeholder="you@somewhere.com" />
+      </div>
+      <div class="field">
+        <label for="app-phone">Phone (with country code)</label>
+        <input type="tel" id="app-phone" name="phone" placeholder="+91 98xxxxxxxx" />
+      </div>
+      <div class="field">
+        <label for="app-experience">Trekking / altitude experience</label>
+        <select id="app-experience" name="experience">
+          <option value="">Choose one…</option>
+          <option>None — first multi-day trek</option>
+          <option>Some — done day hikes, light multi-day</option>
+          <option>Comfortable — multiple treks, some altitude</option>
+          <option>Experienced — regular at 4,000 m+</option>
+        </select>
+      </div>
+      <div class="field full">
+        <label for="app-message">Anything you want us to know</label>
+        <textarea id="app-message" name="message" placeholder="Health considerations, the friends joining you, what drew you to this walk — anything that helps us plan the conversation."></textarea>
+      </div>
+
+      <div class="application-submit-row">
+        <p class="application-fineprint">A reply within two business days. No payment is taken until we've spoken and the cohort is confirmed.</p>
+        <button type="submit" class="application-submit" id="app-submit" disabled>Send application →</button>
+      </div>
+
+      <div class="application-confirmation" id="app-confirmation">
+        <h4>Application received.</h4>
+        <p>We'll be in touch within two business days to schedule a short call. Look out for an email from <em>hello@totemtou.com</em>.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ============================================== APPLICATION CLOSE -->
+<section class="close">
+  <div class="close-inner">
+    <div class="kicker">Walking with us</div>
+    <h2>If the page <em>read like something you would walk,</em> apply.</h2>
+    <p>We don't take bookings on this site. The journey is a small group on a tested route, and we want a short conversation before you commit — to make sure the pacing, the dates, and the temperament fit on both sides.</p>
+    <p>The form is six questions and takes ten minutes. We reply within two days. Departures fill quietly; we don't run waitlists louder than the journey.</p>
+    <a class="apply" href="#">Begin an application →</a>
+
+    <div class="price-block">
+      <div>
+        <div class="price-from">From</div>
+        <div class="price-amount">$400 <small>per person</small></div>
+      </div>
+      <div class="price-fineprint">
+        Includes all stays, meals, transport from Pokhara, permits, guide and porter, travel insurance and the medical kit on the trail. International flights, beverages, tips and 5% GST sit outside.
+      </div>
+    </div>
+
+    <div class="close-foot">
+      <span>Annapurna Base Camp · 7 days · Walk the Land</span>
+      <span>Departures&nbsp;·&nbsp;Feb · Mar · Oct · Nov</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Nav adapts to whatever it's sitting over — dark hero vs. paper background.
+  (function() {
+    const nav = document.querySelector('.nav');
+    const hero = document.querySelector('.hero');
+    if (!nav || !hero) return;
+    function update() {
+      const heroBottom = hero.getBoundingClientRect().bottom;
+      const navMid = nav.offsetHeight / 2 + 4;
+      if (heroBottom > navMid) {
+        nav.classList.add('is-over-dark');
+        nav.classList.remove('is-over-paper');
+      } else {
+        nav.classList.add('is-over-paper');
+        nav.classList.remove('is-over-dark');
+      }
+    }
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+  })();
+
+  // Interactive elevation profile.
+  // Each point has SVG x position (in viewBox coords, range 60..1180),
+  // y position (the chart's y for that altitude), real km, altitude m,
+  // a place name, a short kicker label for the fact, and the fact itself.
+  // The fact rotates between view, fauna, flora, history, geography — whatever
+  // is most distinctive for that exact spot on the trail.
+  (function() {
+    const POINTS = [
+      { x: 60,   y: 247, km: 0,    alt: 1600, name: "Jhinu Danda",
+        factLabel: "Trailhead", fact: "The road ends here. From this stone-paved village above the Modi Khola, the foot trail begins. Hot springs sit ten minutes below — the same ones you will return to on Day 6." },
+
+      { x: 118,  y: 210, km: 2.5,  alt: 2170, name: "Chomrong",
+        factLabel: "The village", fact: "A Gurung village built into a steep ridge, with terraced fields of barley and millet. Almost every teahouse on the trail above belongs to someone from Chomrong; they walk up for the season and walk down in November." },
+
+      { x: 200,  y: 195, km: 6.5,  alt: 2350, name: "Sinuwa",
+        factLabel: "Forest", fact: "The trail enters the bamboo. Below, oak and rhododendron; here, dense bamboo and lichen-hung trees where the air stays damp. Listen for the rufous-bellied niltava — small, blue, common above 2,000 m." },
+
+      { x: 284,  y: 184, km: 12.1, alt: 2600, name: "Dovan",
+        factLabel: "The rule", fact: "From here, the menu turns vegetarian. The Annapurna Conservation Area considers the trail above this point sacred to both Hindus and Buddhists; meat is not served. Dal bhat, fried potato, vegetable thukpa, eggs." },
+
+      { x: 380,  y: 145, km: 14.6, alt: 2920, name: "108 Waterfalls",
+        factLabel: "The forest", fact: "A stretch of waterfalls the Gurung count as one hundred and eight — a sacred number in both Hindu and Buddhist tradition. They are not all running at once. After rain, the forest sounds like a single instrument." },
+
+      { x: 459,  y: 116, km: 17.1, alt: 3200, name: "Deurali",
+        factLabel: "Treeline", fact: "The forest thins. Above Deurali the rhododendron and oak give way to scrub and then to nothing — just glacial moraine and the river, narrowing. The first night the cold makes itself felt." },
+
+      { x: 564,  y: 83,  km: 21.6, alt: 3700, name: "Machhapuchhre Base Camp",
+        factLabel: "The unclimbed peak", fact: "A flat shoulder under the fishtail. Machhapuchhre rises directly overhead — the only major Himalayan peak no one has summited. A British team in 1957 stopped fifty metres short of the top in deference to its sacredness, and climbing has been forbidden since." },
+
+      { x: 622,  y: 30,  km: 24.1, alt: 4130, name: "Annapurna Base Camp",
+        factLabel: "View", fact: "A complete circle of peaks. Annapurna I rises to 8,091 m on the western edge, Annapurna South to 7,219 m beside it, Hiunchuli to 6,441 m closer in. Machhapuchhre, the unclimbed, sits east at 6,993 m." },
+
+      { x: 800,  y: 130, km: 31.5, alt: 3000, name: "Above Deurali, descending",
+        factLabel: "Birds", fact: "Blood pheasants, the national bird of Nepal, feed on the ground in the rhododendron between 2,800 and 4,000 m. Slow walkers see them; fast ones spook them." },
+
+      { x: 947,  y: 200, km: 38.1, alt: 2310, name: "Bamboo",
+        factLabel: "Return", fact: "The river is loud again, the trees keep most of the sky, the air is thick. The forest you walked through with the urgency of going up reveals itself as a forest." },
+
+      { x: 1080, y: 218, km: 43.0, alt: 2050, name: "Kimrong Khola",
+        factLabel: "The crossing", fact: "Knee-work, not lung-work. A long descent to the river, a steel suspension bridge, then the climb up to Jhinu. The body remembers it has been working for six days." },
+
+      { x: 1180, y: 235, km: 48.1, alt: 1780, name: "Jhinu Danda · the hot springs",
+        factLabel: "End of the walk", fact: "Three pools, fed from the cliff, looking onto the Modi Khola. Around 40 °C. You sit in them. You stop talking. The walk is over and the heat undoes most of what it did." }
+    ];
+
+    const canvas = document.getElementById('elev-canvas');
+    const svg = canvas && canvas.querySelector('svg');
+    const ptrLine = document.getElementById('elev-pointer-line');
+    const ptrDot = document.getElementById('elev-pointer-dot');
+    const elName = document.getElementById('ec-name');
+    const elKm = document.getElementById('ec-km');
+    const elAlt = document.getElementById('ec-alt');
+    const elOx = document.getElementById('ec-ox');
+    const elFactLabel = document.getElementById('ec-fact-label');
+    const elFact = document.getElementById('ec-fact');
+    if (!canvas || !svg) return;
+
+    // Real oxygen partial-pressure ratio at altitude vs sea level.
+    // Standard barometric model: P(h) = P0 * exp(-h / 7400) for the troposphere.
+    function oxygenPercent(altitude_m) {
+      return Math.round(Math.exp(-altitude_m / 7400) * 100);
+    }
+
+    // Find the day number for a given km along the trail. Day boundaries are
+    // the cumulative km at the end of each day.
+    function dayFor(km) {
+      if (km < 2.5)  return 1;
+      if (km < 12.1) return 2;
+      if (km < 17.1) return 3;
+      if (km < 24.1) return 4;
+      if (km < 38.1) return 5;
+      if (km < 48.1) return 6;
+      return 7;
+    }
+
+    function snap(x_in_svg) {
+      // Find nearest point by x-coordinate.
+      let nearest = POINTS[0];
+      let minDist = Infinity;
+      for (const p of POINTS) {
+        const d = Math.abs(p.x - x_in_svg);
+        if (d < minDist) { minDist = d; nearest = p; }
+      }
+      return nearest;
+    }
+
+    function render(point) {
+      ptrLine.setAttribute('x1', point.x);
+      ptrLine.setAttribute('x2', point.x);
+      ptrLine.setAttribute('y1', point.y);
+      ptrLine.setAttribute('y2', 260);
+      ptrDot.setAttribute('cx', point.x);
+      ptrDot.setAttribute('cy', point.y);
+      elName.textContent = point.name;
+      const kmDisplay = point.km < 1 ? '0' : Math.round(point.km);
+      elKm.textContent = `Day ${dayFor(point.km)}  ·  km ${kmDisplay}`;
+      elAlt.innerHTML = point.alt.toLocaleString() + '<small>m</small>';
+      elOx.innerHTML = oxygenPercent(point.alt) + '<small>%</small>';
+      elFactLabel.textContent = point.factLabel;
+      elFact.textContent = point.fact;
+    }
+
+    function pointerMove(clientX) {
+      const rect = svg.getBoundingClientRect();
+      // Map client X to SVG viewBox X (viewBox is 0..1200).
+      const svgX = ((clientX - rect.left) / rect.width) * 1200;
+      const point = snap(svgX);
+      render(point);
+      canvas.classList.add('touched');
+    }
+
+    let dragging = false;
+    canvas.addEventListener('mousedown', (e) => {
+      dragging = true;
+      pointerMove(e.clientX);
+      e.preventDefault();
+    });
+    window.addEventListener('mouseup', () => { dragging = false; });
+
+    // Desktop: pointer follows mouse whenever it's over the chart.
+    // Drag is implicit — there's nothing extra to do besides move.
+    canvas.addEventListener('mousemove', (e) => {
+      pointerMove(e.clientX);
+    });
+
+    // Touch.
+    canvas.addEventListener('touchstart', (e) => {
+      if (e.touches.length) pointerMove(e.touches[0].clientX);
+    }, { passive: true });
+    canvas.addEventListener('touchmove', (e) => {
+      if (e.touches.length) pointerMove(e.touches[0].clientX);
+    }, { passive: true });
+  })();
+
+  // Trip calendar — scheduled departures and application form.
+  // The CMS writes the canonical list to localStorage under
+  // `totemtou.departures.abc-base-camp`; we fall back to a default slate.
+  (function() {
+    const STORAGE_KEY = 'totemtou.departures.abc-base-camp';
+    const DEFAULTS = [
+      { id: 'feb-2026-a', month: 'February 2026', range: '10 – 16 Feb', note: 'Cool, clearest skies', capacity: 12, booked: 4 },
+      { id: 'feb-2026-b', month: 'February 2026', range: '24 Feb – 2 Mar', note: 'Late winter window', capacity: 12, booked: 9 },
+      { id: 'mar-2026',   month: 'March 2026',    range: '17 – 23 Mar', note: 'Rhododendron in bloom', capacity: 12, booked: 12 },
+      { id: 'oct-2026-a', month: 'October 2026',  range: '6 – 12 Oct', note: 'Post-monsoon, crisp air', capacity: 12, booked: 2 },
+      { id: 'oct-2026-b', month: 'October 2026',  range: '20 – 26 Oct', note: 'Peak visibility', capacity: 12, booked: 6 },
+      { id: 'nov-2026',   month: 'November 2026', range: '10 – 16 Nov', note: 'Final window of the season', capacity: 12, booked: 1 },
+    ];
+
+    function load() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length) return parsed;
+        }
+      } catch (e) { /* ignore */ }
+      return DEFAULTS;
+    }
+
+    const grid = document.getElementById('departure-grid');
+    const readout = document.getElementById('selected-readout');
+    const form = document.getElementById('application-form');
+    const submit = document.getElementById('app-submit');
+    const confirmation = document.getElementById('app-confirmation');
+    if (!grid || !form) return;
+
+    let selected = null;
+    const departures = load();
+
+    function statusFor(d) {
+      const left = d.capacity - d.booked;
+      if (left <= 0) return { label: 'Full', cls: 'is-full' };
+      if (left <= 3) return { label: left + ' left', cls: 'is-filling' };
+      return { label: 'Open', cls: '' };
+    }
+
+    function render() {
+      grid.innerHTML = '';
+      departures.forEach(d => {
+        const status = statusFor(d);
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'departure-card';
+        if (status.label === 'Full') card.classList.add('is-full');
+        if (selected && selected.id === d.id) card.classList.add('is-selected');
+        card.dataset.id = d.id;
+        card.innerHTML = `
+          <span class="departure-month">${d.month}</span>
+          <span class="departure-dates">${d.range}<small>${d.note || ''}</small></span>
+          <span class="departure-foot">
+            <span class="departure-spots">${d.capacity - d.booked}/${d.capacity} spots</span>
+            <span class="departure-status ${status.cls}">${status.label}</span>
+          </span>
+        `;
+        if (status.label !== 'Full') {
+          card.addEventListener('click', () => {
+            selected = d;
+            updateReadout();
+            render();
+          });
+        }
+        grid.appendChild(card);
+      });
+    }
+
+    function updateReadout() {
+      if (!selected) {
+        readout.textContent = 'No date selected';
+        submit.disabled = true;
+        return;
+      }
+      readout.innerHTML = 'Reserving <strong>' + selected.range + '</strong> · ' + selected.month;
+      submit.disabled = false;
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!selected) return;
+      // In production this would POST to an applications endpoint with the
+      // selected departure id and the form payload. For now, record locally
+      // so the CMS dashboard can show pending interest.
+      const application = {
+        departureId: selected.id,
+        name: form.name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        experience: form.experience.value,
+        message: form.message.value,
+        submittedAt: new Date().toISOString(),
+      };
+      try {
+        const key = 'totemtou.applications';
+        const existing = JSON.parse(localStorage.getItem(key) || '[]');
+        existing.push(application);
+        localStorage.setItem(key, JSON.stringify(existing));
+      } catch (e) { /* ignore */ }
+      confirmation.classList.add('is-visible');
+      submit.disabled = true;
+      submit.textContent = 'Sent ✓';
+      confirmation.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    render();
+    updateReadout();
+  })();
+</script>
+
+</body>
+</html>

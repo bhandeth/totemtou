@@ -1,0 +1,1624 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Totemtou — Content Management</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..600;1,8..60,300..600&family=Lora:ital,wght@0,400..600;1,400..600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --paper: #f6f3ec;
+  --paper-deep: #ebe6da;
+  --paper-deeper: #e0d9c6;
+  --ink: #1c1917;
+  --ink-soft: #44403c;
+  --ink-mute: #78716c;
+  --rule: #d6cfbf;
+  --rule-soft: #e3ddd0;
+  --accent: #854513;
+  --accent-soft: #b06a3a;
+  --accent-deep: #5e3010;
+  --good: #4d7a3a;
+  --warn: #8a6d2a;
+  --danger: #9b3a2a;
+  --serif-display: "Source Serif 4", Georgia, serif;
+  --serif-body: "Lora", Georgia, serif;
+  --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+button { font-family: inherit; cursor: pointer; }
+
+/* --- top admin bar ------------------------------------------------ */
+.admin-nav {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(246,243,236,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--rule);
+}
+.admin-nav .mark {
+  font-family: var(--serif-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.admin-nav .mark::before {
+  content: "●";
+  color: var(--accent);
+  font-size: 0.7rem;
+}
+.admin-nav .mark .scope {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  border-left: 1px solid var(--rule);
+  padding-left: 0.7rem;
+  margin-left: 0.4rem;
+}
+.admin-nav-right {
+  display: flex; align-items: center; gap: 1.4rem;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+.admin-nav-right a { color: var(--ink-soft); text-decoration: none; }
+.admin-nav-right a:hover { color: var(--accent); }
+.admin-nav-right .who {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--paper);
+}
+.admin-nav-right .who::before {
+  content: "";
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--good);
+}
+
+/* --- shell -------------------------------------------------------- */
+.admin-shell {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 3rem 2rem 6rem;
+}
+.admin-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: end;
+  margin-bottom: 2.5rem;
+}
+.admin-header h1 {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: 2.6rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+}
+.admin-header h1 em { font-style: italic; color: var(--accent); }
+.admin-header p {
+  font-family: var(--serif-body);
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  max-width: 60ch;
+}
+.admin-header-actions {
+  display: flex; gap: 0.6rem;
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.7rem 1.1rem;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.btn.btn-primary:hover { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+.btn.btn-ghost { background: transparent; }
+.btn.btn-danger:hover { color: var(--danger); border-color: var(--danger); }
+.btn.btn-tiny { padding: 0.4rem 0.7rem; font-size: 0.65rem; letter-spacing: 0.16em; }
+
+/* --- stats ribbon ------------------------------------------------- */
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-bottom: 4rem;
+}
+.stat {
+  background: var(--paper);
+  padding: 1.4rem 1.6rem;
+}
+.stat-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 0.6rem;
+}
+.stat-value {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: 2rem;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.stat-value small {
+  font-family: var(--serif-body);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--ink-mute);
+  margin-left: 0.4rem;
+}
+
+/* --- hero media section ------------------------------------------ */
+.hero-section {
+  margin-bottom: 4.5rem;
+  padding: 1.8rem 1.8rem 1.4rem;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule);
+}
+.hero-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  padding-bottom: 1rem;
+  margin-bottom: 1.4rem;
+  border-bottom: 1px solid var(--rule);
+}
+.hero-section-head h2 {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: 1.6rem;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.2rem;
+}
+.hero-section-head h2 em { font-style: italic; color: var(--accent); }
+.hero-section-head .help {
+  font-family: var(--serif-body);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  max-width: 48ch;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.8rem;
+  align-items: start;
+}
+.hero-preview {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+}
+.hero-preview video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.85) contrast(1.05) brightness(0.78);
+}
+.hero-preview .empty {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink-mute);
+  font-family: var(--serif-body);
+  font-style: italic;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 1rem;
+}
+.hero-preview .now-playing {
+  position: absolute;
+  bottom: 0.5rem; left: 0.5rem;
+  padding: 0.3rem 0.55rem;
+  background: rgba(28,25,23,0.7);
+  color: var(--paper);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.hero-poster-field { margin-top: 0.8rem; }
+.hero-poster-field label {
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+.hero-poster-field input {
+  width: 100%;
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 0.55rem 0.7rem;
+}
+.hero-poster-field input:focus { outline: none; border-color: var(--accent); }
+
+.hero-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.hero-list-head {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.video-row {
+  display: grid;
+  grid-template-columns: 24px 1fr auto auto;
+  gap: 0.6rem;
+  align-items: center;
+  padding: 0.6rem 0.8rem;
+  background: var(--paper);
+  border: 1px solid var(--rule-soft);
+}
+.video-row .grip {
+  color: var(--ink-mute);
+  font-family: var(--serif-display);
+  font-size: 0.95rem;
+  text-align: center;
+  cursor: grab;
+  user-select: none;
+}
+.video-row input.video-url {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 0.35rem 0.4rem;
+  width: 100%;
+}
+.video-row input.video-url:focus { outline: none; border-color: var(--accent); background: #fff; }
+.video-row .video-type {
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  white-space: nowrap;
+}
+.video-row .video-actions { display: flex; gap: 0.3rem; }
+.video-empty {
+  padding: 1.6rem;
+  text-align: center;
+  font-style: italic;
+  color: var(--ink-mute);
+  font-family: var(--serif-body);
+  border: 1px dashed var(--rule);
+}
+.hero-list-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 0.8rem;
+  font-size: 0.72rem;
+  color: var(--ink-mute);
+  font-family: var(--serif-body);
+  font-style: italic;
+}
+
+/* --- categories --------------------------------------------------- */
+.category {
+  margin-bottom: 4.5rem;
+}
+.category-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  padding-bottom: 1.2rem;
+  margin-bottom: 1.8rem;
+  border-bottom: 1px solid var(--rule);
+}
+.category-head h2 {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: 1.8rem;
+  letter-spacing: -0.015em;
+}
+.category-head h2 em { font-style: italic; color: var(--accent); }
+.category-head .meta {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.4rem;
+}
+
+/* --- trip card ---------------------------------------------------- */
+.trip-card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.trip-card:hover { border-color: var(--ink-soft); box-shadow: 0 4px 18px rgba(28,25,23,0.06); }
+.trip-card.is-inactive { opacity: 0.55; background: var(--paper-deep); }
+.trip-card.is-inactive .trip-card-img { filter: grayscale(1); }
+
+.trip-card-img {
+  aspect-ratio: 4 / 3;
+  background: var(--paper-deeper);
+  overflow: hidden;
+  position: relative;
+  border-bottom: 1px solid var(--rule);
+}
+.trip-card-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.6) contrast(1.02);
+  transition: filter 0.3s;
+}
+.trip-card:hover .trip-card-img img { filter: grayscale(0.2); }
+.trip-card-img-empty {
+  display: flex; align-items: center; justify-content: center;
+  height: 100%;
+  color: var(--ink-mute);
+  font-style: italic;
+  font-family: var(--serif-body);
+  font-size: 0.95rem;
+}
+.trip-card-pill {
+  position: absolute;
+  top: 0.7rem; left: 0.7rem;
+  padding: 0.3rem 0.6rem;
+  background: rgba(28,25,23,0.78);
+  color: var(--paper);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.trip-card-pill.is-inactive { background: rgba(155,58,42,0.85); }
+
+.trip-card-body {
+  padding: 1.1rem 1.2rem 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.trip-card-tag {
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.trip-card-meta {
+  font-size: 0.78rem;
+  color: var(--ink-mute);
+  letter-spacing: 0.005em;
+}
+.trip-card-title {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--ink);
+}
+.trip-card-stats {
+  display: flex;
+  gap: 0.7rem;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  flex-wrap: wrap;
+  margin-top: 0.2rem;
+}
+.trip-card-stats span + span::before {
+  content: "·";
+  margin-right: 0.7rem;
+  color: var(--accent);
+}
+
+.trip-card-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1.2rem;
+  border-top: 1px solid var(--rule-soft);
+  background: rgba(235,230,218,0.4);
+}
+.trip-card-foot .deps {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.trip-card-foot .deps strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.trip-card-foot .actions { display: flex; gap: 0.4rem; }
+.icon-btn {
+  border: 1px solid transparent;
+  background: transparent;
+  width: 30px; height: 30px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--ink-soft);
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+.icon-btn.is-danger:hover { border-color: var(--danger); color: var(--danger); }
+
+/* --- toggle ------------------------------------------------------- */
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+}
+.toggle input { display: none; }
+.toggle-track {
+  width: 30px; height: 16px;
+  background: var(--rule);
+  border-radius: 999px;
+  position: relative;
+  transition: background 0.2s;
+}
+.toggle-track::after {
+  content: "";
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 12px; height: 12px;
+  background: var(--paper);
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+.toggle input:checked + .toggle-track {
+  background: var(--accent);
+}
+.toggle input:checked + .toggle-track::after {
+  transform: translateX(14px);
+}
+.toggle-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+/* --- "add new" ghost card ---------------------------------------- */
+.add-card {
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: transparent;
+  border: 2px dashed var(--rule);
+  color: var(--ink-mute);
+  min-height: 320px;
+  padding: 2rem;
+  font-family: var(--serif-body);
+  font-size: 1rem;
+  font-style: italic;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  cursor: pointer;
+}
+.add-card:hover { border-color: var(--accent); color: var(--accent); background: rgba(133,69,19,0.04); }
+.add-card .plus { font-size: 1.8rem; line-height: 1; font-style: normal; }
+
+/* --- drawer ------------------------------------------------------- */
+.drawer-overlay {
+  position: fixed; inset: 0;
+  background: rgba(28,25,23,0.45);
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+.drawer-overlay.is-open { opacity: 1; pointer-events: auto; }
+
+.drawer {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: min(640px, 100%);
+  background: var(--paper);
+  z-index: 101;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -10px 0 40px rgba(28,25,23,0.15);
+}
+.drawer.is-open { transform: translateX(0); }
+
+.drawer-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper-deep);
+}
+.drawer-head h3 {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  font-size: 1.2rem;
+  letter-spacing: -0.005em;
+}
+.drawer-head h3 small {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+.drawer-close {
+  border: none;
+  background: transparent;
+  font-size: 1.4rem;
+  color: var(--ink-mute);
+  width: 36px; height: 36px;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: color 0.2s;
+}
+.drawer-close:hover { color: var(--ink); }
+
+.drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+}
+.drawer-section {
+  margin-bottom: 2.5rem;
+}
+.drawer-section-head {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  padding-bottom: 0.7rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.drawer-section-head h4 {
+  font-size: inherit; letter-spacing: inherit; text-transform: inherit;
+  color: var(--ink); font-weight: 600;
+}
+
+.drawer-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 2rem;
+  border-top: 1px solid var(--rule);
+  background: var(--paper-deep);
+}
+.drawer-foot .save-state {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.drawer-foot .save-state.is-saved { color: var(--good); }
+
+/* --- form fields in drawer --------------------------------------- */
+.field-row {
+  display: grid;
+  gap: 1rem 1.2rem;
+}
+.field-row.cols-2 { grid-template-columns: 1fr 1fr; }
+.field-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+.field label {
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.field input,
+.field select,
+.field textarea {
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 0.65rem 0.8rem;
+  color: var(--ink);
+  transition: border-color 0.15s, background 0.15s;
+  width: 100%;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus { outline: none; border-color: var(--accent); background: #fff; }
+.field textarea { resize: vertical; min-height: 80px; line-height: 1.55; font-family: var(--serif-body); }
+.field-help {
+  font-size: 0.72rem;
+  color: var(--ink-mute);
+  font-style: italic;
+  font-family: var(--serif-body);
+}
+
+/* image picker */
+.image-picker {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+.image-preview {
+  width: 140px; height: 105px;
+  background: var(--paper-deeper);
+  border: 1px solid var(--rule);
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--ink-mute);
+  font-style: italic;
+  font-family: var(--serif-body);
+  font-size: 0.8rem;
+}
+.image-preview img { width: 100%; height: 100%; object-fit: cover; }
+
+/* departures editor */
+.departure-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.departure-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 80px 80px auto;
+  gap: 0.6rem;
+  align-items: center;
+  padding: 0.7rem 0.9rem;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule-soft);
+}
+.departure-row input,
+.departure-row select {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  border: 1px solid transparent;
+  background: transparent;
+  padding: 0.35rem 0.4rem;
+  width: 100%;
+}
+.departure-row input:focus,
+.departure-row select:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: #fff;
+}
+.departure-row .row-status {
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--good);
+  white-space: nowrap;
+}
+.departure-row .row-status.is-filling { color: var(--warn); }
+.departure-row .row-status.is-full { color: var(--danger); }
+
+/* empty state for departures */
+.departure-empty {
+  padding: 2rem;
+  text-align: center;
+  font-style: italic;
+  color: var(--ink-mute);
+  font-family: var(--serif-body);
+  border: 1px dashed var(--rule);
+}
+
+/* --- responsive --------------------------------------------------- */
+@media (max-width: 880px) {
+  .admin-shell { padding: 2rem 1.2rem 5rem; }
+  .admin-header { grid-template-columns: 1fr; }
+  .admin-stats { grid-template-columns: 1fr 1fr; }
+  .field-row.cols-2, .field-row.cols-3 { grid-template-columns: 1fr; }
+  .departure-row { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav class="admin-nav">
+  <a class="mark" href="index.html">
+    Totemtou
+    <span class="scope">CMS · Content</span>
+  </a>
+  <div class="admin-nav-right">
+    <a href="index.html" target="_blank">View site ↗</a>
+    <a href="abc_journey_3.html" target="_blank">Trip page ↗</a>
+    <span class="who">Deepak · admin</span>
+  </div>
+</nav>
+
+<main class="admin-shell">
+
+  <header class="admin-header">
+    <div>
+      <h1>Trips <em>dashboard.</em></h1>
+      <p>Edit cards that appear on the home page, swap display imagery, manage scheduled departures, and control which trips are live.</p>
+    </div>
+    <div class="admin-header-actions">
+      <button class="btn btn-ghost" id="reset-btn" title="Restore default trip slate">Reset to defaults</button>
+      <button class="btn btn-primary" id="publish-btn">Publish changes</button>
+    </div>
+  </header>
+
+  <div class="admin-stats" id="admin-stats"></div>
+
+  <!-- ============================================== HERO MEDIA -->
+  <section class="hero-section" id="hero-section">
+    <div class="hero-section-head">
+      <div>
+        <h2>Landing page <em>hero video.</em></h2>
+        <div class="help">Replace the background reel on the home page. Add more than one and they'll play inline back-to-back, muted, and loop the playlist forever.</div>
+      </div>
+      <button class="btn btn-tiny" id="add-video-btn" type="button">+ Add video</button>
+    </div>
+
+    <div class="hero-grid">
+      <div>
+        <div class="hero-preview" id="hero-preview">
+          <div class="empty">No video set</div>
+        </div>
+        <div class="hero-poster-field">
+          <label for="hero-poster">Poster image (shown while video loads)</label>
+          <input type="url" id="hero-poster" placeholder="https://… .jpg" />
+        </div>
+      </div>
+
+      <div>
+        <div class="hero-list-head">
+          <span>Playlist</span>
+          <span id="hero-list-count">0 videos</span>
+        </div>
+        <div class="hero-list" id="hero-list"></div>
+        <div class="hero-list-foot">
+          <span>Drag the · · handles to reorder. Single video = native HTML loop. Multiple = JS playlist with loop.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="category" data-category="walk">
+    <div class="category-head">
+      <h2>Walk <em>the Land</em></h2>
+      <div class="meta"><span data-count></span><span>High-altitude trekking</span></div>
+    </div>
+    <div class="category-grid" data-grid></div>
+  </section>
+
+  <section class="category" data-category="traverse">
+    <div class="category-head">
+      <h2>Traverse <em>the Land</em></h2>
+      <div class="meta"><span data-count></span><span>4×4 expeditions</span></div>
+    </div>
+    <div class="category-grid" data-grid></div>
+  </section>
+
+  <section class="category" data-category="flow">
+    <div class="category-head">
+      <h2>Flow <em>with the Land</em></h2>
+      <div class="meta"><span data-count></span><span>Cycling · MTB</span></div>
+    </div>
+    <div class="category-grid" data-grid></div>
+  </section>
+
+</main>
+
+<!-- ============================================== EDIT DRAWER -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <h3>
+      <small>Editing trip</small>
+      <span id="drawer-title">—</span>
+    </h3>
+    <button class="drawer-close" id="drawer-close" aria-label="Close">×</button>
+  </div>
+
+  <div class="drawer-body">
+
+    <div class="drawer-section">
+      <div class="drawer-section-head"><h4>Card content</h4><span>shown on home page</span></div>
+      <div class="field-row cols-2">
+        <div class="field">
+          <label for="f-tag">Way (category tag)</label>
+          <select id="f-tag">
+            <option value="walk">Walk the Land</option>
+            <option value="traverse">Traverse the Land</option>
+            <option value="flow">Flow with the Land</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-active">Visibility</label>
+          <label class="toggle" style="padding: 0.5rem 0;">
+            <input type="checkbox" id="f-active" />
+            <span class="toggle-track"></span>
+            <span class="toggle-label" id="f-active-label">Active on website</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="f-title">Trip title</label>
+        <input type="text" id="f-title" placeholder="e.g. Annapurna Base Camp" />
+      </div>
+
+      <div class="field-row cols-3">
+        <div class="field">
+          <label for="f-region">Region</label>
+          <input type="text" id="f-region" placeholder="Annapurna" />
+        </div>
+        <div class="field">
+          <label for="f-days">Days</label>
+          <input type="number" id="f-days" min="1" placeholder="7" />
+        </div>
+        <div class="field">
+          <label for="f-level">Level (1–6)</label>
+          <input type="number" id="f-level" min="1" max="6" placeholder="3" />
+        </div>
+      </div>
+
+      <div class="field-row cols-3">
+        <div class="field">
+          <label for="f-altitude">Max altitude</label>
+          <input type="text" id="f-altitude" placeholder="4,130 m" />
+        </div>
+        <div class="field">
+          <label for="f-distance">Distance</label>
+          <input type="text" id="f-distance" placeholder="48 km" />
+        </div>
+        <div class="field">
+          <label for="f-difficulty">Difficulty</label>
+          <input type="text" id="f-difficulty" placeholder="Moderate" />
+        </div>
+      </div>
+    </div>
+
+    <div class="drawer-section">
+      <div class="drawer-section-head"><h4>Display picture</h4><span>card hero image</span></div>
+      <div class="image-picker">
+        <div class="image-preview" id="f-image-preview">No image</div>
+        <div>
+          <div class="field">
+            <label for="f-image">Image URL</label>
+            <input type="url" id="f-image" placeholder="https://..." />
+            <div class="field-help">Paste a public URL or media library link. The card uses a 4:3 crop.</div>
+          </div>
+          <button class="btn btn-tiny" id="f-image-upload-btn" type="button">Upload from device</button>
+          <input type="file" id="f-image-upload" accept="image/*" style="display:none;" />
+        </div>
+      </div>
+    </div>
+
+    <div class="drawer-section">
+      <div class="drawer-section-head">
+        <h4>Scheduled departures</h4>
+        <button class="btn btn-tiny" id="add-departure-btn" type="button">+ Add departure</button>
+      </div>
+      <div class="departure-list" id="f-departures"></div>
+    </div>
+
+    <div class="drawer-section">
+      <div class="drawer-section-head"><h4>Danger zone</h4><span>permanent</span></div>
+      <button class="btn btn-danger" id="delete-trip-btn" type="button">Delete this trip</button>
+    </div>
+
+  </div>
+
+  <div class="drawer-foot">
+    <span class="save-state" id="save-state">Unsaved changes will persist locally</span>
+    <div style="display:flex; gap:0.5rem;">
+      <button class="btn btn-ghost" id="drawer-cancel">Close</button>
+      <button class="btn btn-primary" id="drawer-save">Save trip</button>
+    </div>
+  </div>
+</aside>
+
+<script>
+/* ====== DATA MODEL ================================================= */
+const STORAGE_KEY = 'totemtou.cms.trips';
+const APPS_KEY = 'totemtou.applications';
+const HERO_KEY = 'totemtou.cms.hero';
+
+const DEFAULT_HERO = {
+  poster: 'https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-97ZE.JPG',
+  videos: [
+    { id: 'hero-default', url: 'https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-1R34.webm' },
+  ],
+};
+
+const DEFAULT_TRIPS = [
+  {
+    id: 'abc',
+    category: 'walk',
+    title: 'Annapurna Base Camp',
+    region: 'Annapurna',
+    days: 7,
+    level: 3,
+    altitude: '4,130 m',
+    distance: '48 km',
+    difficulty: 'Moderate',
+    image: 'https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg',
+    active: true,
+    departures: [
+      { id: 'feb-2026-a', month: 'February 2026', range: '10 – 16 Feb', note: 'Cool, clearest skies', capacity: 12, booked: 4 },
+      { id: 'feb-2026-b', month: 'February 2026', range: '24 Feb – 2 Mar', note: 'Late winter window', capacity: 12, booked: 9 },
+      { id: 'mar-2026',   month: 'March 2026',    range: '17 – 23 Mar', note: 'Rhododendron in bloom', capacity: 12, booked: 12 },
+      { id: 'oct-2026-a', month: 'October 2026',  range: '6 – 12 Oct', note: 'Post-monsoon, crisp air', capacity: 12, booked: 2 },
+      { id: 'oct-2026-b', month: 'October 2026',  range: '20 – 26 Oct', note: 'Peak visibility', capacity: 12, booked: 6 },
+      { id: 'nov-2026',   month: 'November 2026', range: '10 – 16 Nov', note: 'Final window of the season', capacity: 12, booked: 1 },
+    ],
+  },
+  {
+    id: 'ebc',
+    category: 'walk',
+    title: 'Everest Base Camp',
+    region: 'Khumbu',
+    days: 16,
+    level: 5,
+    altitude: '5,364 m',
+    distance: '130 km',
+    difficulty: 'Challenging',
+    image: 'https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-V51J.jpeg',
+    active: true,
+    departures: [
+      { id: 'mar-2026-ebc', month: 'March 2026',   range: '5 – 20 Mar',  note: 'Spring window', capacity: 10, booked: 3 },
+      { id: 'oct-2026-ebc', month: 'October 2026', range: '8 – 23 Oct',  note: 'Post-monsoon clarity', capacity: 10, booked: 7 },
+    ],
+  },
+  {
+    id: 'khopra',
+    category: 'walk',
+    title: 'Khopra Ridge & Khayer Lake',
+    region: 'Annapurna',
+    days: 7,
+    level: 4,
+    altitude: '4,660 m',
+    distance: '~50 km',
+    difficulty: 'Moderate–Challenging',
+    image: 'https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-V5CX.JPG',
+    active: true,
+    departures: [
+      { id: 'apr-2026-kh', month: 'April 2026',   range: '4 – 10 Apr',  note: 'Rhododendron season', capacity: 10, booked: 2 },
+      { id: 'nov-2026-kh', month: 'November 2026', range: '14 – 20 Nov', note: 'Final clear window', capacity: 10, booked: 0 },
+    ],
+  },
+  {
+    id: 'mustang',
+    category: 'traverse',
+    title: 'Upper Mustang Expedition',
+    region: 'Mustang',
+    days: 7,
+    level: 3,
+    altitude: '3,840 m',
+    distance: '4×4',
+    difficulty: 'Moderate',
+    image: 'https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-97ZE.JPG',
+    active: true,
+    departures: [
+      { id: 'may-2026-mu', month: 'May 2026',     range: '10 – 16 May', note: 'Pre-monsoon window', capacity: 8, booked: 4 },
+      { id: 'oct-2026-mu', month: 'October 2026', range: '15 – 21 Oct', note: 'Tiji aftermath, clear skies', capacity: 8, booked: 1 },
+    ],
+  },
+  {
+    id: 'dolpo',
+    category: 'flow',
+    title: 'Upper Dolpo MTB Expedition',
+    region: 'Dolpo',
+    days: 20,
+    level: 6,
+    altitude: '5,350 m',
+    distance: 'MTB',
+    difficulty: 'Extreme',
+    image: 'https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-F951.jpeg',
+    active: true,
+    departures: [
+      { id: 'sep-2026-do', month: 'September 2026', range: '5 – 25 Sep', note: 'Single yearly window', capacity: 6, booked: 1 },
+    ],
+  },
+];
+
+const CATEGORY_NAMES = {
+  walk: 'Walk the Land',
+  traverse: 'Traverse the Land',
+  flow: 'Flow with the Land',
+};
+
+/* ====== STATE ====================================================== */
+let state = load();
+let hero = loadHero();
+let editing = null; // working copy of the trip currently in the drawer
+let editingIndex = -1; // -1 means new trip
+let dirty = false;
+let dragSrcIndex = null;
+
+function load() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length) return parsed;
+    }
+  } catch (e) { /* ignore */ }
+  return JSON.parse(JSON.stringify(DEFAULT_TRIPS));
+}
+
+function persist() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  // Also write per-trip departures so the public page can read them by slug.
+  state.forEach(t => {
+    localStorage.setItem('totemtou.departures.' + t.id, JSON.stringify(t.departures));
+  });
+}
+
+function loadHero() {
+  try {
+    const raw = localStorage.getItem(HERO_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && Array.isArray(parsed.videos)) return parsed;
+    }
+  } catch (e) { /* ignore */ }
+  return JSON.parse(JSON.stringify(DEFAULT_HERO));
+}
+
+function persistHero() {
+  localStorage.setItem(HERO_KEY, JSON.stringify(hero));
+}
+
+function videoTypeFor(url) {
+  if (!url) return '';
+  const m = url.split('?')[0].match(/\.([a-z0-9]+)$/i);
+  if (!m) return '';
+  const ext = m[1].toLowerCase();
+  if (ext === 'webm') return 'video/webm';
+  if (ext === 'mp4')  return 'video/mp4';
+  if (ext === 'mov')  return 'video/quicktime';
+  if (ext === 'ogv' || ext === 'ogg') return 'video/ogg';
+  return '';
+}
+
+function applicationsCount() {
+  try {
+    const raw = localStorage.getItem(APPS_KEY);
+    if (!raw) return 0;
+    const arr = JSON.parse(raw);
+    return Array.isArray(arr) ? arr.length : 0;
+  } catch (e) { return 0; }
+}
+
+/* ====== RENDER ===================================================== */
+function renderStats() {
+  const total = state.length;
+  const active = state.filter(t => t.active).length;
+  const departures = state.reduce((sum, t) => sum + t.departures.length, 0);
+  const seats = state.reduce((sum, t) => sum + t.departures.reduce((s, d) => s + (d.capacity - d.booked), 0), 0);
+
+  const stats = [
+    { label: 'Trips', value: total, sub: active + ' active' },
+    { label: 'Categories', value: 3, sub: 'walk · traverse · flow' },
+    { label: 'Scheduled departures', value: departures, sub: seats + ' seats open' },
+    { label: 'Pending applications', value: applicationsCount(), sub: 'from public site' },
+  ];
+
+  const wrap = document.getElementById('admin-stats');
+  wrap.innerHTML = stats.map(s => `
+    <div class="stat">
+      <div class="stat-label">${s.label}</div>
+      <div class="stat-value">${s.value}<small>${s.sub}</small></div>
+    </div>
+  `).join('');
+}
+
+function renderCategories() {
+  ['walk', 'traverse', 'flow'].forEach(cat => {
+    const section = document.querySelector(`.category[data-category="${cat}"]`);
+    const grid = section.querySelector('[data-grid]');
+    const countEl = section.querySelector('[data-count]');
+    const trips = state.filter(t => t.category === cat);
+    countEl.textContent = trips.length + ' trip' + (trips.length === 1 ? '' : 's');
+
+    grid.innerHTML = trips.map((t) => tripCardHtml(t)).join('') +
+      `<button class="add-card" data-add="${cat}" type="button"><span class="plus">+</span><span>Add a ${CATEGORY_NAMES[cat].toLowerCase()} trip</span></button>`;
+
+    grid.querySelectorAll('[data-edit]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openDrawer(state.findIndex(t => t.id === btn.dataset.edit));
+      });
+    });
+    grid.querySelectorAll('[data-toggle]').forEach(input => {
+      input.addEventListener('change', () => {
+        const idx = state.findIndex(t => t.id === input.dataset.toggle);
+        if (idx >= 0) {
+          state[idx].active = input.checked;
+          persist();
+          renderAll();
+        }
+      });
+    });
+    grid.querySelectorAll('[data-add]').forEach(btn => {
+      btn.addEventListener('click', () => openDrawer(-1, btn.dataset.add));
+    });
+  });
+}
+
+function tripCardHtml(t) {
+  const img = t.image
+    ? `<img src="${escapeAttr(t.image)}" alt="${escapeAttr(t.title)}" />`
+    : `<div class="trip-card-img-empty">No image yet</div>`;
+
+  const departuresLabel = t.departures.length
+    ? `<strong>${t.departures.length}</strong> departure${t.departures.length === 1 ? '' : 's'}`
+    : `<em>No departures yet</em>`;
+
+  return `
+    <article class="trip-card ${t.active ? '' : 'is-inactive'}" data-trip="${t.id}">
+      <div class="trip-card-img">
+        ${img}
+        ${t.active
+          ? `<span class="trip-card-pill">${CATEGORY_NAMES[t.category]}</span>`
+          : `<span class="trip-card-pill is-inactive">Inactive</span>`}
+      </div>
+      <div class="trip-card-body">
+        <span class="trip-card-tag">${CATEGORY_NAMES[t.category]}</span>
+        <span class="trip-card-meta">${escapeHtml(t.region)} · ${t.days} days · Level ${t.level}</span>
+        <h3 class="trip-card-title">${escapeHtml(t.title)}</h3>
+        <div class="trip-card-stats">
+          <span>${escapeHtml(t.altitude)}</span>
+          <span>${escapeHtml(t.distance)}</span>
+          <span>${escapeHtml(t.difficulty)}</span>
+        </div>
+      </div>
+      <div class="trip-card-foot">
+        <span class="deps">${departuresLabel}</span>
+        <div class="actions">
+          <label class="toggle" title="${t.active ? 'Active — visible on site' : 'Hidden from site'}">
+            <input type="checkbox" data-toggle="${t.id}" ${t.active ? 'checked' : ''} />
+            <span class="toggle-track"></span>
+          </label>
+          <button class="icon-btn" data-edit="${t.id}" title="Edit">✎</button>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderAll() {
+  renderStats();
+  renderHero();
+  renderCategories();
+}
+
+/* ====== HERO RENDERING ============================================ */
+function renderHero() {
+  // Poster input
+  document.getElementById('hero-poster').value = hero.poster || '';
+
+  // Preview
+  const preview = document.getElementById('hero-preview');
+  if (!hero.videos.length) {
+    preview.innerHTML = '<div class="empty">No video set — add one below to populate the home-page hero</div>';
+  } else {
+    let idx = 0;
+    const single = hero.videos.length === 1;
+    const v = hero.videos[idx];
+    preview.innerHTML = `
+      <video id="hero-preview-video" autoplay muted ${single ? 'loop' : ''} playsinline
+             ${hero.poster ? `poster="${escapeAttr(hero.poster)}"` : ''}>
+        <source src="${escapeAttr(v.url)}" ${videoTypeFor(v.url) ? `type="${videoTypeFor(v.url)}"` : ''}>
+      </video>
+      <span class="now-playing" id="hero-now-playing">${single ? 'Looping' : `1 / ${hero.videos.length}`}</span>
+    `;
+    if (!single) {
+      const videoEl = preview.querySelector('#hero-preview-video');
+      const tag = preview.querySelector('#hero-now-playing');
+      videoEl.addEventListener('ended', () => {
+        idx = (idx + 1) % hero.videos.length;
+        const next = hero.videos[idx];
+        videoEl.src = next.url;
+        videoEl.play().catch(() => {});
+        tag.textContent = `${idx + 1} / ${hero.videos.length}`;
+      });
+    }
+  }
+
+  // List
+  const list = document.getElementById('hero-list');
+  document.getElementById('hero-list-count').textContent =
+    hero.videos.length + ' video' + (hero.videos.length === 1 ? '' : 's');
+
+  if (!hero.videos.length) {
+    list.innerHTML = '<div class="video-empty">Playlist empty. Click "+ Add video" to set the hero reel.</div>';
+    return;
+  }
+
+  list.innerHTML = hero.videos.map((v, i) => {
+    const type = videoTypeFor(v.url);
+    return `
+      <div class="video-row" draggable="true" data-vi="${i}">
+        <span class="grip" title="Drag to reorder">··</span>
+        <input type="url" class="video-url" data-vi="${i}" value="${escapeAttr(v.url)}" placeholder="https://… .webm or .mp4" />
+        <span class="video-type">${type ? type.replace('video/', '') : '—'}</span>
+        <div class="video-actions">
+          <button class="icon-btn is-danger" type="button" data-remove-vi="${i}" title="Remove">×</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  list.querySelectorAll('input.video-url').forEach(input => {
+    input.addEventListener('input', (e) => {
+      const i = parseInt(e.target.dataset.vi, 10);
+      hero.videos[i].url = e.target.value;
+      // Update type label inline without redrawing the field (would lose focus).
+      const row = e.target.closest('.video-row');
+      row.querySelector('.video-type').textContent = videoTypeFor(e.target.value).replace('video/', '') || '—';
+    });
+    input.addEventListener('change', () => {
+      persistHero();
+      renderHero();
+    });
+  });
+  list.querySelectorAll('[data-remove-vi]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = parseInt(btn.dataset.removeVi, 10);
+      hero.videos.splice(i, 1);
+      persistHero();
+      renderHero();
+    });
+  });
+
+  // Drag-and-drop reordering.
+  list.querySelectorAll('.video-row').forEach(row => {
+    row.addEventListener('dragstart', (e) => {
+      dragSrcIndex = parseInt(row.dataset.vi, 10);
+      e.dataTransfer.effectAllowed = 'move';
+      row.style.opacity = '0.4';
+    });
+    row.addEventListener('dragend', () => { row.style.opacity = ''; });
+    row.addEventListener('dragover', (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; });
+    row.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const dst = parseInt(row.dataset.vi, 10);
+      if (dragSrcIndex == null || dragSrcIndex === dst) return;
+      const moved = hero.videos.splice(dragSrcIndex, 1)[0];
+      hero.videos.splice(dst, 0, moved);
+      dragSrcIndex = null;
+      persistHero();
+      renderHero();
+    });
+  });
+}
+
+/* ====== DRAWER ===================================================== */
+const drawer = document.getElementById('drawer');
+const overlay = document.getElementById('drawer-overlay');
+const drawerTitle = document.getElementById('drawer-title');
+const saveState = document.getElementById('save-state');
+
+function openDrawer(index, defaultCategory) {
+  editingIndex = index;
+  if (index === -1) {
+    editing = {
+      id: 'trip-' + Date.now().toString(36),
+      category: defaultCategory || 'walk',
+      title: '',
+      region: '',
+      days: 7,
+      level: 3,
+      altitude: '',
+      distance: '',
+      difficulty: '',
+      image: '',
+      active: true,
+      departures: [],
+    };
+    drawerTitle.textContent = 'New trip';
+  } else {
+    editing = JSON.parse(JSON.stringify(state[index]));
+    drawerTitle.textContent = editing.title || '(untitled)';
+  }
+  dirty = false;
+  populateDrawer();
+  drawer.classList.add('is-open');
+  overlay.classList.add('is-open');
+  drawer.setAttribute('aria-hidden', 'false');
+  document.getElementById('delete-trip-btn').style.display = (index === -1) ? 'none' : '';
+}
+
+function closeDrawer() {
+  if (dirty && !confirm('You have unsaved changes. Close without saving?')) return;
+  drawer.classList.remove('is-open');
+  overlay.classList.remove('is-open');
+  drawer.setAttribute('aria-hidden', 'true');
+  editing = null;
+  editingIndex = -1;
+  dirty = false;
+}
+
+function populateDrawer() {
+  document.getElementById('f-tag').value = editing.category;
+  document.getElementById('f-active').checked = editing.active;
+  document.getElementById('f-active-label').textContent = editing.active ? 'Active on website' : 'Inactive — hidden from site';
+  document.getElementById('f-title').value = editing.title;
+  document.getElementById('f-region').value = editing.region;
+  document.getElementById('f-days').value = editing.days;
+  document.getElementById('f-level').value = editing.level;
+  document.getElementById('f-altitude').value = editing.altitude;
+  document.getElementById('f-distance').value = editing.distance;
+  document.getElementById('f-difficulty').value = editing.difficulty;
+  document.getElementById('f-image').value = editing.image;
+  renderImagePreview();
+  renderDepartures();
+  saveState.textContent = 'No changes yet';
+  saveState.classList.remove('is-saved');
+}
+
+function renderImagePreview() {
+  const el = document.getElementById('f-image-preview');
+  if (editing.image) {
+    el.innerHTML = `<img src="${escapeAttr(editing.image)}" alt="" />`;
+  } else {
+    el.textContent = 'No image';
+  }
+}
+
+function renderDepartures() {
+  const wrap = document.getElementById('f-departures');
+  if (!editing.departures.length) {
+    wrap.innerHTML = `<div class="departure-empty">No departures scheduled. Add one to make this trip bookable.</div>`;
+    return;
+  }
+  wrap.innerHTML = editing.departures.map((d, i) => {
+    const left = d.capacity - d.booked;
+    let statusCls = '', statusText = 'Open';
+    if (left <= 0) { statusCls = 'is-full'; statusText = 'Full'; }
+    else if (left <= 3) { statusCls = 'is-filling'; statusText = left + ' left'; }
+    return `
+      <div class="departure-row" data-dep-index="${i}">
+        <input type="text" data-field="month" value="${escapeAttr(d.month)}" placeholder="Month YYYY" />
+        <input type="text" data-field="range" value="${escapeAttr(d.range)}" placeholder="Date range" />
+        <input type="number" data-field="capacity" value="${d.capacity}" min="1" title="Capacity" />
+        <input type="number" data-field="booked" value="${d.booked}" min="0" title="Booked" />
+        <div style="display:flex; align-items:center; gap:0.5rem;">
+          <span class="row-status ${statusCls}">${statusText}</span>
+          <button class="icon-btn is-danger" type="button" data-remove-dep="${i}" title="Remove">×</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  wrap.querySelectorAll('input').forEach(input => {
+    input.addEventListener('input', (e) => {
+      const row = e.target.closest('[data-dep-index]');
+      const i = parseInt(row.dataset.depIndex, 10);
+      const field = e.target.dataset.field;
+      let val = e.target.value;
+      if (field === 'capacity' || field === 'booked') val = parseInt(val, 10) || 0;
+      editing.departures[i][field] = val;
+      markDirty();
+      // Re-render only the status pill for snappy feel.
+      if (field === 'capacity' || field === 'booked') renderDepartures();
+    });
+  });
+  wrap.querySelectorAll('[data-remove-dep]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = parseInt(btn.dataset.removeDep, 10);
+      editing.departures.splice(i, 1);
+      markDirty();
+      renderDepartures();
+    });
+  });
+}
+
+function markDirty() {
+  dirty = true;
+  saveState.textContent = 'Unsaved changes';
+  saveState.classList.remove('is-saved');
+}
+
+/* ====== DRAWER WIRING ============================================== */
+document.getElementById('drawer-close').addEventListener('click', closeDrawer);
+document.getElementById('drawer-cancel').addEventListener('click', closeDrawer);
+overlay.addEventListener('click', closeDrawer);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && drawer.classList.contains('is-open')) closeDrawer();
+});
+
+const fieldMap = {
+  'f-tag': 'category',
+  'f-title': 'title',
+  'f-region': 'region',
+  'f-days': 'days',
+  'f-level': 'level',
+  'f-altitude': 'altitude',
+  'f-distance': 'distance',
+  'f-difficulty': 'difficulty',
+  'f-image': 'image',
+};
+Object.keys(fieldMap).forEach(id => {
+  const el = document.getElementById(id);
+  el.addEventListener('input', () => {
+    let v = el.value;
+    if (fieldMap[id] === 'days' || fieldMap[id] === 'level') v = parseInt(v, 10) || 0;
+    editing[fieldMap[id]] = v;
+    if (fieldMap[id] === 'image') renderImagePreview();
+    if (fieldMap[id] === 'title') drawerTitle.textContent = v || '(untitled)';
+    markDirty();
+  });
+});
+
+document.getElementById('f-active').addEventListener('change', (e) => {
+  editing.active = e.target.checked;
+  document.getElementById('f-active-label').textContent = editing.active ? 'Active on website' : 'Inactive — hidden from site';
+  markDirty();
+});
+
+document.getElementById('add-departure-btn').addEventListener('click', () => {
+  editing.departures.push({
+    id: 'dep-' + Date.now().toString(36),
+    month: '',
+    range: '',
+    note: '',
+    capacity: 12,
+    booked: 0,
+  });
+  markDirty();
+  renderDepartures();
+});
+
+document.getElementById('f-image-upload-btn').addEventListener('click', () => {
+  document.getElementById('f-image-upload').click();
+});
+document.getElementById('f-image-upload').addEventListener('change', (e) => {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (evt) => {
+    editing.image = evt.target.result;
+    document.getElementById('f-image').value = '(uploaded image)';
+    renderImagePreview();
+    markDirty();
+  };
+  reader.readAsDataURL(file);
+});
+
+document.getElementById('drawer-save').addEventListener('click', () => {
+  if (!editing.title.trim()) {
+    alert('Trip needs a title before saving.');
+    return;
+  }
+  if (editingIndex === -1) {
+    state.push(editing);
+  } else {
+    state[editingIndex] = editing;
+  }
+  persist();
+  dirty = false;
+  saveState.textContent = 'Saved ✓';
+  saveState.classList.add('is-saved');
+  renderAll();
+  setTimeout(() => closeDrawer(), 600);
+});
+
+document.getElementById('delete-trip-btn').addEventListener('click', () => {
+  if (editingIndex === -1) return;
+  if (!confirm(`Delete "${editing.title}"? This cannot be undone.`)) return;
+  state.splice(editingIndex, 1);
+  persist();
+  renderAll();
+  closeDrawerForce();
+});
+function closeDrawerForce() {
+  drawer.classList.remove('is-open');
+  overlay.classList.remove('is-open');
+  drawer.setAttribute('aria-hidden', 'true');
+  editing = null;
+  editingIndex = -1;
+  dirty = false;
+}
+
+/* ====== HEADER ACTIONS ============================================ */
+document.getElementById('reset-btn').addEventListener('click', () => {
+  if (!confirm('Restore the default trip slate and hero video? Your edits will be lost.')) return;
+  state = JSON.parse(JSON.stringify(DEFAULT_TRIPS));
+  hero = JSON.parse(JSON.stringify(DEFAULT_HERO));
+  persist();
+  persistHero();
+  renderAll();
+});
+
+document.getElementById('publish-btn').addEventListener('click', () => {
+  persist();
+  const btn = document.getElementById('publish-btn');
+  const original = btn.textContent;
+  btn.textContent = 'Published ✓';
+  btn.disabled = true;
+  setTimeout(() => { btn.textContent = original; btn.disabled = false; }, 1600);
+});
+
+/* ====== UTILS ====================================================== */
+function escapeHtml(s) {
+  return String(s ?? '').replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+function escapeAttr(s) { return escapeHtml(s); }
+
+/* ====== HERO WIRING =============================================== */
+document.getElementById('add-video-btn').addEventListener('click', () => {
+  hero.videos.push({ id: 'hero-' + Date.now().toString(36), url: '' });
+  persistHero();
+  renderHero();
+});
+document.getElementById('hero-poster').addEventListener('input', (e) => {
+  hero.poster = e.target.value;
+});
+document.getElementById('hero-poster').addEventListener('change', () => {
+  persistHero();
+  renderHero();
+});
+
+/* ====== INIT ======================================================= */
+persist(); // ensure defaults are written on first load
+persistHero();
+renderAll();
+</script>
+
+</body>
+</html>
