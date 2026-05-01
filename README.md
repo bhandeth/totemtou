@@ -49,6 +49,12 @@ The following content is managed through `cms.html` and stored in the browser's 
 
 Open `cms.html` locally or via the deployed URL to make these changes.
 
+## Changelog
+
+| Date | Change |
+|------|--------|
+| 2026-05-01 | Fixed Khopra Ridge & Khayer Lake card link — now points to `khopra_journey.html` instead of `#` |
+
 ## Adding a new journey page
 
 1. Duplicate an existing journey file (e.g. `abc_journey_3.html`) and rename it
