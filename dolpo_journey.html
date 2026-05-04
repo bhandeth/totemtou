@@ -1627,7 +1627,7 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
 
 <!-- ============================================== HERO -->
 <header class="hero">
-  <div class="placeholder-img" style="position: absolute; inset: 0; min-height: 100%; border: none; background: var(--ink); color: rgba(246,243,236,0.4);">
+  <div class="placeholder-img" data-media="hero-video" data-media-type="video" style="position: absolute; inset: 0; min-height: 100%; border: none; background: var(--ink); color: rgba(246,243,236,0.4);">
     Hero video / poster pending<br>· The cold desert north of the Niwar La pass ·
   </div>
   <div class="hero-inner">
@@ -1718,22 +1718,22 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
 <!-- Valley imagery strip — placeholders pending real route photography -->
 <div class="valley-images">
   <figure>
-    <div class="placeholder-img wide">Crossing toward the Niwar La<br>· photo pending ·</div>
+    <div class="placeholder-img wide" data-media="valley-photo-1" data-media-type="photo">Crossing toward the Niwar La<br>· photo pending ·</div>
     <figcaption>Niwar La approach · 5,125 m</figcaption>
   </figure>
   <figure>
-    <div class="placeholder-img wide">Shey Gompa<br>· photo pending ·</div>
+    <div class="placeholder-img wide" data-media="valley-photo-2" data-media-type="photo">Shey Gompa<br>· photo pending ·</div>
     <figcaption>Shey Gompa · spiritual heart of Dolpo</figcaption>
   </figure>
   <figure>
-    <div class="placeholder-img wide">Phoksundo Lake from the Nagdalo descent<br>· photo pending ·</div>
+    <div class="placeholder-img wide" data-media="valley-photo-3" data-media-type="photo">Phoksundo Lake from the Nagdalo descent<br>· photo pending ·</div>
     <figcaption>Phoksundo · 3,611 m</figcaption>
   </figure>
 </div>
 
 <!-- ============================================== FULL-BLEED PAUSE -->
 <section class="pause" aria-label="The cold desert">
-  <div class="placeholder-img" style="height: 100%; min-height: 100%; border: none; background: var(--ink); color: rgba(246,243,236,0.4);">
+  <div class="placeholder-img" data-media="pause-video" data-media-type="video" style="height: 100%; min-height: 100%; border: none; background: var(--ink); color: rgba(246,243,236,0.4);">
     Full-bleed video / image pending<br>· Trail beyond Sangda, where the road ends ·
   </div>
   <div class="pause-caption">Beyond Sangda · the road ends, the trail begins</div>
@@ -2005,7 +2005,7 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
 
   <div class="phase-photo-single">
     <figure>
-      <div class="placeholder-img wide">Bike workshop in Pokhara · photo pending</div>
+      <div class="placeholder-img wide" data-media="day-1" data-media-type="photo">Bike workshop in Pokhara · photo pending</div>
       <figcaption>Pokhara · build day, before the road north</figcaption>
     </figure>
   </div>
@@ -2105,7 +2105,7 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
 
   <div class="phase-photo-single">
     <figure>
-      <div class="placeholder-img wide">Niwar La summit · prayer flags, no shelter · photo pending</div>
+      <div class="placeholder-img wide" data-media="day-2" data-media-type="photo">Niwar La summit · prayer flags, no shelter · photo pending</div>
       <figcaption>Niwar La · 5,125 m, day 7</figcaption>
     </figure>
   </div>
@@ -2212,7 +2212,7 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
 
   <div class="phase-photo-single">
     <figure>
-      <div class="placeholder-img wide">Shey Gompa under Crystal Mountain · photo pending</div>
+      <div class="placeholder-img wide" data-media="day-3" data-media-type="photo">Shey Gompa under Crystal Mountain · photo pending</div>
       <figcaption>Shey Gompa · day 14, the rest day</figcaption>
     </figure>
   </div>
@@ -2349,7 +2349,7 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
 <section class="leader">
   <div class="leader-grid">
     <div class="leader-photo">
-      <img src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-FOP0.jpeg" alt="Deepak — trip leader, Upper Dolpo MTB Expedition">
+      <img data-media="leader" src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-FOP0.jpeg" alt="Deepak — trip leader, Upper Dolpo MTB Expedition">
       <div class="caption">Deepak · above Muktinath, Mustang · 2025</div>
     </div>
     <div>
@@ -2836,6 +2836,49 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
 
     render();
     updateReadout();
+  })();
+
+  // Apply CMS media overrides. Each [data-media] / [data-media-poster] element
+  // is a slot keyed by id; CMS writes `totemtou.media.<tripId>` as { id: url }.
+  (async function () {
+    const TRIP_ID = 'dolpo';
+    const data = await TTStorage.getItem('totemtou.media.' + TRIP_ID);
+    if (!data || typeof data !== 'object') return;
+
+    document.querySelectorAll('[data-media]').forEach(el => {
+      const id = el.dataset.media;
+      if (!(id in data)) return;
+      const url = data[id];
+      if (el.tagName === 'IMG') {
+        if (url) el.src = url; else el.removeAttribute('src');
+      } else if (el.tagName === 'SOURCE') {
+        if (url) {
+          el.src = url;
+          const v = el.closest('video');
+          if (v) { v.load(); v.play().catch(() => {}); }
+        } else {
+          el.removeAttribute('src');
+        }
+      } else if (el.classList.contains('placeholder-img')) {
+        const type = el.dataset.mediaType || 'photo';
+        if (!url) return;
+        if (type === 'video') {
+          el.innerHTML = '<video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"><source src="' + url + '"></video>';
+        } else {
+          el.innerHTML = '<img src="' + url + '" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">';
+        }
+        el.style.padding = '0';
+        el.style.background = 'none';
+        el.style.color = 'inherit';
+      }
+    });
+
+    document.querySelectorAll('[data-media-poster]').forEach(el => {
+      const id = el.dataset.mediaPoster;
+      if (!(id in data)) return;
+      const url = data[id];
+      if (url) el.poster = url; else el.removeAttribute('poster');
+    });
   })();
 </script>
 

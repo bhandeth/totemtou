@@ -1658,8 +1658,9 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
 <!-- ============================================== HERO -->
 <header class="hero">
   <video class="hero-video" autoplay muted loop playsinline preload="auto"
+         data-media-poster="hero-poster"
          poster="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-ARS9.jpg">
-    <source src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-Z5N5.webm" type="video/webm">
+    <source data-media="hero-video" src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-Z5N5.webm" type="video/webm">
   </video>
   <div class="hero-inner">
     <div>
@@ -1741,15 +1742,15 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
 <!-- Valley imagery strip — placeholder boxes pending real teahouse / community / sanctuary photography -->
 <div class="valley-images">
   <figure>
-    <img src="https://v3b.fal.media/files/b/0a97b900/loEJkIMctORVtUcOIuZfK_oeHTtKYi.png" alt="Teahouse interior — Gurung family kitchen, Chomrong">
+    <img data-media="valley-photo-1" src="https://v3b.fal.media/files/b/0a97b900/loEJkIMctORVtUcOIuZfK_oeHTtKYi.png" alt="Teahouse interior — Gurung family kitchen, Chomrong">
     <figcaption>Teahouse · Gurung community life</figcaption>
   </figure>
   <figure>
-    <img src="https://v3b.fal.media/files/b/0a97b902/6nUna0AEEGgXKfpHqpwZD_vL351Hlf.png" alt="Annapurna Conservation Area — trail signage and ranger post">
+    <img data-media="valley-photo-2" src="https://v3b.fal.media/files/b/0a97b902/6nUna0AEEGgXKfpHqpwZD_vL351Hlf.png" alt="Annapurna Conservation Area — trail signage and ranger post">
     <figcaption>Annapurna Conservation Area</figcaption>
   </figure>
   <figure>
-    <img src="https://v3b.fal.media/files/b/0a97b91c/-qvdeJC89r71wFiytAopx_iLwjl6sV.png" alt="Machhapuchhre at first light from MBC">
+    <img data-media="valley-photo-3" src="https://v3b.fal.media/files/b/0a97b91c/-qvdeJC89r71wFiytAopx_iLwjl6sV.png" alt="Machhapuchhre at first light from MBC">
     <figcaption>The fishtail · unclimbed</figcaption>
   </figure>
 </div>
@@ -1757,8 +1758,9 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
 <!-- ============================================== FULL-BLEED PAUSE -->
 <section class="pause" aria-label="The trail">
   <video autoplay muted loop playsinline preload="auto"
+         data-media-poster="pause-poster"
          poster="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-OZ5X.jpeg">
-    <source src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-15FQ.webm" type="video/webm">
+    <source data-media="pause-video" src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-15FQ.webm" type="video/webm">
   </video>
   <div class="pause-caption">The Modi Khola valley · between Sinuwa and Dovan</div>
 </section>
@@ -1956,7 +1958,7 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
 
   <div class="day-photo-single">
     <figure>
-      <img src="https://v3b.fal.media/files/b/0a97b921/CUyzyekqZ-eXRX3qiZJUx_IpKWwGaV.png" alt="Chomrong village at last light">
+      <img data-media="day-1" src="https://v3b.fal.media/files/b/0a97b921/CUyzyekqZ-eXRX3qiZJUx_IpKWwGaV.png" alt="Chomrong village at last light">
       <figcaption>Chomrong · arrival, Day 1</figcaption>
     </figure>
   </div>
@@ -2007,7 +2009,7 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
 
   <div class="day-photo-single">
     <figure>
-      <img src="https://v3b.fal.media/files/b/0a97b923/wilWQSauq4WqjpTE3cTVo_7NnXIhTG.png" alt="Bamboo, oak and rhododendron forest above Sinuwa">
+      <img data-media="day-2" src="https://v3b.fal.media/files/b/0a97b923/wilWQSauq4WqjpTE3cTVo_7NnXIhTG.png" alt="Bamboo, oak and rhododendron forest above Sinuwa">
       <figcaption>The forest above Sinuwa · Day 2</figcaption>
     </figure>
   </div>
@@ -2058,7 +2060,7 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
 
   <div class="day-photo-single">
     <figure>
-      <img src="https://v3b.fal.media/files/b/0a97b92e/t5KpQZrP7NDf8ECf1iMAX_OWMoZl3p.png" alt="Narrow valley between Himalaya and Deurali, Machhapuchhre above cliff line">
+      <img data-media="day-3" src="https://v3b.fal.media/files/b/0a97b92e/t5KpQZrP7NDf8ECf1iMAX_OWMoZl3p.png" alt="Narrow valley between Himalaya and Deurali, Machhapuchhre above cliff line">
       <figcaption>The valley narrows · Day 3</figcaption>
     </figure>
   </div>
@@ -2130,11 +2132,11 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
 
   <div class="day-image">
     <figure>
-      <img src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg" alt="The Annapurna Sanctuary">
+      <img data-media="day-4-photo-1" src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg" alt="The Annapurna Sanctuary">
       <figcaption>The bowl, mid-morning · ABC</figcaption>
     </figure>
     <figure>
-      <img src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-0D0E.jpeg" alt="Machhapuchhre">
+      <img data-media="day-4-photo-2" src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-0D0E.jpeg" alt="Machhapuchhre">
       <figcaption>Machhapuchhre · the unclimbed peak</figcaption>
     </figure>
   </div>
@@ -2180,7 +2182,7 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
 
   <div class="day-photo-single">
     <figure>
-      <img src="https://v3b.fal.media/files/b/0a97b96b/b2t0FWKe-5QE2jPpqV6Dq_BU3c9pWh.png" alt="Long descent through bamboo and rhododendron forest">
+      <img data-media="day-5" src="https://v3b.fal.media/files/b/0a97b96b/b2t0FWKe-5QE2jPpqV6Dq_BU3c9pWh.png" alt="Long descent through bamboo and rhododendron forest">
       <figcaption>Walking out · Day 5</figcaption>
     </figure>
   </div>
@@ -2226,7 +2228,7 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
 
   <div class="day-photo-single">
     <figure>
-      <img src="https://v3b.fal.media/files/b/0a97b939/TN8_-V06JIviwlrfdUr91_TukgsXGT.png" alt="Hot springs at Jhinu Danda — three pools by the Modi Khola">
+      <img data-media="day-6" src="https://v3b.fal.media/files/b/0a97b939/TN8_-V06JIviwlrfdUr91_TukgsXGT.png" alt="Hot springs at Jhinu Danda — three pools by the Modi Khola">
       <figcaption>Hot springs · Day 6</figcaption>
     </figure>
   </div>
@@ -2272,7 +2274,7 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
 
   <div class="day-photo-single">
     <figure>
-      <img src="https://v3b.fal.media/files/b/0a97b93b/zYroWsuFprE-Fzr80bQXj_z2JnDlmF.png" alt="Phewa Lake at last light, Annapurna range across the water">
+      <img data-media="day-7" src="https://v3b.fal.media/files/b/0a97b93b/zYroWsuFprE-Fzr80bQXj_z2JnDlmF.png" alt="Phewa Lake at last light, Annapurna range across the water">
       <figcaption>Pokhara, last evening · Day 7</figcaption>
     </figure>
   </div>
@@ -2322,7 +2324,7 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
 <section class="leader">
   <div class="leader-grid">
     <div class="leader-photo">
-      <img src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-FOP0.jpeg" alt="Deepak — trip leader, Annapurna Base Camp">
+      <img data-media="leader" src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-FOP0.jpeg" alt="Deepak — trip leader, Annapurna Base Camp">
       <div class="caption">Deepak · above Muktinath, Mustang · 2025</div>
     </div>
     <div>
@@ -2797,6 +2799,49 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
 
     render();
     updateReadout();
+  })();
+
+  // Apply CMS media overrides. Each [data-media] / [data-media-poster] element
+  // is a slot keyed by id; CMS writes `totemtou.media.<tripId>` as { id: url }.
+  (async function () {
+    const TRIP_ID = 'abc';
+    const data = await TTStorage.getItem('totemtou.media.' + TRIP_ID);
+    if (!data || typeof data !== 'object') return;
+
+    document.querySelectorAll('[data-media]').forEach(el => {
+      const id = el.dataset.media;
+      if (!(id in data)) return;
+      const url = data[id];
+      if (el.tagName === 'IMG') {
+        if (url) el.src = url; else el.removeAttribute('src');
+      } else if (el.tagName === 'SOURCE') {
+        if (url) {
+          el.src = url;
+          const v = el.closest('video');
+          if (v) { v.load(); v.play().catch(() => {}); }
+        } else {
+          el.removeAttribute('src');
+        }
+      } else if (el.classList.contains('placeholder-img')) {
+        const type = el.dataset.mediaType || 'photo';
+        if (!url) return;
+        if (type === 'video') {
+          el.innerHTML = '<video autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"><source src="' + url + '"></video>';
+        } else {
+          el.innerHTML = '<img src="' + url + '" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">';
+        }
+        el.style.padding = '0';
+        el.style.background = 'none';
+        el.style.color = 'inherit';
+      }
+    });
+
+    document.querySelectorAll('[data-media-poster]').forEach(el => {
+      const id = el.dataset.mediaPoster;
+      if (!(id in data)) return;
+      const url = data[id];
+      if (url) el.poster = url; else el.removeAttribute('poster');
+    });
   })();
 </script>
 

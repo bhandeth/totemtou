@@ -759,6 +759,129 @@ button { font-family: inherit; cursor: pointer; }
   border: 1px dashed var(--rule);
 }
 
+/* --- media editor modal ----------------------------------------- */
+.media-overlay {
+  position: fixed; inset: 0;
+  background: rgba(28,25,23,0.55);
+  z-index: 110;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+.media-overlay.is-open { opacity: 1; pointer-events: auto; }
+
+.media-modal {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -48%);
+  width: min(760px, calc(100vw - 2rem));
+  max-height: calc(100vh - 4rem);
+  background: var(--paper);
+  z-index: 111;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(28,25,23,0.25);
+}
+.media-modal.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
+}
+.media-modal-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.1rem 1.6rem;
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper-deep);
+}
+.media-modal-head h3 {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  font-size: 1.15rem;
+  letter-spacing: -0.005em;
+}
+.media-modal-head h3 small {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+.media-modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.6rem 1.8rem;
+}
+.media-modal-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.9rem 1.6rem;
+  border-top: 1px solid var(--rule);
+  background: var(--paper-deep);
+}
+.media-section { margin-bottom: 1.8rem; }
+.media-section-head {
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 600;
+  padding-bottom: 0.55rem;
+  margin-bottom: 0.9rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.media-slot {
+  display: grid;
+  grid-template-columns: 86px 1fr;
+  gap: 0.9rem;
+  margin-bottom: 0.9rem;
+  align-items: start;
+}
+.media-slot-thumb {
+  width: 86px;
+  height: 64px;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.media-slot-thumb img,
+.media-slot-thumb video {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.media-slot-meta { display: flex; flex-direction: column; gap: 0.3rem; }
+.media-slot-label {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 0.6rem;
+  font-size: 0.82rem;
+  color: var(--ink);
+  font-weight: 500;
+}
+.media-slot-type {
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.media-slot input {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 0.5rem 0.65rem;
+  width: 100%;
+  color: var(--ink);
+}
+.media-slot input:focus { outline: none; border-color: var(--accent); background: #fff; }
+
 /* --- responsive --------------------------------------------------- */
 @media (max-width: 880px) {
   .admin-shell { padding: 2rem 1.2rem 5rem; }
@@ -770,6 +893,24 @@ button { font-family: inherit; cursor: pointer; }
 </style>
 </head>
 <body>
+
+<script>
+// Password gate. Light protection — anyone reading source can bypass.
+// For real security, host cms.html behind a server-side auth wall.
+(function () {
+  const PASSWORD = 'totemtouon';
+  if (sessionStorage.getItem('tt.cms.auth') === 'ok') return;
+  let attempt = window.prompt('Enter CMS password:');
+  while (attempt !== PASSWORD) {
+    if (attempt === null) {
+      window.location.href = 'index.html';
+      return;
+    }
+    attempt = window.prompt('Wrong password. Try again:');
+  }
+  sessionStorage.setItem('tt.cms.auth', 'ok');
+})();
+</script>
 
 <nav class="admin-nav">
   <a class="mark" href="index.html">
@@ -955,6 +1096,11 @@ button { font-family: inherit; cursor: pointer; }
     </div>
 
     <div class="drawer-section">
+      <div class="drawer-section-head"><h4>Journey page media</h4><span>photos &amp; videos on the trip page</span></div>
+      <button class="btn" id="edit-journey-btn" type="button">Edit Journey Page</button>
+    </div>
+
+    <div class="drawer-section">
       <div class="drawer-section-head"><h4>Danger zone</h4><span>permanent</span></div>
       <button class="btn btn-danger" id="delete-trip-btn" type="button">Delete this trip</button>
     </div>
@@ -966,6 +1112,26 @@ button { font-family: inherit; cursor: pointer; }
     <div style="display:flex; gap:0.5rem;">
       <button class="btn btn-ghost" id="drawer-cancel">Close</button>
       <button class="btn btn-primary" id="drawer-save">Save trip</button>
+    </div>
+  </div>
+</aside>
+
+<!-- ============================================== MEDIA EDITOR MODAL -->
+<div class="media-overlay" id="media-overlay"></div>
+<aside class="media-modal" id="media-modal" aria-hidden="true">
+  <div class="media-modal-head">
+    <h3>
+      <small>Editing journey page media</small>
+      <span id="media-modal-title">—</span>
+    </h3>
+    <button class="drawer-close" id="media-modal-close" aria-label="Close">×</button>
+  </div>
+  <div class="media-modal-body" id="media-modal-body"></div>
+  <div class="media-modal-foot">
+    <span class="save-state" id="media-save-state">Edits sync to all visitors on save</span>
+    <div style="display:flex; gap:0.5rem;">
+      <button class="btn btn-ghost" id="media-modal-cancel">Close</button>
+      <button class="btn btn-primary" id="media-modal-save">Save media</button>
     </div>
   </div>
 </aside>
@@ -1080,6 +1246,89 @@ const CATEGORY_NAMES = {
   walk: 'Walk the Land',
   traverse: 'Traverse the Land',
   flow: 'Flow with the Land',
+};
+
+// Manifest of editable media slots per journey page. Each slot has a stable id
+// that journey pages match via [data-media] attributes. `default` is what the
+// page renders if no override is set.
+const MEDIA_MANIFEST = {
+  abc: [
+    { title: 'Hero', slots: [
+      { id: 'hero-video', label: 'Hero background video', type: 'video', default: 'https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-Z5N5.webm' },
+      { id: 'hero-poster', label: 'Hero poster (shown while video loads)', type: 'photo', default: 'https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-ARS9.jpg' },
+    ]},
+    { title: 'Valley · opening imagery', slots: [
+      { id: 'valley-photo-1', label: 'Photo 1 — Teahouse · Gurung community life', type: 'photo', default: 'https://v3b.fal.media/files/b/0a97b900/loEJkIMctORVtUcOIuZfK_oeHTtKYi.png' },
+      { id: 'valley-photo-2', label: 'Photo 2 — Annapurna Conservation Area', type: 'photo', default: 'https://v3b.fal.media/files/b/0a97b902/6nUna0AEEGgXKfpHqpwZD_vL351Hlf.png' },
+      { id: 'valley-photo-3', label: 'Photo 3 — Machhapuchhre, the unclimbed', type: 'photo', default: 'https://v3b.fal.media/files/b/0a97b91c/-qvdeJC89r71wFiytAopx_iLwjl6sV.png' },
+    ]},
+    { title: 'Pause · full-bleed mid-page video', slots: [
+      { id: 'pause-video', label: 'Pause video', type: 'video', default: 'https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-15FQ.webm' },
+      { id: 'pause-poster', label: 'Pause video poster', type: 'photo', default: 'https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-OZ5X.jpeg' },
+    ]},
+    { title: 'Day-by-day photos', slots: [
+      { id: 'day-1', label: 'Day 1 — Chomrong arrival', type: 'photo', default: 'https://v3b.fal.media/files/b/0a97b921/CUyzyekqZ-eXRX3qiZJUx_IpKWwGaV.png' },
+      { id: 'day-2', label: 'Day 2 — Bamboo, oak, rhododendron', type: 'photo', default: 'https://v3b.fal.media/files/b/0a97b923/wilWQSauq4WqjpTE3cTVo_7NnXIhTG.png' },
+      { id: 'day-3', label: 'Day 3 — Narrow valley, Machhapuchhre above', type: 'photo', default: 'https://v3b.fal.media/files/b/0a97b92e/t5KpQZrP7NDf8ECf1iMAX_OWMoZl3p.png' },
+      { id: 'day-4-photo-1', label: 'Day 4 — Annapurna Sanctuary (the bowl)', type: 'photo', default: 'https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg' },
+      { id: 'day-4-photo-2', label: 'Day 4 — Machhapuchhre', type: 'photo', default: 'https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-0D0E.jpeg' },
+      { id: 'day-5', label: 'Day 5 — Long descent through forest', type: 'photo', default: 'https://v3b.fal.media/files/b/0a97b96b/b2t0FWKe-5QE2jPpqV6Dq_BU3c9pWh.png' },
+      { id: 'day-6', label: 'Day 6 — Hot springs at Jhinu Danda', type: 'photo', default: 'https://v3b.fal.media/files/b/0a97b939/TN8_-V06JIviwlrfdUr91_TukgsXGT.png' },
+      { id: 'day-7', label: 'Day 7 — Phewa Lake, Annapurna across', type: 'photo', default: 'https://v3b.fal.media/files/b/0a97b93b/zYroWsuFprE-Fzr80bQXj_z2JnDlmF.png' },
+    ]},
+    { title: 'Leader', slots: [
+      { id: 'leader', label: 'Lead guide photo', type: 'photo', default: 'https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-FOP0.jpeg' },
+    ]},
+  ],
+  khopra: [
+    { title: 'Hero', slots: [
+      { id: 'hero-video', label: 'Hero background video', type: 'video', default: '' },
+      { id: 'hero-poster', label: 'Hero poster (shown while video loads)', type: 'photo', default: '' },
+    ]},
+    { title: 'Valley · opening imagery', slots: [
+      { id: 'valley-photo-1', label: 'Photo 1 — Khopra Ridge homestays', type: 'photo', default: '' },
+      { id: 'valley-photo-2', label: 'Photo 2 — Dhaulagiri from Khopra', type: 'photo', default: '' },
+      { id: 'valley-photo-3', label: 'Photo 3 — Khayer Lake', type: 'photo', default: '' },
+    ]},
+    { title: 'Pause · full-bleed mid-page', slots: [
+      { id: 'pause-video', label: 'Pause video — The ridge approach to Khopra', type: 'video', default: '' },
+    ]},
+    { title: 'Day-by-day photos', slots: [
+      { id: 'day-1', label: 'Day 1 — Tadapani saddle, evening light', type: 'photo', default: '' },
+      { id: 'day-2', label: 'Day 2 — Forest above Tadapani', type: 'photo', default: '' },
+      { id: 'day-3', label: 'Day 3 — Muldai View Point at sunrise', type: 'photo', default: '' },
+      { id: 'day-4', label: 'Day 4 — Khopra Ridge at sunset, Dhaulagiri behind', type: 'photo', default: '' },
+      { id: 'day-5-photo-1', label: 'Day 5 — Khayer Lake under Annapurna South', type: 'photo', default: '' },
+      { id: 'day-5-photo-2', label: 'Day 5 — Ridge approach to the lake', type: 'photo', default: '' },
+      { id: 'day-6', label: 'Day 6 — Swanta village, terraced fields', type: 'photo', default: '' },
+      { id: 'day-7', label: 'Day 7 — Kali Gandaki gorge from the road', type: 'photo', default: '' },
+    ]},
+    { title: 'Leader', slots: [
+      { id: 'leader', label: 'Lead guide photo', type: 'photo', default: 'https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-FOP0.jpeg' },
+    ]},
+  ],
+  dolpo: [
+    { title: 'Hero', slots: [
+      { id: 'hero-video', label: 'Hero background video', type: 'video', default: '' },
+      { id: 'hero-poster', label: 'Hero poster', type: 'photo', default: '' },
+    ]},
+    { title: 'Valley · opening imagery', slots: [
+      { id: 'valley-photo-1', label: 'Photo 1 — Crossing toward the Niwar La', type: 'photo', default: '' },
+      { id: 'valley-photo-2', label: 'Photo 2 — Shey Gompa', type: 'photo', default: '' },
+      { id: 'valley-photo-3', label: 'Photo 3 — Phoksundo Lake from the Nagdalo descent', type: 'photo', default: '' },
+    ]},
+    { title: 'Pause · full-bleed mid-page', slots: [
+      { id: 'pause-video', label: 'Pause video — Trail beyond Sangda', type: 'video', default: '' },
+    ]},
+    { title: 'Day-by-day photos', slots: [
+      { id: 'day-1', label: 'Day 1 — Bike workshop in Pokhara', type: 'photo', default: '' },
+      { id: 'day-2', label: 'Niwar La summit · prayer flags', type: 'photo', default: '' },
+      { id: 'day-3', label: 'Shey Gompa under Crystal Mountain', type: 'photo', default: '' },
+    ]},
+    { title: 'Leader', slots: [
+      { id: 'leader', label: 'Lead guide photo', type: 'photo', default: 'https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-FOP0.jpeg' },
+    ]},
+  ],
 };
 
 /* ====== STATE ====================================================== */
@@ -1602,6 +1851,118 @@ document.getElementById('hero-poster').addEventListener('input', (e) => {
 document.getElementById('hero-poster').addEventListener('change', () => {
   persistHero();
   renderHero();
+});
+
+/* ====== MEDIA EDITOR MODAL ======================================== */
+let mediaEditingTripId = null;
+let mediaWorking = {}; // working copy of overrides {slotId: url}
+
+const mediaModalEl = document.getElementById('media-modal');
+const mediaOverlayEl = document.getElementById('media-overlay');
+
+async function openMediaModal(tripId) {
+  if (!MEDIA_MANIFEST[tripId]) {
+    alert('No journey-page media manifest defined for this trip yet.\n\nAdd entries in MEDIA_MANIFEST in cms.html for trip id: ' + tripId);
+    return;
+  }
+  mediaEditingTripId = tripId;
+  const stored = await TTStorage.getItem('totemtou.media.' + tripId);
+  mediaWorking = stored && typeof stored === 'object' ? Object.assign({}, stored) : {};
+  const tripTitle = (state.find(t => t.id === tripId) || {}).title || tripId;
+  document.getElementById('media-modal-title').textContent = tripTitle;
+  renderMediaSlots();
+  mediaModalEl.classList.add('is-open');
+  mediaOverlayEl.classList.add('is-open');
+  mediaModalEl.setAttribute('aria-hidden', 'false');
+}
+
+function closeMediaModal() {
+  mediaModalEl.classList.remove('is-open');
+  mediaOverlayEl.classList.remove('is-open');
+  mediaModalEl.setAttribute('aria-hidden', 'true');
+  mediaEditingTripId = null;
+  mediaWorking = {};
+}
+
+function findMediaSlot(id) {
+  if (!mediaEditingTripId) return null;
+  for (const section of MEDIA_MANIFEST[mediaEditingTripId]) {
+    for (const s of section.slots) if (s.id === id) return s;
+  }
+  return null;
+}
+
+function mediaThumbHtml(url, type) {
+  if (!url) return 'No media';
+  if (type === 'video') return `<video src="${escapeAttr(url)}" muted></video>`;
+  return `<img src="${escapeAttr(url)}" alt="" />`;
+}
+
+function mediaSlotHtml(slot) {
+  // Show override if present (even empty string means "explicitly cleared"),
+  // otherwise the static default the page renders today.
+  const hasOverride = Object.prototype.hasOwnProperty.call(mediaWorking, slot.id);
+  const current = hasOverride ? mediaWorking[slot.id] : slot.default;
+  return `
+    <div class="media-slot">
+      <div class="media-slot-thumb">${mediaThumbHtml(current, slot.type)}</div>
+      <div class="media-slot-meta">
+        <div class="media-slot-label">
+          <span>${escapeHtml(slot.label)}</span>
+          <span class="media-slot-type">${slot.type}</span>
+        </div>
+        <input type="url" data-slot-id="${escapeAttr(slot.id)}" value="${escapeAttr(current || '')}" placeholder="https://… (leave blank for no media)" />
+      </div>
+    </div>
+  `;
+}
+
+function renderMediaSlots() {
+  const body = document.getElementById('media-modal-body');
+  if (!mediaEditingTripId) { body.innerHTML = ''; return; }
+  const sections = MEDIA_MANIFEST[mediaEditingTripId];
+  body.innerHTML = sections.map(section => `
+    <div class="media-section">
+      <div class="media-section-head">${escapeHtml(section.title)}</div>
+      ${section.slots.map(slot => mediaSlotHtml(slot)).join('')}
+    </div>
+  `).join('');
+  body.querySelectorAll('input[data-slot-id]').forEach(input => {
+    input.addEventListener('input', (e) => {
+      const id = e.target.dataset.slotId;
+      const v = e.target.value.trim();
+      mediaWorking[id] = v; // store '' explicitly so override "wins" when blanked
+      const slot = findMediaSlot(id);
+      const thumb = e.target.closest('.media-slot').querySelector('.media-slot-thumb');
+      thumb.innerHTML = mediaThumbHtml(v, slot.type);
+    });
+  });
+}
+
+document.getElementById('edit-journey-btn').addEventListener('click', () => {
+  if (!editing) return;
+  if (editingIndex === -1) {
+    alert('Save this trip first, then edit its journey page media.');
+    return;
+  }
+  openMediaModal(editing.id);
+});
+document.getElementById('media-modal-close').addEventListener('click', closeMediaModal);
+document.getElementById('media-modal-cancel').addEventListener('click', closeMediaModal);
+mediaOverlayEl.addEventListener('click', closeMediaModal);
+
+document.getElementById('media-modal-save').addEventListener('click', () => {
+  if (!mediaEditingTripId) return;
+  TTStorage.setItem('totemtou.media.' + mediaEditingTripId, mediaWorking);
+  const btn = document.getElementById('media-modal-save');
+  const orig = btn.textContent;
+  btn.textContent = 'Saved ✓';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.textContent = orig;
+    btn.disabled = false;
+    closeMediaModal();
+  }, 700);
 });
 
 /* ====== INIT ======================================================= */
