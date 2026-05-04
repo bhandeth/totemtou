@@ -9,6 +9,7 @@ Static website for [Totemtou](https://totemtou.com) — curated Himalayan advent
 | `index.html` | Main landing page |
 | `abc_journey_3.html` | Annapurna Base Camp journey page |
 | `khopra_journey.html` | Khopra Ridge & Khayer Lake journey page |
+| `dolpo_journey.html` | Upper Dolpo MTB Expedition journey page |
 | `cms.html` | Internal CMS — manage trips, hero video, and content |
 
 ## Making edits
@@ -54,6 +55,7 @@ Open `cms.html` locally or via the deployed URL to make these changes.
 | Date | Change |
 |------|--------|
 | 2026-05-01 | Fixed Khopra Ridge & Khayer Lake card link — now points to `khopra_journey.html` instead of `#` |
+| 2026-05-04 | Added `dolpo_journey.html` — Upper Dolpo MTB Expedition journey page |
 
 ## Adding a new journey page
 

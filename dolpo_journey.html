@@ -1,0 +1,2846 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Upper Dolpo MTB Expedition — Totemtou</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..600;1,8..60,300..600&family=Lora:ital,wght@0,400..600;1,400..600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --paper: #f6f3ec;
+  --paper-deep: #ebe6da;
+  --ink: #1c1917;
+  --ink-soft: #44403c;
+  --ink-mute: #78716c;
+  --rule: #d6cfbf;
+  --accent: #854513;       /* totem orange, sampled from logo */
+  --accent-soft: #b06a3a;
+  --accent-deep: #5e3010;
+  --serif-display: "Source Serif 4", Georgia, serif;
+  --serif-body: "Lora", Georgia, serif;
+  --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif-body);
+  font-size: 19px;
+  line-height: 1.65;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
+
+/* ----- header ------------------------------------------------------ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.2rem 2.5rem;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 400;
+  z-index: 100;
+  transition: background 0.35s ease, backdrop-filter 0.35s ease;
+}
+.nav.is-over-dark {
+  background: linear-gradient(to bottom, rgba(28,25,23,0.4), rgba(28,25,23,0));
+}
+.nav.is-over-paper {
+  background: linear-gradient(to bottom, rgba(246,243,236,0.95), rgba(246,243,236,0));
+  backdrop-filter: blur(8px);
+}
+.nav.is-over-dark .mark { color: var(--paper); }
+.nav.is-over-dark .mark::before { color: var(--accent-soft); }
+.nav.is-over-dark a { color: rgba(246,243,236,0.8); }
+.nav.is-over-dark a:hover { color: var(--paper); }
+.nav .mark {
+  font-family: var(--serif-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--ink);
+}
+.nav .mark::before {
+  content: "●";
+  color: var(--accent);
+  margin-right: 0.5rem;
+  font-size: 0.7rem;
+  vertical-align: middle;
+}
+.nav ul { display: flex; gap: 2.5rem; list-style: none; }
+.nav a { color: var(--ink-soft); text-decoration: none; }
+.nav a:hover { color: var(--ink); }
+
+/* ----- hero -------------------------------------------------------- */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: end;
+  padding: 0 2.5rem 5rem;
+  position: relative;
+  overflow: hidden;
+  background: var(--ink);
+}
+.hero-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  filter: grayscale(0.9) contrast(1.05) brightness(0.85);
+}
+.hero::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom,
+    rgba(28,25,23,0.15) 0%,
+    rgba(28,25,23,0.35) 50%,
+    rgba(246,243,236,0.05) 75%,
+    var(--paper) 100%);
+  z-index: 1;
+}
+.hero-inner {
+  position: relative; z-index: 2;
+  max-width: 1300px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end;
+  color: var(--paper);
+}
+.hero-meta {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(246,243,236,0.7);
+  margin-bottom: 1.5rem;
+}
+.hero-meta span { color: var(--accent-soft); }
+.hero h1 {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: clamp(3rem, 7vw, 6.4rem);
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  color: var(--paper);
+  margin-bottom: 2rem;
+}
+.hero h1 em {
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(246,243,236,0.65);
+}
+.hero-sub {
+  font-family: var(--serif-body);
+  font-size: 1.25rem;
+  line-height: 1.55;
+  color: rgba(246,243,236,0.85);
+  max-width: 32ch;
+  font-style: italic;
+  font-weight: 400;
+}
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem 3rem;
+  align-self: end;
+  padding-bottom: 0.5rem;
+}
+.stat-label {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(246,243,236,0.55);
+  margin-bottom: 0.4rem;
+}
+.stat-value {
+  font-family: var(--serif-display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--paper);
+}
+.stat-value small {
+  font-size: 0.85rem;
+  color: rgba(246,243,236,0.65);
+  font-weight: 400;
+  margin-left: 0.2rem;
+}
+
+/* ----- section frame ---------------------------------------------- */
+.section {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 8rem 2.5rem;
+}
+.kicker {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.kicker::before {
+  content: ""; width: 28px; height: 1px; background: var(--accent);
+}
+.section-title {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  line-height: 1.05;
+  letter-spacing: -0.018em;
+  margin-bottom: 3rem;
+  max-width: 18ch;
+}
+.section-title em { font-style: italic; color: var(--ink-soft); }
+
+/* ----- the valley (parallel spine) -------------------------------- */
+.valley {
+  background: var(--paper-deep);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.valley-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 6rem;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 8rem 2.5rem;
+}
+.valley-intro p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin-bottom: 1.4rem;
+  max-width: 38ch;
+}
+.valley-intro p:first-of-type::first-letter {
+  font-family: var(--serif-display);
+  font-size: 4.5rem;
+  font-weight: 400;
+  float: left;
+  line-height: 0.9;
+  margin: 0.2rem 0.6rem 0 -0.3rem;
+  color: var(--accent);
+}
+
+.valley-notes {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+.vnote {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 2rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid var(--rule);
+}
+.vnote:last-child { border-bottom: none; padding-bottom: 0; }
+.vnote-num {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--accent);
+  font-weight: 400;
+}
+.vnote h3 {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  font-size: 1.45rem;
+  line-height: 1.2;
+  margin-bottom: 0.8rem;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.vnote p {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+.vnote p + p { margin-top: 0.8rem; }
+
+/* ----- valley imagery strip -------------------------------------- */
+.valley-images {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 2.5rem 5rem;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 1.2rem;
+}
+.valley-images figure { margin: 0; }
+.valley-images figcaption {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 0.7rem;
+}
+
+/* ----- full-bleed pause ------------------------------------------ */
+.pause {
+  width: 100%;
+  height: 80vh;
+  min-height: 480px;
+  max-height: 760px;
+  overflow: hidden;
+  position: relative;
+  background: var(--ink);
+}
+.pause video, .pause img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.85) contrast(1.04) brightness(0.92);
+}
+.pause-caption {
+  position: absolute;
+  bottom: 2.5rem; left: 2.5rem;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(246,243,236,0.75);
+}
+
+/* ----- shape of the ride ------------------------------------------ */
+.shape {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 4rem 2.5rem 2rem;
+}
+.shape-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1.2rem;
+}
+.shape-head h3 {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  font-style: italic;
+  font-size: 1.6rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.shape-head .legend {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.shape-head .legend strong {
+  color: var(--ink);
+  font-weight: 500;
+  margin-right: 0.5em;
+}
+
+.elevation { width: 100%; height: auto; display: block; }
+.elevation .grid-line { stroke: var(--rule); stroke-width: 0.5; stroke-dasharray: 2 4; }
+.elevation .y-label, .elevation .day-label {
+  font-family: var(--sans);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  fill: var(--ink-mute);
+}
+.elevation .alt-label {
+  font-family: var(--serif-display);
+  font-size: 11px;
+  font-style: italic;
+  fill: var(--ink-soft);
+}
+.elevation .place-label {
+  font-family: var(--serif-display);
+  font-size: 12px;
+  fill: var(--ink);
+}
+.elevation .profile-fill { fill: var(--accent); fill-opacity: 0.06; }
+.elevation .profile-line { fill: none; stroke: var(--accent); stroke-width: 1.4; }
+.elevation .day-tick { stroke: var(--ink-soft); stroke-width: 0.8; }
+.elevation .day-dot { fill: var(--paper); stroke: var(--accent); stroke-width: 1.5; }
+.elevation .day-dot.peak { fill: var(--accent); }
+
+/* ----- interactive elevation pointer ------------------------------ */
+.elev-wrap {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+.elev-canvas {
+  position: relative;
+  cursor: ew-resize;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;
+}
+.elev-canvas svg { display: block; }
+.elev-pointer-line {
+  stroke: var(--ink);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  pointer-events: none;
+}
+.elev-pointer-dot {
+  fill: var(--accent);
+  stroke: var(--paper);
+  stroke-width: 2;
+  pointer-events: none;
+}
+.elev-hint {
+  position: absolute;
+  bottom: -1.8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.4s;
+}
+.elev-canvas.touched .elev-hint { opacity: 0; }
+
+.elev-card {
+  background: var(--paper-deep);
+  padding: 2rem 2rem 2.2rem;
+  border-left: 2px solid var(--accent);
+  position: sticky;
+  top: 6rem;
+  min-height: 360px;
+}
+.elev-card .place-name {
+  font-family: var(--serif-display);
+  font-size: 1.7rem;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.4rem;
+}
+.elev-card .place-name em { font-style: italic; color: var(--ink-soft); }
+.elev-card .place-km {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 1.8rem;
+}
+.elev-stats-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 1.6rem;
+}
+.elev-stat {
+  padding: 0.9rem 0.8rem 0.9rem 0;
+}
+.elev-stat:first-child {
+  border-right: 1px solid var(--rule);
+  padding-right: 0.8rem;
+  padding-left: 0;
+}
+.elev-stat:last-child {
+  padding-left: 0.8rem;
+}
+.elev-stat-label {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+.elev-stat-value {
+  font-family: var(--serif-display);
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.elev-stat-value small {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--ink-mute);
+  margin-left: 0.2rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.elev-fact-label {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.7rem;
+  display: block;
+}
+.elev-fact {
+  font-family: var(--serif-body);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* ----- placeholder boxes for missing imagery --------------------- */
+.placeholder-img {
+  background: var(--paper-deep);
+  border: 1px dashed var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  padding: 1.5rem;
+  line-height: 1.6;
+  min-height: 180px;
+  width: 100%;
+}
+.placeholder-img.tall { aspect-ratio: 3 / 4; min-height: 280px; }
+.placeholder-img.wide { aspect-ratio: 16 / 9; min-height: 200px; }
+.placeholder-img.square { aspect-ratio: 1 / 1; min-height: 220px; }
+
+@media (max-width: 880px) {
+  .elev-wrap { grid-template-columns: 1fr; }
+  .elev-card { position: static; min-height: 0; }
+  .valley-images { grid-template-columns: 1fr; }
+}
+
+/* ----- phase strip (replaces the seven-day strip for a 20-day expedition) -- */
+.strip {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 3rem 2.5rem 6rem;
+}
+.strip-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.strip-day {
+  padding: 1.6rem 1rem;
+  border-right: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-height: 200px;
+}
+.strip-day:last-child { border-right: none; }
+.strip-day.peak { background: var(--paper-deep); }
+.strip-num {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--accent);
+}
+.strip-title {
+  font-family: var(--serif-display);
+  font-size: 1.05rem;
+  line-height: 1.15;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.strip-days {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.strip-alt {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: auto;
+}
+.strip-alt strong {
+  color: var(--ink);
+  font-weight: 400;
+  font-family: var(--serif-display);
+  font-size: 1rem;
+  letter-spacing: 0;
+  text-transform: none;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+@media (max-width: 880px) {
+  .shape, .strip { padding-left: 1.2rem; padding-right: 1.2rem; }
+  .strip-grid { grid-template-columns: 1fr; }
+  .strip-day {
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
+    min-height: 0;
+  }
+  .strip-day:last-child { border-bottom: none; }
+  .shape-head { flex-direction: column; align-items: flex-start; }
+}
+
+/* ----- phases (groups of days, prose-led) ------------------------- */
+.phases-intro {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 8rem 2.5rem 4rem;
+}
+.phases-intro p {
+  font-size: 1.2rem;
+  color: var(--ink-soft);
+  max-width: 50ch;
+  line-height: 1.6;
+}
+
+.phase {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 5rem 2.5rem;
+  border-top: 1px solid var(--rule);
+}
+.phase-head {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+  align-items: baseline;
+}
+.phase-num {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: 5.5rem;
+  line-height: 0.85;
+  color: var(--ink);
+  letter-spacing: -0.04em;
+}
+.phase-num small {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 0.8rem;
+  font-weight: 400;
+}
+.phase-title {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  margin-bottom: 1rem;
+}
+.phase-title em { font-style: italic; color: var(--ink-soft); }
+.phase-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 2.5rem;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.phase-meta span strong {
+  color: var(--ink);
+  font-weight: 500;
+  margin-right: 0.4em;
+}
+
+.phase-body {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+.phase-route p {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  margin-bottom: 1.3rem;
+}
+.phase-route p:first-child::first-letter {
+  font-family: var(--serif-display);
+  font-size: 3rem;
+  float: left;
+  line-height: 0.9;
+  margin: 0.15rem 0.5rem 0 -0.2rem;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.phase-aside {
+  display: grid;
+  gap: 3rem;
+  position: sticky;
+  top: 6rem;
+}
+
+/* per-phase day list (short, factual, no decoration) */
+.day-list {
+  list-style: none;
+  display: grid;
+  gap: 0;
+  margin: 1.5rem 0 2.5rem;
+  border-top: 1px solid var(--rule);
+}
+.day-list li {
+  display: grid;
+  grid-template-columns: 70px 1fr 130px;
+  gap: 1.5rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.day-list li .dl-day {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  padding-top: 0.15rem;
+}
+.day-list li .dl-where {
+  font-family: var(--serif-body);
+  color: var(--ink);
+}
+.day-list li .dl-where em { color: var(--ink-soft); font-style: italic; }
+.day-list li .dl-alt {
+  font-family: var(--serif-display);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--accent);
+  text-align: right;
+  letter-spacing: -0.01em;
+}
+
+.place-fragment {
+  border-left: 2px solid var(--accent);
+  padding-left: 1.5rem;
+}
+.place-label {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.8rem;
+}
+.place-fragment h4 {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 1.2;
+  margin-bottom: 0.7rem;
+  letter-spacing: -0.01em;
+}
+.place-fragment p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.place-fragment p + p { margin-top: 0.7rem; }
+
+.field-notes {
+  background: var(--paper-deep);
+  padding: 2rem 1.8rem;
+  border-radius: 2px;
+}
+.field-notes-label {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.field-notes-label::before {
+  content: ""; width: 20px; height: 1px; background: var(--ink-mute);
+}
+.fn-empty {
+  font-family: var(--serif-body);
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ink-mute);
+}
+
+.fn-entry {
+  padding: 1.3rem 0;
+  border-bottom: 1px dashed var(--rule);
+}
+.fn-entry:last-child { border-bottom: none; padding-bottom: 0; }
+.fn-entry:first-child { padding-top: 0; }
+.fn-entry blockquote {
+  font-family: var(--serif-body);
+  font-style: italic;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: var(--ink);
+  margin-bottom: 0.7rem;
+}
+.fn-attr {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.fn-attr strong { color: var(--ink-soft); font-weight: 500; }
+
+.phase-photo-single {
+  margin: 2.5rem 0 0;
+}
+.phase-photo-single figure { margin: 0; }
+.phase-photo-single img,
+.phase-photo-single .placeholder-img {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  object-fit: cover;
+}
+.phase-photo-single figcaption {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 0.8rem;
+}
+
+/* ----- pull quote (sparingly, on key phases) ---------------------- */
+.pull-quote {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 2.5rem 0;
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--accent);
+  max-width: 28ch;
+}
+.pull-quote-attr {
+  display: block;
+  margin-top: 0.8rem;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-style: normal;
+}
+
+/* ----- "is this for you" panel ----------------------------------- */
+.fitness {
+  background: var(--paper-deep);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.fitness-grid {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 7rem 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 5rem;
+}
+.fitness-left h2 {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.018em;
+  margin-bottom: 1.6rem;
+  max-width: 14ch;
+}
+.fitness-left h2 em { font-style: italic; color: var(--ink-soft); }
+
+.diff-scale {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.4rem;
+  margin: 2rem 0 1.2rem;
+}
+.diff-bar {
+  flex: 1;
+  height: 22px;
+  background: var(--rule);
+  border-radius: 1px;
+}
+.diff-bar.active { background: var(--accent); height: 36px; }
+.diff-bar.passed { background: var(--accent-soft); }
+.diff-meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.diff-meta strong {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+  font-size: 1rem;
+  letter-spacing: 0;
+  text-transform: none;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.fitness-right p {
+  font-size: 1.1rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin-bottom: 1.2rem;
+}
+.fitness-right p:first-of-type::first-letter {
+  font-family: var(--serif-display);
+  font-size: 3.2rem;
+  font-weight: 400;
+  float: left;
+  line-height: 0.9;
+  margin: 0.15rem 0.5rem 0 -0.2rem;
+  color: var(--accent);
+}
+.fitness-right .signal {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+}
+.fitness-right .signal-label {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 1rem;
+  display: block;
+}
+.signal-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem 2rem;
+  list-style: none;
+}
+.signal-list li {
+  font-family: var(--serif-body);
+  font-size: 1.02rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  padding-left: 1.2rem;
+  position: relative;
+}
+.signal-list li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+/* ----- leader card ------------------------------------------------ */
+.leader {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 8rem 2.5rem;
+}
+.leader-grid {
+  display: grid;
+  grid-template-columns: 0.8fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+.leader-photo {
+  position: relative;
+}
+.leader-photo img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  filter: grayscale(0.85) contrast(1.04);
+}
+.leader-photo .caption {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 1rem;
+}
+.leader-name {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+}
+.leader-role {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--ink-soft);
+  margin-bottom: 2rem;
+}
+.leader-bio p {
+  font-size: 1.15rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin-bottom: 1.2rem;
+}
+.leader-creds {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.cred-label {
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.cred-value {
+  font-family: var(--serif-display);
+  font-size: 1.05rem;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.cred-value em { font-style: italic; color: var(--ink-soft); }
+
+/* ----- preparation flow ------------------------------------------ */
+.prep {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 8rem 2.5rem;
+}
+.prep-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.prep-head {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 5rem;
+  margin-bottom: 5rem;
+  align-items: end;
+}
+.prep .kicker { color: var(--accent-soft); }
+.prep .kicker::before { background: var(--accent-soft); }
+.prep h2 {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  max-width: 16ch;
+}
+.prep h2 em { font-style: italic; color: rgba(246,243,236,0.55); }
+.prep-lede {
+  font-family: var(--serif-body);
+  font-style: italic;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: rgba(246,243,236,0.8);
+  max-width: 42ch;
+}
+
+.prep-steps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  border-top: 1px solid rgba(246,243,236,0.18);
+}
+.prep-step {
+  padding: 2.5rem 1.5rem 2rem;
+  border-right: 1px solid rgba(246,243,236,0.18);
+  position: relative;
+}
+.prep-step:last-child { border-right: none; }
+.prep-step .num {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--accent-soft);
+  margin-bottom: 1.2rem;
+  display: block;
+}
+.prep-step h4 {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.9rem;
+  color: var(--paper);
+}
+.prep-step p {
+  font-family: var(--serif-body);
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: rgba(246,243,236,0.7);
+}
+.prep-step.expand .pillars {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(246,243,236,0.18);
+  display: grid;
+  gap: 0.5rem;
+}
+.pillars span {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(246,243,236,0.55);
+}
+.pillars span::before {
+  content: "·";
+  margin-right: 0.5rem;
+  color: var(--accent-soft);
+}
+
+/* ----- operational substance ------------------------------------- */
+.ops {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 8rem 2.5rem;
+}
+.ops-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 3.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1.5rem;
+}
+.ops-head h2 {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.7rem;
+  letter-spacing: -0.01em;
+}
+.ops-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+}
+.ops-block h3 {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  font-size: 1.4rem;
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.01em;
+}
+.ops-block > p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin-bottom: 1.5rem;
+}
+.kit-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem 2rem;
+  margin-top: 1.2rem;
+}
+.kit-list li {
+  font-family: var(--serif-body);
+  font-size: 1rem;
+  color: var(--ink-soft);
+  padding-left: 1rem;
+  position: relative;
+}
+.kit-list li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+.plan-b {
+  list-style: none;
+  display: grid;
+  gap: 1.4rem;
+}
+.plan-b li {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.plan-b li strong {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 1.08rem;
+  letter-spacing: -0.005em;
+}
+
+/* ----- price anchor in close section ----------------------------- */
+.price-block {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2.5rem;
+  align-items: end;
+  margin: 3.5rem 0 0;
+  padding-top: 2.5rem;
+  border-top: 1px solid rgba(255,255,255,0.18);
+}
+.price-from {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(246,243,236,0.55);
+  margin-bottom: 0.5rem;
+}
+.price-amount {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: 3.2rem;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: var(--paper);
+}
+.price-amount small {
+  font-size: 1.2rem;
+  color: rgba(246,243,236,0.65);
+  margin-left: 0.4rem;
+  font-weight: 400;
+}
+.price-fineprint {
+  font-family: var(--serif-body);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: rgba(246,243,236,0.65);
+  font-style: italic;
+  max-width: 38ch;
+  padding-bottom: 0.4rem;
+}
+
+@media (max-width: 880px) {
+  .day-list li { grid-template-columns: 60px 1fr; }
+  .day-list li .dl-alt { grid-column: 2; text-align: left; }
+  .fitness-grid, .leader-grid, .ops-grid, .prep-head { grid-template-columns: 1fr; gap: 3rem; padding-left: 1.2rem; padding-right: 1.2rem; }
+  .fitness-grid { padding: 5rem 1.2rem; }
+  .leader, .ops, .prep { padding-left: 1.2rem; padding-right: 1.2rem; }
+  .leader { padding-top: 5rem; padding-bottom: 5rem; }
+  .ops { padding-top: 5rem; padding-bottom: 5rem; }
+  .prep { padding-top: 5rem; padding-bottom: 5rem; }
+  .prep-steps { grid-template-columns: 1fr; }
+  .prep-step { border-right: none; border-bottom: 1px solid rgba(246,243,236,0.18); }
+  .prep-step:last-child { border-bottom: none; }
+  .signal-list, .leader-creds, .kit-list { grid-template-columns: 1fr; }
+  .price-block { grid-template-columns: 1fr; gap: 1rem; }
+}
+
+.close {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 10rem 2.5rem;
+  margin-top: 8rem;
+}
+.close-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: left;
+}
+.close .kicker { color: var(--accent-soft); }
+.close .kicker::before { background: var(--accent-soft); }
+.close h2 {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 2rem;
+  max-width: 18ch;
+}
+.close h2 em { font-style: italic; color: var(--paper-deep); opacity: 0.7; }
+.close p {
+  font-size: 1.2rem;
+  color: var(--paper-deep);
+  margin-bottom: 1.4rem;
+  max-width: 50ch;
+  line-height: 1.6;
+}
+.apply {
+  display: inline-block;
+  margin-top: 3rem;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--paper);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-soft);
+  padding-bottom: 0.5rem;
+  transition: color 0.2s;
+}
+.apply:hover { color: var(--accent-soft); }
+.close-foot {
+  margin-top: 6rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ----- trip calendar / departures CTA ----------------------------- */
+.calendar {
+  background: var(--paper-deep);
+  padding: 9rem 2.5rem 9rem;
+  border-top: 1px solid var(--rule);
+}
+.calendar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.calendar-head {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 4rem;
+  align-items: end;
+  margin-bottom: 4.5rem;
+}
+.calendar-head h2 {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: clamp(2rem, 4.2vw, 3.2rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  max-width: 16ch;
+}
+.calendar-head h2 em { font-style: italic; color: var(--ink-soft); }
+.calendar-head .lede {
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  max-width: 42ch;
+}
+
+.departure-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 4.5rem;
+}
+.departure-card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 1.6rem 1.4rem 1.4rem;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.2s, background 0.2s;
+  position: relative;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.departure-card:hover:not(.is-full) {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.departure-card.is-selected {
+  border-color: var(--accent);
+  background: var(--ink);
+  color: var(--paper);
+}
+.departure-card.is-selected .departure-month,
+.departure-card.is-selected .departure-status { color: var(--accent-soft); }
+.departure-card.is-selected .departure-spots { color: rgba(246,243,236,0.6); }
+.departure-card.is-full {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.departure-month {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.departure-dates {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: 1.6rem;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+}
+.departure-dates small {
+  display: block;
+  font-family: var(--serif-body);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--ink-mute);
+  font-weight: 400;
+  margin-top: 0.35rem;
+  letter-spacing: 0;
+}
+.departure-card.is-selected .departure-dates small { color: rgba(246,243,236,0.55); }
+.departure-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.departure-card.is-selected .departure-foot { border-top-color: rgba(246,243,236,0.18); }
+.departure-spots { color: var(--ink-mute); }
+.departure-status { color: var(--accent); }
+.departure-status.is-filling { color: #8a6d2a; }
+.departure-status.is-full { color: var(--ink-mute); }
+
+.application {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem 2rem;
+  padding-top: 3.5rem;
+  border-top: 1px solid var(--rule);
+}
+.application-intro {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+.application-intro h3 {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: 1.7rem;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+.application-intro h3 em { font-style: italic; color: var(--accent); }
+.application-intro .selected-readout {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  text-align: right;
+}
+.application-intro .selected-readout strong {
+  color: var(--accent);
+  font-weight: 500;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.field.full { grid-column: 1 / -1; }
+.field label {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.field input,
+.field textarea,
+.field select {
+  font-family: var(--serif-body);
+  font-size: 1rem;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  padding: 0.6rem 0;
+  color: var(--ink);
+  transition: border-color 0.2s;
+  outline: none;
+  width: 100%;
+}
+.field textarea {
+  resize: vertical;
+  min-height: 90px;
+  line-height: 1.55;
+}
+.field input:focus,
+.field textarea:focus,
+.field select:focus { border-bottom-color: var(--accent); }
+.field input::placeholder, .field textarea::placeholder { color: var(--ink-mute); opacity: 0.6; }
+
+.application-submit-row {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding-top: 1.8rem;
+  border-top: 1px solid var(--rule);
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.application-submit {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  padding: 1.1rem 2.2rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.application-submit:hover { background: var(--accent); }
+.application-submit:disabled { background: var(--ink-mute); cursor: not-allowed; }
+.application-fineprint {
+  font-family: var(--serif-body);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--ink-mute);
+  max-width: 38ch;
+}
+
+.application-confirmation {
+  grid-column: 1 / -1;
+  display: none;
+  padding: 2.5rem;
+  background: var(--paper);
+  border: 1px solid var(--accent-soft);
+  text-align: center;
+}
+.application-confirmation.is-visible { display: block; }
+.application-confirmation h4 {
+  font-family: var(--serif-display);
+  font-weight: 300;
+  font-size: 1.6rem;
+  margin-bottom: 0.6rem;
+}
+.application-confirmation p {
+  color: var(--ink-soft);
+  max-width: 50ch;
+  margin: 0 auto;
+}
+
+/* ----- responsive -------------------------------------------------- */
+@media (max-width: 880px) {
+  .nav { padding: 1rem 1.2rem; }
+  .nav ul { display: none; }
+  .hero { padding: 0 1.2rem 3rem; }
+  .hero-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .section, .valley-grid, .phases-intro, .phase { padding-left: 1.2rem; padding-right: 1.2rem; }
+  .valley-grid { grid-template-columns: 1fr; gap: 4rem; padding-top: 5rem; padding-bottom: 5rem; }
+  .phase-head { grid-template-columns: 1fr; gap: 1.5rem; }
+  .phase-num { font-size: 4rem; }
+  .phase-body { grid-template-columns: 1fr; gap: 3rem; }
+  .phase-aside { position: static; }
+  .close { padding: 6rem 1.2rem; }
+  .calendar { padding: 5rem 1.2rem; }
+  .calendar-head { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 3rem; }
+  .departure-grid { grid-template-columns: 1fr 1fr; }
+  .application { grid-template-columns: 1fr; }
+  .application-intro { flex-direction: column; align-items: flex-start; }
+  .application-intro .selected-readout { text-align: left; }
+}
+@media (max-width: 540px) {
+  .departure-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="mark" href="index.html">Totemtou</a>
+  <ul>
+    <li><a href="index.html#journeys">Journeys</a></li>
+    <li><a href="index.html#leaders">Leaders</a></li>
+    <li><a href="index.html#apply">Apply</a></li>
+  </ul>
+</nav>
+
+<!-- ============================================== HERO -->
+<header class="hero">
+  <div class="placeholder-img" style="position: absolute; inset: 0; min-height: 100%; border: none; background: var(--ink); color: rgba(246,243,236,0.4);">
+    Hero video / poster pending<br>· The cold desert north of the Niwar La pass ·
+  </div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-meta">Flow with the Land &nbsp;·&nbsp; Dolpo &nbsp;·&nbsp; <span>Twenty days</span></div>
+      <h1>Upper Dolpo<br>MTB Expedition<br><em>5,350 m</em></h1>
+      <p class="hero-sub">Three weeks across the trans-Himalaya by bike, on foot, by jeep — the longest, highest, hardest journey we run.</p>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-label">High point</div>
+        <div class="stat-value">5,350 <small>m</small></div>
+      </div>
+      <div>
+        <div class="stat-label">Passes above 5,000 m</div>
+        <div class="stat-value">Four</div>
+      </div>
+      <div>
+        <div class="stat-label">Difficulty</div>
+        <div class="stat-value">Extreme</div>
+      </div>
+      <div>
+        <div class="stat-label">Group</div>
+        <div class="stat-value">Six riders</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================== THE VALLEY (parallel spine) -->
+<section class="valley">
+  <div class="valley-grid">
+    <div class="valley-intro">
+      <div class="kicker">The Cold Desert</div>
+      <h2 class="section-title">Before <em>the days,</em><br>the place.</h2>
+      <p>Upper Dolpo sits in the northwest of Nepal, against the Tibetan border. Geographically and culturally it is part of the Tibetan plateau, not the Nepali mid-hills. It rains here only in the Indian-summer fringes; the rest of the year it is wind, light, and rock.</p>
+      <p>This is the longest journey we run, and the only one we run by bike. Read this section before the days. The days will read differently afterwards.</p>
+    </div>
+
+    <div class="valley-notes">
+      <article class="vnote">
+        <div class="vnote-num">i.</div>
+        <div>
+          <h3>A Tibetan plateau the map calls Nepal</h3>
+          <p>Dolpo was part of the ancient Ngari region of western Tibet. The early settlers practised Bön, the indigenous belief system that pre-dates Buddhism on the plateau. From the eleventh century onward, Tibetan Buddhism took root alongside it. The two have lived together here ever since — in the same villages, sometimes in the same family.</p>
+          <p>The land sits in the rain shadow of the Dhaulagiri massif. Almost no monsoon reaches it. The villages farm barley and graze yak; the trade that built them ran north into Tibet, not south into Nepal. Walking through Dolpo is, in most practical senses, walking through a country that is no longer on the map.</p>
+        </div>
+      </article>
+
+      <article class="vnote">
+        <div class="vnote-num">ii.</div>
+        <div>
+          <h3>The salt road, before the road</h3>
+          <p>For centuries, Dolpo was a salt corridor. Yak caravans carried salt from the Tibetan plateau over the high passes into Dolpo, and traded it south for grain, butter, and cloth. The same passes we cross — Niwar La, Mola, Sela La, Nagdalo La — were the working passes of that trade.</p>
+          <p>The road still ends well short of Upper Dolpo. Past Sangda, there is no road, and there will not be a road for some time. Trails the salt caravans used are still the trails the local boys ride their Chinese motocross bikes on. We ride and push our bikes along the same thread.</p>
+        </div>
+      </article>
+
+      <article class="vnote">
+        <div class="vnote-num">iii.</div>
+        <div>
+          <h3>Shey Gompa, the spiritual heart</h3>
+          <p>At around 4,400 m, sitting beneath Crystal Mountain, Shey Gompa was built in the eleventh century and is the spiritual centre of Dolpo. The monastery is the destination of a once-every-twelve-years pilgrimage that circles the mountain. We sleep one of the trip's nights at Shey, and rest the next day there.</p>
+          <p>Two monasteries on this journey are not stops on the way to somewhere — they are the somewhere. Namgung is the other. The day spent inside each is one of the reasons the route is twenty days and not fifteen.</p>
+        </div>
+      </article>
+
+      <article class="vnote">
+        <div class="vnote-num">iv.</div>
+        <div>
+          <h3>Phoksundo, the lake</h3>
+          <p>Shey Phoksundo is the deepest lake in Nepal — 145 m at its centre, sitting at 3,611 m, ringed by cliffs and a dry blue that doesn't quite look like other water. The Tibetan name for the village beside it, Ringmo, means 'long' for the shape of the lake. We descend to it from the Nagdalo La on the seventeenth day. The trail down is long, exposed, and one of the more spectacular descents in the Himalaya.</p>
+        </div>
+      </article>
+
+      <article class="vnote">
+        <div class="vnote-num">v.</div>
+        <div>
+          <h3>What riding a bike here actually means</h3>
+          <p>Roughly ten percent of this expedition is rideable trail. Another forty percent is bike on shoulder, walking up. The remainder is jeep transfer in and out, and short flying segments. We say "MTB Expedition" carefully — this is not a cycling holiday. The bike is the right tool for the descents, for the rideable valleys near Tinje and Khomas, and for the long valley out of Phoksundo to Dunai. For the passes, the bike is a load you carry over the mountain.</p>
+          <p>We tell every applicant this directly on the call. Riders who have done long-format expeditions already understand it. Riders who haven't sometimes need to hear it twice.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Valley imagery strip — placeholders pending real route photography -->
+<div class="valley-images">
+  <figure>
+    <div class="placeholder-img wide">Crossing toward the Niwar La<br>· photo pending ·</div>
+    <figcaption>Niwar La approach · 5,125 m</figcaption>
+  </figure>
+  <figure>
+    <div class="placeholder-img wide">Shey Gompa<br>· photo pending ·</div>
+    <figcaption>Shey Gompa · spiritual heart of Dolpo</figcaption>
+  </figure>
+  <figure>
+    <div class="placeholder-img wide">Phoksundo Lake from the Nagdalo descent<br>· photo pending ·</div>
+    <figcaption>Phoksundo · 3,611 m</figcaption>
+  </figure>
+</div>
+
+<!-- ============================================== FULL-BLEED PAUSE -->
+<section class="pause" aria-label="The cold desert">
+  <div class="placeholder-img" style="height: 100%; min-height: 100%; border: none; background: var(--ink); color: rgba(246,243,236,0.4);">
+    Full-bleed video / image pending<br>· Trail beyond Sangda, where the road ends ·
+  </div>
+  <div class="pause-caption">Beyond Sangda · the road ends, the trail begins</div>
+</section>
+
+<!-- ============================================== THE SHAPE OF THE RIDE -->
+<section class="shape">
+  <div class="shape-head">
+    <h3>The shape of the ride.</h3>
+    <div class="legend">
+      <span><strong>20 days</strong> total</span>
+      <span><strong>5,350 m</strong> high point</span>
+      <span><strong>4 passes</strong> over 5,000 m</span>
+    </div>
+  </div>
+
+  <div class="elev-wrap">
+    <div class="elev-canvas" id="elev-canvas">
+      <svg class="elevation" viewBox="0 0 1200 320" xmlns="http://www.w3.org/2000/svg" aria-label="Elevation profile of the Upper Dolpo MTB Expedition">
+
+        <!-- altitude grid lines + labels -->
+        <line class="grid-line" x1="60" y1="30"  x2="1180" y2="30"/>
+        <line class="grid-line" x1="60" y1="85"  x2="1180" y2="85"/>
+        <line class="grid-line" x1="60" y1="140" x2="1180" y2="140"/>
+        <line class="grid-line" x1="60" y1="195" x2="1180" y2="195"/>
+        <line class="grid-line" x1="60" y1="260" x2="1180" y2="260"/>
+
+        <text class="y-label" x="14" y="33">5,300 m</text>
+        <text class="y-label" x="14" y="88">4,200 m</text>
+        <text class="y-label" x="14" y="143">3,100 m</text>
+        <text class="y-label" x="14" y="198">2,000 m</text>
+        <text class="y-label" x="14" y="263">200 m</text>
+
+        <!-- Profile path: 20 days mapped across x=60..1180 (~56 px per day).
+             Points (day → x ; alt → y), where
+               y = 260 - ((alt - 150) / 5200) * 230, clamped to [30, 260].
+               Day 1   x=60    Pokhara 822      → 230
+               Day 2   x=116   Pokhara local    → 230
+               Day 3   x=172   Thini 2700        → 147
+               Day 4   x=228   Muktinath/Thini 3760 → 100
+               Day 5   x=284   Sangda 4990       → 46
+               Day 6   x=340   Niwar BC 4800     → 54
+               Day 7   x=396   Niwar La 5125 → Chharka 4300 (peak then drop)
+               Day 8   x=452   Mola 5030 → Tinje 4150
+               Day 9   x=508   Tinje rest 4150   → 83
+               Day 10  x=564   Shimen/Khomas 4150→ 83
+               Day 11  x=620   Khomas rest 4150  → 83
+               Day 12  x=676   Saldang/Namgung 4400 → 72
+               Day 13  x=732   Sela La 5090 → Shey 4400
+               Day 14  x=788   Shey rest 4400    → 72
+               Day 15  x=844   Nagdalo La 5350 → Phoksundo 3611
+               Day 16  x=900   Phoksundo rest 3611 → 107
+               Day 17  x=956   Dunai 2140        → 172
+               Day 18  x=1012  Nepalgunj 150     → 260
+               Day 19  x=1068  Kathmandu 1400    → 205
+               Day 20  x=1180  Kathmandu 1400    → 205
+        -->
+        <path class="profile-fill"
+              d="M 60,230
+                 L 116,230
+                 L 172,147
+                 L 228,100
+                 L 284,46
+                 L 340,54
+                 L 396,40 L 396,76
+                 L 452,44 L 452,83
+                 L 508,83
+                 L 564,83
+                 L 620,83
+                 L 676,72
+                 L 732,42 L 732,72
+                 L 788,72
+                 L 844,30 L 844,107
+                 L 900,107
+                 L 956,172
+                 L 1012,260
+                 L 1068,205
+                 L 1180,205
+                 L 1180,260
+                 L 60,260 Z"/>
+
+        <!-- profile line -->
+        <path class="profile-line" id="profile-path"
+              d="M 60,230
+                 L 116,230
+                 L 172,147
+                 L 228,100
+                 L 284,46
+                 L 340,54
+                 L 396,40
+                 L 396,76
+                 L 452,44
+                 L 452,83
+                 L 508,83
+                 L 564,83
+                 L 620,83
+                 L 676,72
+                 L 732,42
+                 L 732,72
+                 L 788,72
+                 L 844,30
+                 L 844,107
+                 L 900,107
+                 L 956,172
+                 L 1012,260
+                 L 1068,205
+                 L 1180,205"/>
+
+        <!-- selected day stops (we don't tick all 20 — too noisy; we tick the named markers) -->
+        <line class="day-tick" x1="172" y1="147" x2="172" y2="290"/>
+        <circle class="day-dot" cx="172" cy="147" r="3.5"/>
+        <text class="day-label" x="172" y="305" text-anchor="middle">D3 · Thini</text>
+
+        <line class="day-tick" x1="284" y1="46" x2="284" y2="290"/>
+        <circle class="day-dot" cx="284" cy="46" r="3.5"/>
+        <text class="day-label" x="284" y="305" text-anchor="middle">D5 · Sangda</text>
+
+        <line class="day-tick" x1="396" y1="40" x2="396" y2="290"/>
+        <circle class="day-dot peak" cx="396" cy="40" r="4"/>
+        <text class="day-label" x="396" y="305" text-anchor="middle">D7 · Niwar La</text>
+
+        <line class="day-tick" x1="452" y1="44" x2="452" y2="290"/>
+        <circle class="day-dot peak" cx="452" cy="44" r="4"/>
+        <text class="day-label" x="452" y="305" text-anchor="middle">D8 · Mola</text>
+
+        <line class="day-tick" x1="676" y1="72" x2="676" y2="290"/>
+        <circle class="day-dot" cx="676" cy="72" r="3.5"/>
+        <text class="day-label" x="676" y="305" text-anchor="middle">D12 · Namgung</text>
+
+        <line class="day-tick" x1="732" y1="42" x2="732" y2="290"/>
+        <circle class="day-dot peak" cx="732" cy="42" r="4"/>
+        <text class="day-label" x="732" y="305" text-anchor="middle">D13 · Sela La</text>
+
+        <line class="day-tick" x1="844" y1="30" x2="844" y2="290"/>
+        <circle class="day-dot peak" cx="844" cy="30" r="5"/>
+        <text class="day-label" x="844" y="305" text-anchor="middle">D15 · Nagdalo La</text>
+
+        <line class="day-tick" x1="956" y1="172" x2="956" y2="290"/>
+        <circle class="day-dot" cx="956" cy="172" r="3.5"/>
+        <text class="day-label" x="956" y="305" text-anchor="middle">D17 · Dunai</text>
+
+        <line class="day-tick" x1="1180" y1="205" x2="1180" y2="290"/>
+        <circle class="day-dot" cx="1180" cy="205" r="3.5"/>
+        <text class="day-label" x="1180" y="305" text-anchor="end">D20 · KTM</text>
+
+        <!-- interactive pointer -->
+        <line class="elev-pointer-line" id="elev-pointer-line" x1="844" y1="30" x2="844" y2="260"/>
+        <circle class="elev-pointer-dot" id="elev-pointer-dot" cx="844" cy="30" r="6"/>
+      </svg>
+      <div class="elev-hint">Move along the route</div>
+    </div>
+
+    <aside class="elev-card" id="elev-card">
+      <div class="place-name" id="ec-name">Nagdalo La</div>
+      <div class="place-km" id="ec-km">Day 15 &nbsp;·&nbsp; the high pass</div>
+
+      <div class="elev-stats-row">
+        <div class="elev-stat">
+          <span class="elev-stat-label">Altitude</span>
+          <span class="elev-stat-value" id="ec-alt">5,350<small>m</small></span>
+        </div>
+        <div class="elev-stat">
+          <span class="elev-stat-label">Oxygen</span>
+          <span class="elev-stat-value" id="ec-ox">49<small>%</small></span>
+        </div>
+      </div>
+
+      <span class="elev-fact-label" id="ec-fact-label">The high pass</span>
+      <p class="elev-fact" id="ec-fact">The highest point of the expedition. Technical, exposed, and the gate between Shey Gompa and the descent to Phoksundo. Bikes are pushed and carried the last hour up. The descent on the far side is long, spectacular, and on a trail you ride.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- ============================================== SEVEN-PHASE STRIP -->
+<section class="strip">
+  <div class="strip-grid">
+    <div class="strip-day">
+      <span class="strip-num">i.</span>
+      <span class="strip-title">Pokhara &nbsp;— prep, warm-up, drive in</span>
+      <span class="strip-days">Days 1 – 3</span>
+      <span class="strip-alt"><strong>2,700 m</strong>by jeep</span>
+    </div>
+    <div class="strip-day">
+      <span class="strip-num">ii.</span>
+      <span class="strip-title">Mustang &nbsp;— Muktinath, on to Sangda</span>
+      <span class="strip-days">Days 4 – 5</span>
+      <span class="strip-alt"><strong>4,990 m</strong>entry to Dolpo</span>
+    </div>
+    <div class="strip-day peak">
+      <span class="strip-num">iii.</span>
+      <span class="strip-title">The crossings &nbsp;— Niwar La &amp; Mola</span>
+      <span class="strip-days">Days 6 – 8</span>
+      <span class="strip-alt"><strong>5,125 m</strong>two passes, three days</span>
+    </div>
+    <div class="strip-day">
+      <span class="strip-num">iv.</span>
+      <span class="strip-title">The high villages &nbsp;— Tinje to Saldang</span>
+      <span class="strip-days">Days 9 – 12</span>
+      <span class="strip-alt"><strong>4,400 m</strong>rideable valleys</span>
+    </div>
+    <div class="strip-day peak">
+      <span class="strip-num">v.</span>
+      <span class="strip-title">Shey &amp; the high pass &nbsp;— Sela La, Nagdalo La</span>
+      <span class="strip-days">Days 13 – 15</span>
+      <span class="strip-alt"><strong>5,350 m</strong>the spiritual heart</span>
+    </div>
+    <div class="strip-day">
+      <span class="strip-num">vi.</span>
+      <span class="strip-title">Phoksundo &nbsp;— and the long descent to Dunai</span>
+      <span class="strip-days">Days 16 – 17</span>
+      <span class="strip-alt"><strong>3,611 m</strong>the deepest lake</span>
+    </div>
+    <div class="strip-day">
+      <span class="strip-num">vii.</span>
+      <span class="strip-title">Out &nbsp;— Nepalgunj, fly to Kathmandu</span>
+      <span class="strip-days">Days 18 – 20</span>
+      <span class="strip-alt"><strong>1,400 m</strong>back to the lowlands</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================== PHASES INTRO -->
+<div class="phases-intro">
+  <div class="kicker">The Days</div>
+  <h2 class="section-title">Twenty days, <em>walked, ridden, and pushed.</em></h2>
+  <p>Twenty days is too long to read as a list. We've grouped the route into seven phases — each one a different kind of day, with a different relationship to the bike. The frame above runs underneath all of them.</p>
+</div>
+
+<!-- ============================================== PHASE 1 -->
+<article class="phase">
+  <div class="phase-head">
+    <div class="phase-num">i<small>Pokhara · prep · drive in</small></div>
+    <div>
+      <h2 class="phase-title">The bikes are built. <em>The first warm-up rides happen here.</em></h2>
+      <div class="phase-meta">
+        <span><strong>Days</strong>1–3</span>
+        <span><strong>Mode</strong>jeep, short rides</span>
+        <span><strong>Sleep</strong>hotel, then teahouse</span>
+      </div>
+    </div>
+  </div>
+
+  <ul class="day-list">
+    <li><span class="dl-day">Day 1</span><span class="dl-where">Arrive Pokhara · final gear check, bike assembly, test ride toward Sarangkot or Peace Pagoda.</span><span class="dl-alt">822 m</span></li>
+    <li><span class="dl-day">Day 2</span><span class="dl-where">Warm-up loop · Pokhara valley — Kaskikot, Pame, Begnas. Last day at low altitude.</span><span class="dl-alt">822 m</span></li>
+    <li><span class="dl-day">Day 3</span><span class="dl-where">Long drive to Thini · 8–9 hours up the Kali Gandaki gorge into Lower Mustang.</span><span class="dl-alt">2,700 m</span></li>
+  </ul>
+
+  <div class="phase-body">
+    <div class="phase-route">
+      <p>Two days in Pokhara is not a layover. The bikes are unboxed, built, and tuned at the same workshop the founders use; cleat positions are checked, brake pads bedded in, tubeless sealant topped up. The first ride is a short loop to Sarangkot or the Peace Pagoda — enough to find anything wrong with the build before the road heads north.</p>
+      <p>Day three is the long drive. Pokhara to Thini is eight or nine hours through the Kali Gandaki, a gorge that runs between Annapurna and Dhaulagiri and is, by the standard measure of river to ridgeline, the deepest in the world. The road climbs from sub-tropical green into high-desert brown over the course of one afternoon. The body needs the time. Thini is a quiet, working settlement at 2,700 m, far enough off the main Mustang trail to feel local rather than touristed.</p>
+    </div>
+
+    <aside class="phase-aside">
+      <div class="place-fragment">
+        <div class="place-label">Place — Thini</div>
+        <h4>One of Mustang's oldest villages</h4>
+        <p>Thini sits a short distance from Jomsom but feels older. Stone houses, barley fields, prayer wheels turned by elderly villagers in the same way they've been turned for generations. We stop here on purpose: most groups push straight to Jomsom or Kagbeni; we sleep where the day actually wants to end.</p>
+      </div>
+      <div class="field-notes">
+        <div class="field-notes-label">Field notes</div>
+        <div class="fn-entry">
+          <blockquote class="fn-empty">Field notes from the leader team will appear here as the route is ridden again this season.</blockquote>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="phase-photo-single">
+    <figure>
+      <div class="placeholder-img wide">Bike workshop in Pokhara · photo pending</div>
+      <figcaption>Pokhara · build day, before the road north</figcaption>
+    </figure>
+  </div>
+</article>
+
+<!-- ============================================== PHASE 2 -->
+<article class="phase">
+  <div class="phase-head">
+    <div class="phase-num">ii<small>Mustang · entry to Dolpo</small></div>
+    <div>
+      <h2 class="phase-title">From Thini, into Lower Mustang. <em>Then the road runs out.</em></h2>
+      <div class="phase-meta">
+        <span><strong>Days</strong>4–5</span>
+        <span><strong>Mode</strong>ride · jeep · push</span>
+        <span><strong>Sleep</strong>teahouse, then homestay/camp</span>
+      </div>
+    </div>
+  </div>
+
+  <ul class="day-list">
+    <li><span class="dl-day">Day 4</span><span class="dl-where">Thini–Muktinath–Lupra–Thini · loop ride for acclimatisation, no luggage.</span><span class="dl-alt">3,760 m</span></li>
+    <li><span class="dl-day">Day 5</span><span class="dl-where">Thini → Sangda La (4,990 m) → Sangda · jeep section over high passes; entry to Dolpo proper.</span><span class="dl-alt">4,990 m</span></li>
+  </ul>
+
+  <div class="phase-body">
+    <div class="phase-route">
+      <p>Day four is the first full day on the bike at altitude. We ride up to Muktinath at 3,760 m — a temple complex sacred to Hindus and Buddhists, with the eternal-flame shrine of Jwala Mai inside its grounds — then drop into the Lupra valley and back. No luggage on the bikes. The intent is acclimatisation, not distance.</p>
+      <p>Day five is the entry to Dolpo. We take a jeep over the Sangda La at 4,990 m. It is the first serious altitude of the trip, and there is a reason it is in the jeep and not on the bike: the air at 4,990 m, on day five, asks too much. The road ends shortly after. From here on, we are on bikes or on foot. Sangda is the last settlement that has, in any meaningful way, a connection to the outside.</p>
+    </div>
+
+    <aside class="phase-aside">
+      <div class="place-fragment">
+        <div class="place-label">Place — Sangda La</div>
+        <h4>The threshold</h4>
+        <p>Crossing the Sangda La is the trip's threshold. South of it is Mustang — a region with electricity, intermittent network, jeep-roads. North of it is Upper Dolpo, where almost none of those things exist past the next village. The pass is also where, in the historical sense, Nepal becomes Tibet.</p>
+      </div>
+      <div class="field-notes">
+        <div class="field-notes-label">Field notes</div>
+        <div class="fn-entry">
+          <blockquote class="fn-empty">Field notes from the leader team will appear here as the route is ridden again this season.</blockquote>
+        </div>
+      </div>
+    </aside>
+  </div>
+</article>
+
+<!-- ============================================== PHASE 3 — THE CROSSINGS -->
+<article class="phase">
+  <div class="phase-head">
+    <div class="phase-num">iii<small>Niwar La · Mola · Tinje</small></div>
+    <div>
+      <h2 class="phase-title">Two passes in three days. <em>The hardest section of the trip.</em></h2>
+      <div class="phase-meta">
+        <span><strong>Days</strong>6–8</span>
+        <span><strong>Passes</strong>5,125 m · 5,030 m</span>
+        <span><strong>Sleep</strong>camp, homestay, camp</span>
+      </div>
+    </div>
+  </div>
+
+  <ul class="day-list">
+    <li><span class="dl-day">Day 6</span><span class="dl-where">Sangda → Niwar La Base Camp · ride, push, carry. First real wilderness camp.</span><span class="dl-alt">4,800 m</span></li>
+    <li><span class="dl-day">Day 7</span><span class="dl-where">Cross Niwar La (5,125 m) → Chharka Bhot · long technical descent off the pass.</span><span class="dl-alt">4,302 m</span></li>
+    <li><span class="dl-day">Day 8</span><span class="dl-where">Chharka Bhot → Mola Pass (5,030 m) → Tinje · long crossing day, beautiful descent.</span><span class="dl-alt">4,150 m</span></li>
+  </ul>
+
+  <div class="phase-body">
+    <div class="phase-route">
+      <p>This is the section that defines the trip's grade. Three days, two passes above 5,000 m, one wilderness camp on the way to the first one. The bike is on your shoulder for hours at a time; the gradient out of Sangda toward Niwar La is too steep and too high to ride. The compensations come later — the descent off the Niwar La into the Chharka valley is long enough that the morning's climb will, for a while, feel worth it.</p>
+
+      <blockquote class="pull-quote">
+        Whenever we thought today was the easy day, it turned out to be a killing kind of a day.
+        <span class="pull-quote-attr">— Past rider, Dolpo MTB</span>
+      </blockquote>
+
+      <p>Chharka Bhot is one of the more isolated villages on the route. There are a handful of homestays, no shop in any sense you would recognise, and dal bhat for dinner. The morning of day eight starts early; the climb to the Mola is gradual but long, and the descent on the far side, into Tinje, is the first real flowing trail of the trip. After three days of carrying the bike, the act of riding it is briefly extraordinary.</p>
+    </div>
+
+    <aside class="phase-aside">
+      <div class="place-fragment">
+        <div class="place-label">Place — Niwar La</div>
+        <h4>5,125 m, on a bike day</h4>
+        <p>The pass is a saddle of grey rock with prayer flags. The wind is steady. There is no view that isn't of more mountain. The air, by the partial-pressure measure, is at fifty-three percent of sea level. Most groups stop here for fifteen minutes, no more — long enough to catch breath, drink water, and start the descent before the cold gets in.</p>
+      </div>
+      <div class="field-notes">
+        <div class="field-notes-label">Field notes</div>
+        <div class="fn-entry">
+          <blockquote>"At the first pass we spent the night in a simple tent lodge. The next day we climbed to over 5,100 metres. There was nothing but nature and a narrow path leading through the endless expanse. Long descents alternated with short, steep climbs — always surrounded by the raw scenery of the Himalayas right in front of us."</blockquote>
+          <div class="fn-attr"><strong>Manuel</strong> &nbsp;·&nbsp; past rider &nbsp;·&nbsp; 2024</div>
+        </div>
+        <div class="fn-entry">
+          <blockquote class="fn-empty">More field notes from the leader team will appear here as the route is ridden again.</blockquote>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="phase-photo-single">
+    <figure>
+      <div class="placeholder-img wide">Niwar La summit · prayer flags, no shelter · photo pending</div>
+      <figcaption>Niwar La · 5,125 m, day 7</figcaption>
+    </figure>
+  </div>
+</article>
+
+<!-- ============================================== PHASE 4 — THE HIGH VILLAGES -->
+<article class="phase">
+  <div class="phase-head">
+    <div class="phase-num">iv<small>Tinje · Shimen · Khomas · Saldang</small></div>
+    <div>
+      <h2 class="phase-title">Where the trip is rideable. <em>Hidden valleys, ancient villages, the longest single-trails.</em></h2>
+      <div class="phase-meta">
+        <span><strong>Days</strong>9–12</span>
+        <span><strong>Mode</strong>ride · explore · rest</span>
+        <span><strong>Sleep</strong>homestays</span>
+      </div>
+    </div>
+  </div>
+
+  <ul class="day-list">
+    <li><span class="dl-day">Day 9</span><span class="dl-where">Rest and exploration · Tinje village.</span><span class="dl-alt">4,150 m</span></li>
+    <li><span class="dl-day">Day 10</span><span class="dl-where">Tinje → Shimen → Khomas · flowing valley ride through hidden Dolpo settlements.</span><span class="dl-alt">4,200 m</span></li>
+    <li><span class="dl-day">Day 11</span><span class="dl-where">Rest and exploration · Khomas village.</span><span class="dl-alt">4,200 m</span></li>
+    <li><span class="dl-day">Day 12</span><span class="dl-where">Khomas → Saldang → Namgung · short technical day; ancient monastery in the evening.</span><span class="dl-alt">4,400 m</span></li>
+  </ul>
+
+  <div class="phase-body">
+    <div class="phase-route">
+      <p>After the crossings, the route opens. The valleys between Tinje and Saldang sit at around 4,100 to 4,400 metres — high enough that the air still asks something of you, low enough that the bike works again. Most of these days are rideable. The trail comes in long, flowing single-track sections through arid red and grey landscape, with occasional crossings of small settlements where children stop to look.</p>
+      <p>We build in two rest days here on purpose. Tinje and Khomas are the kind of villages where staying a day matters — there are gompas, traditional homes, fields being worked, people who will sit and talk through the guide's translation. Without the rest, the next phase is too much to ask of the body. With it, the next phase is a pilgrimage.</p>
+      <p>Saldang is the largest settlement in this part of Upper Dolpo — culturally rich, with several monasteries and a proper Tibetan-plateau feel. Namgung Gompa, where we sleep, is one of the older monasteries on the route. The day ends short specifically so the evening at the gompa is long.</p>
+    </div>
+
+    <aside class="phase-aside">
+      <div class="place-fragment">
+        <div class="place-label">Place — Saldang</div>
+        <h4>The largest village in the deep Dolpo</h4>
+        <p>Saldang sits in a wide upland basin, with terraces of barley and houses in the Tibetan style. It was an important node on the salt trade. The cultural texture is intact — a rare thing in the Himalaya in 2026 — because the road has not yet reached it. Whether that holds is a question every visitor is, indirectly, part of the answer to.</p>
+      </div>
+      <div class="field-notes">
+        <div class="field-notes-label">Field notes</div>
+        <div class="fn-entry">
+          <blockquote>"We passed through only a few villages, but everywhere we were welcomed with great warmth and openness. Our guide translated for us, or we communicated with hands and feet. Eventually the road ended completely, leaving only simple trails. The landscape became even more remote, even emptier."</blockquote>
+          <div class="fn-attr"><strong>Manuel</strong> &nbsp;·&nbsp; past rider &nbsp;·&nbsp; 2024</div>
+        </div>
+        <div class="fn-entry">
+          <blockquote>"We slept with the local families there as there were not many options for homestays. We had limited options for food — sometimes just dal bhat. People of the villages were surprised seeing us on bikes in that cold."</blockquote>
+          <div class="fn-attr"><strong>Deepak</strong> &nbsp;·&nbsp; founder · scouting ride &nbsp;·&nbsp; 2023</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</article>
+
+<!-- ============================================== PHASE 5 — SHEY & THE HIGH PASS -->
+<article class="phase">
+  <div class="phase-head">
+    <div class="phase-num">v<small>Sela La · Shey · Nagdalo La</small></div>
+    <div>
+      <h2 class="phase-title">The spiritual heart, then the highest point.</h2>
+      <div class="phase-meta">
+        <span><strong>Days</strong>13–15</span>
+        <span><strong>Passes</strong>5,090 m · 5,350 m</span>
+        <span><strong>Sleep</strong>camp at Shey, then homestay at Phoksundo</span>
+      </div>
+    </div>
+  </div>
+
+  <ul class="day-list">
+    <li><span class="dl-day">Day 13</span><span class="dl-where">Namgung → Sela La (5,090 m) → Shey Gompa · cross, then a long descending single-track to Shey.</span><span class="dl-alt">4,400 m</span></li>
+    <li><span class="dl-day">Day 14</span><span class="dl-where">Rest day · Shey Gompa, Crystal Mountain.</span><span class="dl-alt">4,400 m</span></li>
+    <li><span class="dl-day">Day 15</span><span class="dl-where">Shey → Nagdalo La (5,350 m) → Ringmo (Phoksundo) · the highest pass, then the long descent to the lake.</span><span class="dl-alt">3,611 m</span></li>
+  </ul>
+
+  <div class="phase-body">
+    <div class="phase-route">
+      <p>Day thirteen is a working day for the body and a still day for everything else. The Sela La sits at 5,090 m; the trail to it is rideable in places and a push in others. The descent on the far side, into the basin where Shey sits beneath Crystal Mountain, is one of the longest single-track sections of the whole trip. By late afternoon you are at the gompa.</p>
+      <p>Day fourteen is rest. Shey Gompa is the spiritual centre of Upper Dolpo, built in the eleventh century, and the destination of a pilgrimage that circles Crystal Mountain once every twelve years. The day is short on activity. Walking around the kora, sitting in the gompa, drinking butter tea with a monk — the trip slows here on purpose.</p>
+      <p>Day fifteen is the high day. The Nagdalo La at 5,350 m is the highest point of the journey and the last serious crossing. The push up is long and exposed; the descent on the far side is a fourteen-kilometre drop on technical trail toward Phoksundo Lake. The trail is steep, shaped by yak hooves over centuries, and rideable in long sections that you will, for the rest of your life, remember in detail.</p>
+    </div>
+
+    <aside class="phase-aside">
+      <div class="place-fragment">
+        <div class="place-label">Place — Shey Gompa</div>
+        <h4>The eleventh-century monastery</h4>
+        <p>Shey Gompa was made famous in Peter Matthiessen's <em>The Snow Leopard</em>, the 1978 book that brought the region to a Western readership for the first time. The gompa is still active. The monks live here year-round, snowed in for parts of the winter. We arrive in their season; we keep our voices low, we leave the place as we found it.</p>
+      </div>
+
+      <div class="place-fragment">
+        <div class="place-label">Place — Nagdalo La</div>
+        <h4>5,350 m, on a bike, on day fifteen</h4>
+        <p>By day fifteen, the body has been at altitude long enough that the Nagdalo is harder than its number suggests. The pass is technical and exposed; the wind on the saddle is steady and cold even in spring. We start early. We give ourselves all day. The descent toward Phoksundo is, for many riders, the single most spectacular descent of any trip we run.</p>
+      </div>
+
+      <div class="field-notes">
+        <div class="field-notes-label">Field notes</div>
+        <div class="fn-entry">
+          <blockquote>"Towards the end, we spent two stages in Buddhist monasteries. These places gave us a deep and fascinating insight into the local culture and spirituality. The final pass — over 5,300 metres — was a special moment. One last look back before beginning our return."</blockquote>
+          <div class="fn-attr"><strong>Manuel</strong> &nbsp;·&nbsp; past rider &nbsp;·&nbsp; 2024</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="phase-photo-single">
+    <figure>
+      <div class="placeholder-img wide">Shey Gompa under Crystal Mountain · photo pending</div>
+      <figcaption>Shey Gompa · day 14, the rest day</figcaption>
+    </figure>
+  </div>
+</article>
+
+<!-- ============================================== PHASE 6 — PHOKSUNDO & DUNAI -->
+<article class="phase">
+  <div class="phase-head">
+    <div class="phase-num">vi<small>Phoksundo · Dunai</small></div>
+    <div>
+      <h2 class="phase-title">The lake, then the long ride out.</h2>
+      <div class="phase-meta">
+        <span><strong>Days</strong>16–17</span>
+        <span><strong>Mode</strong>walk and rest, then long descent</span>
+        <span><strong>Sleep</strong>homestay, then lodge</span>
+      </div>
+    </div>
+  </div>
+
+  <ul class="day-list">
+    <li><span class="dl-day">Day 16</span><span class="dl-where">Rest at Phoksundo · short rides to viewpoints, walks along the shore.</span><span class="dl-alt">3,611 m</span></li>
+    <li><span class="dl-day">Day 17</span><span class="dl-where">Phoksundo → Suligad → Dunai · long technical descent on river trails.</span><span class="dl-alt">2,140 m</span></li>
+  </ul>
+
+  <div class="phase-body">
+    <div class="phase-route">
+      <p>Day sixteen is a true rest day. Phoksundo is the deepest lake in Nepal — 145 m at its centre, sitting at 3,611 m, ringed by cliffs and a colour of blue that doesn't quite read on the eye. There are short rides up to viewpoints. There are slow walks along the shore. The body is recovering from fifteen days of work; the head is starting to register what has happened.</p>
+      <p>Day seventeen is one of the longest descents in the Himalaya: from Phoksundo down to Dunai is a drop of nearly 1,500 metres on technical river trail, with several gorge sections that are rideable in skilled hands and walkable for everyone else. By late afternoon, you are in Dunai — a real town, with electricity, with a shop, with restaurants. The body and the head, between them, register that they are out.</p>
+    </div>
+
+    <aside class="phase-aside">
+      <div class="place-fragment">
+        <div class="place-label">Place — Phoksundo</div>
+        <h4>The deepest lake in Nepal</h4>
+        <p>Phoksundo holds a colour that local lore attributes to a mineral content unique to its catchment. The village of Ringmo, at one end, was built before the lake had a road or a permit system — it was a stop on the salt trade. Today, the lake is part of Shey Phoksundo National Park, and one of the more protected high-altitude ecosystems in the Himalaya.</p>
+      </div>
+      <div class="field-notes">
+        <div class="field-notes-label">Field notes</div>
+        <div class="fn-entry">
+          <blockquote>"When we reached Dunai, we felt like now we are alive — and we took a whole day there just to eat food."</blockquote>
+          <div class="fn-attr"><strong>Deepak</strong> &nbsp;·&nbsp; founder · scouting ride &nbsp;·&nbsp; 2023</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</article>
+
+<!-- ============================================== PHASE 7 — OUT -->
+<article class="phase">
+  <div class="phase-head">
+    <div class="phase-num">vii<small>Nepalgunj · Kathmandu</small></div>
+    <div>
+      <h2 class="phase-title">From the high plateau to the lowlands. <em>Then a flight east, and home.</em></h2>
+      <div class="phase-meta">
+        <span><strong>Days</strong>18–20</span>
+        <span><strong>Mode</strong>jeep · domestic flight</span>
+        <span><strong>Sleep</strong>hotel</span>
+      </div>
+    </div>
+  </div>
+
+  <ul class="day-list">
+    <li><span class="dl-day">Day 18</span><span class="dl-where">Dunai → Nepalgunj · early jeep down through the lower hills to the Terai.</span><span class="dl-alt">150 m</span></li>
+    <li><span class="dl-day">Day 19</span><span class="dl-where">Nepalgunj → Kathmandu · morning flight east, rest day, gear sort.</span><span class="dl-alt">1,400 m</span></li>
+    <li><span class="dl-day">Day 20</span><span class="dl-where">Kathmandu · departure, or extension into a wider Nepal trip.</span><span class="dl-alt">1,400 m</span></li>
+  </ul>
+
+  <div class="phase-body">
+    <div class="phase-route">
+      <p>The exit is the inverse of the entry. From Dunai down to Nepalgunj on the Terai plain is a long jeep, an early start, and a profound shift of climate — from cold high desert to humid jungle in a single day. By evening you are in a hotel with running hot water, which after twenty days takes a few minutes to register.</p>
+      <p>The flight from Nepalgunj to Kathmandu is a morning hop. The capital, after Dolpo, feels like an entirely different country, which in many practical senses it is. The last full day is for sleeping, sorting gear, walking around the Boudha or Patan, and saying the kind of goodbye that people who have spent twenty days at altitude together say to each other.</p>
+    </div>
+
+    <aside class="phase-aside">
+      <div class="place-fragment">
+        <div class="place-label">Place — Nepalgunj &amp; the Terai</div>
+        <h4>A different country, on the same map</h4>
+        <p>The Terai is the strip of low-lying jungle that runs along Nepal's southern border. Wildlife, big rivers, sub-tropical heat. We pass through it briefly. For riders extending the trip, we can route into Bardia or Chitwan from Nepalgunj — a separate journey, with separate logistics, that sits well after Dolpo.</p>
+      </div>
+      <div class="field-notes">
+        <div class="field-notes-label">Field notes</div>
+        <div class="fn-entry">
+          <blockquote>"Back in civilisation, we first enjoyed a well-deserved shower. Afterwards we spent two more days travelling by jeep into the Nepalese lowlands, where a completely different kind of nature and wildlife awaited us. An incredible journey with stunning landscapes and people who will stay in my memories for a lifetime."</blockquote>
+          <div class="fn-attr"><strong>Manuel</strong> &nbsp;·&nbsp; past rider &nbsp;·&nbsp; 2024</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</article>
+
+<!-- ============================================== IS THIS FOR YOU -->
+<section class="fitness">
+  <div class="fitness-grid">
+    <div class="fitness-left">
+      <div class="kicker">Is this for you?</div>
+      <h2>The honest answer, <em>at the top of the scale.</em></h2>
+      <p style="font-family: var(--serif-body); font-size: 1.05rem; color: var(--ink-soft); line-height: 1.6;">We grade our journeys on a 1–6 scale. Upper Dolpo sits at six. There is nothing harder on our slate. Almost everyone who applies is told some version of: not yet.</p>
+
+      <div class="diff-scale">
+        <div class="diff-bar passed"></div>
+        <div class="diff-bar passed"></div>
+        <div class="diff-bar passed"></div>
+        <div class="diff-bar passed"></div>
+        <div class="diff-bar passed"></div>
+        <div class="diff-bar active"></div>
+      </div>
+      <div class="diff-meta">
+        <span><strong>Level 6 — Extreme</strong>Twenty days, four passes above 5,000 m, MTB-handling at altitude</span>
+        <span style="text-align: right;">1 → 6</span>
+      </div>
+    </div>
+
+    <div class="fitness-right">
+      <p>This is the hardest journey on our slate. The grade is not marketing language — twenty days at altitude, four passes over 5,000 m, and a bike that you carry as much as you ride is, by any reasonable measure, an expedition. Riders join this trip with prior multi-day MTB experience and prior altitude experience, separately. If you have one but not the other, the right answer is to walk a high journey first, ride a long one second, and apply for Dolpo third.</p>
+      <p>We are honest with applicants on the call. The scouting ride that informed this itinerary was harder than the founders had planned for; we built the route as it now stands so that future cohorts walk into the difficulty with their eyes open, and with rest days, contingencies, and a medical kit designed for what the actual terrain can do.</p>
+      <p>If the conversation suggests Dolpo is one trip too soon, we'll say so. Most applicants we say it to come back two seasons later, ready.</p>
+
+      <div class="signal">
+        <span class="signal-label">If you're ready for this, you have already —</span>
+        <ul class="signal-list">
+          <li>Completed at least one multi-day MTB expedition of 7+ days</li>
+          <li>Spent at least one continuous week above 4,000 m before</li>
+          <li>Carried and pushed a loaded bike on technical singletrack</li>
+          <li>Twelve weeks out, with time to train specifically for this</li>
+          <li>Ridden tubeless and managed your own basic mechanicals</li>
+          <li>Slept in a tent at altitude, in cold, more than once</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================== LEADER CARD -->
+<section class="leader">
+  <div class="leader-grid">
+    <div class="leader-photo">
+      <img src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-FOP0.jpeg" alt="Deepak — trip leader, Upper Dolpo MTB Expedition">
+      <div class="caption">Deepak · above Muktinath, Mustang · 2025</div>
+    </div>
+    <div>
+      <div class="kicker">Riding with you</div>
+      <h2 class="leader-name">Deepak</h2>
+      <div class="leader-role">Lead · Upper Dolpo MTB Expedition</div>
+      <div class="leader-bio">
+        <p>Deepak rode this route as a scouting expedition in 2023. The ride was harder than the original plan, and the planned route changed in places to match what the terrain actually allows. The version of Upper Dolpo we now run is the one shaped by that ride — and by the conversations with the local families and homestay owners we depend on along the way.</p>
+        <p>The work of leadership on a trip of this scale is mostly invisible: pacing the group, watching for altitude signs, making the call to push or to stop, knowing which homestay's kitchen is open in late October. The leader is not a service provider. On Dolpo, the leader is the difference between a journey and an evacuation.</p>
+      </div>
+
+      <div class="leader-creds">
+        <div>
+          <span class="cred-label">Mountaineering</span>
+          <div class="cred-value">NMA-certified <em>Nepal Mountaineering Association</em></div>
+        </div>
+        <div>
+          <span class="cred-label">Medical</span>
+          <div class="cred-value">Wilderness First Responder <em>WFR-certified</em></div>
+        </div>
+        <div>
+          <span class="cred-label">Route record</span>
+          <div class="cred-value">Scouted and led <em>Upper Dolpo, Mustang, Annapurna</em></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================== OPERATIONAL SUBSTANCE -->
+<section class="ops">
+  <div class="ops-head">
+    <h2>What we carry, and what we plan for.</h2>
+    <span style="font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-mute);">Logistics &nbsp;·&nbsp; Safety</span>
+  </div>
+
+  <div class="ops-grid">
+    <div class="ops-block">
+      <h3>The medical &amp; mechanical kit on the trail</h3>
+      <p>The kit is sized for the route. Twenty days, four passes over 5,000 m, and most of the route a day or more from the nearest road means we carry more than the smaller treks need. Mechanicals matter as much as medical: a broken derailleur on day eleven is a day-long problem if you don't have the spare. The kit is carried by the lead guide and the support crew, and re-stocked between expeditions.</p>
+      <ul class="kit-list">
+        <li>Portable oxygen — multiple cylinders</li>
+        <li>Pulse oximeter &amp; BP monitor</li>
+        <li>Stethoscope</li>
+        <li>AMS protocol kit · Diamox, Dexamethasone</li>
+        <li>HACE / HAPE response kit</li>
+        <li>Trauma kit · splints, dressings, sutures</li>
+        <li>Folding stretcher</li>
+        <li>Spare derailleur hangers</li>
+        <li>Spare brake pads, chains, sealant</li>
+        <li>Bike multi-tools, chain breaker</li>
+        <li>Hand-warmers, emergency bivy bags</li>
+        <li>Satellite communicator · two units</li>
+      </ul>
+    </div>
+
+    <div class="ops-block">
+      <h3>If something doesn't go to plan</h3>
+      <p>Five of the failure modes we plan for, and how the day works when they happen.</p>
+      <ul class="plan-b">
+        <li>
+          <strong>Altitude affects a member of the group</strong>
+          We have built rest days into days 9, 11, 14 and 16. If a rider needs to descend, we descend; the group stays at the last village while the rider and a guide drop to lower altitude with the satellite communicator open. Dolpo is twenty days because the rest days exist, not in spite of them.
+        </li>
+        <li>
+          <strong>A pass is closed by snow or weather</strong>
+          On Dolpo, the four 5,000 m passes are weather-dependent in shoulder season. We hold a day at the last settlement before the pass and reassess; if the window doesn't open, we have alternative routes via lower (slower) passes — pre-walked by the lead — that get us to Shey or Phoksundo without crossing the Niwar or Nagdalo at full height.
+        </li>
+        <li>
+          <strong>A serious mechanical failure on a bike</strong>
+          We carry spare derailleur hangers, brake pads, chains, sealant, and a full multi-tool. For frame or wheel damage that the kit cannot fix, the rider continues by yak or by foot to the next village, and a replacement bike is moved up from Dunai or Pokhara to meet the group at Phoksundo or earlier. Local boys riding Chinese motocross bikes have, more than once, helped extract a broken bike from a distant valley.
+        </li>
+        <li>
+          <strong>Weight limit on the domestic flights</strong>
+          Flights from Nepalgunj and Juphal cap at 15–20 kg including hand baggage. We pre-stage non-essential luggage in Pokhara and Kathmandu; what the rider carries on the trail is genuinely what they need.
+        </li>
+        <li>
+          <strong>Evacuation from above 4,000 m</strong>
+          The satellite communicators carried by the lead and the support crew connect to Nepali helicopter evacuation services. We have the registered policies and the contact tree pre-loaded. Travel insurance covering MTB at high altitude is a non-negotiable condition of joining this trip.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================== PREPARATION FLOW -->
+<section class="prep">
+  <div class="prep-inner">
+    <div class="prep-head">
+      <div>
+        <div class="kicker">From application to arrival</div>
+        <h2>A twelve-week <em>preparation,</em> not a booking confirmation.</h2>
+      </div>
+      <p class="prep-lede">An application is the start of a relationship, not a transaction. For Dolpo, the relationship is twelve weeks long — twice the length of our shorter journeys. The expedition is not where the trip begins.</p>
+    </div>
+
+    <div class="prep-steps">
+      <div class="prep-step">
+        <span class="num">i.</span>
+        <h4>Apply &amp; talk</h4>
+        <p>You apply. We schedule a video call within days. We talk about your MTB and altitude history, the trip, and whether the fit is right both ways. For Dolpo, the call is longer than for our other journeys.</p>
+      </div>
+
+      <div class="prep-step">
+        <span class="num">ii.</span>
+        <h4>Confirm the cohort</h4>
+        <p>If we go ahead, you join a small group of six riders. The WhatsApp circle opens as soon as the cohort reaches three. Early signups become informal hosts for later joiners.</p>
+      </div>
+
+      <div class="prep-step expand">
+        <span class="num">iii.</span>
+        <h4>Twelve weeks of preparation</h4>
+        <p>Specific to Dolpo: an extended training plan, an MTB skills checklist, a high-altitude bivvy night before departure if you haven't done one in the last year.</p>
+        <div class="pillars">
+          <span>Health &amp; fitness intake</span>
+          <span>Bike spec &amp; gear list</span>
+          <span>Twelve-week training plan</span>
+          <span>MTB-specific skills review</span>
+          <span>Weekly group check-ins</span>
+        </div>
+      </div>
+
+      <div class="prep-step">
+        <span class="num">iv.</span>
+        <h4>Logistics briefing</h4>
+        <p>Permits — Upper Dolpo special permit is restricted and slow — domestic flights, weight rules, teahouse and camp etiquette, the specific shape of the four pass days, and the call we make on weather.</p>
+      </div>
+
+      <div class="prep-step">
+        <span class="num">v.</span>
+        <h4>On the ground</h4>
+        <p>Every intake, flag, and note from twelve weeks of conversation is handed to the guide team before you arrive. They know your bike, your altitude history, your training base, and what you came to Dolpo to find.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================== TRIP CALENDAR / DEPARTURES -->
+<section class="calendar" id="departures">
+  <div class="calendar-inner">
+    <div class="calendar-head">
+      <div>
+        <div class="kicker">Scheduled departures</div>
+        <h2>Pick a window. <em>Apply to reserve.</em></h2>
+      </div>
+      <p class="lede">Dolpo runs in two short windows a year — the dry shoulders of the monsoon, when the passes are open and the rivers are low. Each cohort caps at six riders. We confirm by hand after a longer-than-usual conversation; a place is held the moment we both agree.</p>
+    </div>
+
+    <div class="departure-grid" id="departure-grid">
+      <!-- populated by script -->
+    </div>
+
+    <form class="application" id="application-form" novalidate>
+      <div class="application-intro">
+        <h3>Send an <em>application.</em></h3>
+        <div class="selected-readout" id="selected-readout">No window selected</div>
+      </div>
+
+      <div class="field">
+        <label for="app-name">Full name</label>
+        <input type="text" id="app-name" name="name" required placeholder="As on your passport" />
+      </div>
+      <div class="field">
+        <label for="app-email">Email</label>
+        <input type="email" id="app-email" name="email" required placeholder="you@somewhere.com" />
+      </div>
+      <div class="field">
+        <label for="app-phone">Phone (with country code)</label>
+        <input type="tel" id="app-phone" name="phone" placeholder="+91 98xxxxxxxx" />
+      </div>
+      <div class="field">
+        <label for="app-experience">MTB &amp; altitude experience</label>
+        <select id="app-experience" name="experience">
+          <option value="">Choose one…</option>
+          <option>Multi-day MTB done · no high altitude yet</option>
+          <option>High altitude done · light MTB only</option>
+          <option>Both done separately · 7+ day MTB and 4,000 m+ trek</option>
+          <option>Done a comparable expedition before</option>
+        </select>
+      </div>
+      <div class="field full">
+        <label for="app-message">Tell us about a recent expedition you've done</label>
+        <textarea id="app-message" name="message" placeholder="Where, when, how many days, max altitude, what surprised you, what you'd do differently. The more specific, the better the call."></textarea>
+      </div>
+
+      <div class="application-submit-row">
+        <p class="application-fineprint">A reply within two business days. The Dolpo call usually runs 30–45 minutes. No payment is taken until we've spoken and the cohort is confirmed.</p>
+        <button type="submit" class="application-submit" id="app-submit" disabled>Send application →</button>
+      </div>
+
+      <div class="application-confirmation" id="app-confirmation">
+        <h4>Application received.</h4>
+        <p>We'll be in touch within two business days to schedule the call. Look out for an email from <em>hello@totemtou.com</em>.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ============================================== APPLICATION CLOSE -->
+<section class="close">
+  <div class="close-inner">
+    <div class="kicker">Riding with us</div>
+    <h2>If twenty days <em>at this altitude reads like something you would ride,</em> apply.</h2>
+    <p>We don't take bookings on this site, and Dolpo is not a journey we run lightly. The cohort is six riders. The call before we confirm is longer than our shorter trips. We want to know — and you want to know — that the fit is right on both sides.</p>
+    <p>The form is six questions and takes ten minutes. We reply within two business days. Departures fill quietly; we don't run waitlists louder than the journey.</p>
+    <a class="apply" href="#departures">Begin an application →</a>
+
+    <div class="price-block">
+      <div>
+        <div class="price-from">From</div>
+        <div class="price-amount">$5,800 <small>per person</small></div>
+      </div>
+      <div class="price-fineprint">
+        Includes all stays, meals, transport from Pokhara to Pokhara, all permits including the Upper Dolpo special, lead guide and support crew, mechanical and medical kit, and the Nepalgunj–Kathmandu flight. International flights, personal bike, beverages, tips and 5% GST sit outside.
+      </div>
+    </div>
+
+    <div class="close-foot">
+      <span>Upper Dolpo MTB Expedition · 20 days · Flow with the Land</span>
+      <span>Departures&nbsp;·&nbsp;Apr · May · Sep · Oct</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Nav adapts to whatever it's sitting over — dark hero vs. paper background.
+  (function() {
+    const nav = document.querySelector('.nav');
+    const hero = document.querySelector('.hero');
+    if (!nav || !hero) return;
+    function update() {
+      const heroBottom = hero.getBoundingClientRect().bottom;
+      const navMid = nav.offsetHeight / 2 + 4;
+      if (heroBottom > navMid) {
+        nav.classList.add('is-over-dark');
+        nav.classList.remove('is-over-paper');
+      } else {
+        nav.classList.add('is-over-paper');
+        nav.classList.remove('is-over-dark');
+      }
+    }
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+  })();
+
+  // Interactive elevation profile — the 20-day Upper Dolpo route.
+  // Each point has SVG x position (in viewBox coords, range 60..1180),
+  // y position for that altitude, day index, altitude m,
+  // a place name, a short kicker label, and the fact.
+  (function() {
+    const POINTS = [
+      { x: 60,   y: 230, day: 1,  alt: 822,  name: "Pokhara",
+        factLabel: "The build day", fact: "The bikes are unboxed and tuned. A short loop to Sarangkot or the Peace Pagoda finds anything wrong before the road north. Last day at low altitude before the long jeep into Mustang." },
+
+      { x: 116,  y: 230, day: 2,  alt: 822,  name: "Pokhara local ride",
+        factLabel: "The warm-up", fact: "A loop through Kaskikot, Pame, or Begnas. Last working day at low altitude. The bike is dialled in, the legs are reminded of what they're about to do for three weeks." },
+
+      { x: 172,  y: 147, day: 3,  alt: 2700, name: "Thini",
+        factLabel: "The drive in", fact: "Eight to nine hours up the Kali Gandaki — the deepest gorge in the world by the standard measure. Thini is one of Mustang's oldest villages, off the main trail. Quiet, working, the right place for the body to start adjusting." },
+
+      { x: 228,  y: 100, day: 4,  alt: 3760, name: "Muktinath / Lupra loop",
+        factLabel: "First ride at altitude", fact: "Acclimatisation ride to Muktinath at 3,760 m — a temple complex sacred to Hindus and Buddhists, with the eternal-flame shrine of Jwala Mai inside its grounds — then a drop into the Lupra valley and back. No luggage on the bikes today." },
+
+      { x: 284,  y: 46,  day: 5,  alt: 4990, name: "Sangda",
+        factLabel: "Entry to Dolpo", fact: "We jeep over the Sangda La at 4,990 m. South of it is Mustang. North of it is Upper Dolpo. The road effectively ends here. From this point on, the trip is on bikes or on foot." },
+
+      { x: 340,  y: 54,  day: 6,  alt: 4800, name: "Niwar La Base Camp",
+        factLabel: "First wilderness camp", fact: "Push, ride, carry from Sangda to a high camp below the Niwar La. The first night fully off-grid. Tents, a stove, the wind that defines this part of Dolpo. The pass is the morning's work." },
+
+      { x: 396,  y: 40,  day: 7,  alt: 5125, name: "Niwar La",
+        factLabel: "5,125 m, on a bike day", fact: "A saddle of grey rock with prayer flags. The wind is steady. Air at fifty-three percent of sea level. Most groups stop fifteen minutes — long enough to catch breath, drink water, and start the descent before the cold gets in. The drop into the Chharka valley is long." },
+
+      { x: 452,  y: 44,  day: 8,  alt: 5030, name: "Mola Pass",
+        factLabel: "The second crossing", fact: "Out of Chharka Bhot early. The climb to the Mola is gradual but long. The descent on the far side, into Tinje, is the first real flowing single-track of the trip — after three days of carrying the bike, riding it again is briefly extraordinary." },
+
+      { x: 508,  y: 83,  day: 9,  alt: 4150, name: "Tinje · rest day",
+        factLabel: "First rest in Dolpo", fact: "Tinje is a hidden Dolpo village with traditional homes, a small gompa, and fields being worked. The day is short on activity by design. Walking, drinking butter tea, sitting with locals through the guide's translation." },
+
+      { x: 564,  y: 83,  day: 10, alt: 4200, name: "Tinje → Khomas",
+        factLabel: "The rideable valleys", fact: "Flowing valley ride through Shimen and on to Khomas. Long single-track sections, arid landscape in red and grey, occasional small settlements where children stop to watch the bikes. One of the more rideable days of the whole expedition." },
+
+      { x: 620,  y: 83,  day: 11, alt: 4200, name: "Khomas · rest day",
+        factLabel: "Second rest", fact: "Built into the route on purpose. Without the rest, the next phase — Sela La and Shey — is too much to ask of the body. With it, the next phase is a pilgrimage. Khomas is a working settlement with deep Tibetan-Buddhist traditions." },
+
+      { x: 676,  y: 72,  day: 12, alt: 4400, name: "Saldang & Namgung",
+        factLabel: "The largest village", fact: "Saldang is the largest settlement in this part of Upper Dolpo — culturally rich, several monasteries, the proper feel of the Tibetan plateau. We sleep at Namgung Gompa. The day ends short specifically so the evening at the gompa is long." },
+
+      { x: 732,  y: 42,  day: 13, alt: 5090, name: "Sela La",
+        factLabel: "On to Shey", fact: "5,090 m and rideable in places, push in others. The descent on the far side is one of the longest single-track sections of the whole trip — a long drop into the basin where Shey sits beneath Crystal Mountain." },
+
+      { x: 788,  y: 72,  day: 14, alt: 4400, name: "Shey Gompa · rest day",
+        factLabel: "The spiritual heart", fact: "Shey was built in the eleventh century and is the destination of a once-every-twelve-years pilgrimage that circles Crystal Mountain. The gompa is still active. Walking around the kora, sitting inside, drinking butter tea — the trip slows here on purpose." },
+
+      { x: 844,  y: 30,  day: 15, alt: 5350, name: "Nagdalo La",
+        factLabel: "The high pass", fact: "5,350 m — the highest point of the expedition. Technical, exposed, the gate between Shey and the descent to Phoksundo. Bikes are pushed and carried the last hour up. The descent on the far side is fourteen kilometres on technical trail toward the lake." },
+
+      { x: 900,  y: 107, day: 16, alt: 3611, name: "Phoksundo · rest day",
+        factLabel: "The deepest lake", fact: "Phoksundo is 145 m at its centre, ringed by cliffs, a colour of blue that doesn't quite read on the eye. A true rest day after fifteen days of work. Short rides to viewpoints, slow walks along the shore, the head registering what has happened." },
+
+      { x: 956,  y: 172, day: 17, alt: 2140, name: "Dunai",
+        factLabel: "Out of the high country", fact: "One of the longest descents in the Himalaya — Phoksundo down to Dunai is a 1,500 m drop on technical river trail. By late afternoon, you are in a real town, with electricity and shops. The body and the head register that they are out." },
+
+      { x: 1012, y: 260, day: 18, alt: 150,  name: "Nepalgunj",
+        factLabel: "The lowlands", fact: "Long jeep down through the lower hills to the Terai plain. From cold high desert to humid jungle in a single day. By evening you are in a hotel with running hot water, which after twenty days takes a few minutes to register." },
+
+      { x: 1068, y: 205, day: 19, alt: 1400, name: "Kathmandu",
+        factLabel: "Back east", fact: "Morning flight to Kathmandu. The capital, after Dolpo, feels like an entirely different country, which in many practical senses it is. Rest, gear sort, optional walks around Boudha or Patan." },
+
+      { x: 1180, y: 205, day: 20, alt: 1400, name: "Departure",
+        factLabel: "End", fact: "Departure from Kathmandu, or extension into a wider Nepal trip. Goodbyes the kind that people who have spent twenty days at altitude together say to each other." }
+    ];
+
+    const canvas = document.getElementById('elev-canvas');
+    const svg = canvas && canvas.querySelector('svg');
+    const ptrLine = document.getElementById('elev-pointer-line');
+    const ptrDot = document.getElementById('elev-pointer-dot');
+    const elName = document.getElementById('ec-name');
+    const elKm = document.getElementById('ec-km');
+    const elAlt = document.getElementById('ec-alt');
+    const elOx = document.getElementById('ec-ox');
+    const elFactLabel = document.getElementById('ec-fact-label');
+    const elFact = document.getElementById('ec-fact');
+    if (!canvas || !svg) return;
+
+    // Real oxygen partial-pressure ratio at altitude vs sea level.
+    function oxygenPercent(altitude_m) {
+      return Math.round(Math.exp(-altitude_m / 7400) * 100);
+    }
+
+    function snap(x_in_svg) {
+      let nearest = POINTS[0];
+      let minDist = Infinity;
+      for (const p of POINTS) {
+        const d = Math.abs(p.x - x_in_svg);
+        if (d < minDist) { minDist = d; nearest = p; }
+      }
+      return nearest;
+    }
+
+    function render(point) {
+      ptrLine.setAttribute('x1', point.x);
+      ptrLine.setAttribute('x2', point.x);
+      ptrLine.setAttribute('y1', point.y);
+      ptrLine.setAttribute('y2', 260);
+      ptrDot.setAttribute('cx', point.x);
+      ptrDot.setAttribute('cy', point.y);
+      elName.textContent = point.name;
+      elKm.textContent = `Day ${point.day}  ·  ${point.factLabel}`;
+      elAlt.innerHTML = point.alt.toLocaleString() + '<small>m</small>';
+      elOx.innerHTML = oxygenPercent(point.alt) + '<small>%</small>';
+      elFactLabel.textContent = point.factLabel;
+      elFact.textContent = point.fact;
+    }
+
+    function pointerMove(clientX) {
+      const rect = svg.getBoundingClientRect();
+      const svgX = ((clientX - rect.left) / rect.width) * 1200;
+      const point = snap(svgX);
+      render(point);
+      canvas.classList.add('touched');
+    }
+
+    let dragging = false;
+    canvas.addEventListener('mousedown', (e) => {
+      dragging = true;
+      pointerMove(e.clientX);
+      e.preventDefault();
+    });
+    window.addEventListener('mouseup', () => { dragging = false; });
+
+    canvas.addEventListener('mousemove', (e) => {
+      pointerMove(e.clientX);
+    });
+
+    canvas.addEventListener('touchstart', (e) => {
+      if (e.touches.length) pointerMove(e.touches[0].clientX);
+    }, { passive: true });
+    canvas.addEventListener('touchmove', (e) => {
+      if (e.touches.length) pointerMove(e.touches[0].clientX);
+    }, { passive: true });
+  })();
+
+  // Trip calendar — scheduled departures and application form.
+  // The CMS writes the canonical list to localStorage under
+  // `totemtou.departures.upper-dolpo-mtb`; we fall back to a default slate.
+  (function() {
+    const STORAGE_KEY = 'totemtou.departures.upper-dolpo-mtb';
+    const DEFAULTS = [
+      { id: 'apr-2026',   month: 'April 2026',     range: '12 Apr – 1 May',   note: 'Pre-monsoon window',                  capacity: 6, booked: 2 },
+      { id: 'may-2026',   month: 'May 2026',       range: '10 – 29 May',       note: 'Late spring, snow off the passes',   capacity: 6, booked: 4 },
+      { id: 'sep-2026',   month: 'September 2026', range: '13 Sep – 2 Oct',   note: 'Post-monsoon, rivers high',           capacity: 6, booked: 1 },
+      { id: 'oct-2026',   month: 'October 2026',   range: '4 – 23 Oct',        note: 'Clearest autumn window',             capacity: 6, booked: 3 },
+    ];
+
+    function load() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length) return parsed;
+        }
+      } catch (e) { /* ignore */ }
+      return DEFAULTS;
+    }
+
+    const grid = document.getElementById('departure-grid');
+    const readout = document.getElementById('selected-readout');
+    const form = document.getElementById('application-form');
+    const submit = document.getElementById('app-submit');
+    const confirmation = document.getElementById('app-confirmation');
+    if (!grid || !form) return;
+
+    let selected = null;
+    const departures = load();
+
+    function statusFor(d) {
+      const left = d.capacity - d.booked;
+      if (left <= 0) return { label: 'Full', cls: 'is-full' };
+      if (left <= 2) return { label: left + ' left', cls: 'is-filling' };
+      return { label: 'Open', cls: '' };
+    }
+
+    function render() {
+      grid.innerHTML = '';
+      departures.forEach(d => {
+        const status = statusFor(d);
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'departure-card';
+        if (status.label === 'Full') card.classList.add('is-full');
+        if (selected && selected.id === d.id) card.classList.add('is-selected');
+        card.dataset.id = d.id;
+        card.innerHTML = `
+          <span class="departure-month">${d.month}</span>
+          <span class="departure-dates">${d.range}<small>${d.note || ''}</small></span>
+          <span class="departure-foot">
+            <span class="departure-spots">${d.capacity - d.booked}/${d.capacity} spots</span>
+            <span class="departure-status ${status.cls}">${status.label}</span>
+          </span>
+        `;
+        if (status.label !== 'Full') {
+          card.addEventListener('click', () => {
+            selected = d;
+            updateReadout();
+            render();
+          });
+        }
+        grid.appendChild(card);
+      });
+    }
+
+    function updateReadout() {
+      if (!selected) {
+        readout.textContent = 'No window selected';
+        submit.disabled = true;
+        return;
+      }
+      readout.innerHTML = 'Reserving <strong>' + selected.range + '</strong> · ' + selected.month;
+      submit.disabled = false;
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!selected) return;
+      const application = {
+        trip: 'upper-dolpo-mtb',
+        departureId: selected.id,
+        name: form.name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        experience: form.experience.value,
+        message: form.message.value,
+        submittedAt: new Date().toISOString(),
+      };
+      try {
+        const key = 'totemtou.applications';
+        const existing = JSON.parse(localStorage.getItem(key) || '[]');
+        existing.push(application);
+        localStorage.setItem(key, JSON.stringify(existing));
+      } catch (e) { /* ignore */ }
+      confirmation.classList.add('is-visible');
+      submit.disabled = true;
+      submit.textContent = 'Sent ✓';
+      confirmation.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    render();
+    updateReadout();
+  })();
+</script>
+
+</body>
+</html>
