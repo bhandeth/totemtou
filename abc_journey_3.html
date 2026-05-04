@@ -2536,6 +2536,8 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
   </div>
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="storage.js"></script>
 <script>
   // Nav adapts to whatever it's sitting over — dark hero vs. paper background.
   (function() {
@@ -2693,10 +2695,10 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
   })();
 
   // Trip calendar — scheduled departures and application form.
-  // The CMS writes the canonical list to localStorage under
-  // `totemtou.departures.abc-base-camp`; we fall back to a default slate.
-  (function() {
-    const STORAGE_KEY = 'totemtou.departures.abc-base-camp';
+  // The CMS writes the canonical list to Supabase under
+  // `totemtou.departures.abc`; we fall back to a default slate.
+  (async function() {
+    const STORAGE_KEY = 'totemtou.departures.abc';
     const DEFAULTS = [
       { id: 'feb-2026-a', month: 'February 2026', range: '10 – 16 Feb', note: 'Cool, clearest skies', capacity: 12, booked: 4 },
       { id: 'feb-2026-b', month: 'February 2026', range: '24 Feb – 2 Mar', note: 'Late winter window', capacity: 12, booked: 9 },
@@ -2706,14 +2708,9 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
       { id: 'nov-2026',   month: 'November 2026', range: '10 – 16 Nov', note: 'Final window of the season', capacity: 12, booked: 1 },
     ];
 
-    function load() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed) && parsed.length) return parsed;
-        }
-      } catch (e) { /* ignore */ }
+    async function load() {
+      const data = await TTStorage.getItem(STORAGE_KEY);
+      if (Array.isArray(data) && data.length) return data;
       return DEFAULTS;
     }
 
@@ -2725,7 +2722,7 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
     if (!grid || !form) return;
 
     let selected = null;
-    const departures = load();
+    const departures = await load();
 
     function statusFor(d) {
       const left = d.capacity - d.booked;
@@ -2773,13 +2770,11 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
       submit.disabled = false;
     }
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!selected) return;
-      // In production this would POST to an applications endpoint with the
-      // selected departure id and the form payload. For now, record locally
-      // so the CMS dashboard can show pending interest.
       const application = {
+        trip: 'annapurna-base-camp',
         departureId: selected.id,
         name: form.name.value,
         email: form.email.value,
@@ -2790,9 +2785,9 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
       };
       try {
         const key = 'totemtou.applications';
-        const existing = JSON.parse(localStorage.getItem(key) || '[]');
+        const existing = await TTStorage.getItem(key) || [];
         existing.push(application);
-        localStorage.setItem(key, JSON.stringify(existing));
+        TTStorage.setItem(key, existing);
       } catch (e) { /* ignore */ }
       confirmation.classList.add('is-visible');
       submit.disabled = true;

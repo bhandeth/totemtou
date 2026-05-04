@@ -2521,6 +2521,8 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
   </div>
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="storage.js"></script>
 <script>
   // Nav adapts to whatever it's sitting over — dark hero vs. paper background.
   (function() {
@@ -2663,10 +2665,10 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
   })();
 
   // Trip calendar — scheduled departures and application form.
-  // The CMS writes the canonical list to localStorage under
-  // `totemtou.departures.khopra-ridge`; we fall back to a default slate.
-  (function() {
-    const STORAGE_KEY = 'totemtou.departures.khopra-ridge';
+  // The CMS writes the canonical list to Supabase under
+  // `totemtou.departures.khopra`; we fall back to a default slate.
+  (async function() {
+    const STORAGE_KEY = 'totemtou.departures.khopra';
     const DEFAULTS = [
       { id: 'mar-2026',   month: 'March 2026',    range: '15 – 21 Mar', note: 'Rhododendron starting to bloom', capacity: 12, booked: 3 },
       { id: 'apr-2026',   month: 'April 2026',    range: '5 – 11 Apr',  note: 'Clearest spring window',         capacity: 12, booked: 7 },
@@ -2676,14 +2678,9 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
       { id: 'nov-2026-b', month: 'November 2026', range: '23 – 29 Nov', note: 'Final window of the season',     capacity: 12, booked: 0 },
     ];
 
-    function load() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed) && parsed.length) return parsed;
-        }
-      } catch (e) { /* ignore */ }
+    async function load() {
+      const data = await TTStorage.getItem(STORAGE_KEY);
+      if (Array.isArray(data) && data.length) return data;
       return DEFAULTS;
     }
 
@@ -2695,7 +2692,7 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
     if (!grid || !form) return;
 
     let selected = null;
-    const departures = load();
+    const departures = await load();
 
     function statusFor(d) {
       const left = d.capacity - d.booked;
@@ -2743,7 +2740,7 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
       submit.disabled = false;
     }
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!selected) return;
       const application = {
@@ -2758,9 +2755,9 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
       };
       try {
         const key = 'totemtou.applications';
-        const existing = JSON.parse(localStorage.getItem(key) || '[]');
+        const existing = await TTStorage.getItem(key) || [];
         existing.push(application);
-        localStorage.setItem(key, JSON.stringify(existing));
+        TTStorage.setItem(key, existing);
       } catch (e) { /* ignore */ }
       confirmation.classList.add('is-visible');
       submit.disabled = true;

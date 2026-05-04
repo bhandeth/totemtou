@@ -778,7 +778,9 @@ button { font-family: inherit; cursor: pointer; }
   </a>
   <div class="admin-nav-right">
     <a href="index.html" target="_blank">View site ↗</a>
-    <a href="abc_journey_3.html" target="_blank">Trip page ↗</a>
+    <a href="abc_journey_3.html" target="_blank">ABC ↗</a>
+    <a href="khopra_journey.html" target="_blank">Khopra ↗</a>
+    <a href="dolpo_journey.html" target="_blank">Dolpo ↗</a>
     <span class="who">Deepak · admin</span>
   </div>
 </nav>
@@ -968,6 +970,8 @@ button { font-family: inherit; cursor: pointer; }
   </div>
 </aside>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="storage.js"></script>
 <script>
 /* ====== DATA MODEL ================================================= */
 const STORAGE_KEY = 'totemtou.cms.trips';
@@ -1079,45 +1083,34 @@ const CATEGORY_NAMES = {
 };
 
 /* ====== STATE ====================================================== */
-let state = load();
-let hero = loadHero();
+let state = null;
+let hero = null;
 let editing = null; // working copy of the trip currently in the drawer
 let editingIndex = -1; // -1 means new trip
 let dirty = false;
 let dragSrcIndex = null;
 
-function load() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length) return parsed;
-    }
-  } catch (e) { /* ignore */ }
+async function load() {
+  const data = await TTStorage.getItem(STORAGE_KEY);
+  if (Array.isArray(data) && data.length) return data;
   return JSON.parse(JSON.stringify(DEFAULT_TRIPS));
 }
 
 function persist() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  // Also write per-trip departures so the public page can read them by slug.
+  TTStorage.setItem(STORAGE_KEY, state);
   state.forEach(t => {
-    localStorage.setItem('totemtou.departures.' + t.id, JSON.stringify(t.departures));
+    TTStorage.setItem('totemtou.departures.' + t.id, t.departures);
   });
 }
 
-function loadHero() {
-  try {
-    const raw = localStorage.getItem(HERO_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (parsed && Array.isArray(parsed.videos)) return parsed;
-    }
-  } catch (e) { /* ignore */ }
+async function loadHero() {
+  const data = await TTStorage.getItem(HERO_KEY);
+  if (data && Array.isArray(data.videos)) return data;
   return JSON.parse(JSON.stringify(DEFAULT_HERO));
 }
 
 function persistHero() {
-  localStorage.setItem(HERO_KEY, JSON.stringify(hero));
+  TTStorage.setItem(HERO_KEY, hero);
 }
 
 function videoTypeFor(url) {
@@ -1132,27 +1125,24 @@ function videoTypeFor(url) {
   return '';
 }
 
-function applicationsCount() {
-  try {
-    const raw = localStorage.getItem(APPS_KEY);
-    if (!raw) return 0;
-    const arr = JSON.parse(raw);
-    return Array.isArray(arr) ? arr.length : 0;
-  } catch (e) { return 0; }
+async function applicationsCount() {
+  const arr = await TTStorage.getItem(APPS_KEY);
+  return Array.isArray(arr) ? arr.length : 0;
 }
 
 /* ====== RENDER ===================================================== */
-function renderStats() {
+async function renderStats() {
   const total = state.length;
   const active = state.filter(t => t.active).length;
   const departures = state.reduce((sum, t) => sum + t.departures.length, 0);
   const seats = state.reduce((sum, t) => sum + t.departures.reduce((s, d) => s + (d.capacity - d.booked), 0), 0);
+  const appCount = await applicationsCount();
 
   const stats = [
     { label: 'Trips', value: total, sub: active + ' active' },
     { label: 'Categories', value: 3, sub: 'walk · traverse · flow' },
     { label: 'Scheduled departures', value: departures, sub: seats + ' seats open' },
-    { label: 'Pending applications', value: applicationsCount(), sub: 'from public site' },
+    { label: 'Pending applications', value: appCount, sub: 'from public site' },
   ];
 
   const wrap = document.getElementById('admin-stats');
@@ -1239,7 +1229,7 @@ function tripCardHtml(t) {
 }
 
 function renderAll() {
-  renderStats();
+  renderStats(); // async, fire-and-forget
   renderHero();
   renderCategories();
 }
@@ -1615,9 +1605,13 @@ document.getElementById('hero-poster').addEventListener('change', () => {
 });
 
 /* ====== INIT ======================================================= */
-persist(); // ensure defaults are written on first load
-persistHero();
-renderAll();
+(async function () {
+  state = await load();
+  hero = await loadHero();
+  persist();
+  persistHero();
+  renderAll();
+})();
 </script>
 
 </body>

@@ -940,6 +940,8 @@ a.way-content:hover { color: var(--cream); }
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="storage.js"></script>
 <script>
   // Nav adapts to dark hero vs paper background.
   (function() {
@@ -978,19 +980,15 @@ a.way-content:hover { color: var(--cream); }
 
   // Render the hero video from the CMS storage. Single video → native HTML
   // loop. Multiple videos → JS playlist that advances on `ended` and loops.
-  (function() {
+  (async function() {
     const HERO_KEY = 'totemtou.cms.hero';
     const video = document.getElementById('hero-video');
     if (!video) return;
 
-    function load() {
-      try {
-        const raw = localStorage.getItem(HERO_KEY);
-        if (!raw) return null;
-        const parsed = JSON.parse(raw);
-        if (parsed && Array.isArray(parsed.videos) && parsed.videos.length) return parsed;
-        return null;
-      } catch (e) { return null; }
+    async function load() {
+      const data = await TTStorage.getItem(HERO_KEY);
+      if (data && Array.isArray(data.videos) && data.videos.length) return data;
+      return null;
     }
 
     function typeFor(url) {
@@ -1006,8 +1004,8 @@ a.way-content:hover { color: var(--cream); }
 
     let endedHandler = null;
 
-    function apply() {
-      const data = load();
+    async function apply() {
+      const data = await load();
       if (!data) return; // keep static fallback
       const videos = data.videos.filter(v => v && v.url);
       if (!videos.length) return;
@@ -1054,7 +1052,7 @@ a.way-content:hover { color: var(--cream); }
       playAt(0);
     }
 
-    apply();
+    await apply();
 
     // Cross-tab sync: if the CMS publishes elsewhere, swap the hero in place.
     window.addEventListener('storage', (e) => {
@@ -1065,7 +1063,7 @@ a.way-content:hover { color: var(--cream); }
   // Render the journey grid from the CMS storage when present, so admin edits
   // (visibility, content, image, ordering by category) flow through here.
   // The static markup above is the fallback for first-time visitors.
-  (function() {
+  (async function() {
     const STORAGE_KEY = 'totemtou.cms.trips';
     const grid = document.getElementById('journey-grid');
     if (!grid) return;
@@ -1080,6 +1078,7 @@ a.way-content:hover { color: var(--cream); }
     // Trip → its dedicated page. Add new entries here as more pages ship.
     const TRIP_URLS = {
       abc: 'abc_journey_3.html',
+      khopra: 'khopra_journey.html',
       dolpo: 'dolpo_journey.html',
     };
 
@@ -1091,13 +1090,9 @@ a.way-content:hover { color: var(--cream); }
       flow: 'flow',
     };
 
-    function load() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return null;
-        const parsed = JSON.parse(raw);
-        return Array.isArray(parsed) && parsed.length ? parsed : null;
-      } catch (e) { return null; }
+    async function load() {
+      const data = await TTStorage.getItem(STORAGE_KEY);
+      return Array.isArray(data) && data.length ? data : null;
     }
 
     function escapeHtml(s) {
@@ -1127,8 +1122,8 @@ a.way-content:hover { color: var(--cream); }
       `;
     }
 
-    function render() {
-      const trips = load();
+    async function render() {
+      const trips = await load();
       if (!trips) return; // keep the static markup
       const active = trips.filter(t => t.active);
       // Order: by category (walk, traverse, flow), preserving in-category order.
@@ -1145,7 +1140,7 @@ a.way-content:hover { color: var(--cream); }
       }).join('');
     }
 
-    render();
+    await render();
 
     // Cross-tab sync: when the CMS publishes in another tab, refresh here.
     window.addEventListener('storage', (e) => {

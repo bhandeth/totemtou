@@ -2574,6 +2574,8 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
   </div>
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="storage.js"></script>
 <script>
   // Nav adapts to whatever it's sitting over — dark hero vs. paper background.
   (function() {
@@ -2734,10 +2736,10 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
   })();
 
   // Trip calendar — scheduled departures and application form.
-  // The CMS writes the canonical list to localStorage under
-  // `totemtou.departures.upper-dolpo-mtb`; we fall back to a default slate.
-  (function() {
-    const STORAGE_KEY = 'totemtou.departures.upper-dolpo-mtb';
+  // The CMS writes the canonical list to Supabase under
+  // `totemtou.departures.dolpo`; we fall back to a default slate.
+  (async function() {
+    const STORAGE_KEY = 'totemtou.departures.dolpo';
     const DEFAULTS = [
       { id: 'apr-2026',   month: 'April 2026',     range: '12 Apr – 1 May',   note: 'Pre-monsoon window',                  capacity: 6, booked: 2 },
       { id: 'may-2026',   month: 'May 2026',       range: '10 – 29 May',       note: 'Late spring, snow off the passes',   capacity: 6, booked: 4 },
@@ -2745,14 +2747,9 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
       { id: 'oct-2026',   month: 'October 2026',   range: '4 – 23 Oct',        note: 'Clearest autumn window',             capacity: 6, booked: 3 },
     ];
 
-    function load() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed) && parsed.length) return parsed;
-        }
-      } catch (e) { /* ignore */ }
+    async function load() {
+      const data = await TTStorage.getItem(STORAGE_KEY);
+      if (Array.isArray(data) && data.length) return data;
       return DEFAULTS;
     }
 
@@ -2764,7 +2761,7 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
     if (!grid || !form) return;
 
     let selected = null;
-    const departures = load();
+    const departures = await load();
 
     function statusFor(d) {
       const left = d.capacity - d.booked;
@@ -2812,7 +2809,7 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
       submit.disabled = false;
     }
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!selected) return;
       const application = {
@@ -2827,9 +2824,9 @@ img { max-width: 100%; display: block; filter: grayscale(0.85) contrast(1.02); }
       };
       try {
         const key = 'totemtou.applications';
-        const existing = JSON.parse(localStorage.getItem(key) || '[]');
+        const existing = await TTStorage.getItem(key) || [];
         existing.push(application);
-        localStorage.setItem(key, JSON.stringify(existing));
+        TTStorage.setItem(key, existing);
       } catch (e) { /* ignore */ }
       confirmation.classList.add('is-visible');
       submit.disabled = true;
