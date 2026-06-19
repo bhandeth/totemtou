@@ -1,1153 +1,535 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Totemtou — Curated adventures, led with experience.</title>
-
+<meta name="description" content="Small groups. Tested routes. Calm leadership. Trekking, 4×4 and expedition MTB journeys across the Nepal Himalaya, designed end to end.">
+<meta property="og:title" content="Totemtou — Curated adventures, led with experience.">
+<meta property="og:description" content="Small groups. Tested routes. Calm leadership. Journeys across the Himalayas, designed end to end.">
+<meta property="og:image" content="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M3 26 12 8l5 9 3-5 9 14z' fill='none' stroke='%2390CCBE' stroke-width='2.4' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..600;1,8..60,300..600&family=Lora:ital,wght@0,400..600;1,400..600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Spline+Sans+Mono:wght@300..700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');if(matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.classList.add('anim');</script>
 <style>
-:root {
-  --paper: #f6f3ec;
-  --paper-deep: #ebe6da;
-  --cream: #ecdec3;          /* sampled from logo */
-  --ink: #1c1917;
-  --ink-soft: #44403c;
-  --ink-mute: #78716c;
-  --rule: #d6cfbf;
-  --accent: #854513;         /* sampled from logo — deep burnt sienna */
-  --accent-soft: #b06a3a;
-  --accent-deep: #5e3010;
-  --serif-display: "Source Serif 4", Georgia, serif;
-  --serif-body: "Lora", Georgia, serif;
-  --sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+/* ============================================================
+   TOTEMTOU — tokens
+   ink: pre-dawn spruce · bone: kata ivory · river: glacial teal
+   marigold: field-note amber (sparingly)
+   ============================================================ */
+:root{
+  --ink-0:#0B1410; --ink-1:#101D17; --ink-2:#15261E;
+  --bone:#EBE7DB; --bone-2:rgba(235,231,219,.66); --bone-3:rgba(235,231,219,.4);
+  --river:#90CCBE; --river-deep:#27483F; --marigold:#D9A23B;
+  --line:rgba(235,231,219,.14);
+  --f-disp:"Newsreader",Georgia,serif;
+  --f-mono:"Spline Sans Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-padding-top:6rem;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{background:var(--ink-0);color:var(--bone);font:400 1.05rem/1.7 var(--f-disp);font-optical-sizing:auto;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img,video,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:var(--river);color:var(--ink-0)}
+:focus-visible{outline:2px solid var(--river);outline-offset:3px;border-radius:2px}
+.skip{position:fixed;top:-4rem;left:1rem;z-index:300;background:var(--river);color:var(--ink-0);padding:.7em 1.2em;font:500 .72rem var(--f-mono);letter-spacing:.12em;text-transform:uppercase;border-radius:4px;transition:top .3s}
+.skip:focus{top:1rem}
+.wrap{width:min(1280px,92vw);margin-inline:auto}
+section{position:relative;padding:clamp(6rem,13vh,10.5rem) 0}
+
+/* grain */
+body::after{content:"";position:fixed;inset:-50%;z-index:90;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+.anim body::after,html.anim body::after{animation:grain 7s steps(10) infinite}
+@keyframes grain{0%,100%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-2%)}80%{transform:translate(3%,3%)}}
+
+/* type voices */
+.eyebrow{display:flex;align-items:center;gap:.85rem;margin-bottom:1.7rem;font:500 .68rem/1 var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--bone-2)}
+.eyebrow::before{content:"";width:2.4rem;height:1px;background:var(--river);flex:none}
+.h2{font-weight:470;font-size:clamp(2.15rem,4.7vw,4rem);line-height:1.05;letter-spacing:-.018em;text-wrap:balance}
+.h2 em,h1 em,h3 em{font-style:italic;font-weight:400}
+.lede{font-size:clamp(1.02rem,1.45vw,1.22rem);line-height:1.68;color:var(--bone-2);max-width:54ch}
+.mono{font:500 .72rem/1.6 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--bone-2)}
+
+/* buttons */
+.btn{position:relative;display:inline-flex;align-items:center;gap:.8rem;isolation:isolate;font:500 .7rem/1 var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--bone);padding:1.2em 1.9em;border:1px solid rgba(235,231,219,.34);border-radius:999px;transition:color .45s var(--ease),border-color .45s var(--ease);overflow:hidden}
+.btn::before{content:"";position:absolute;inset:-1px;background:var(--river);border-radius:inherit;transform:translateY(103%);transition:transform .55s var(--ease);z-index:-1}
+.btn:hover{color:var(--ink-0);border-color:var(--river)}
+.btn:hover::before{transform:translateY(0)}
+.btn .arr{transition:transform .45s var(--ease)}
+.btn:hover .arr{transform:translateX(4px)}
+.btn--solid{background:var(--river);color:var(--ink-0);border-color:var(--river)}
+.btn--solid::before{background:var(--bone)}
+
+/* nav */
+header.nav{position:fixed;inset:0 0 auto;z-index:200;transition:background .4s,border-color .4s;border-bottom:1px solid transparent}
+header.nav.scrolled{background:rgba(11,20,16,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:4.6rem}
+.brand{display:flex;align-items:center;gap:.7rem;font:600 1.05rem var(--f-disp);letter-spacing:.02em}
+.brand svg{width:1.5rem;height:1.5rem}
+.nav-links{display:flex;gap:2.4rem}
+.nav-links a{position:relative;font:500 .7rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-2);transition:color .3s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:100%;height:1px;background:var(--river);transform:scaleX(0);transform-origin:right;transition:transform .4s var(--ease)}
+.nav-links a:hover{color:var(--bone)}
+.nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+.nav-cta{display:inline-flex}
+.burger{display:none;flex-direction:column;gap:6px;padding:.6rem;z-index:210}
+.burger span{width:24px;height:1.5px;background:var(--bone);transition:.35s var(--ease)}
+.menu{display:none}
+@media(max-width:880px){
+  .nav-links,.nav-cta{display:none}
+  .burger{display:flex}
+  .burger.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+  .menu{display:flex;position:fixed;inset:0;z-index:205;background:rgba(11,20,16,.97);backdrop-filter:blur(10px);flex-direction:column;justify-content:center;gap:.5rem;padding:8vh 8vw;opacity:0;pointer-events:none;transition:opacity .4s}
+  .menu.open{opacity:1;pointer-events:auto}
+  .menu a{font:470 clamp(2rem,9vw,3rem)/1.3 var(--f-disp);letter-spacing:-.01em;display:flex;align-items:baseline;gap:1rem;transform:translateY(14px);opacity:0;transition:.5s var(--ease)}
+  .menu.open a{transform:none;opacity:1}
+  .menu a small{font:500 .65rem var(--f-mono);letter-spacing:.2em;color:var(--river)}
+  .menu.open a:nth-child(2){transition-delay:.05s}.menu.open a:nth-child(3){transition-delay:.1s}.menu.open a:nth-child(4){transition-delay:.15s}
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--serif-body);
-  font-size: 19px;
-  line-height: 1.65;
-  font-weight: 400;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
+/* loader */
+#loader{position:fixed;inset:0;z-index:400;background:var(--ink-0);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;transition:opacity .7s var(--ease),visibility .7s}
+#loader.done{opacity:0;visibility:hidden}
+#loader .alt{font:300 clamp(2.4rem,7vw,4.2rem) var(--f-mono);color:var(--bone);letter-spacing:-.02em}
+#loader .alt b{font-weight:300;color:var(--river)}
+#loader .tag{font:500 .65rem var(--f-mono);letter-spacing:.3em;text-transform:uppercase;color:var(--bone-3)}
+html:not(.anim) #loader{display:none}
 
-img, video { max-width: 100%; display: block; }
+/* hero */
+.hero{min-height:100svh;display:flex;align-items:flex-end;padding:0 0 clamp(9rem,18vh,13rem);overflow:hidden}
+.hero-media{position:absolute;inset:-6%;z-index:-2;will-change:transform}
+.hero-media video{width:100%;height:100%;object-fit:cover;filter:saturate(.92) brightness(.78)}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(11,20,16,.55),rgba(11,20,16,.15) 35%,rgba(11,20,16,.35) 70%,var(--ink-0))}
+.hero-in{width:min(1280px,92vw);margin-inline:auto}
+.hero .kicker{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;font:500 .68rem var(--f-mono);letter-spacing:.26em;text-transform:uppercase;color:var(--bone-2)}
+.hero .kicker::before{content:"";width:3rem;height:1px;background:var(--marigold)}
+h1{font-weight:430;font-size:clamp(2.9rem,8.6vw,7.6rem);line-height:1.0;letter-spacing:-.028em;max-width:14ch}
+h1 .line{display:block;overflow:hidden}
+h1 .line>span{display:block}
+.hero .sub{margin-top:2rem;max-width:46ch;font-size:clamp(1.02rem,1.5vw,1.25rem);line-height:1.65;color:var(--bone-2)}
+.hero-foot{display:flex;align-items:center;flex-wrap:wrap;gap:1.6rem 2.6rem;margin-top:3rem}
+.hero-foot .est{font:500 .65rem var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--bone-3)}
+.marquee{position:absolute;right:0;bottom:clamp(3rem,8vh,6rem);writing-mode:vertical-rl;font:500 .62rem var(--f-mono);letter-spacing:.4em;text-transform:uppercase;color:var(--bone-3)}
+@media(max-width:880px){.marquee{display:none}}
+.scroll-cue{position:absolute;left:50%;bottom:1.1rem;translate:-50% 0;width:1px;height:54px;background:var(--line);overflow:hidden}
+.scroll-cue::after{content:"";position:absolute;inset:0;background:var(--river);transform:translateY(-100%)}
+.anim .scroll-cue::after{animation:cue 2s var(--ease) infinite}
+@keyframes cue{to{transform:translateY(100%)}}
+/* parallax ridge between hero and manifesto */
+.ridge{position:absolute;left:0;right:0;bottom:-2px;z-index:2;pointer-events:none}
+.ridge svg{width:100%;height:clamp(70px,12vw,160px)}
 
-/* ----- nav -------------------------------------------------------- */
-.nav {
-  position: fixed; top: 0; left: 0; right: 0;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 1.4rem 2.5rem;
-  font-family: var(--sans);
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  font-weight: 400;
-  z-index: 100;
-  transition: background 0.35s ease;
-}
-.nav.is-over-dark { background: linear-gradient(to bottom, rgba(28,25,23,0.55), rgba(28,25,23,0)); }
-.nav.is-over-paper {
-  background: linear-gradient(to bottom, rgba(246,243,236,0.95), rgba(246,243,236,0));
-  backdrop-filter: blur(8px);
-}
+/* manifesto */
+.manifesto{background:var(--ink-0)}
+.manifesto p{font-weight:430;font-size:clamp(1.8rem,4.6vw,3.7rem);line-height:1.22;letter-spacing:-.018em;max-width:24ch}
+.manifesto p em{font-style:italic;color:var(--river)}
+.manifesto .w{opacity:.13;transition:opacity .3s linear}
+.manifesto .tail{margin-top:2.6rem;max-width:46ch}
 
-.mark {
-  display: flex; align-items: center; gap: 0.7rem;
-  font-family: var(--serif-display);
-  font-size: 1.2rem;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  text-transform: none;
-}
-.mark img {
-  width: 26px; height: 26px;
-  display: inline-block;
-}
-.nav.is-over-dark .mark { color: var(--paper); }
-.nav.is-over-paper .mark { color: var(--ink); }
+/* ways */
+.ways{background:linear-gradient(var(--ink-0),var(--ink-1))}
+.ways-head{display:grid;grid-template-columns:1.2fr .8fr;gap:3rem;align-items:end;margin-bottom:4.5rem}
+@media(max-width:880px){.ways-head{grid-template-columns:1fr;gap:1.4rem}}
+.way-list{display:grid;gap:1.4rem}
+.way{position:relative;display:grid;grid-template-columns:minmax(0,1fr) clamp(260px,34vw,460px);gap:clamp(1.4rem,4vw,3.5rem);align-items:center;padding:clamp(1.6rem,3vw,2.6rem);border:1px solid var(--line);border-radius:20px;background:rgba(235,231,219,.025);overflow:hidden;transition:border-color .5s,background .5s;will-change:transform}
+.way:hover{border-color:rgba(144,204,190,.4);background:rgba(144,204,190,.04)}
+.way .num{font:300 .85rem var(--f-mono);letter-spacing:.2em;color:var(--marigold);margin-bottom:1rem}
+.way h3{font-weight:460;font-size:clamp(1.7rem,3.2vw,2.7rem);line-height:1.08;letter-spacing:-.015em;margin-bottom:1rem}
+.way p{color:var(--bone-2);max-width:42ch}
+.way .vid{position:relative;aspect-ratio:16/10;border-radius:14px;overflow:hidden;transform:translateZ(0)}
+.way .vid video{width:100%;height:100%;object-fit:cover;transform:scale(1.06);filter:saturate(.9) brightness(.85);transition:transform 1.1s var(--ease),filter .8s}
+.way:hover .vid video{transform:scale(1.0);filter:saturate(1) brightness(.95)}
+.way .vid::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(235,231,219,.12)}
+.way .go{position:absolute;top:1.4rem;right:1.4rem;width:2.7rem;height:2.7rem;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;font-size:1rem;color:var(--bone-2);transition:.45s var(--ease)}
+.way:hover .go{background:var(--river);border-color:var(--river);color:var(--ink-0);transform:rotate(45deg)}
+@media(max-width:880px){.way{grid-template-columns:1fr}.way .vid{order:-1}}
 
-.nav ul { display: flex; gap: 2.5rem; list-style: none; }
-.nav a { text-decoration: none; transition: color 0.2s; }
-.nav.is-over-dark a { color: rgba(246,243,236,0.85); }
-.nav.is-over-dark a:hover { color: var(--paper); }
-.nav.is-over-paper a { color: var(--ink-soft); }
-.nav.is-over-paper a:hover { color: var(--ink); }
+/* standards */
+.standards{background:var(--ink-1)}
+.std-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--line);border-radius:20px;overflow:hidden;margin-top:4rem}
+.std{padding:clamp(1.8rem,3.4vw,3rem);border:0 solid var(--line);position:relative}
+.std:nth-child(1){border-right-width:1px;border-bottom-width:1px}
+.std:nth-child(2){border-bottom-width:1px}
+.std:nth-child(3){border-right-width:1px}
+.std .rn{font:300 .8rem var(--f-mono);letter-spacing:.22em;color:var(--marigold)}
+.std h3{font-weight:470;font-size:clamp(1.3rem,2vw,1.7rem);margin:.9rem 0 .8rem;letter-spacing:-.01em}
+.std p{color:var(--bone-2);font-size:.98rem;max-width:42ch}
+.std::after{content:"";position:absolute;left:0;top:0;width:3px;height:0;background:var(--river);transition:height .8s var(--ease)}
+.std:hover::after{height:100%}
+@media(max-width:760px){.std-grid{grid-template-columns:1fr}.std{border-right-width:0!important;border-bottom-width:1px}.std:last-child{border-bottom-width:0}}
+.std-tail{margin-top:2.2rem;font-style:italic;color:var(--bone-2)}
 
-/* ----- hero ------------------------------------------------------- */
-.hero {
-  min-height: 100vh;
-  position: relative;
-  display: grid;
-  grid-template-rows: 1fr auto 1fr;
-  align-items: center;
-  padding: 0 2.5rem;
-  overflow: hidden;
-  background: var(--ink);
-  color: var(--paper);
-}
-.hero-video {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  z-index: 0;
-  filter: grayscale(0.85) contrast(1.05) brightness(0.78);
-}
-.hero::before {
-  content: "";
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg,
-    rgba(28,25,23,0.35) 0%,
-    rgba(28,25,23,0.15) 35%,
-    rgba(28,25,23,0.4) 100%);
-  z-index: 1;
-}
+/* journeys */
+.journeys{background:linear-gradient(var(--ink-1),var(--ink-0))}
+.j-list{margin-top:3.6rem;border-top:1px solid var(--line)}
+.j-row{position:relative;display:grid;grid-template-columns:auto 1fr auto auto;gap:clamp(1rem,3vw,3rem);align-items:center;padding:clamp(1.5rem,3vw,2.2rem) .4rem;border-bottom:1px solid var(--line);transition:padding-left .5s var(--ease),background .5s}
+.j-row:hover{padding-left:1.6rem;background:rgba(144,204,190,.035)}
+.j-row .idx{font:300 .8rem var(--f-mono);color:var(--bone-3);letter-spacing:.15em}
+.j-row h3{font-weight:460;font-size:clamp(1.45rem,3vw,2.4rem);letter-spacing:-.015em;line-height:1.12}
+.j-row .meta{font:400 .72rem/1.7 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--bone-2);text-align:right;white-space:nowrap}
+.j-row .stat{font:400 .72rem/1.7 var(--f-mono);letter-spacing:.08em;color:var(--bone-3);text-align:right;white-space:nowrap}
+.j-row .stat b{color:var(--river);font-weight:500}
+.j-row[aria-disabled]{opacity:.45;pointer-events:none}
+.j-row .soon{font:500 .58rem var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--marigold);border:1px solid rgba(217,162,59,.4);padding:.35em .8em;border-radius:99px;margin-left:.8rem;vertical-align:middle}
+@media(max-width:760px){.j-row{grid-template-columns:auto 1fr;row-gap:.4rem}.j-row .meta,.j-row .stat{grid-column:2;text-align:left}}
+/* cursor-following preview card */
+#jcard{position:fixed;z-index:120;width:300px;aspect-ratio:4/3;border-radius:14px;overflow:hidden;pointer-events:none;opacity:0;scale:.85;box-shadow:0 30px 80px rgba(0,0,0,.55);border:1px solid rgba(235,231,219,.18)}
+#jcard img{width:100%;height:100%;object-fit:cover}
+#jcard .cap{position:absolute;left:0;right:0;bottom:0;padding:.8rem 1rem;font:500 .62rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;background:linear-gradient(transparent,rgba(11,20,16,.85));color:var(--bone)}
+@media(hover:none),(max-width:880px){#jcard{display:none}}
 
-.hero-inner {
-  grid-row: 2;
-  position: relative; z-index: 2;
-  max-width: 1300px;
-  margin: 0 auto;
-  width: 100%;
-  text-align: center;
-  padding-bottom: 4rem;
-}
+/* leaders */
+.leaders{background:var(--ink-0)}
+.lead-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.3rem;margin-top:3.6rem}
+.lead{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(235,231,219,.02)}
+.lead .ph{aspect-ratio:3/3.6;overflow:hidden;position:relative;background:var(--ink-2)}
+.lead .ph img{width:100%;height:100%;object-fit:cover;filter:saturate(.85);transition:transform 1s var(--ease),filter .8s}
+.lead:hover .ph img{transform:scale(1.05);filter:saturate(1)}
+.lead .ph .pending{position:absolute;inset:0;display:grid;place-items:center;font:400 .68rem/1.8 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--bone-3);text-align:center;padding:1rem}
+.lead .nm{padding:1.1rem 1.2rem .35rem;font-weight:520;font-size:1.15rem}
+.lead .rl{padding:0 1.2rem 1.2rem;font:400 .66rem/1.6 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--bone-2)}
+@media(max-width:980px){.lead-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.lead-grid{grid-template-columns:1fr 1fr;gap:.8rem}.lead .nm{font-size:1rem}}
 
-.hero h1 {
-  font-family: var(--serif-display);
-  font-weight: 300;
-  font-size: clamp(3.5rem, 10vw, 8rem);
-  line-height: 0.92;
-  letter-spacing: -0.035em;
-  margin-bottom: 2rem;
-  color: var(--paper);
-}
-.hero h1 em { font-style: italic; font-weight: 300; color: var(--cream); opacity: 0.85; }
+/* apply */
+.apply{background:linear-gradient(var(--ink-0),var(--ink-1));text-align:center}
+.apply .h2{margin-inline:auto;max-width:18ch}
+.apply .lede{margin:1.8rem auto 2.8rem}
+.flags{display:flex;justify-content:center;gap:.45rem;margin-bottom:2.6rem}
+.flags i{width:26px;height:18px;opacity:.85;border-radius:2px}
+.flags i:nth-child(1){background:#5B8FD9}.flags i:nth-child(2){background:#EBE7DB}.flags i:nth-child(3){background:#C9504A}.flags i:nth-child(4){background:#4F9E6B}.flags i:nth-child(5){background:var(--marigold)}
 
-.hero-tag {
-  font-family: var(--serif-body);
-  font-style: italic;
-  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
-  line-height: 1.5;
-  color: rgba(246,243,236,0.85);
-  max-width: 36ch;
-  margin: 0 auto;
-}
+/* footer */
+footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--ink-1);overflow:hidden}
+.foot-grid{display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin-bottom:3.5rem}
+.foot-grid nav{display:flex;gap:2rem;flex-wrap:wrap}
+.foot-grid a{font:500 .68rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-2);transition:color .3s}
+.foot-grid a:hover{color:var(--river)}
+.foot-mark{font-weight:430;font-size:clamp(3.6rem,14vw,12rem);line-height:.95;letter-spacing:-.03em;color:rgba(235,231,219,.1);text-align:center;user-select:none}
+.foot-base{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:2.5rem;font:400 .68rem var(--f-mono);letter-spacing:.12em;color:var(--bone-3)}
 
-.hero-foot {
-  grid-row: 3;
-  align-self: end;
-  position: relative;
-  z-index: 2;
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-  max-width: 1300px;
-  margin: 0 auto 2.5rem;
-  width: 100%;
-  font-family: var(--sans);
-  font-size: 0.7rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(246,243,236,0.7);
-}
-.hero-enter {
-  text-decoration: none;
-  color: rgba(246,243,236,0.85);
-  border-bottom: 1px solid rgba(236,222,195,0.5);
-  padding-bottom: 0.4rem;
-  transition: color 0.2s, border-color 0.2s;
-}
-.hero-enter:hover { color: var(--paper); border-bottom-color: var(--cream); }
-.hero-enter::after { content: " ↓"; }
-
-/* ----- positioning statement ------------------------------------- */
-.statement {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 12rem 2.5rem 8rem;
-  text-align: center;
-}
-.statement-kicker {
-  font-family: var(--sans);
-  font-size: 0.72rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 2.5rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.8rem;
-}
-.statement-kicker::before, .statement-kicker::after {
-  content: ""; width: 32px; height: 1px; background: var(--accent);
-}
-.statement p {
-  font-family: var(--serif-display);
-  font-weight: 300;
-  font-size: clamp(1.6rem, 3.2vw, 2.6rem);
-  line-height: 1.3;
-  letter-spacing: -0.018em;
-  color: var(--ink);
-  max-width: 28ch;
-  margin: 0 auto 1.5rem;
-}
-.statement p em { font-style: italic; color: var(--ink-soft); }
-.statement p:last-child { color: var(--ink-soft); font-size: clamp(1.3rem, 2.4vw, 1.9rem); margin-top: 2rem; }
-
-/* ----- four standards ------------------------------------------- */
-.standards {
-  background: var(--paper-deep);
-  border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
-  padding: 9rem 2.5rem;
-}
-.standards-inner {
-  max-width: 1300px;
-  margin: 0 auto;
-}
-.standards-head {
-  display: grid;
-  grid-template-columns: 1fr 1.6fr;
-  gap: 5rem;
-  margin-bottom: 6rem;
-  align-items: end;
-}
-.kicker {
-  font-family: var(--sans);
-  font-size: 0.72rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 1.5rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7rem;
-}
-.kicker::before { content: ""; width: 28px; height: 1px; background: var(--accent); }
-.standards-head h2 {
-  font-family: var(--serif-display);
-  font-weight: 300;
-  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
-  line-height: 1.05;
-  letter-spacing: -0.018em;
-  max-width: 14ch;
-}
-.standards-head h2 em { font-style: italic; color: var(--ink-soft); }
-.standards-head .lede {
-  font-family: var(--serif-body);
-  font-style: italic;
-  font-size: 1.2rem;
-  line-height: 1.6;
-  color: var(--ink-soft);
-  max-width: 42ch;
-  padding-bottom: 0.6rem;
-}
-
-.standards-prose {
-  max-width: 64ch;
-  margin: 0 auto;
-  padding-top: 4rem;
-  border-top: 1px solid var(--rule);
-}
-.standards-prose p {
-  font-family: var(--serif-body);
-  font-size: 1.2rem;
-  line-height: 1.65;
-  color: var(--ink);
-  margin-bottom: 1.6rem;
-}
-.standards-prose p:last-child { margin-bottom: 0; }
-.standards-coda {
-  font-family: var(--serif-display);
-  font-style: italic;
-  font-size: 1.4rem !important;
-  color: var(--ink-soft);
-  margin-top: 2.5rem !important;
-  padding-top: 2rem;
-  border-top: 1px solid var(--rule);
-}
-
-/* ----- four ways to journey -------------------------------------- */
-.ways {
-  padding: 10rem 0 0;
-}
-.ways-head {
-  max-width: 1300px;
-  margin: 0 auto 5rem;
-  padding: 0 2.5rem;
-}
-.ways-head h2 {
-  font-family: var(--serif-display);
-  font-weight: 300;
-  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  max-width: 16ch;
-}
-.ways-head h2 em { font-style: italic; color: var(--ink-soft); }
-.ways-head p {
-  font-family: var(--serif-body);
-  font-style: italic;
-  font-size: 1.2rem;
-  color: var(--ink-soft);
-  max-width: 50ch;
-  margin-top: 1.5rem;
-}
-
-.way {
-  position: relative;
-  min-height: 70vh;
-  overflow: hidden;
-  display: flex;
-  align-items: end;
-  border-top: 1px solid var(--rule);
-}
-.way:last-child { border-bottom: 1px solid var(--rule); }
-.way-media {
-  position: absolute; inset: 0;
-  z-index: 0;
-}
-.way-media img, .way-media video {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  filter: grayscale(0.85) contrast(1.04) brightness(0.85);
-}
-.way-media.empty {
-  background: var(--paper-deep);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--sans);
-  font-size: 0.7rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  text-align: center;
-  padding: 3rem;
-  border: 1px dashed var(--rule);
-  margin: 1px;
-}
-.way::after {
-  content: "";
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(28,25,23,0) 30%, rgba(28,25,23,0.7) 100%);
-  z-index: 1;
-  pointer-events: none;
-}
-.way.empty::after { display: none; }
-.way-content {
-  position: relative; z-index: 2;
-  max-width: 1300px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 4rem 2.5rem;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 3rem;
-  align-items: end;
-  color: var(--paper);
-  text-decoration: none;
-  transition: color 0.25s ease;
-}
-a.way-content:hover { color: var(--cream); }
-.way.empty .way-content { color: var(--ink); }
-.way-num {
-  font-family: var(--serif-display);
-  font-style: italic;
-  font-size: 0.9rem;
-  letter-spacing: 0.04em;
-  opacity: 0.7;
-}
-.way-name {
-  font-family: var(--serif-display);
-  font-weight: 300;
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-.way-name em { font-style: italic; opacity: 0.7; }
-.way-line {
-  font-family: var(--serif-body);
-  font-style: italic;
-  font-size: 1.15rem;
-  line-height: 1.5;
-  max-width: 32ch;
-  text-align: right;
-  opacity: 0.9;
-}
-
-/* ----- the journeys --------------------------------------------- */
-.journeys {
-  padding: 10rem 2.5rem 6rem;
-  max-width: 1300px;
-  margin: 0 auto;
-}
-.journeys-head {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 5rem;
-  margin-bottom: 5rem;
-  align-items: end;
-}
-.journeys-head h2 {
-  font-family: var(--serif-display);
-  font-weight: 300;
-  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  max-width: 14ch;
-}
-.journeys-head h2 em { font-style: italic; color: var(--ink-soft); }
-.journeys-head .lede {
-  font-family: var(--serif-body);
-  font-style: italic;
-  font-size: 1.2rem;
-  color: var(--ink-soft);
-  max-width: 42ch;
-  padding-bottom: 0.6rem;
-}
-
-.journey-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 4rem 3rem;
-}
-.journey {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  cursor: pointer;
-  scroll-margin-top: 6rem;
-}
-.journey-media {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  background: var(--paper-deep);
-  overflow: hidden;
-  position: relative;
-  margin-bottom: 1.5rem;
-}
-.journey-media img, .journey-media video {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  filter: grayscale(0.82) contrast(1.04);
-  transition: transform 0.6s ease, filter 0.4s ease;
-}
-.journey:hover .journey-media img,
-.journey:hover .journey-media video {
-  transform: scale(1.03);
-  filter: grayscale(0.65) contrast(1.06);
-}
-.journey-media.empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--sans);
-  font-size: 0.7rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  text-align: center;
-  padding: 2rem;
-  border: 1px dashed var(--rule);
-}
-.journey-meta {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.8rem;
-  font-family: var(--sans);
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-}
-.journey-meta .way-tag { color: var(--accent); }
-.journey h3 {
-  font-family: var(--serif-display);
-  font-weight: 400;
-  font-size: clamp(1.5rem, 2.4vw, 2rem);
-  line-height: 1.15;
-  letter-spacing: -0.015em;
-  color: var(--ink);
-  margin-bottom: 0.4rem;
-}
-.journey-stats {
-  font-family: var(--serif-display);
-  font-style: italic;
-  font-size: 1rem;
-  color: var(--ink-soft);
-}
-.journey-stats span + span { margin-left: 0.6em; }
-.journey-stats span + span::before { content: "·"; margin-right: 0.6em; color: var(--accent); }
-
-/* ----- leaders strip -------------------------------------------- */
-.leaders {
-  background: var(--paper-deep);
-  border-top: 1px solid var(--rule);
-  padding: 9rem 2.5rem;
-}
-.leaders-inner {
-  max-width: 1300px;
-  margin: 0 auto;
-}
-.leaders-head {
-  margin-bottom: 4rem;
-  max-width: 50ch;
-}
-.leaders-head h2 {
-  font-family: var(--serif-display);
-  font-weight: 300;
-  font-size: clamp(2.2rem, 4vw, 3rem);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  margin-bottom: 1.2rem;
-}
-.leaders-head h2 em { font-style: italic; color: var(--ink-soft); }
-.leaders-head p {
-  font-family: var(--serif-body);
-  font-style: italic;
-  font-size: 1.15rem;
-  color: var(--ink-soft);
-  line-height: 1.6;
-}
-
-.leader-team {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-}
-.leader-card {
-  display: flex;
-  flex-direction: column;
-}
-.leader-card .leader-img {
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  background: var(--rule);
-  overflow: hidden;
-  margin-bottom: 1rem;
-}
-.leader-card .leader-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: grayscale(0.85) contrast(1.04);
-}
-.leader-card .leader-img.silhouette {
-  background: linear-gradient(to bottom, var(--rule) 0%, var(--paper-deep) 100%);
-  display: flex;
-  align-items: end;
-  justify-content: center;
-  padding: 1.5rem;
-  font-family: var(--sans);
-  font-size: 0.65rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  text-align: center;
-  line-height: 1.7;
-}
-.leader-card .leader-name {
-  font-family: var(--serif-display);
-  font-size: 1.15rem;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  margin-bottom: 0.2rem;
-  color: var(--ink);
-}
-.leader-card .leader-role {
-  font-family: var(--serif-body);
-  font-style: italic;
-  font-size: 0.95rem;
-  color: var(--ink-soft);
-  line-height: 1.4;
-}
-
-/* ----- close ----------------------------------------------------- */
-.close {
-  background: var(--ink);
-  color: var(--paper);
-  padding: 11rem 2.5rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.close::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 30%, rgba(133,69,19,0.18) 0%, transparent 60%);
-  pointer-events: none;
-}
-.close-inner { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
-.close .kicker { color: var(--accent-soft); }
-.close .kicker::before { background: var(--accent-soft); }
-.close h2 {
-  font-family: var(--serif-display);
-  font-weight: 300;
-  font-size: clamp(2.4rem, 4.8vw, 3.8rem);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  margin-bottom: 2rem;
-}
-.close h2 em { font-style: italic; color: var(--cream); opacity: 0.7; }
-.close p {
-  font-family: var(--serif-body);
-  font-style: italic;
-  font-size: 1.2rem;
-  line-height: 1.6;
-  color: rgba(246,243,236,0.8);
-  margin-bottom: 3rem;
-  max-width: 50ch;
-  margin-left: auto; margin-right: auto;
-}
-.close-cta {
-  display: inline-block;
-  font-family: var(--sans);
-  font-size: 0.78rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--paper);
-  text-decoration: none;
-  border-bottom: 1px solid var(--accent-soft);
-  padding-bottom: 0.5rem;
-  transition: color 0.2s, border-color 0.2s;
-}
-.close-cta:hover { color: var(--cream); border-bottom-color: var(--cream); }
-
-/* ----- footer ---------------------------------------------------- */
-.footer {
-  background: var(--ink);
-  color: rgba(246,243,236,0.55);
-  padding: 3.5rem 2.5rem;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  font-family: var(--sans);
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-.footer-inner {
-  max-width: 1300px; margin: 0 auto;
-  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
-}
-.footer .mark { color: rgba(246,243,236,0.85); font-size: 1rem; }
-.footer .mark img { width: 22px; height: 22px; }
-.footer ul { display: flex; gap: 2rem; list-style: none; }
-.footer a { color: rgba(246,243,236,0.55); text-decoration: none; }
-.footer a:hover { color: rgba(246,243,236,0.85); }
-
-/* ----- responsive ----------------------------------------------- */
-@media (max-width: 880px) {
-  .nav { padding: 1rem 1.2rem; }
-  .nav ul { display: none; }
-  .hero { padding: 0 1.2rem; }
-  .hero-foot { margin-bottom: 1.5rem; gap: 1rem; flex-direction: column; align-items: flex-start; }
-  .statement { padding: 7rem 1.2rem 5rem; }
-  .standards { padding: 6rem 1.2rem; }
-  .standards-head { grid-template-columns: 1fr; gap: 2rem; margin-bottom: 4rem; }
-  .standards-prose { padding-top: 2.5rem; }
-  .standards-prose p { font-size: 1.1rem; }
-  .ways { padding: 6rem 0 0; }
-  .ways-head { padding: 0 1.2rem; margin-bottom: 3rem; }
-  .way { min-height: 60vh; }
-  .way-content {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    padding: 3rem 1.2rem;
-  }
-  .way-line { text-align: left; }
-  .journeys { padding: 6rem 1.2rem 4rem; }
-  .journeys-head { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 3rem; }
-  .journey-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .leaders { padding: 6rem 1.2rem; }
-  .leader-team { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-  .close { padding: 7rem 1.2rem; }
-  .footer-inner { flex-direction: column; align-items: flex-start; }
-  .footer ul { flex-wrap: wrap; gap: 1rem; }
-}
+/* reveal helpers (gsap targets) */
+.anim .rv{opacity:0;transform:translateY(34px)}
+.anim .rv-img{clip-path:inset(12% 0 12% 0);transform:scale(1.06)}
 </style>
 </head>
-<body>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
 
-<!-- ============================================== NAV -->
-<nav class="nav">
-  <a class="mark" href="index.html">
-    <img src="https://v3b.fal.media/files/b/0a8b894b/OATIVAFUWeuGZbdjfi5sf.png" alt="Totemtou">
-    <span>Totemtou</span>
-  </a>
-  <ul>
-    <li><a href="#journeys">Journeys</a></li>
-    <li><a href="#ways">Ways</a></li>
-    <li><a href="#leaders">Leaders</a></li>
-    <li><a href="#apply">Apply</a></li>
-  </ul>
-</nav>
+<div id="loader" aria-hidden="true">
+  <div class="alt"><span id="altN">822</span><b>&nbsp;m</b></div>
+  <div class="tag">Totemtou · Pokhara → the sanctuary</div>
+</div>
 
-<!-- ============================================== HERO -->
-<header class="hero">
-  <video class="hero-video" id="hero-video" autoplay muted loop playsinline preload="auto"
-         poster="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-97ZE.JPG">
-    <source src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-1R34.webm" type="video/webm">
-  </video>
-
-  <div class="hero-inner">
-    <h1>Curated adventures,<br><em>led with experience.</em></h1>
-    <p class="hero-tag">Small groups. Tested routes. Calm leadership.<br>Journeys across the Himalayas, designed end to end.</p>
-  </div>
-
-  <div class="hero-foot">
-    <span>Totemtou · est. 2026</span>
-    <a class="hero-enter" href="#journeys">The journeys</a>
-    <span>Walk · Live · Traverse · Flow</span>
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="Totemtou home">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M3 26 12 8l5 9 3-5 9 14z" stroke="#90CCBE" stroke-width="2.4" stroke-linejoin="round"/></svg>
+      Totemtou
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#ways">Ways</a><a href="#standards">Standards</a><a href="#journeys">Journeys</a><a href="#leaders">Leaders</a>
+    </nav>
+    <a class="btn nav-cta" href="#apply">Apply <span class="arr">→</span></a>
+    <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
 </header>
+<nav class="menu" id="menu" aria-label="Mobile">
+  <a href="#ways"><small>01</small>Ways</a>
+  <a href="#standards"><small>02</small>Standards</a>
+  <a href="#journeys"><small>03</small>Journeys</a>
+  <a href="#apply"><small>04</small>Apply</a>
+</nav>
 
-<!-- ============================================== POSITIONING STATEMENT -->
-<section class="statement">
-  <div class="statement-kicker">What Totemtou is</div>
-  <p>Not luxury tourism. Not budget travel.</p>
-  <p><em>Adventure you can trust —</em> premium by design, because leadership and curation cost what they cost.</p>
-</section>
+<main id="main">
 
-<!-- ============================================== FOUR WAYS -->
-<section class="ways" id="ways">
-  <div class="ways-head">
-    <div class="kicker">The three ways to journey</div>
-    <h2>Different people want different relationships <em>with the land.</em></h2>
-    <p>Every Totemtou journey lives inside one of three ways. Pick the relationship; we'll point you at the journeys.</p>
+<!-- HERO -->
+<section class="hero" aria-label="Intro">
+  <div class="hero-media" id="heroMedia">
+    <video autoplay muted loop playsinline preload="metadata" poster="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg">
+      <source src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-1R34.webm" type="video/webm">
+    </video>
   </div>
-
-  <article class="way">
-    <div class="way-media">
-      <video muted loop playsinline preload="metadata"
-             poster="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-V51J.jpeg">
-        <source src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-VWQR.webm" type="video/webm">
-      </video>
+  <div class="hero-in">
+    <p class="kicker">Nepal Himalaya · Trek · 4×4 · MTB</p>
+    <h1 id="heroTitle">
+      <span class="line"><span>Curated adventures,</span></span>
+      <span class="line"><span><em>led with experience.</em></span></span>
+    </h1>
+    <p class="sub rv">Small groups. Tested routes. Calm leadership.<br>Journeys across the Himalayas, designed end to end.</p>
+    <div class="hero-foot rv">
+      <a class="btn btn--solid mag" href="#journeys">The journeys <span class="arr">↓</span></a>
+      <span class="est">Totemtou · est. 2026</span>
     </div>
-    <a class="way-content" href="#walk">
-      <span class="way-num">i.</span>
-      <h3 class="way-name">Walk <em>the Land</em></h3>
-      <p class="way-line">High-altitude trekking. The day is simple: walk, breathe, eat, rest, repeat.</p>
-    </a>
-  </article>
-
-  <article class="way">
-    <div class="way-media">
-      <video muted loop playsinline preload="metadata"
-             poster="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-97ZE.JPG">
-        <source src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-4XB1.webm" type="video/webm">
-      </video>
-    </div>
-    <a class="way-content" href="#traverse">
-      <span class="way-num">ii.</span>
-      <h3 class="way-name">Traverse <em>the Land</em></h3>
-      <p class="way-line">4×4 expeditions through remote terrain. Not road trips — terrain planning, cultural respect, serious logistics.</p>
-    </a>
-  </article>
-
-  <article class="way">
-    <div class="way-media">
-      <video muted loop playsinline preload="metadata"
-             poster="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-F951.jpeg">
-        <source src="https://storage.zopuai.com/video-conversions/converted-1770093589989-TUFP.webm" type="video/webm">
-      </video>
-    </div>
-    <a class="way-content" href="#flow">
-      <span class="way-num">iii.</span>
-      <h3 class="way-name">Flow <em>with the Land</em></h3>
-      <p class="way-line">Cycling and expedition MTB. Movement as meditation when the trail demands presence.</p>
-    </a>
-  </article>
+  </div>
+  <p class="marquee">Walk · Live · Traverse · Flow</p>
+  <div class="scroll-cue" aria-hidden="true"></div>
+  <div class="ridge" aria-hidden="true">
+    <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+      <path d="M0 160 L0 120 L140 60 L260 110 L420 30 L560 100 L730 14 L880 96 L1040 44 L1200 112 L1320 70 L1440 118 L1440 160 Z" fill="#0B1410"/>
+    </svg>
+  </div>
 </section>
 
-<!-- ============================================== FOUR STANDARDS -->
-<section class="standards">
-  <div class="standards-inner">
-    <div class="standards-head">
+<!-- MANIFESTO -->
+<section class="manifesto" aria-label="What Totemtou is">
+  <div class="wrap">
+    <p class="eyebrow">What Totemtou is</p>
+    <p id="creed">Not luxury tourism. Not budget travel. <em>Adventure you can trust</em> — premium by design, because leadership and curation cost what they cost.</p>
+  </div>
+</section>
+
+<!-- WAYS -->
+<section class="ways" id="ways" aria-label="The three ways to journey">
+  <div class="wrap">
+    <div class="ways-head">
       <div>
-        <div class="kicker">The four standards</div>
-        <h2>What every Totemtou journey <em>delivers.</em></h2>
+        <p class="eyebrow">The three ways to journey</p>
+        <h2 class="h2 rv">Different people want different relationships <em>with the land.</em></h2>
       </div>
-      <div class="lede">Regardless of way, region, or duration, every journey we run holds these four lines. They are non-negotiable.</div>
+      <p class="lede rv">Every Totemtou journey lives inside one of three ways. Pick the relationship; we'll point you at the journeys.</p>
     </div>
-
-    <div class="standards-prose">
-      <p>Every group has a leader who has done the route, repeatedly, in the conditions we're going in. Not a guide, not a chaperone, but a leader. They walk what we publish, and we publish only what we've tested. Every route has been walked end to end by a founder.</p>
-      <p>Permits, stays, transport, food, contingencies. The traveller doesn't manage the country; the country has been managed for them. The group is small enough to move at its actual pace, not the slowest published one. Small enough that the leader knows everyone's name on day one.</p>
-      <p class="standards-coda">These are the lines we hold. They cost what they cost.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================== THE JOURNEYS -->
-<section class="journeys" id="journeys">
-  <div class="journeys-head">
-    <div>
-      <div class="kicker">The journeys</div>
-      <h2>Five journeys, walked <em>and tested.</em></h2>
-    </div>
-    <div class="lede">Our launch slate. Five journeys we run repeatedly, in the conditions they're meant for. We'd rather run five things properly than thirty things loosely.</div>
-  </div>
-
-  <div class="journey-grid" id="journey-grid">
-
-    <a class="journey" id="walk" href="abc_journey_3.html">
-      <div class="journey-media">
-        <img src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg" alt="Annapurna Base Camp">
-      </div>
-      <div class="journey-meta">
-        <span class="way-tag">Walk the Land</span>
-        <span>Annapurna · 7 days · Level 3</span>
-      </div>
-      <h3>Annapurna Base Camp</h3>
-      <div class="journey-stats">
-        <span>4,130 m</span><span>48 km</span><span>Moderate</span>
-      </div>
-    </a>
-
-    <a class="journey" href="#">
-      <div class="journey-media">
-        <img src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-V51J.jpeg" alt="Everest Base Camp">
-      </div>
-      <div class="journey-meta">
-        <span class="way-tag">Walk the Land</span>
-        <span>Khumbu · 16 days · Level 5</span>
-      </div>
-      <h3>Everest Base Camp</h3>
-      <div class="journey-stats">
-        <span>5,364 m</span><span>130 km</span><span>Challenging</span>
-      </div>
-    </a>
-
-    <a class="journey" href="khopra_journey.html">
-      <div class="journey-media">
-        <img src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-V5CX.JPG" alt="Khopra Ridge">
-      </div>
-      <div class="journey-meta">
-        <span class="way-tag">Walk the Land</span>
-        <span>Annapurna · 7 days · Level 4</span>
-      </div>
-      <h3>Khopra Ridge &amp; Khayer Lake</h3>
-      <div class="journey-stats">
-        <span>4,660 m</span><span>~50 km</span><span>Moderate–Challenging</span>
-      </div>
-    </a>
-
-    <a class="journey" id="traverse" href="#">
-      <div class="journey-media">
-        <img src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-97ZE.JPG" alt="Upper Mustang">
-      </div>
-      <div class="journey-meta">
-        <span class="way-tag">Traverse the Land</span>
-        <span>Mustang · 7 days · Level 3</span>
-      </div>
-      <h3>Upper Mustang Expedition</h3>
-      <div class="journey-stats">
-        <span>3,840 m</span><span>4×4</span><span>Moderate</span>
-      </div>
-    </a>
-
-    <a class="journey" id="flow" href="dolpo_journey.html">
-      <div class="journey-media">
-        <img src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-F951.jpeg" alt="Upper Dolpo MTB">
-      </div>
-      <div class="journey-meta">
-        <span class="way-tag">Flow with the Land</span>
-        <span>Dolpo · 20 days · Level 6</span>
-      </div>
-      <h3>Upper Dolpo MTB Expedition</h3>
-      <div class="journey-stats">
-        <span>5,350 m</span><span>MTB</span><span>Extreme</span>
-      </div>
-    </a>
-
-  </div>
-</section>
-
-<!-- ============================================== LEADERS -->
-<section class="leaders" id="leaders">
-  <div class="leaders-inner">
-    <div class="leaders-head">
-      <div class="kicker">The people who lead</div>
-      <h2>The leader is not a service provider. <em>The leader is the journey.</em></h2>
-      <p>Every journey is led by someone who has walked, ridden, or driven its route repeatedly, in the conditions we're going in. Their names are on the journeys for a reason.</p>
-    </div>
-
-    <div class="leader-team">
-      <div class="leader-card">
-        <div class="leader-img">
-          <img src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-FOP0.jpeg" alt="Deepak, trip leader, Annapurna Base Camp">
+    <div class="way-list">
+      <a class="way rv tilt" href="#journeys">
+        <div>
+          <p class="num">i.</p>
+          <h3>Walk <em>the Land</em></h3>
+          <p>High-altitude trekking. The day is simple: walk, breathe, eat, rest, repeat.</p>
         </div>
-        <div class="leader-name">Deepak</div>
-        <div class="leader-role">Founder · Annapurna &amp; Mustang lead</div>
-      </div>
+        <div class="vid"><video muted loop playsinline preload="none" data-src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-VWQR.webm"></video></div>
+        <span class="go" aria-hidden="true">→</span>
+      </a>
+      <a class="way rv tilt" href="#journeys">
+        <div>
+          <p class="num">ii.</p>
+          <h3>Traverse <em>the Land</em></h3>
+          <p>4×4 expeditions through remote terrain. Not road trips — terrain planning, cultural respect, serious logistics.</p>
+        </div>
+        <div class="vid"><video muted loop playsinline preload="none" data-src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-4XB1.webm"></video></div>
+        <span class="go" aria-hidden="true">→</span>
+      </a>
+      <a class="way rv tilt" href="#journeys">
+        <div>
+          <p class="num">iii.</p>
+          <h3>Flow <em>with the Land</em></h3>
+          <p>Cycling and expedition MTB. Movement as meditation when the trail demands presence.</p>
+        </div>
+        <div class="vid"><video muted loop playsinline preload="none" data-src="https://storage.zopuai.com/video-conversions/converted-1770093589989-TUFP.webm"></video></div>
+        <span class="go" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</section>
 
-      <div class="leader-card">
-        <div class="leader-img silhouette">Swapnil<br>· portrait pending ·</div>
-        <div class="leader-name">Swapnil</div>
-        <div class="leader-role">Founder · Brand &amp; growth</div>
-      </div>
+<!-- STANDARDS -->
+<section class="standards" id="standards" aria-label="The four standards">
+  <div class="wrap">
+    <p class="eyebrow">The four standards</p>
+    <h2 class="h2 rv">What every Totemtou journey <em>delivers.</em></h2>
+    <p class="lede rv" style="margin-top:1.4rem">Regardless of way, region, or duration, every journey we run holds these four lines. They are non-negotiable.</p>
+    <div class="std-grid">
+      <div class="std rv"><p class="rn">I · Leadership</p><h3>A leader, not a guide</h3><p>Every group has a leader who has done the route, repeatedly, in the conditions we're going in. Not a chaperone. They walk what we publish.</p></div>
+      <div class="std rv"><p class="rn">II · Routes</p><h3>Walked before published</h3><p>We publish only what we've tested. Every route has been walked end to end by a founder.</p></div>
+      <div class="std rv"><p class="rn">III · Logistics</p><h3>The country, managed</h3><p>Permits, stays, transport, food, contingencies. The traveller doesn't manage the country; the country has been managed for them.</p></div>
+      <div class="std rv"><p class="rn">IV · Scale</p><h3>Small enough to know names</h3><p>The group moves at its actual pace, not the slowest published one. Small enough that the leader knows everyone's name on day one.</p></div>
+    </div>
+    <p class="std-tail rv">These are the lines we hold. They cost what they cost.</p>
+  </div>
+</section>
 
-      <div class="leader-card">
-        <div class="leader-img silhouette">EBC lead guide<br>· photography pending ·</div>
-        <div class="leader-name">—</div>
-        <div class="leader-role">Lead guide · Everest Base Camp</div>
-      </div>
+<!-- JOURNEYS -->
+<section class="journeys" id="journeys" aria-label="The journeys">
+  <div class="wrap">
+    <p class="eyebrow">The journeys</p>
+    <h2 class="h2 rv">Five journeys, walked <em>and tested.</em></h2>
+    <p class="lede rv" style="margin-top:1.4rem">Our launch slate. Five journeys we run repeatedly, in the conditions they're meant for. We'd rather run five things properly than thirty things loosely.</p>
+    <div class="j-list">
+      <a class="j-row rv" href="journey.html" data-img="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg" data-cap="Annapurna sanctuary · 4,130 m">
+        <span class="idx">01</span>
+        <h3>Annapurna Base Camp</h3>
+        <span class="meta">Walk the Land<br>Annapurna · 7 days · Level 3</span>
+        <span class="stat"><b>4,130 m</b><br>48 km · Moderate</span>
+      </a>
+      <a class="j-row rv" href="#apply" aria-disabled="true" data-img="https://v3b.fal.media/files/b/0a97b91c/-qvdeJC89r71wFiytAopx_iLwjl6sV.png" data-cap="Khumbu · 5,364 m">
+        <span class="idx">02</span>
+        <h3>Everest Base Camp<span class="soon">Soon</span></h3>
+        <span class="meta">Walk the Land<br>Khumbu · 16 days · Level 5</span>
+        <span class="stat"><b>5,364 m</b><br>130 km · Challenging</span>
+      </a>
+      <a class="j-row rv" href="#apply" aria-disabled="true" data-img="https://v3b.fal.media/files/b/0a97b902/6nUna0AEEGgXKfpHqpwZD_vL351Hlf.png" data-cap="Khopra ridge · 4,660 m">
+        <span class="idx">03</span>
+        <h3>Khopra Ridge &amp; Khayer Lake<span class="soon">Soon</span></h3>
+        <span class="meta">Walk the Land<br>Annapurna · 7 days · Level 4</span>
+        <span class="stat"><b>4,660 m</b><br>~50 km · Mod–Chall.</span>
+      </a>
+      <a class="j-row rv" href="#apply" aria-disabled="true" data-img="https://v3b.fal.media/files/b/0a97b900/loEJkIMctORVtUcOIuZfK_oeHTtKYi.png" data-cap="Mustang · 3,840 m">
+        <span class="idx">04</span>
+        <h3>Upper Mustang Expedition<span class="soon">Soon</span></h3>
+        <span class="meta">Traverse the Land<br>Mustang · 7 days · Level 3</span>
+        <span class="stat"><b>3,840 m</b><br>4×4 · Moderate</span>
+      </a>
+      <a class="j-row rv" href="#apply" aria-disabled="true" data-img="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-0D0E.jpeg" data-cap="Dolpo · 5,350 m">
+        <span class="idx">05</span>
+        <h3>Upper Dolpo MTB Expedition<span class="soon">Soon</span></h3>
+        <span class="meta">Flow with the Land<br>Dolpo · 20 days · Level 6</span>
+        <span class="stat"><b>5,350 m</b><br>MTB · Extreme</span>
+      </a>
+    </div>
+  </div>
+  <div id="jcard" aria-hidden="true"><img alt=""><span class="cap"></span></div>
+</section>
 
-      <div class="leader-card">
-        <div class="leader-img silhouette">Dolpo MTB lead<br>· photography pending ·</div>
-        <div class="leader-name">—</div>
-        <div class="leader-role">Lead guide · Upper Dolpo</div>
+<!-- LEADERS -->
+<section class="leaders" id="leaders" aria-label="The people who lead">
+  <div class="wrap">
+    <p class="eyebrow">The people who lead</p>
+    <h2 class="h2 rv">The leader is not a service provider. <em>The leader is the journey.</em></h2>
+    <p class="lede rv" style="margin-top:1.4rem">Every journey is led by someone who has walked, ridden, or driven its route repeatedly, in the conditions we're going in. Their names are on the journeys for a reason.</p>
+    <div class="lead-grid">
+      <div class="lead rv">
+        <div class="ph rv-img"><img src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-FOP0.jpeg" alt="Deepak, trip leader, above Muktinath" loading="lazy"></div>
+        <p class="nm">Deepak</p><p class="rl">Founder · Annapurna &amp; Mustang lead</p>
+      </div>
+      <div class="lead rv">
+        <div class="ph"><span class="pending">Swapnil<br>· portrait pending ·</span></div>
+        <p class="nm">Swapnil</p><p class="rl">Founder · Brand &amp; growth</p>
+      </div>
+      <div class="lead rv">
+        <div class="ph"><span class="pending">EBC lead guide<br>· photography pending ·</span></div>
+        <p class="nm">—</p><p class="rl">Lead guide · Everest Base Camp</p>
+      </div>
+      <div class="lead rv">
+        <div class="ph"><span class="pending">Dolpo MTB lead<br>· photography pending ·</span></div>
+        <p class="nm">—</p><p class="rl">Lead guide · Upper Dolpo</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================== CLOSE -->
-<section class="close" id="apply">
-  <div class="close-inner">
-    <div class="kicker">Walking with us</div>
-    <h2>Application, <em>not booking.</em></h2>
-    <p>Each journey runs on published dates with a small cohort. Before we confirm a place, we have a short conversation. Pacing, dates, and temperament fit on both sides, or they don't.</p>
-    <a class="close-cta" href="#apply">Begin an application →</a>
+<!-- APPLY -->
+<section class="apply" id="apply" aria-label="Apply">
+  <div class="wrap">
+    <div class="flags rv" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    <p class="eyebrow" style="justify-content:center">Walking with us</p>
+    <h2 class="h2 rv">Application, <em>not booking.</em></h2>
+    <p class="lede rv">Each journey runs on published dates with a small cohort. Before we confirm a place, we have a short conversation. Pacing, dates, and temperament fit on both sides, or they don't.</p>
+    <a class="btn btn--solid mag rv" href="journey.html#apply">Begin an application <span class="arr">→</span></a>
   </div>
 </section>
+</main>
 
-<!-- ============================================== FOOTER -->
-<footer class="footer">
-  <div class="footer-inner">
-    <a class="mark" href="index.html">
-      <span>Totemtou</span>
-    </a>
-    <ul>
-      <li><a href="#journeys">Journeys</a></li>
-      <li><a href="#ways">Ways</a></li>
-      <li><a href="#leaders">Leaders</a></li>
-      <li><a href="#apply">Apply</a></li>
-      <li><a href="#">Field notes</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-    <span>© 2026 Totemtou Experiences</span>
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <a class="brand" href="#top"><svg viewBox="0 0 32 32" fill="none" width="22" aria-hidden="true"><path d="M3 26 12 8l5 9 3-5 9 14z" stroke="#90CCBE" stroke-width="2.4" stroke-linejoin="round"/></svg>Totemtou</a>
+      <nav aria-label="Footer"><a href="#journeys">Journeys</a><a href="#ways">Ways</a><a href="#leaders">Leaders</a><a href="#apply">Apply</a><a href="#">Field notes</a><a href="#">Contact</a></nav>
+    </div>
+    <p class="foot-mark" aria-hidden="true">Totemtou</p>
+    <div class="foot-base"><span>© 2026 Totemtou Experiences</span><span>Pokhara · Kathmandu · the trail</span></div>
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="storage.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-  // Nav adapts to dark hero vs paper background.
-  (function() {
-    const nav = document.querySelector('.nav');
-    const hero = document.querySelector('.hero');
-    if (!nav || !hero) return;
-    function update() {
-      const heroBottom = hero.getBoundingClientRect().bottom;
-      const navMid = nav.offsetHeight / 2 + 4;
-      if (heroBottom > navMid) {
-        nav.classList.add('is-over-dark');
-        nav.classList.remove('is-over-paper');
-      } else {
-        nav.classList.add('is-over-paper');
-        nav.classList.remove('is-over-dark');
-      }
-    }
-    update();
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-  })();
+(function(){
+"use strict";
+const anim = document.documentElement.classList.contains('anim') && window.gsap;
 
-  // Way videos: play on hover, pause and reset on leave.
-  (function() {
-    document.querySelectorAll('.way').forEach(function(way) {
-      const video = way.querySelector('.way-media video');
-      if (!video) return;
-      way.addEventListener('mouseenter', function() {
-        video.play().catch(function() {});
-      });
-      way.addEventListener('mouseleave', function() {
-        video.pause();
-      });
-    });
-  })();
+/* nav state */
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
 
-  // Render the hero video from the CMS storage. Single video → native HTML
-  // loop. Multiple videos → JS playlist that advances on `ended` and loops.
-  (async function() {
-    const HERO_KEY = 'totemtou.cms.hero';
-    const video = document.getElementById('hero-video');
-    if (!video) return;
+/* mobile menu */
+const burger=document.getElementById('burger'),menu=document.getElementById('menu');
+burger.addEventListener('click',()=>{const o=menu.classList.toggle('open');burger.classList.toggle('open',o);burger.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':''});
+menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');burger.classList.remove('open');document.body.style.overflow=''}));
 
-    async function load() {
-      const data = await TTStorage.getItem(HERO_KEY);
-      if (data && Array.isArray(data.videos) && data.videos.length) return data;
-      return null;
-    }
+/* lazy-load way videos */
+const vio=new IntersectionObserver(es=>es.forEach(e=>{
+  const v=e.target;
+  if(e.isIntersecting){ if(!v.src&&v.dataset.src){v.src=v.dataset.src} v.play().catch(()=>{}) }
+  else v.pause();
+}),{rootMargin:'120px'});
+document.querySelectorAll('video[data-src]').forEach(v=>vio.observe(v));
 
-    function typeFor(url) {
-      const m = (url || '').split('?')[0].match(/\.([a-z0-9]+)$/i);
-      if (!m) return '';
-      const ext = m[1].toLowerCase();
-      if (ext === 'webm') return 'video/webm';
-      if (ext === 'mp4')  return 'video/mp4';
-      if (ext === 'mov')  return 'video/quicktime';
-      if (ext === 'ogv' || ext === 'ogg') return 'video/ogg';
-      return '';
-    }
+/* journeys hover preview card */
+const jcard=document.getElementById('jcard');
+if(jcard&&matchMedia('(hover:hover)').matches){
+  const img=jcard.querySelector('img'),cap=jcard.querySelector('.cap');
+  let raf,tx=0,ty=0,cx=0,cy=0;
+  const loop=()=>{cx+=(tx-cx)*.12;cy+=(ty-cy)*.12;jcard.style.transform=`translate(${cx}px,${cy}px) translate(-50%,-110%)`;raf=requestAnimationFrame(loop)};
+  document.querySelectorAll('.j-row').forEach(r=>{
+    r.addEventListener('mouseenter',()=>{img.src=r.dataset.img;cap.textContent=r.dataset.cap;jcard.style.opacity=1;jcard.style.scale=1;cancelAnimationFrame(raf);loop()});
+    r.addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});
+    r.addEventListener('mouseleave',()=>{jcard.style.opacity=0;jcard.style.scale=.85;cancelAnimationFrame(raf)});
+  });
+  jcard.style.transition='opacity .35s,scale .45s cubic-bezier(.22,1,.36,1)';
+}
 
-    let endedHandler = null;
+if(!anim){document.querySelectorAll('.rv,.rv-img').forEach(el=>{el.style.opacity=1;el.style.transform='none';el.style.clipPath='none'});return}
+gsap.registerPlugin(ScrollTrigger);
 
-    async function apply() {
-      const data = await load();
-      if (!data) return; // keep static fallback
-      const videos = data.videos.filter(v => v && v.url);
-      if (!videos.length) return;
+/* loader: altitude count then reveal */
+const loader=document.getElementById('loader'),altN=document.getElementById('altN');
+const intro=gsap.timeline();
+intro.to({v:822},{v:4130,duration:1.4,ease:'power2.inOut',onUpdate:function(){altN.textContent=Math.round(this.targets()[0].v).toLocaleString()}})
+.to(loader,{opacity:0,duration:.6,onComplete:()=>loader.classList.add('done')},'+=0.15')
+.from('#heroTitle .line>span',{yPercent:110,duration:1.1,ease:'power4.out',stagger:.12},'-=0.35')
+.to('.hero .rv',{opacity:1,y:0,duration:.9,ease:'power3.out',stagger:.12},'-=0.6');
 
-      if (data.poster) video.poster = data.poster;
+/* hero parallax + pointer drift */
+const hm=document.getElementById('heroMedia');
+gsap.to(hm,{yPercent:14,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+gsap.to('#heroTitle',{yPercent:-26,opacity:.25,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+if(matchMedia('(hover:hover)').matches){
+  const qx=gsap.quickTo(hm,'x',{duration:1.2,ease:'power3'}),qy=gsap.quickTo(hm,'rotationZ',{duration:1.2,ease:'power3'});
+  addEventListener('pointermove',e=>{const nx=e.clientX/innerWidth-.5;qx(nx*26);qy(nx*.4)});
+}
 
-      // Reset prior playlist handler if any.
-      if (endedHandler) {
-        video.removeEventListener('ended', endedHandler);
-        endedHandler = null;
-      }
+/* generic reveals */
+document.querySelectorAll('.rv').forEach(el=>{
+  if(el.closest('.hero'))return;
+  gsap.to(el,{opacity:1,y:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}});
+});
+document.querySelectorAll('.rv-img').forEach(el=>{
+  gsap.to(el,{clipPath:'inset(0% 0 0% 0)',scale:1,duration:1.3,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 86%'}});
+});
 
-      if (videos.length === 1) {
-        video.loop = true;
-        video.innerHTML = '';
-        const src = document.createElement('source');
-        src.src = videos[0].url;
-        const t = typeFor(videos[0].url);
-        if (t) src.type = t;
-        video.appendChild(src);
-        video.load();
-        video.play().catch(() => {});
-        return;
-      }
+/* manifesto word scrub */
+const creed=document.getElementById('creed');
+creed.innerHTML=creed.innerHTML.split(/(\s+|<em>|<\/em>)/).map(t=>/^\s*$/.test(t)||t.startsWith('<')?t:`<span class="w">${t}</span>`).join(' ');
+gsap.to('#creed .w',{opacity:1,stagger:.06,ease:'none',scrollTrigger:{trigger:creed,start:'top 78%',end:'bottom 45%',scrub:true}});
 
-      // Multiple — JS-driven playlist. Disable native loop.
-      video.loop = false;
-      let idx = 0;
-      function playAt(i) {
-        idx = i;
-        video.innerHTML = '';
-        const src = document.createElement('source');
-        src.src = videos[idx].url;
-        const t = typeFor(videos[idx].url);
-        if (t) src.type = t;
-        video.appendChild(src);
-        video.load();
-        video.play().catch(() => {});
-      }
-      endedHandler = function() {
-        playAt((idx + 1) % videos.length);
-      };
-      video.addEventListener('ended', endedHandler);
-      playAt(0);
-    }
+/* way card tilt (pointer animation) */
+if(matchMedia('(hover:hover)').matches){
+  document.querySelectorAll('.tilt').forEach(card=>{
+    const rx=gsap.quickTo(card,'rotationX',{duration:.6,ease:'power3'}),
+          ry=gsap.quickTo(card,'rotationY',{duration:.6,ease:'power3'});
+    gsap.set(card,{transformPerspective:1100});
+    card.addEventListener('pointermove',e=>{const r=card.getBoundingClientRect();
+      ry(((e.clientX-r.left)/r.width-.5)*5);rx(-((e.clientY-r.top)/r.height-.5)*4)});
+    card.addEventListener('pointerleave',()=>{rx(0);ry(0)});
+  });
+  /* magnetic buttons */
+  document.querySelectorAll('.mag').forEach(b=>{
+    const mx=gsap.quickTo(b,'x',{duration:.5,ease:'power3'}),my=gsap.quickTo(b,'y',{duration:.5,ease:'power3'});
+    b.addEventListener('pointermove',e=>{const r=b.getBoundingClientRect();mx((e.clientX-r.left-r.width/2)*.3);my((e.clientY-r.top-r.height/2)*.4)});
+    b.addEventListener('pointerleave',()=>{mx(0);my(0)});
+  });
+}
 
-    await apply();
-
-    // Cross-tab sync: if the CMS publishes elsewhere, swap the hero in place.
-    window.addEventListener('storage', (e) => {
-      if (e.key === HERO_KEY) apply();
-    });
-  })();
-
-  // Render the journey grid from the CMS storage when present, so admin edits
-  // (visibility, content, image, ordering by category) flow through here.
-  // The static markup above is the fallback for first-time visitors.
-  (async function() {
-    const STORAGE_KEY = 'totemtou.cms.trips';
-    const grid = document.getElementById('journey-grid');
-    if (!grid) return;
-
-    const CATEGORY_NAMES = {
-      walk: 'Walk the Land',
-      traverse: 'Traverse the Land',
-      flow: 'Flow with the Land',
-    };
-    const CATEGORY_ORDER = ['walk', 'traverse', 'flow'];
-
-    // Trip → its dedicated page. Add new entries here as more pages ship.
-    const TRIP_URLS = {
-      abc: 'abc_journey_3.html',
-      khopra: 'khopra_journey.html',
-      dolpo: 'dolpo_journey.html',
-    };
-
-    // Anchor IDs for the "ways" strip jump links — keep the first trip in each
-    // category as the named anchor for that way.
-    const ANCHOR_FOR_CATEGORY = {
-      walk: 'walk',
-      traverse: 'traverse',
-      flow: 'flow',
-    };
-
-    async function load() {
-      const data = await TTStorage.getItem(STORAGE_KEY);
-      return Array.isArray(data) && data.length ? data : null;
-    }
-
-    function escapeHtml(s) {
-      return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-      }[c]));
-    }
-
-    function cardHtml(trip, isFirstInCategory) {
-      const url = TRIP_URLS[trip.id] || '#';
-      const idAttr = isFirstInCategory ? ` id="${ANCHOR_FOR_CATEGORY[trip.category]}"` : '';
-      const media = trip.image
-        ? `<img src="${escapeHtml(trip.image)}" alt="${escapeHtml(trip.title)}">`
-        : `<div class="journey-media empty">Image pending</div>`;
-      return `
-        <a class="journey"${idAttr} href="${escapeHtml(url)}">
-          <div class="journey-media">${media}</div>
-          <div class="journey-meta">
-            <span class="way-tag">${CATEGORY_NAMES[trip.category] || ''}</span>
-            <span>${escapeHtml(trip.region)} · ${trip.days} days · Level ${trip.level}</span>
-          </div>
-          <h3>${escapeHtml(trip.title)}</h3>
-          <div class="journey-stats">
-            <span>${escapeHtml(trip.altitude)}</span><span>${escapeHtml(trip.distance)}</span><span>${escapeHtml(trip.difficulty)}</span>
-          </div>
-        </a>
-      `;
-    }
-
-    async function render() {
-      const trips = await load();
-      if (!trips) return; // keep the static markup
-      const active = trips.filter(t => t.active);
-      // Order: by category (walk, traverse, flow), preserving in-category order.
-      active.sort((a, b) => {
-        const ai = CATEGORY_ORDER.indexOf(a.category);
-        const bi = CATEGORY_ORDER.indexOf(b.category);
-        return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
-      });
-      const seenCategory = {};
-      grid.innerHTML = active.map(t => {
-        const first = !seenCategory[t.category];
-        seenCategory[t.category] = true;
-        return cardHtml(t, first);
-      }).join('');
-    }
-
-    await render();
-
-    // Cross-tab sync: when the CMS publishes in another tab, refresh here.
-    window.addEventListener('storage', (e) => {
-      if (e.key === STORAGE_KEY) render();
-    });
-  })();
+/* footer wordmark drift */
+gsap.from('.foot-mark',{yPercent:42,ease:'none',scrollTrigger:{trigger:'footer',start:'top bottom',end:'bottom bottom',scrub:true}});
+})();
 </script>
-
 </body>
 </html>
