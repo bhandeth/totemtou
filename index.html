@@ -256,8 +256,9 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
 <!-- HERO -->
 <section class="hero" aria-label="Intro">
   <div class="hero-media" id="heroMedia">
-    <video autoplay muted loop playsinline preload="metadata" poster="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg">
-      <source src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-1R34.webm" type="video/webm">
+    <video autoplay muted loop playsinline preload="metadata" poster="posters/hero.jpg">
+      <source src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-LKSH.MP4" type="video/mp4">
+      <source src="https://storage.zopuai.com/video-conversions/converted-1782408613481-S8YR.webm" type="video/webm">
     </video>
   </div>
   <div class="hero-in">
@@ -306,7 +307,7 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
           <h3>Walk <em>the Land</em></h3>
           <p>High-altitude trekking. The day is simple: walk, breathe, eat, rest, repeat.</p>
         </div>
-        <div class="vid"><video muted loop playsinline preload="none" data-src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-VWQR.webm"></video></div>
+        <div class="vid"><video muted loop playsinline preload="none" poster="posters/walk.jpg"><source src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-BHY8.mov" type="video/mp4"><source src="https://storage.zopuai.com/video-conversions/converted-1782407287083-PN4N.webm" type="video/webm"></video></div>
         <span class="go" aria-hidden="true">→</span>
       </a>
       <a class="way rv tilt" href="#journeys">
@@ -315,7 +316,7 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
           <h3>Traverse <em>the Land</em></h3>
           <p>4×4 expeditions through remote terrain. Terrain planning, cultural respect, serious logistics.</p>
         </div>
-        <div class="vid"><video muted loop playsinline preload="none" data-src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-4XB1.webm"></video></div>
+        <div class="vid"><video muted loop playsinline preload="none" poster="posters/traverse.jpg"><source src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-P4SR.MP4" type="video/mp4"><source src="https://storage.zopuai.com/video-conversions/converted-1782408396060-0WE7.webm" type="video/webm"></video></div>
         <span class="go" aria-hidden="true">→</span>
       </a>
       <a class="way rv tilt" href="#journeys">
@@ -324,7 +325,7 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
           <h3>Flow <em>with the Land</em></h3>
           <p>Cycling and expedition MTB. Movement as meditation when the trail demands presence.</p>
         </div>
-        <div class="vid"><video muted loop playsinline preload="none" data-src="https://storage.zopuai.com/video-conversions/converted-1770093589989-TUFP.webm"></video></div>
+        <div class="vid"><video muted loop playsinline preload="none" poster="posters/flow.jpg"><source src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-YZ5C.MP4" type="video/mp4"><source src="https://storage.zopuai.com/video-conversions/converted-1770093589989-TUFP.webm" type="video/webm"></video></div>
         <span class="go" aria-hidden="true">→</span>
       </a>
     </div>
@@ -442,13 +443,12 @@ const burger=document.getElementById('burger'),menu=document.getElementById('men
 burger.addEventListener('click',()=>{const o=menu.classList.toggle('open');burger.classList.toggle('open',o);burger.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':''});
 menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');burger.classList.remove('open');document.body.style.overflow=''}));
 
-/* lazy-load way videos */
+/* play/pause way videos on scroll */
 const vio=new IntersectionObserver(es=>es.forEach(e=>{
-  const v=e.target;
-  if(e.isIntersecting){ if(!v.src&&v.dataset.src){v.src=v.dataset.src} v.play().catch(()=>{}) }
-  else v.pause();
+  if(e.isIntersecting) e.target.play().catch(()=>{});
+  else e.target.pause();
 }),{rootMargin:'120px'});
-document.querySelectorAll('video[data-src]').forEach(v=>vio.observe(v));
+document.querySelectorAll('.way .vid video').forEach(v=>vio.observe(v));
 
 /* journeys hover preview card */
 const jcard=document.getElementById('jcard');
