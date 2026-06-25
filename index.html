@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Totemtou — Curated adventures, led with experience.</title>
+<title>Totemtou · Curated adventures, led with experience.</title>
 <meta name="description" content="Small groups. Tested routes. Calm leadership. Trekking, 4×4 and expedition MTB journeys across the Nepal Himalaya, designed end to end.">
-<meta property="og:title" content="Totemtou — Curated adventures, led with experience.">
+<meta property="og:title" content="Totemtou · Curated adventures, led with experience.">
 <meta property="og:description" content="Small groups. Tested routes. Calm leadership. Journeys across the Himalayas, designed end to end.">
 <meta property="og:image" content="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M3 26 12 8l5 9 3-5 9 14z' fill='none' stroke='%2390CCBE' stroke-width='2.4' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="icon" type="image/webp" href="https://storage.zopuai.com/converted/user-OJXX.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Spline+Sans+Mono:wght@300..700&display=swap" rel="stylesheet">
@@ -49,8 +49,7 @@ body::after{content:"";position:fixed;inset:-50%;z-index:90;pointer-events:none;
 @keyframes grain{0%,100%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-2%)}80%{transform:translate(3%,3%)}}
 
 /* type voices */
-.eyebrow{display:flex;align-items:center;gap:.85rem;margin-bottom:1.7rem;font:500 .68rem/1 var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--bone-2)}
-.eyebrow::before{content:"";width:2.4rem;height:1px;background:var(--river);flex:none}
+.eyebrow{display:block;margin-bottom:1.7rem;font:500 .68rem/1 var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--bone-2)}
 .h2{font-weight:470;font-size:clamp(2.15rem,4.7vw,4rem);line-height:1.05;letter-spacing:-.018em;text-wrap:balance}
 .h2 em,h1 em,h3 em{font-style:italic;font-weight:400}
 .lede{font-size:clamp(1.02rem,1.45vw,1.22rem);line-height:1.68;color:var(--bone-2);max-width:54ch}
@@ -71,7 +70,7 @@ header.nav{position:fixed;inset:0 0 auto;z-index:200;transition:background .4s,b
 header.nav.scrolled{background:rgba(11,20,16,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
 .nav-in{display:flex;align-items:center;justify-content:space-between;height:4.6rem}
 .brand{display:flex;align-items:center;gap:.7rem;font:600 1.05rem var(--f-disp);letter-spacing:.02em}
-.brand svg{width:1.5rem;height:1.5rem}
+.brand svg,.brand img{width:1.7rem;height:1.7rem;border-radius:50%}
 .nav-links{display:flex;gap:2.4rem}
 .nav-links a{position:relative;font:500 .7rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-2);transition:color .3s}
 .nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;width:100%;height:1px;background:var(--river);transform:scaleX(0);transform-origin:right;transition:transform .4s var(--ease)}
@@ -109,8 +108,7 @@ html:not(.anim) #loader{display:none}
 .hero-media video{width:100%;height:100%;object-fit:cover;filter:saturate(.92) brightness(.78)}
 .hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(11,20,16,.55),rgba(11,20,16,.15) 35%,rgba(11,20,16,.35) 70%,var(--ink-0))}
 .hero-in{width:min(1280px,92vw);margin-inline:auto}
-.hero .kicker{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;font:500 .68rem var(--f-mono);letter-spacing:.26em;text-transform:uppercase;color:var(--bone-2)}
-.hero .kicker::before{content:"";width:3rem;height:1px;background:var(--marigold)}
+.hero .kicker{display:block;margin-bottom:2rem;font:500 .68rem var(--f-mono);letter-spacing:.26em;text-transform:uppercase;color:var(--bone-2)}
 h1{font-weight:430;font-size:clamp(2.9rem,8.6vw,7.6rem);line-height:1.0;letter-spacing:-.028em;max-width:14ch}
 h1 .line{display:block;overflow:hidden}
 h1 .line>span{display:block}
@@ -141,7 +139,7 @@ h1 .line>span{display:block}
 .way-list{display:grid;gap:1.4rem}
 .way{position:relative;display:grid;grid-template-columns:minmax(0,1fr) clamp(260px,34vw,460px);gap:clamp(1.4rem,4vw,3.5rem);align-items:center;padding:clamp(1.6rem,3vw,2.6rem);border:1px solid var(--line);border-radius:20px;background:rgba(235,231,219,.025);overflow:hidden;transition:border-color .5s,background .5s;will-change:transform}
 .way:hover{border-color:rgba(144,204,190,.4);background:rgba(144,204,190,.04)}
-.way .num{font:300 .85rem var(--f-mono);letter-spacing:.2em;color:var(--marigold);margin-bottom:1rem}
+.way .num{font:300 .85rem var(--f-mono);letter-spacing:.2em;color:var(--bone-3);margin-bottom:1rem}
 .way h3{font-weight:460;font-size:clamp(1.7rem,3.2vw,2.7rem);line-height:1.08;letter-spacing:-.015em;margin-bottom:1rem}
 .way p{color:var(--bone-2);max-width:42ch}
 .way .vid{position:relative;aspect-ratio:16/10;border-radius:14px;overflow:hidden;transform:translateZ(0)}
@@ -159,7 +157,7 @@ h1 .line>span{display:block}
 .std:nth-child(1){border-right-width:1px;border-bottom-width:1px}
 .std:nth-child(2){border-bottom-width:1px}
 .std:nth-child(3){border-right-width:1px}
-.std .rn{font:300 .8rem var(--f-mono);letter-spacing:.22em;color:var(--marigold)}
+.std .rn{font:300 .8rem var(--f-mono);letter-spacing:.22em;color:var(--bone-3)}
 .std h3{font-weight:470;font-size:clamp(1.3rem,2vw,1.7rem);margin:.9rem 0 .8rem;letter-spacing:-.01em}
 .std p{color:var(--bone-2);font-size:.98rem;max-width:42ch}
 .std::after{content:"";position:absolute;left:0;top:0;width:3px;height:0;background:var(--river);transition:height .8s var(--ease)}
@@ -178,7 +176,7 @@ h1 .line>span{display:block}
 .j-row .stat{font:400 .72rem/1.7 var(--f-mono);letter-spacing:.08em;color:var(--bone-3);text-align:right;white-space:nowrap}
 .j-row .stat b{color:var(--river);font-weight:500}
 .j-row[aria-disabled]{opacity:.45;pointer-events:none}
-.j-row .soon{font:500 .58rem var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--marigold);border:1px solid rgba(217,162,59,.4);padding:.35em .8em;border-radius:99px;margin-left:.8rem;vertical-align:middle}
+.j-row .soon{font:500 .58rem var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--bone-3);border:1px solid rgba(235,231,219,.2);padding:.35em .8em;border-radius:99px;margin-left:.8rem;vertical-align:middle}
 @media(max-width:760px){.j-row{grid-template-columns:auto 1fr;row-gap:.4rem}.j-row .meta,.j-row .stat{grid-column:2;text-align:left}}
 /* cursor-following preview card */
 #jcard{position:fixed;z-index:120;width:300px;aspect-ratio:4/3;border-radius:14px;overflow:hidden;pointer-events:none;opacity:0;scale:.85;box-shadow:0 30px 80px rgba(0,0,0,.55);border:1px solid rgba(235,231,219,.18)}
@@ -188,7 +186,7 @@ h1 .line>span{display:block}
 
 /* leaders */
 .leaders{background:var(--ink-0)}
-.lead-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.3rem;margin-top:3.6rem}
+.lead-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:3.6rem}
 .lead{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(235,231,219,.02)}
 .lead .ph{aspect-ratio:3/3.6;overflow:hidden;position:relative;background:var(--ink-2)}
 .lead .ph img{width:100%;height:100%;object-fit:cover;filter:saturate(.85);transition:transform 1s var(--ease),filter .8s}
@@ -206,6 +204,10 @@ h1 .line>span{display:block}
 .flags{display:flex;justify-content:center;gap:.45rem;margin-bottom:2.6rem}
 .flags i{width:26px;height:18px;opacity:.85;border-radius:2px}
 .flags i:nth-child(1){background:#5B8FD9}.flags i:nth-child(2){background:#EBE7DB}.flags i:nth-child(3){background:#C9504A}.flags i:nth-child(4){background:#4F9E6B}.flags i:nth-child(5){background:var(--marigold)}
+
+/* apply ctas */
+.apply-ctas{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;margin-top:.6rem}
+@media(max-width:520px){.apply-ctas{flex-direction:column;width:100%}.apply-ctas .btn{width:100%;justify-content:center}}
 
 /* footer */
 footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--ink-1);overflow:hidden}
@@ -232,7 +234,7 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
 <header class="nav" id="nav">
   <div class="wrap nav-in">
     <a class="brand" href="#top" aria-label="Totemtou home">
-      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M3 26 12 8l5 9 3-5 9 14z" stroke="#90CCBE" stroke-width="2.4" stroke-linejoin="round"/></svg>
+      <img src="https://storage.zopuai.com/converted/user-OJXX.webp" alt="" width="32" height="32" aria-hidden="true">
       Totemtou
     </a>
     <nav class="nav-links" aria-label="Primary">
@@ -283,7 +285,7 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
 <section class="manifesto" aria-label="What Totemtou is">
   <div class="wrap">
     <p class="eyebrow">What Totemtou is</p>
-    <p id="creed">Not luxury tourism. Not budget travel. <em>Adventure you can trust</em> — premium by design, because leadership and curation cost what they cost.</p>
+    <p id="creed"><em>Adventure you can trust.</em> Premium by design. Leadership and curation cost what they cost.</p>
   </div>
 </section>
 
@@ -311,7 +313,7 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
         <div>
           <p class="num">ii.</p>
           <h3>Traverse <em>the Land</em></h3>
-          <p>4×4 expeditions through remote terrain. Not road trips — terrain planning, cultural respect, serious logistics.</p>
+          <p>4×4 expeditions through remote terrain. Terrain planning, cultural respect, serious logistics.</p>
         </div>
         <div class="vid"><video muted loop playsinline preload="none" data-src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-4XB1.webm"></video></div>
         <span class="go" aria-hidden="true">→</span>
@@ -336,10 +338,10 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
     <h2 class="h2 rv">What every Totemtou journey <em>delivers.</em></h2>
     <p class="lede rv" style="margin-top:1.4rem">Regardless of way, region, or duration, every journey we run holds these four lines. They are non-negotiable.</p>
     <div class="std-grid">
-      <div class="std rv"><p class="rn">I · Leadership</p><h3>A leader, not a guide</h3><p>Every group has a leader who has done the route, repeatedly, in the conditions we're going in. Not a chaperone. They walk what we publish.</p></div>
+      <div class="std rv"><p class="rn">I · Leadership</p><h3>A leader who has walked it</h3><p>Every group has a leader who has done the route, repeatedly, in the conditions we're going in. They walk what we publish.</p></div>
       <div class="std rv"><p class="rn">II · Routes</p><h3>Walked before published</h3><p>We publish only what we've tested. Every route has been walked end to end by a founder.</p></div>
       <div class="std rv"><p class="rn">III · Logistics</p><h3>The country, managed</h3><p>Permits, stays, transport, food, contingencies. The traveller doesn't manage the country; the country has been managed for them.</p></div>
-      <div class="std rv"><p class="rn">IV · Scale</p><h3>Small enough to know names</h3><p>The group moves at its actual pace, not the slowest published one. Small enough that the leader knows everyone's name on day one.</p></div>
+      <div class="std rv"><p class="rn">IV · Scale</p><h3>Small enough to know names</h3><p>The group moves at its actual pace. Small enough that the leader knows everyone's name on day one.</p></div>
     </div>
     <p class="std-tail rv">These are the lines we hold. They cost what they cost.</p>
   </div>
@@ -349,8 +351,8 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
 <section class="journeys" id="journeys" aria-label="The journeys">
   <div class="wrap">
     <p class="eyebrow">The journeys</p>
-    <h2 class="h2 rv">Five journeys, walked <em>and tested.</em></h2>
-    <p class="lede rv" style="margin-top:1.4rem">Our launch slate. Five journeys we run repeatedly, in the conditions they're meant for. We'd rather run five things properly than thirty things loosely.</p>
+    <h2 class="h2 rv">Three journeys, walked <em>and tested.</em></h2>
+    <p class="lede rv" style="margin-top:1.4rem">Our launch slate. Three journeys we run repeatedly, in the conditions they're meant for. We'd rather run three properly than thirty loosely.</p>
     <div class="j-list">
       <a class="j-row rv" href="journey.html" data-img="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg" data-cap="Annapurna sanctuary · 4,130 m">
         <span class="idx">01</span>
@@ -358,29 +360,17 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
         <span class="meta">Walk the Land<br>Annapurna · 7 days · Level 3</span>
         <span class="stat"><b>4,130 m</b><br>48 km · Moderate</span>
       </a>
-      <a class="j-row rv" href="#apply" aria-disabled="true" data-img="https://v3b.fal.media/files/b/0a97b91c/-qvdeJC89r71wFiytAopx_iLwjl6sV.png" data-cap="Khumbu · 5,364 m">
+      <a class="j-row rv" href="#apply" aria-disabled="true" data-img="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-0D0E.jpeg" data-cap="Upper Mustang · MTB">
         <span class="idx">02</span>
-        <h3>Everest Base Camp<span class="soon">Soon</span></h3>
-        <span class="meta">Walk the Land<br>Khumbu · 16 days · Level 5</span>
-        <span class="stat"><b>5,364 m</b><br>130 km · Challenging</span>
+        <h3>Upper Mustang MTB<span class="soon">Soon</span></h3>
+        <span class="meta">Flow with the Land<br>Mustang · 9 days · Level 4</span>
+        <span class="stat"><b>3,840 m</b><br>MTB · Challenging</span>
       </a>
-      <a class="j-row rv" href="#apply" aria-disabled="true" data-img="https://v3b.fal.media/files/b/0a97b902/6nUna0AEEGgXKfpHqpwZD_vL351Hlf.png" data-cap="Khopra ridge · 4,660 m">
+      <a class="j-row rv" href="#apply" aria-disabled="true" data-img="https://v3b.fal.media/files/b/0a97b900/loEJkIMctORVtUcOIuZfK_oeHTtKYi.png" data-cap="Upper Mustang · 4×4">
         <span class="idx">03</span>
-        <h3>Khopra Ridge &amp; Khayer Lake<span class="soon">Soon</span></h3>
-        <span class="meta">Walk the Land<br>Annapurna · 7 days · Level 4</span>
-        <span class="stat"><b>4,660 m</b><br>~50 km · Mod–Chall.</span>
-      </a>
-      <a class="j-row rv" href="#apply" aria-disabled="true" data-img="https://v3b.fal.media/files/b/0a97b900/loEJkIMctORVtUcOIuZfK_oeHTtKYi.png" data-cap="Mustang · 3,840 m">
-        <span class="idx">04</span>
-        <h3>Upper Mustang Expedition<span class="soon">Soon</span></h3>
+        <h3>Upper Mustang 4×4<span class="soon">Soon</span></h3>
         <span class="meta">Traverse the Land<br>Mustang · 7 days · Level 3</span>
         <span class="stat"><b>3,840 m</b><br>4×4 · Moderate</span>
-      </a>
-      <a class="j-row rv" href="#apply" aria-disabled="true" data-img="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-0D0E.jpeg" data-cap="Dolpo · 5,350 m">
-        <span class="idx">05</span>
-        <h3>Upper Dolpo MTB Expedition<span class="soon">Soon</span></h3>
-        <span class="meta">Flow with the Land<br>Dolpo · 20 days · Level 6</span>
-        <span class="stat"><b>5,350 m</b><br>MTB · Extreme</span>
       </a>
     </div>
   </div>
@@ -391,24 +381,20 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
 <section class="leaders" id="leaders" aria-label="The people who lead">
   <div class="wrap">
     <p class="eyebrow">The people who lead</p>
-    <h2 class="h2 rv">The leader is not a service provider. <em>The leader is the journey.</em></h2>
+    <h2 class="h2 rv"><em>The leader is the journey.</em></h2>
     <p class="lede rv" style="margin-top:1.4rem">Every journey is led by someone who has walked, ridden, or driven its route repeatedly, in the conditions we're going in. Their names are on the journeys for a reason.</p>
     <div class="lead-grid">
       <div class="lead rv">
         <div class="ph rv-img"><img src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-FOP0.jpeg" alt="Deepak, trip leader, above Muktinath" loading="lazy"></div>
-        <p class="nm">Deepak</p><p class="rl">Founder · Annapurna &amp; Mustang lead</p>
+        <p class="nm">Deepak</p><p class="rl">Founder · Operations &amp; Experience</p>
       </div>
       <div class="lead rv">
-        <div class="ph"><span class="pending">Swapnil<br>· portrait pending ·</span></div>
+        <div class="ph rv-img"><img src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-U83X.jpg" alt="Swapnil, founder, on the trail" loading="lazy"></div>
         <p class="nm">Swapnil</p><p class="rl">Founder · Brand &amp; growth</p>
       </div>
       <div class="lead rv">
-        <div class="ph"><span class="pending">EBC lead guide<br>· photography pending ·</span></div>
-        <p class="nm">—</p><p class="rl">Lead guide · Everest Base Camp</p>
-      </div>
-      <div class="lead rv">
-        <div class="ph"><span class="pending">Dolpo MTB lead<br>· photography pending ·</span></div>
-        <p class="nm">—</p><p class="rl">Lead guide · Upper Dolpo</p>
+        <div class="ph rv-img"><img src="https://storage.zopuai.com/converted/user-TUJZ.webp" alt="Fabio Marques, lead MTB guide" loading="lazy"></div>
+        <p class="nm">Fabio Marques</p><p class="rl">Lead MTB guide · Upper Mustang</p>
       </div>
     </div>
   </div>
@@ -418,10 +404,13 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
 <section class="apply" id="apply" aria-label="Apply">
   <div class="wrap">
     <div class="flags rv" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-    <p class="eyebrow" style="justify-content:center">Walking with us</p>
-    <h2 class="h2 rv">Application, <em>not booking.</em></h2>
-    <p class="lede rv">Each journey runs on published dates with a small cohort. Before we confirm a place, we have a short conversation. Pacing, dates, and temperament fit on both sides, or they don't.</p>
-    <a class="btn btn--solid mag rv" href="journey.html#apply">Begin an application <span class="arr">→</span></a>
+    <p class="eyebrow" style="text-align:center">Walking with us</p>
+    <h2 class="h2 rv">Two ways to <em>begin.</em></h2>
+    <p class="lede rv">Each journey runs on published dates with a small cohort. Pick the cohort that fits, or book a short call with us. Pacing, dates, temperament, all worked out together before we confirm a place.</p>
+    <div class="apply-ctas rv">
+      <a class="btn btn--solid mag" href="#journeys">Choose a journey <span class="arr">↓</span></a>
+      <a class="btn mag" href="https://wa.me/WHATSAPP_NUMBER?text=Hi%20Totemtou%20%E2%80%94%20I%20have%20a%20few%20questions%20about%20your%20journeys." target="_blank" rel="noopener">I have questions <span class="arr">→</span></a>
+    </div>
   </div>
 </section>
 </main>
@@ -429,7 +418,7 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
 <footer>
   <div class="wrap">
     <div class="foot-grid">
-      <a class="brand" href="#top"><svg viewBox="0 0 32 32" fill="none" width="22" aria-hidden="true"><path d="M3 26 12 8l5 9 3-5 9 14z" stroke="#90CCBE" stroke-width="2.4" stroke-linejoin="round"/></svg>Totemtou</a>
+      <a class="brand" href="#top"><img src="https://storage.zopuai.com/converted/user-OJXX.webp" alt="" width="22" height="22" aria-hidden="true">Totemtou</a>
       <nav aria-label="Footer"><a href="#journeys">Journeys</a><a href="#ways">Ways</a><a href="#leaders">Leaders</a><a href="#apply">Apply</a><a href="#">Field notes</a><a href="#">Contact</a></nav>
     </div>
     <p class="foot-mark" aria-hidden="true">Totemtou</p>
