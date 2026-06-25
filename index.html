@@ -186,16 +186,17 @@ h1 .line>span{display:block}
 
 /* leaders */
 .leaders{background:var(--ink-0)}
-.lead-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;margin-top:3.6rem}
-.lead{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(235,231,219,.02)}
+.lead-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1.3rem;margin-top:3.6rem}
+.lead{grid-column:span 2;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(235,231,219,.02)}
+.lead-grid .lead:nth-child(4):nth-last-child(2){grid-column:2 / span 2}
 .lead .ph{aspect-ratio:3/3.6;overflow:hidden;position:relative;background:var(--ink-2)}
 .lead .ph img{width:100%;height:100%;object-fit:cover;filter:saturate(.85);transition:transform 1s var(--ease),filter .8s}
 .lead:hover .ph img{transform:scale(1.05);filter:saturate(1)}
 .lead .ph .pending{position:absolute;inset:0;display:grid;place-items:center;font:400 .68rem/1.8 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--bone-3);text-align:center;padding:1rem}
 .lead .nm{padding:1.1rem 1.2rem .35rem;font-weight:520;font-size:1.15rem}
 .lead .rl{padding:0 1.2rem 1.2rem;font:400 .66rem/1.6 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--bone-2)}
-@media(max-width:980px){.lead-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:520px){.lead-grid{grid-template-columns:1fr 1fr;gap:.8rem}.lead .nm{font-size:1rem}}
+@media(max-width:980px){.lead-grid{grid-template-columns:repeat(4,1fr)}.lead-grid .lead:nth-child(4):nth-last-child(2){grid-column:span 2}.lead-grid .lead:nth-last-child(1):nth-child(odd){grid-column:2 / span 2}}
+@media(max-width:520px){.lead-grid{grid-template-columns:repeat(4,1fr);gap:.8rem}.lead .nm{font-size:1rem}}
 
 /* apply */
 .apply{background:linear-gradient(var(--ink-0),var(--ink-1));text-align:center}
@@ -257,8 +258,8 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
 <section class="hero" aria-label="Intro">
   <div class="hero-media" id="heroMedia">
     <video autoplay muted loop playsinline preload="metadata" poster="posters/hero.jpg">
-      <source src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-LKSH.MP4" type="video/mp4">
       <source src="https://storage.zopuai.com/video-conversions/converted-1782408613481-S8YR.webm" type="video/webm">
+      <source src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-LKSH.MP4" type="video/mp4">
     </video>
   </div>
   <div class="hero-in">
@@ -307,7 +308,7 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
           <h3>Walk <em>the Land</em></h3>
           <p>High-altitude trekking. The day is simple: walk, breathe, eat, rest, repeat.</p>
         </div>
-        <div class="vid"><video muted loop playsinline preload="none" poster="posters/walk.jpg"><source src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-BHY8.mov" type="video/mp4"><source src="https://storage.zopuai.com/video-conversions/converted-1782407287083-PN4N.webm" type="video/webm"></video></div>
+        <div class="vid"><video muted loop playsinline preload="none" poster="posters/walk.jpg"><source src="https://storage.zopuai.com/video-conversions/converted-1782407287083-PN4N.webm" type="video/webm"><source src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-BHY8.mov" type="video/mp4"></video></div>
         <span class="go" aria-hidden="true">→</span>
       </a>
       <a class="way rv tilt" href="#journeys">
@@ -316,7 +317,7 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
           <h3>Traverse <em>the Land</em></h3>
           <p>4×4 expeditions through remote terrain. Terrain planning, cultural respect, serious logistics.</p>
         </div>
-        <div class="vid"><video muted loop playsinline preload="none" poster="posters/traverse.jpg"><source src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-P4SR.MP4" type="video/mp4"><source src="https://storage.zopuai.com/video-conversions/converted-1782408396060-0WE7.webm" type="video/webm"></video></div>
+        <div class="vid"><video muted loop playsinline preload="none" poster="posters/traverse.jpg"><source src="https://storage.zopuai.com/video-conversions/converted-1782408396060-0WE7.webm" type="video/webm"><source src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-P4SR.MP4" type="video/mp4"></video></div>
         <span class="go" aria-hidden="true">→</span>
       </a>
       <a class="way rv tilt" href="#journeys">
@@ -325,7 +326,7 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
           <h3>Flow <em>with the Land</em></h3>
           <p>Cycling and expedition MTB. Movement as meditation when the trail demands presence.</p>
         </div>
-        <div class="vid"><video muted loop playsinline preload="none" poster="posters/flow.jpg"><source src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-YZ5C.MP4" type="video/mp4"><source src="https://storage.zopuai.com/video-conversions/converted-1770093589989-TUFP.webm" type="video/webm"></video></div>
+        <div class="vid"><video muted loop playsinline preload="none" poster="posters/flow.jpg"><source src="https://storage.zopuai.com/video-conversions/converted-1770093589989-TUFP.webm" type="video/webm"><source src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-YZ5C.MP4" type="video/mp4"></video></div>
         <span class="go" aria-hidden="true">→</span>
       </a>
     </div>
@@ -386,16 +387,24 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
     <p class="lede rv" style="margin-top:1.4rem">Every journey is led by someone who has walked, ridden, or driven its route repeatedly, in the conditions we're going in. Their names are on the journeys for a reason.</p>
     <div class="lead-grid">
       <div class="lead rv">
-        <div class="ph rv-img"><img src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-FOP0.jpeg" alt="Deepak, trip leader, above Muktinath" loading="lazy"></div>
-        <p class="nm">Deepak</p><p class="rl">Founder · Operations &amp; Experience</p>
+        <div class="ph rv-img"><img src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-FOP0.jpeg" alt="Deepak Bhatt, founder" loading="lazy"></div>
+        <p class="nm">Deepak Bhatt</p><p class="rl">Founder · Operations &amp; Experience</p>
       </div>
       <div class="lead rv">
-        <div class="ph rv-img"><img src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-U83X.jpg" alt="Swapnil, founder, on the trail" loading="lazy"></div>
-        <p class="nm">Swapnil</p><p class="rl">Founder · Brand &amp; growth</p>
+        <div class="ph rv-img"><img src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-U83X.jpg" alt="Swapnil Srivastava, founder" loading="lazy"></div>
+        <p class="nm">Swapnil Srivastava</p><p class="rl">Founder · Brand &amp; growth</p>
       </div>
       <div class="lead rv">
         <div class="ph rv-img"><img src="https://storage.zopuai.com/converted/user-TUJZ.webp" alt="Fabio Marques, lead MTB guide" loading="lazy"></div>
         <p class="nm">Fabio Marques</p><p class="rl">Lead MTB guide · Upper Mustang</p>
+      </div>
+      <div class="lead rv">
+        <div class="ph rv-img"><img src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-OQKG.jpeg" alt="Prabin Gurung, trek leader" loading="lazy"></div>
+        <p class="nm">Prabin Gurung</p><p class="rl">Trek leader · Annapurna Base Camp</p>
+      </div>
+      <div class="lead rv">
+        <div class="ph rv-img"><img src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-P5MQ.jpeg" alt="Shilpa Rishi, lead social media" loading="lazy"></div>
+        <p class="nm">Shilpa Rishi</p><p class="rl">Lead · Social media</p>
       </div>
     </div>
   </div>
