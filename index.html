@@ -202,9 +202,32 @@ h1 .line>span{display:block}
 .apply{background:linear-gradient(var(--ink-0),var(--ink-1));text-align:center}
 .apply .h2{margin-inline:auto;max-width:18ch}
 .apply .lede{margin:1.8rem auto 2.8rem}
-.flags{display:flex;justify-content:center;gap:.45rem;margin-bottom:2.6rem}
-.flags i{width:26px;height:18px;opacity:.85;border-radius:2px}
-.flags i:nth-child(1){background:#5B8FD9}.flags i:nth-child(2){background:#EBE7DB}.flags i:nth-child(3){background:#C9504A}.flags i:nth-child(4){background:#4F9E6B}.flags i:nth-child(5){background:var(--marigold)}
+/* apply · the five colours wake into the land (scale kept modest) */
+.elements{display:flex;align-items:flex-end;justify-content:center;gap:clamp(.35rem,1vw,.6rem);width:min(360px,84vw);height:clamp(160px,26vh,210px);margin:0 auto 1.4rem}
+.el{position:relative;flex:1;align-self:flex-end;height:clamp(20px,4vh,28px);padding:0;border:0;border-radius:6px 6px 2px 2px;overflow:hidden;cursor:pointer;outline-offset:5px;box-shadow:0 6px 18px rgba(0,0,0,.28);transform-origin:50% 100%;transition:height .6s var(--ease),box-shadow .6s var(--ease),transform .4s var(--ease)}
+.el::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(235,231,219,.16);pointer-events:none;z-index:3}
+.el:hover,.el:focus-visible{height:100%;box-shadow:0 22px 50px rgba(0,0,0,.5);animation:none;transform:none}
+.el svg{position:absolute;left:0;bottom:0;width:100%;height:clamp(160px,26vh,210px)}
+@media(hover:none){.el{height:clamp(90px,18vh,130px)}}
+.el-caption{text-align:center;color:var(--bone-2);min-height:1.4em;margin-bottom:2.4rem;transition:color .4s;text-transform:none;letter-spacing:.06em}
+.el-caption b{color:var(--river);font-weight:500}
+/* idle equalizer — subtle hint that the bars are interactive */
+@keyframes el-breathe{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.22)}}
+.anim .el{animation:el-breathe 2.8s var(--ease) infinite}
+.anim .el--water{animation-delay:-.2s}
+.anim .el--snow{animation-delay:-1.1s;animation-duration:3.2s}
+.anim .el--fire{animation-delay:-.6s;animation-duration:2.4s}
+.anim .el--forest{animation-delay:-1.6s;animation-duration:3.5s}
+.anim .el--mountain{animation-delay:-.9s;animation-duration:2.9s}
+/* element life, revealed as a bar rises */
+@keyframes el-flicker{0%,100%{transform:scaleY(1) skewX(0deg)}25%{transform:scaleY(1.06) skewX(2.5deg)}50%{transform:scaleY(.96) skewX(-2deg)}75%{transform:scaleY(1.04) skewX(1.5deg)}}
+@keyframes el-wave{to{transform:translateX(-60px)}}
+@keyframes el-snow{0%{transform:translateY(-12px);opacity:0}12%{opacity:.95}100%{transform:translateY(160px);opacity:0}}
+@keyframes el-sway{0%,100%{transform:rotate(-1.2deg)}50%{transform:rotate(1.2deg)}}
+.anim .el--fire .flame{transform-box:fill-box;transform-origin:50% 100%;animation:el-flicker 1.6s ease-in-out infinite}
+.anim .el--water .waves{animation:el-wave 3.4s linear infinite}
+.anim .el--snow .flake{transform-box:fill-box;animation:el-snow 3.2s linear infinite}
+.anim .el--forest .canopy{transform-box:fill-box;transform-origin:50% 100%;animation:el-sway 5.5s ease-in-out infinite}
 
 /* apply ctas */
 .apply-ctas{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;margin-top:.6rem}
@@ -412,7 +435,54 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
 <!-- APPLY -->
 <section class="apply" id="apply" aria-label="Apply">
   <div class="wrap">
-    <div class="flags rv" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="elements rv" id="elements" role="group" aria-label="The five colours of the prayer flag, as the elements of the land">
+      <button type="button" class="el el--water" data-color="Blue" data-word="Water" aria-label="Blue, water">
+        <svg viewBox="0 0 120 280" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0,280 L0,150 C20,134 40,166 60,150 C80,134 100,166 120,150 L120,280 Z" fill="#5B8FD9"></path>
+          <g class="waves" fill="none" stroke="rgba(235,231,219,.35)" stroke-width="2.5" stroke-linecap="round">
+            <path d="M-60,188 q15,-12 30,0 t30,0 t30,0 t30,0 t30,0 t30,0 t30,0 t30,0"></path>
+            <path d="M-60,222 q15,-12 30,0 t30,0 t30,0 t30,0 t30,0 t30,0 t30,0 t30,0" stroke="rgba(235,231,219,.2)"></path>
+          </g>
+        </svg>
+      </button>
+      <button type="button" class="el el--snow" data-color="White" data-word="Snow &amp; ice" aria-label="White, snow and ice">
+        <svg viewBox="0 0 120 280" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0,280 L0,165 C18,150 30,138 48,144 C64,149 70,162 90,152 C104,145 112,154 120,150 L120,280 Z" fill="#EBE7DB"></path>
+          <g fill="#FFFFFF">
+            <circle class="flake" cx="22" cy="42" r="2.4" style="animation-delay:0s"></circle>
+            <circle class="flake" cx="54" cy="30" r="2" style="animation-delay:.9s"></circle>
+            <circle class="flake" cx="86" cy="48" r="2.6" style="animation-delay:1.7s"></circle>
+            <circle class="flake" cx="38" cy="26" r="1.8" style="animation-delay:2.4s"></circle>
+            <circle class="flake" cx="72" cy="40" r="2.2" style="animation-delay:1.3s"></circle>
+          </g>
+        </svg>
+      </button>
+      <button type="button" class="el el--fire" data-color="Red" data-word="Fire" aria-label="Red, fire">
+        <svg viewBox="0 0 120 280" preserveAspectRatio="none" aria-hidden="true">
+          <rect x="0" y="158" width="120" height="122" fill="#C9504A"></rect>
+          <g class="flame">
+            <path d="M60,46 C36,92 30,116 44,150 C50,170 78,170 84,150 C96,116 84,92 60,46 Z" fill="#C9504A"></path>
+            <path d="M60,86 C48,114 46,132 56,152 C60,164 70,162 72,150 C80,124 72,108 60,86 Z" fill="#D9A23B"></path>
+          </g>
+        </svg>
+      </button>
+      <button type="button" class="el el--forest" data-color="Green" data-word="Forest" aria-label="Green, forest">
+        <svg viewBox="0 0 120 280" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0,280 L0,176 L18,134 L36,176 L54,128 L72,176 L90,132 L108,176 L120,150 L120,280 Z" fill="#3C7E55"></path>
+          <path class="canopy" d="M0,280 L0,162 L12,104 L24,162 L36,98 L48,162 L60,108 L72,162 L84,100 L96,162 L108,110 L120,162 L120,280 Z" fill="#4F9E6B"></path>
+        </svg>
+      </button>
+      <button type="button" class="el el--mountain" data-color="Yellow" data-word="Mountains" aria-label="Yellow, mountains">
+        <svg viewBox="0 0 120 280" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0,280 L0,150 L30,84 L50,120 L74,48 L98,104 L120,142 L120,280 Z" fill="#D9A23B"></path>
+          <g fill="#EBE7DB">
+            <path d="M22,100 L30,84 L38,100 Z"></path>
+            <path d="M66,66 L74,48 L82,66 Z"></path>
+          </g>
+        </svg>
+      </button>
+    </div>
+    <p class="el-caption mono rv" id="elCaption" aria-live="polite">Five colours of the prayer flag, one for each element of the land.</p>
     <p class="eyebrow" style="text-align:center">Walking with us</p>
     <h2 class="h2 rv">Two ways to <em>begin.</em></h2>
     <p class="lede rv">Each journey runs on published dates with a small cohort. Pick the cohort that fits, or book a short call with us. Pacing, dates, temperament, all worked out together before we confirm a place.</p>
@@ -470,6 +540,18 @@ if(jcard&&matchMedia('(hover:hover)').matches){
     r.addEventListener('mouseleave',()=>{jcard.style.opacity=0;jcard.style.scale=.85;cancelAnimationFrame(raf)});
   });
   jcard.style.transition='opacity .35s,scale .45s cubic-bezier(.22,1,.36,1)';
+}
+
+/* apply: elements caption */
+const elCap=document.getElementById('elCaption');
+if(elCap){
+  const elDef=elCap.innerHTML;
+  document.querySelectorAll('.el').forEach(b=>{
+    const set=()=>{elCap.innerHTML=`${b.dataset.color} · <b>${b.dataset.word}</b>`};
+    b.addEventListener('mouseenter',set);b.addEventListener('focus',set);
+    const clear=()=>{elCap.innerHTML=elDef};
+    b.addEventListener('mouseleave',clear);b.addEventListener('blur',clear);
+  });
 }
 
 if(!anim){document.querySelectorAll('.rv,.rv-img').forEach(el=>{el.style.opacity=1;el.style.transform='none';el.style.clipPath='none'});return}
