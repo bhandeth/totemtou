@@ -205,6 +205,76 @@ h1 .alt{color:var(--river);font-style:italic;font-weight:380}
 .grade-vid.playing .vid-hint{opacity:0}
 @media(max-width:820px){.grade-grid{grid-template-columns:1fr}.grade-vid{width:min(300px,100%)}}
 
+/* ===== ELIGIBILITY ===== */
+.elig-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:3rem}
+.ecard{border:1px solid var(--line);border-radius:16px;padding:1.6rem 1.5rem;background:rgba(235,231,219,.02);transition:border-color .4s var(--ease),transform .4s var(--ease)}
+.ecard:hover{border-color:rgba(144,204,190,.35);transform:translateY(-3px)}
+.ecard .ei{display:block;width:30px;height:30px;color:var(--river);margin-bottom:1.1rem}
+.ecard .ei svg{width:100%;height:100%}
+.ecard h3{font:500 .66rem var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--bone-3)}
+.ecard .ebig{font-family:var(--f-disp);font-size:1.45rem;font-weight:480;letter-spacing:-.01em;margin:.25rem 0 .8rem;color:var(--bone)}
+.ecard .edesc{font-size:.91rem;line-height:1.58;color:var(--bone-2)}
+.elig-not{margin-top:2rem;border:1px solid rgba(217,162,59,.28);border-radius:16px;padding:1.8rem 2rem;background:rgba(217,162,59,.04)}
+.elig-not h3{font-weight:500;font-size:1.12rem;margin-bottom:1.2rem}
+.elig-not ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:.75rem 2.2rem}
+.elig-not li{display:flex;gap:.7rem;color:var(--bone-2);font-size:.95rem;line-height:1.5}
+.elig-not li::before{content:"✕";color:var(--marigold);flex:none;font-family:var(--f-mono);font-size:.82em;margin-top:.2em}
+@media(max-width:880px){.elig-grid{grid-template-columns:1fr 1fr}.elig-not ul{grid-template-columns:1fr}}
+@media(max-width:520px){.elig-grid{grid-template-columns:1fr}}
+
+/* ===== GOOD TO KNOW — tabbed detail ===== */
+.gtk-wrap{margin-top:2.6rem}
+.gtk-tabs{display:flex;gap:.3rem;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:none}
+.gtk-tabs::-webkit-scrollbar{display:none}
+.gtab{flex:none;background:none;border:0;border-bottom:2px solid transparent;padding:.9rem 1.05rem;margin-bottom:-1px;font:500 .68rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--bone-3);cursor:pointer;white-space:nowrap;transition:color .3s,border-color .3s}
+.gtab:hover{color:var(--bone-2)}
+.gtab[aria-selected="true"]{color:var(--river);border-bottom-color:var(--river)}
+.gtk-panels{padding-top:2.2rem;min-height:240px}
+.gpanel[hidden]{display:none}
+.anim .gpanel{animation:gFade .5s var(--ease)}
+@keyframes gFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.gnote{margin-top:1.7rem;font:400 .8rem/1.5 var(--f-mono);color:var(--bone-3);letter-spacing:.01em}
+/* getting there */
+.reach-steps{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem 2.6rem}
+.rstep{display:flex;gap:1rem}
+.rstep .rnum{font:500 .72rem var(--f-mono);color:var(--river);padding-top:.3rem;flex:none}
+.rstep h4{font-weight:500;font-size:1.06rem;margin-bottom:.35rem}
+.rstep p{font-size:.93rem;color:var(--bone-2);line-height:1.55}
+/* cost */
+.gprice{font-family:var(--f-disp);font-size:1.9rem;font-weight:480;margin-bottom:1.8rem}
+.gprice span{font:500 .68rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-3);margin-right:.6rem}
+.gprice small{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.06em;color:var(--bone-3);font-weight:400}
+.cost-cols{display:grid;grid-template-columns:1fr 1fr;gap:2.2rem}
+.cost-col h4{font:500 .66rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;margin-bottom:1.1rem}
+.cost-col.inc h4{color:var(--river)}
+.cost-col.exc h4{color:var(--bone-3)}
+.cost-col ul{list-style:none;display:flex;flex-direction:column;gap:.62rem}
+.cost-col li{display:flex;gap:.7rem;font-size:.93rem;line-height:1.5;color:var(--bone-2)}
+.cost-col.inc li::before{content:"✓";color:var(--river);flex:none;font-family:var(--f-mono)}
+.cost-col.exc li::before{content:"✕";color:var(--bone-3);flex:none;font-family:var(--f-mono);font-size:.85em;margin-top:.15em}
+/* pack */
+.pack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.2rem}
+.pack-col h4{font:500 .66rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--river);margin-bottom:1.1rem}
+.pack-col ul{list-style:none;display:flex;flex-direction:column;gap:.55rem}
+.pack-col li{display:flex;gap:.6rem;font-size:.91rem;line-height:1.5;color:var(--bone-2)}
+.pack-col li::before{content:"+";color:var(--river);flex:none;font-family:var(--f-mono)}
+/* terms & links */
+ul.terms,ul.links{list-style:none}
+ul.terms li,ul.links li{display:grid;grid-template-columns:minmax(110px,150px) 1fr;gap:1.6rem;padding:1.15rem 0;border-top:1px solid var(--line)}
+ul.terms li:first-child,ul.links li:first-child{border-top:0}
+.tk,.lk{font:500 .66rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--river);padding-top:.2rem}
+ul.terms p,ul.links p{font-size:.93rem;line-height:1.55;color:var(--bone-2)}
+ul.links a{color:var(--river);border-bottom:1px solid rgba(144,204,190,.3);transition:border-color .3s}
+ul.links a:hover{border-color:var(--river)}
+/* faq */
+details.faq{border-top:1px solid var(--line)}
+details.faq summary{cursor:pointer;list-style:none;padding:1.15rem 0;font-family:var(--f-disp);font-size:1.08rem;font-weight:460;display:flex;justify-content:space-between;align-items:center;gap:1.2rem}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{content:"+";font-family:var(--f-mono);color:var(--river);font-size:1.25rem;flex:none}
+details.faq[open] summary::after{content:"–"}
+details.faq p{padding:0 0 1.25rem;font-size:.95rem;line-height:1.65;color:var(--bone-2);max-width:64ch}
+@media(max-width:760px){.reach-steps,.cost-cols,.pack-grid{grid-template-columns:1fr}ul.terms li,ul.links li{grid-template-columns:1fr;gap:.35rem}}
+
 /* leader */
 .leader{background:var(--ink-1)}
 .leader-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(2.4rem,5vw,5rem);align-items:center}
@@ -425,7 +495,7 @@ footer{padding:2.2rem 0;border-top:1px solid var(--line);background:var(--ink-1)
   <div class="wrap nav-in">
     <a class="brand" href="index.html"><svg viewBox="0 0 32 32" fill="none" width="22" aria-hidden="true"><path d="M3 26 12 8l5 9 3-5 9 14z" stroke="#90CCBE" stroke-width="2.4" stroke-linejoin="round"/></svg>Totemtou</a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="index.html#journeys">Journeys</a><a href="#trail">The trail</a><a href="#days">The days</a><a href="#leader">Who</a><a href="#prep">Prep</a><a href="#apply">Dates</a>
+      <a href="index.html#journeys">Journeys</a><a href="#trail">The trail</a><a href="#days">The days</a><a href="#eligibility">Eligibility</a><a href="#leader">Who</a><a href="#details">Details</a><a href="#apply">Dates</a>
     </nav>
     <a class="btn" href="#apply">Apply <span aria-hidden="true">→</span></a>
   </div>
@@ -899,6 +969,51 @@ footer{padding:2.2rem 0;border-top:1px solid var(--line);background:var(--ink-1)
   </div>
 </section>
 
+<!-- ELIGIBILITY -->
+<section class="elig" id="eligibility" aria-label="Eligibility">
+  <div class="wrap">
+    <p class="eyebrow">Eligibility</p>
+    <h2 class="h2 rv">Who the trail takes, <em>and who it turns back.</em></h2>
+    <p class="lede rv" style="margin-top:1.4rem">The grade tells you how hard the walk is. This tells you whether you can come. We screen honestly, both ways, before anyone books a flight.</p>
+    <div class="elig-grid">
+      <div class="ecard rv">
+        <span class="ei"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M5 21v-1a7 7 0 0 1 14 0v1"/></svg></span>
+        <h3>Age</h3>
+        <p class="ebig">14 to 65</p>
+        <p class="edesc">Under 16 walks with a parent or guardian. Over 60 is welcome with recent activity and a doctor's note. The trail doesn't count the years; it counts the legs and the lungs.</p>
+      </div>
+      <div class="ecard rv">
+        <span class="ei"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h4l2 5 4-12 2 7h6"/></svg></span>
+        <h3>Fitness</h3>
+        <p class="ebig">5 to 6 hrs, daily</p>
+        <p class="edesc">You should be comfortable walking five to six hours on stepped trails, day after day, with a light pack. Six weeks of preparation builds the base; the readiness check above is the bar.</p>
+      </div>
+      <div class="ecard rv">
+        <span class="ei"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><path d="m9.5 14.5 5-5M9.5 9.5l5 5" opacity=".55"/><circle cx="12" cy="12" r="1.6"/></svg></span>
+        <h3>Experience</h3>
+        <p class="ebig">None required</p>
+        <p class="edesc">No technical skill, no ropes, no prior summit. A first multi-day trek is fine with preparation. No altitude history is needed, but we ask about it and plan around it.</p>
+      </div>
+      <div class="ecard rv">
+        <span class="ei"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c-2.5 3-7 6-7 6s-4.5-3-7-6a4 4 0 0 1 7-3 4 4 0 0 1 7 3Z"/><path d="M12 7V4M10.5 5.5h3" opacity=".55"/></svg></span>
+        <h3>Medical</h3>
+        <p class="ebig">Disclosed, screened</p>
+        <p class="edesc">Heart, lung and blood-pressure conditions, past altitude sickness, pregnancy, recent surgery: tell us. A few need a doctor's clearance, very few are disqualifying. Honesty here keeps the trail safe.</p>
+      </div>
+    </div>
+    <div class="elig-not rv">
+      <h3>This walk isn't for you if:</h3>
+      <ul>
+        <li>You can't give the six weeks of preparation the altitude asks for.</li>
+        <li>You need a guaranteed summit, or won't turn back when a guide makes the call.</li>
+        <li>You have an uncontrolled heart or respiratory condition.</li>
+        <li>You want hotel comfort every night. This is a teahouse trek, twin-share and simple.</li>
+        <li>A week off-grid, out of signal, isn't something you can do right now.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <!-- LEADER -->
 <section class="leader" id="leader" aria-label="Trip leader">
   <div class="wrap leader-grid">
@@ -981,6 +1096,144 @@ footer{padding:2.2rem 0;border-top:1px solid var(--line);background:var(--ink-1)
           <h3 id="pcTitle">A call, by name, <em>within days.</em></h3>
           <p id="pcBody">You apply. We schedule a video call with Swapnil and Deepak, not a bot, not an auto-reply. We talk about the trek, about you, about whether the fit is right both ways.</p>
           <div class="tags" id="pcTags"><span>Real conversation</span><span>Fit, both ways</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GOOD TO KNOW -->
+<section class="gtk" id="details" aria-label="Practical detail">
+  <div class="wrap">
+    <p class="eyebrow">Good to know</p>
+    <h2 class="h2 rv">The practical detail, <em>in one place.</em></h2>
+    <p class="lede rv" style="margin-top:1.4rem">Everything you would otherwise dig through a dozen pages for: costs, kit, getting there, the fine print. Pick a tab.</p>
+    <div class="gtk-wrap rv">
+      <div class="gtk-tabs" role="tablist" aria-label="Practical detail">
+        <button class="gtab" role="tab" aria-selected="true" data-tab="reach" id="gt-reach">Getting there</button>
+        <button class="gtab" role="tab" aria-selected="false" data-tab="cost" id="gt-cost">What's included</button>
+        <button class="gtab" role="tab" aria-selected="false" data-tab="pack" id="gt-pack">What to pack</button>
+        <button class="gtab" role="tab" aria-selected="false" data-tab="cancel" id="gt-cancel">Cancellation</button>
+        <button class="gtab" role="tab" aria-selected="false" data-tab="links" id="gt-links">Permits &amp; links</button>
+        <button class="gtab" role="tab" aria-selected="false" data-tab="faq" id="gt-faq">Questions</button>
+      </div>
+      <div class="gtk-panels">
+        <!-- GETTING THERE -->
+        <div class="gpanel" data-panel="reach" role="tabpanel" aria-labelledby="gt-reach">
+          <div class="reach-steps">
+            <div class="rstep"><span class="rnum">01</span><div><h4>Fly to Kathmandu</h4><p>Nepal's only international gateway (KTM). Visa on arrival for most nationalities.</p></div></div>
+            <div class="rstep"><span class="rnum">02</span><div><h4>Kathmandu to Pokhara</h4><p>A 25-minute mountain flight, or a 6–7 hour drive along the Trishuli. We help you book; this leg sits outside the trek fee.</p></div></div>
+            <div class="rstep"><span class="rnum">03</span><div><h4>Meet in Pokhara</h4><p>Day zero. We gather lakeside at 822 m the evening before: gear check, briefing, the first dinner together.</p></div></div>
+            <div class="rstep"><span class="rnum">04</span><div><h4>Pokhara to the trailhead</h4><p>A 2–3 hour jeep to Jhinu, where the walking begins. Included, and led from here on.</p></div></div>
+          </div>
+          <p class="gnote">Flight and drive times shift with season and traffic; we confirm the day-zero plan with you at booking.</p>
+        </div>
+        <!-- COST -->
+        <div class="gpanel" data-panel="cost" role="tabpanel" aria-labelledby="gt-cost" hidden>
+          <p class="gprice"><span>From</span>$400<small>per person · twin-share</small></p>
+          <div class="cost-cols">
+            <div class="cost-col inc">
+              <h4>Included</h4>
+              <ul>
+                <li>Six nights' teahouse accommodation on the trail</li>
+                <li>All meals on the trek: breakfast, lunch, dinner, tea</li>
+                <li>Ground transport from and back to Pokhara</li>
+                <li>ACAP and TIMS permits, arranged for you</li>
+                <li>Licensed lead guide and porters</li>
+                <li>Group medical kit, oximeter and emergency oxygen on the trail</li>
+                <li>Rescue and evacuation insurance for the trek</li>
+                <li>Six weeks of preparation: calls, training plan, gear list</li>
+              </ul>
+            </div>
+            <div class="cost-col exc">
+              <h4>Not included</h4>
+              <ul>
+                <li>International airfare and the Kathmandu–Pokhara leg</li>
+                <li>Nights and meals in Pokhara, before and after</li>
+                <li>Trip-cancellation and baggage insurance (recommended)</li>
+                <li>Personal gear and any rentals in Pokhara</li>
+                <li>Beverages, snacks, hot showers, charging and wifi on the trail</li>
+                <li>Tips for the guide and porter team</li>
+                <li>5% government tax (GST)</li>
+              </ul>
+            </div>
+          </div>
+          <p class="gnote">Indicative split. The figures and full inclusion list are confirmed in writing before any payment is taken.</p>
+        </div>
+        <!-- PACK -->
+        <div class="gpanel" data-panel="pack" role="tabpanel" aria-labelledby="gt-pack" hidden>
+          <div class="pack-grid">
+            <div class="pack-col">
+              <h4>Layers &amp; footwear</h4>
+              <ul>
+                <li>Base layers, merino or synthetic</li>
+                <li>Insulated mid-layer, fleece or light down</li>
+                <li>Waterproof shell, jacket and trousers</li>
+                <li>Trekking trousers and shirts</li>
+                <li>Warm hat, sun hat, buff, gloves</li>
+                <li>Broken-in trekking boots, plus camp shoes</li>
+                <li>Trekking socks, several pairs</li>
+              </ul>
+            </div>
+            <div class="pack-col">
+              <h4>In the pack</h4>
+              <ul>
+                <li>30–40 L daypack with rain cover</li>
+                <li>Sleeping bag to −10 °C, rentable in Pokhara</li>
+                <li>Trekking poles</li>
+                <li>Headtorch and spare batteries</li>
+                <li>Two to three litres of water capacity, plus purification</li>
+                <li>Sunglasses, SPF 50, lip balm</li>
+                <li>Power bank; charging on the trail is paid and patchy</li>
+              </ul>
+            </div>
+            <div class="pack-col">
+              <h4>Health &amp; documents</h4>
+              <ul>
+                <li>Personal first-aid, blister care, regular medication</li>
+                <li>Diamox, only if advised on your intake call</li>
+                <li>Passport, copies and spare photos for permits</li>
+                <li>Insurance with high-altitude evacuation cover</li>
+                <li>Quick-dry towel, toiletries, wet wipes</li>
+                <li>Cash in rupees for extras on the trail</li>
+              </ul>
+            </div>
+          </div>
+          <p class="gnote">A full list, personalised to you and the season, lands in Weeks −6 to −3 of your preparation.</p>
+        </div>
+        <!-- CANCELLATION -->
+        <div class="gpanel" data-panel="cancel" role="tabpanel" aria-labelledby="gt-cancel" hidden>
+          <ul class="terms">
+            <li><span class="tk">Deposit</span><p>A 25% deposit holds your place, due once we've spoken and both said yes. Fully refundable for seven days after you pay.</p></li>
+            <li><span class="tk">30+ days out</span><p>Cancel 30 or more days before departure: deposit refunded less a small handling fee, or moved in full to another date.</p></li>
+            <li><span class="tk">15–29 days</span><p>Half of the trek fee is refundable.</p></li>
+            <li><span class="tk">Under 14 days</span><p>The fee is non-refundable: the cohort, guides and teahouses are committed by then.</p></li>
+            <li><span class="tk">If we cancel</span><p>If we call it off for safety or too small a cohort, you choose: a full refund, or full credit toward another departure.</p></li>
+            <li><span class="tk">On the trail</span><p>Weather or altitude may reshape a day. The route flexes; the price does not.</p></li>
+          </ul>
+          <p class="gnote">Draft terms, indicative only. The final cancellation policy is set out in your confirmation.</p>
+        </div>
+        <!-- LINKS -->
+        <div class="gpanel" data-panel="links" role="tabpanel" aria-labelledby="gt-links" hidden>
+          <ul class="links">
+            <li><span class="lk">ACAP permit</span><p>Annapurna Conservation Area Permit. Required, and arranged by us.</p></li>
+            <li><span class="lk">TIMS card</span><p>Trekkers' Information Management System card. Required, and arranged by us.</p></li>
+            <li><span class="lk">Nepal visa</span><p>On arrival at Kathmandu for most nationalities. <a href="https://www.immigration.gov.np" target="_blank" rel="noopener">immigration.gov.np ↗</a></p></li>
+            <li><span class="lk">Insurance</span><p>Rescue and evacuation on the trek is covered by us. Trip-cancellation and baggage cover is yours to arrange; we can suggest providers.</p></li>
+            <li><span class="lk">Gear rental</span><p>Sleeping bags, down jackets and poles rent cheaply in Pokhara. We send you to shops we trust.</p></li>
+            <li><span class="lk">Talk to us</span><p>Questions before you apply? <a href="mailto:hello@totemtou.com">hello@totemtou.com</a></p></li>
+          </ul>
+        </div>
+        <!-- FAQ -->
+        <div class="gpanel" data-panel="faq" role="tabpanel" aria-labelledby="gt-faq" hidden>
+          <details class="faq"><summary>Do I need trekking experience?</summary><p>No. No technical skill is required, and a first multi-day trek is common on this route. What you do need is the six-week preparation and a basic cardio base, both of which we build with you.</p></details>
+          <details class="faq"><summary>How fit do I need to be?</summary><p>Comfortable on five to six hours of stepped walking, several days running, carrying a light daypack. The readiness self-check earlier on this page is the honest bar.</p></details>
+          <details class="faq"><summary>Will I get altitude sickness?</summary><p>Day 4 sleeps at 4,130 m. Mild symptoms are common and usually pass with rest and water. Guides carry an oximeter and emergency oxygen, and a worsening case descends, no negotiation.</p></details>
+          <details class="faq"><summary>Is it safe for solo travellers and women?</summary><p>Yes. Cohorts cap at twelve, guides are licensed, and this is among the most travelled trails in Nepal. Many walk it solo and join the group on day zero.</p></details>
+          <details class="faq"><summary>What is the food like?</summary><p>Teahouse cooking: dal bhat, fried potatoes, thukpa, eggs and endless tea. Above Dovan the inner sanctuary is vegetarian by long tradition.</p></details>
+          <details class="faq"><summary>Will I have phone signal?</summary><p>Patchily, and less the higher you go. Treat the week as off-grid and carry a power bank; charging is paid and slow on the trail.</p></details>
+          <details class="faq"><summary>When does it run?</summary><p>Two dry windows: October to November for clear skies, February to March for late winter and spring bloom. We don't run the monsoon.</p></details>
+          <details class="faq"><summary>Do I get my own room?</summary><p>On the trail it's simple twin-share teahouse rooms. A single room can sometimes be arranged lower down; higher up it cannot be guaranteed.</p></details>
         </div>
       </div>
     </div>
@@ -1502,6 +1755,27 @@ if(gradeVidWrap&&gradeVid){
   });
   gradeVidWrap.addEventListener('mouseleave',()=>{
     gradeVid.pause();gradeVid.muted=true;gradeVidWrap.classList.remove('playing');
+  });
+}
+
+/* good-to-know tabs */
+const gtabs=[...document.querySelectorAll('.gtab')];
+if(gtabs.length){
+  const panels=[...document.querySelectorAll('.gpanel')];
+  const show=t=>{
+    const id=t.dataset.tab;
+    gtabs.forEach(x=>x.setAttribute('aria-selected',x===t));
+    panels.forEach(p=>{p.hidden=p.dataset.panel!==id});
+  };
+  gtabs.forEach((t,i)=>{
+    t.addEventListener('click',()=>show(t));
+    t.addEventListener('keydown',e=>{
+      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
+        e.preventDefault();
+        const n=(i+(e.key==='ArrowRight'?1:gtabs.length-1))%gtabs.length;
+        gtabs[n].focus();show(gtabs[n]);
+      }
+    });
   });
 }
 })();
