@@ -7,7 +7,7 @@
 <meta name="description" content="A seven-day walk into the Annapurna Sanctuary, through Gurung country, bamboo and rhododendron, to the amphitheatre at 4,130 m. Led by Deepak. Small cohort, tested route.">
 <meta property="og:title" content="Annapurna Base Camp · 4,130 m · Totemtou">
 <meta property="og:image" content="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M3 26 12 8l5 9 3-5 9 14z' fill='none' stroke='%2390CCBE' stroke-width='2.4' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="icon" type="image/webp" href="https://storage.zopuai.com/converted/user-OJXX.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Spline+Sans+Mono:wght@300..700&display=swap" rel="stylesheet">
@@ -55,7 +55,8 @@ html.anim body::after{animation:grain 7s steps(10) infinite}
 header.nav{position:fixed;inset:0 0 auto;z-index:200;transition:background .4s,border-color .4s;border-bottom:1px solid transparent}
 header.nav.scrolled{background:rgba(11,20,16,.84);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
 .nav-in{display:flex;align-items:center;justify-content:space-between;height:4.6rem}
-.brand{display:flex;align-items:center;gap:.7rem;font:600 1.05rem var(--f-disp)}
+.brand{display:flex;align-items:center;gap:.7rem;font:600 1.05rem var(--f-disp);letter-spacing:.02em}
+.brand img{width:1.7rem;height:1.7rem;border-radius:50%}
 .nav-links{display:flex;gap:2.2rem}
 .nav-links a{font:500 .7rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-2);transition:color .3s}
 .nav-links a:hover{color:var(--bone)}
@@ -428,25 +429,31 @@ details.faq p{padding:0 0 1.25rem;font-size:.95rem;line-height:1.65;color:var(--
 .pc-fade{animation:pcin .5s cubic-bezier(.3,.7,.3,1)}
 @keyframes pcin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media(max-width:700px){.prep-track{grid-template-columns:repeat(7,minmax(46px,1fr))}.prep{overflow:hidden}.prep-card{grid-template-columns:1fr;min-height:0}.prep-card .big{font-size:3rem}}
-/* calendar departures */
-.cal{display:grid;grid-template-columns:repeat(6,1fr);gap:.6rem;margin:3rem 0 2.6rem}
-/* a string of prayer flags — each cell capped in its flag colour */
-.mcell{--flag:var(--river);position:relative;border:1px solid var(--line);border-radius:14px;min-height:170px;padding:1.05rem .9rem 1rem;display:flex;flex-direction:column;overflow:hidden;background:color-mix(in srgb,var(--flag) 7%,transparent)}
-.mcell::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:var(--flag)}
-.mcell .mh{font:500 .6rem var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--bone-3);padding-bottom:.7rem;border-bottom:1px solid color-mix(in srgb,var(--flag) 30%,var(--line));margin-bottom:.8rem;display:flex;justify-content:space-between}
-.mcell .mh em{font-style:normal;opacity:.55}
-.mcell.closed{opacity:.5}
-.mcell .why{margin-top:auto;font:400 .6rem/1.6 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--bone-3)}
-.ev{display:block;width:100%;text-align:left;border:1px solid color-mix(in srgb,var(--flag) 45%,transparent);border-left:3px solid var(--flag);border-radius:8px;background:color-mix(in srgb,var(--flag) 13%,transparent);padding:.7rem .8rem;cursor:pointer;transition:.3s;color:inherit}
-.ev+.ev{margin-top:.5rem}
-.ev:hover{background:color-mix(in srgb,var(--flag) 22%,transparent)}
-.ev[aria-pressed="true"]{background:var(--flag);border-color:var(--flag)}
-.ev[aria-pressed="true"] *{color:var(--ink-0)}
-.ev .ed{font-weight:500;font-size:.92rem;letter-spacing:-.01em}
-.ev .es{font:500 .54rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--flag);margin-top:.3rem;display:block}
-.cohort{font:500 .56rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--bone-3);margin-top:.5rem}
-@media(max-width:980px){.cal{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:560px){.cal{grid-template-columns:repeat(2,1fr)}.mcell{min-height:140px}}
+/* split-flap departures board */
+.board-wrap{margin:3rem 0 1.4rem;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.board-wrap::-webkit-scrollbar{display:none}
+.board{--fw:1.05rem;--fg:.18rem;min-width:min-content;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,#0d1712,#090e0b);padding:clamp(1.2rem,2.6vw,2rem);box-shadow:inset 0 1px 0 rgba(235,231,219,.05),0 24px 60px rgba(0,0,0,.45)}
+.board-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-bottom:1rem;margin-bottom:1.1rem;border-bottom:1px solid var(--line)}
+.bt-title{font:500 .68rem var(--f-mono);letter-spacing:.24em;text-transform:uppercase;color:var(--river);display:flex;align-items:center;gap:.6rem}
+.bt-title::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--river);box-shadow:0 0 9px var(--river)}
+.anim .bt-title::before{animation:btpulse 2.4s var(--ease) infinite}
+@keyframes btpulse{0%,100%{opacity:1}50%{opacity:.35}}
+.bt-meta{font:500 .6rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-3);white-space:nowrap}
+.dep{display:flex;gap:clamp(.8rem,1.7vw,1.6rem);align-items:center;width:100%;text-align:left}
+.dep--head{padding-bottom:.7rem;margin-bottom:.55rem;border-bottom:1px dashed rgba(235,231,219,.13)}
+.dep--head .hl{font:500 .56rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-3);flex:none;width:calc(var(--n)*var(--fw) + (var(--n) - 1)*var(--fg))}
+button.dep{border:0;background:none;color:inherit;border-radius:10px;padding:.5rem .55rem;margin:0 -.55rem;cursor:pointer;transition:background .3s,box-shadow .3s}
+button.dep:hover{background:rgba(144,204,190,.06)}
+button.dep[aria-pressed="true"]{background:rgba(144,204,190,.1);box-shadow:inset 0 0 0 1px rgba(144,204,190,.45)}
+.dep--closed{padding:.5rem .55rem;opacity:.4}
+.field{display:flex;gap:var(--fg);flex:none;width:calc(var(--n)*var(--fw) + (var(--n) - 1)*var(--fg))}
+.flap{position:relative;display:grid;place-items:center;width:var(--fw);height:1.55rem;flex:none;font:600 .92rem/1 var(--f-mono);color:var(--bone);background:linear-gradient(#2a362f,#1c2721 49%,#0d1410 51%,#18211b);border-radius:3px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.5);overflow:hidden;will-change:transform}
+.flap::after{content:"";position:absolute;left:2px;right:2px;top:50%;height:1px;background:rgba(0,0,0,.62);transform:translateY(-.5px)}
+.flap--amber{color:var(--marigold)}
+.flap--open{color:var(--river)}
+.flap--closed{color:var(--bone-3)}
+.board-hint{font:500 .62rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-3);text-align:center;margin-bottom:2.4rem}
+@media(max-width:760px){.board{--fw:.92rem;--fg:.14rem}.flap{font-size:.8rem;height:1.4rem}}
 
 .apply{background:linear-gradient(var(--ink-1),var(--ink-0))}
 .apply-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(2.4rem,5vw,5rem);margin-top:3rem;align-items:start}
@@ -529,7 +536,7 @@ footer{padding:2.2rem 0;border-top:1px solid var(--line);background:var(--ink-1)
 
 <header class="nav" id="nav">
   <div class="wrap nav-in">
-    <a class="brand" href="index.html"><svg viewBox="0 0 32 32" fill="none" width="22" aria-hidden="true"><path d="M3 26 12 8l5 9 3-5 9 14z" stroke="#90CCBE" stroke-width="2.4" stroke-linejoin="round"/></svg>Totemtou</a>
+    <a class="brand" href="index.html"><img src="https://storage.zopuai.com/converted/user-OJXX.webp" alt="" width="32" height="32" aria-hidden="true">Totemtou</a>
     <nav class="nav-links" aria-label="Primary">
       <a href="index.html#journeys">Journeys</a><a href="#trail">The trail</a><a href="#days">The days</a><a href="#eligibility">Eligibility</a><a href="#leader">Who</a><a href="#details">Details</a><a href="#apply">Dates</a>
     </nav>
@@ -1234,36 +1241,15 @@ footer{padding:2.2rem 0;border-top:1px solid var(--line);background:var(--ink-1)
     <p class="eyebrow">Reserve your place</p>
     <h2 class="h2 rv">Pick a date. <em>The rest unfolds.</em></h2>
     <p class="lede rv" style="margin-top:1.4rem">Departures run in the dry windows: late winter and post-monsoon. Each cohort caps at twelve. Choose one, and we take you from there, by hand.</p>
-    <div class="cal rv" role="group" aria-label="Season calendar, departures">
-      <div class="mcell" style="--flag:#5B8FD9">
-        <p class="mh">Oct <em>2026</em></p>
-        <button type="button" class="ev" data-date="11 Oct – 17 Oct 2026" aria-pressed="false"><span class="ed">11 – 17</span><span class="es">Open · post-monsoon</span></button>
-        <p class="cohort">Cohort of 12</p>
-      </div>
-      <div class="mcell" style="--flag:#EBE7DB">
-        <p class="mh">Nov <em>2026</em></p>
-        <button type="button" class="ev" data-date="08 Nov – 14 Nov 2026" aria-pressed="false"><span class="ed">08 – 14</span><span class="es">Open · clear skies</span></button>
-        <p class="cohort">Cohort of 12</p>
-      </div>
-      <div class="mcell closed" style="--flag:#C9504A">
-        <p class="mh">Dec – Jan</p>
-        <p class="why">Closed · winter snow holds the sanctuary</p>
-      </div>
-      <div class="mcell" style="--flag:#4F9E6B">
-        <p class="mh">Feb <em>2027</em></p>
-        <button type="button" class="ev" data-date="22 Feb – 28 Feb 2027" aria-pressed="false"><span class="ed">22 – 28</span><span class="es">Open · late winter</span></button>
-        <p class="cohort">Cohort of 12</p>
-      </div>
-      <div class="mcell" style="--flag:#D9A23B">
-        <p class="mh">Mar <em>2027</em></p>
-        <button type="button" class="ev" data-date="15 Mar – 21 Mar 2027" aria-pressed="false"><span class="ed">15 – 21</span><span class="es">Open · spring bloom</span></button>
-        <p class="cohort">Cohort of 12</p>
-      </div>
-      <div class="mcell closed" style="--flag:#5B8FD9">
-        <p class="mh">Apr – Sep</p>
-        <p class="why">Closed · monsoon on the Modi Khola</p>
+    <div class="board-wrap rv">
+      <div class="board" id="board" role="group" aria-label="Scheduled departures board">
+        <div class="board-top">
+          <span class="bt-title">Departures</span>
+          <span class="bt-meta">Pokhara · ABC · cohort of 12</span>
+        </div>
       </div>
     </div>
+    <p class="board-hint">Tap an open departure to hold your place</p>
     <div class="next rv" id="next" hidden aria-live="polite">
       <div class="next-head">
         <p class="next-sel">You're holding <strong id="nextDate">your cohort</strong></p>
@@ -1410,19 +1396,79 @@ document.querySelectorAll('video.seq').forEach(v=>{
   sio.observe(v);
 });
 
-/* departure pick — reveal the cohort next-steps flow */
+/* ===== split-flap departures board ===== */
 const sel=document.getElementById('selDate');
 const nextBlock=document.getElementById('next'),nextDate=document.getElementById('nextDate'),actWa=document.getElementById('actWa');
 const WA_NUM='919258583023';
-document.querySelectorAll('.ev').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.ev').forEach(x=>x.setAttribute('aria-pressed','false'));
-  b.setAttribute('aria-pressed','true');
-  const d=b.dataset.date;
-  if(sel)sel.textContent='Reserving · '+d;
-  if(nextDate)nextDate.textContent=d;
-  if(actWa)actWa.href='https://wa.me/'+WA_NUM+'?text='+encodeURIComponent("Hi Totemtou, I'm holding the "+d+" Annapurna Base Camp cohort and have a couple of questions.");
-  if(nextBlock){nextBlock.hidden=false;nextBlock.scrollIntoView({behavior:'smooth',block:'start'});}
-}));
+const board=document.getElementById('board');
+if(board){
+  const DEPS=[
+    {f:'ABC 01',d:'11 OCT 26',w:'POST-MONSOON',s:'12',st:'OPEN',  date:'11 – 17 Oct 2026'},
+    {f:'ABC 02',d:'08 NOV 26',w:'CLEAR SKIES', s:'12',st:'OPEN',  date:'08 – 14 Nov 2026'},
+    {f:'-- --', d:'DEC – JAN', w:'WINTER SNOW', s:'--',st:'CLOSED'},
+    {f:'ABC 03',d:'22 FEB 27',w:'LATE WINTER', s:'12',st:'OPEN',  date:'22 – 28 Feb 2027'},
+    {f:'ABC 04',d:'15 MAR 27',w:'SPRING BLOOM',s:'12',st:'OPEN',  date:'15 – 21 Mar 2027'},
+    {f:'-- --', d:'APR – SEP', w:'MONSOON',     s:'--',st:'CLOSED'}
+  ];
+  const COLS=[{k:'f',n:6,label:'Flight'},{k:'d',n:9,label:'Departs',cls:'flap--amber'},{k:'w',n:12,label:'Window'},{k:'s',n:2,label:'Seats'},{k:'st',n:6,label:'Status'}];
+  const head=document.createElement('div');head.className='dep dep--head';
+  COLS.forEach(c=>{const hl=document.createElement('div');hl.className='hl';hl.style.setProperty('--n',c.n);hl.textContent=c.label;head.appendChild(hl)});
+  board.appendChild(head);
+  const flaps=[];
+  DEPS.forEach((dep,ri)=>{
+    const open=dep.st==='OPEN';
+    const row=document.createElement(open?'button':'div');
+    row.className='dep '+(open?'dep--row':'dep--closed');
+    if(open){row.type='button';row.setAttribute('aria-pressed','false');row.dataset.date=dep.date;row.setAttribute('aria-label','Reserve the '+dep.date+' cohort');}
+    let pos=0;
+    COLS.forEach(col=>{
+      const field=document.createElement('div');field.className='field';field.style.setProperty('--n',col.n);
+      const raw=(dep[col.k]||'');const val=(raw+' '.repeat(col.n)).slice(0,col.n);
+      for(let i=0;i<col.n;i++){
+        const fl=document.createElement('span');
+        fl.className='flap'+(col.cls?' '+col.cls:'')+(col.k==='st'?(open?' flap--open':' flap--closed'):'');
+        fl.textContent=' ';
+        field.appendChild(fl);
+        flaps.push({el:fl,ch:val[i]||' ',delay:ri*150+pos*22});
+        pos++;
+      }
+      row.appendChild(field);
+    });
+    board.appendChild(row);
+  });
+  /* split-flap settle */
+  const CH=' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789–';
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches||!document.documentElement.classList.contains('anim');
+  const flip=el=>el.animate([{transform:'translateY(-45%) scaleY(.6)',filter:'brightness(1.5)'},{transform:'none',filter:'none'}],{duration:130,easing:'cubic-bezier(.3,1,.5,1)'});
+  function settle(fl){
+    if(fl.ch===' '){fl.el.textContent=' ';return}
+    if(reduce){fl.el.textContent=fl.ch;return}
+    const ticks=6+Math.floor(Math.random()*12);let n=0,start=Math.floor(Math.random()*CH.length);
+    const iv=setInterval(()=>{
+      n++;fl.el.textContent=CH[(start+n)%CH.length];flip(fl.el);
+      if(n>=ticks){clearInterval(iv);fl.el.textContent=fl.ch;flip(fl.el)}
+    },55);
+  }
+  if(reduce){flaps.forEach(fl=>{fl.el.textContent=fl.ch===' '?' ':fl.ch})}
+  else{
+    let ran=false;
+    const bio=new IntersectionObserver(es=>es.forEach(e=>{
+      if(e.isIntersecting&&!ran){ran=true;flaps.forEach(fl=>setTimeout(()=>settle(fl),fl.delay))}
+    }),{threshold:.25});
+    bio.observe(board);
+  }
+  /* select an open departure → reveal next steps */
+  board.addEventListener('click',e=>{
+    const row=e.target.closest('.dep--row[data-date]');if(!row)return;
+    board.querySelectorAll('.dep--row').forEach(x=>x.setAttribute('aria-pressed','false'));
+    row.setAttribute('aria-pressed','true');
+    const d=row.dataset.date;
+    if(sel)sel.textContent='Reserving · '+d;
+    if(nextDate)nextDate.textContent=d;
+    if(actWa)actWa.href='https://wa.me/'+WA_NUM+'?text='+encodeURIComponent("Hi Totemtou, I'm holding the "+d+" Annapurna Base Camp cohort and have a couple of questions.");
+    if(nextBlock){nextBlock.hidden=false;nextBlock.scrollIntoView({behavior:'smooth',block:'start'})}
+  });
+}
 const actFaq=document.getElementById('actFaq');
 if(actFaq)actFaq.addEventListener('click',()=>{
   const t=document.querySelector('.gtab[data-tab="faq"]');if(t)t.click();
@@ -1435,7 +1481,7 @@ if(actPay)actPay.addEventListener('click',e=>{
 });
 const nextClear=document.getElementById('nextClear');
 if(nextClear)nextClear.addEventListener('click',()=>{
-  document.querySelectorAll('.ev').forEach(x=>x.setAttribute('aria-pressed','false'));
+  document.querySelectorAll('.dep--row').forEach(x=>x.setAttribute('aria-pressed','false'));
   if(nextBlock)nextBlock.hidden=true;
   if(sel)sel.textContent='No date selected';
   document.getElementById('apply').scrollIntoView({behavior:'smooth',block:'start'});
