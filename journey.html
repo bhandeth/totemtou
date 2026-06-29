@@ -162,7 +162,9 @@ h1 .alt{color:var(--river);font-style:italic;font-weight:380}
 .dimg figcaption{position:absolute;left:0;right:0;bottom:0;padding:.85rem 1.1rem;font:500 .6rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;background:linear-gradient(transparent,rgba(11,20,16,.8))}
 .dimg.duo{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;aspect-ratio:auto;overflow:visible;border-radius:0}
 .dimg.duo figure{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3.4;margin:0}
+.dimg.duo.tall{grid-template-columns:repeat(2,clamp(200px,24vw,256px));justify-content:start;gap:.9rem}
 .dimg.duo.tall figure{aspect-ratio:9/16}
+@media(max-width:640px){.dimg.duo.tall{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .dimg.duo img{height:116%}
 @media(max-width:640px){.day{grid-template-columns:1fr}.day .dn{position:static}.dimg.duo{grid-template-columns:1fr}}
 
@@ -170,7 +172,8 @@ h1 .alt{color:var(--river);font-style:italic;font-weight:380}
 .grade{background:var(--ink-0)}
 .grade-head .h2{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4em}
 .grade-sub{margin-top:.9rem;font:500 .78rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-2)}
-.grade-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(2.4rem,5vw,4.5rem);margin-top:2.6rem;align-items:start}
+.grade-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(2.4rem,5vw,4.5rem);margin-top:2.6rem;align-items:stretch}
+.grade-head{margin-bottom:1.8rem}
 .scale{border:1px solid var(--line);border-radius:16px;padding:1.6rem 1.8rem;background:rgba(235,231,219,.02)}
 .scale .lab{display:flex;justify-content:space-between;font:500 .64rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-2);margin-bottom:1rem}
 .scale .bar{height:6px;border-radius:99px;background:rgba(235,231,219,.1);overflow:hidden}
@@ -198,12 +201,12 @@ h1 .alt{color:var(--river);font-style:italic;font-weight:380}
 .ready-tally b{color:var(--river);font-weight:600}
 .ready-tally.full{color:var(--river)}
 /* hover-to-play sound video */
-.grade-vid{position:relative;width:min(330px,100%);margin:0 auto;aspect-ratio:9/16;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--ink-1)}
+.grade-vid{position:relative;width:100%;height:100%;min-height:360px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--ink-1);cursor:pointer}
 .grade-vid video{width:100%;height:100%;object-fit:cover;filter:saturate(.94)}
 .grade-vid .vid-hint{position:absolute;left:50%;bottom:1rem;transform:translateX(-50%);display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap;padding:.5rem .9rem;border-radius:99px;background:rgba(11,20,16,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);font:500 .62rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--bone);transition:opacity .4s var(--ease)}
 .grade-vid .vid-hint svg{width:14px;height:14px;flex:none}
 .grade-vid.playing .vid-hint{opacity:0}
-@media(max-width:820px){.grade-grid{grid-template-columns:1fr}.grade-vid{width:min(300px,100%)}}
+@media(max-width:820px){.grade-grid{grid-template-columns:1fr}.grade-vid{width:min(300px,100%);height:auto;min-height:0;aspect-ratio:9/16;margin:0 auto}}
 
 /* ===== ELIGIBILITY ===== */
 .elig-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:3rem}
@@ -923,12 +926,12 @@ footer{padding:2.2rem 0;border-top:1px solid var(--line);background:var(--ink-1)
 <section class="grade" aria-label="Difficulty">
   <div class="wrap">
     <p class="eyebrow">Is this for you?</p>
-    <div class="grade-head rv">
-      <h2 class="h2">Level 3 <em>: Moderate</em></h2>
-      <p class="grade-sub">Multi-day walk, sustained effort.</p>
-    </div>
     <div class="grade-grid">
       <div class="grade-left">
+        <div class="grade-head rv">
+          <h2 class="h2">Level 3 <em>: Moderate</em></h2>
+          <p class="grade-sub">Multi-day walk, sustained effort.</p>
+        </div>
         <div class="scale rv">
           <div class="lab"><span>Where ABC sits</span><span>3 / 6</span></div>
           <div class="bar"><i id="gbar"></i></div>
@@ -963,7 +966,7 @@ footer{padding:2.2rem 0;border-top:1px solid var(--line);background:var(--ink-1)
       </div>
       <figure class="grade-vid rv" id="gradeVidWrap">
         <video id="gradeVid" src="https://storage.zopuai.com/video-conversions/converted-1782705502868-BVNE.webm" muted loop playsinline preload="none" aria-label="On the trail into the Annapurna Sanctuary"></video>
-        <span class="vid-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 7a8 8 0 0 1 0 10"/></svg>Hover to play · sound on</span>
+        <span class="vid-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 7a8 8 0 0 1 0 10"/></svg>Hover to play · tap for sound</span>
       </figure>
     </div>
   </div>
@@ -1051,25 +1054,6 @@ footer{padding:2.2rem 0;border-top:1px solid var(--line);background:var(--ink-1)
           </div>
         </div>
       </div>
-  </div>
-</section>
-
-<!-- LOGISTICS -->
-<section class="logi" aria-label="Logistics and safety">
-  <div class="wrap">
-    <p class="eyebrow">Safety</p>
-    <h2 class="h2 rv">What we plan for, <em>before it happens.</em></h2>
-    <div class="logi-grid">
-      <div class="lcard rv">
-        <h3>If something doesn't go to plan</h3>
-        <p>Three of the failure modes we plan for, and how the day works when they happen.</p>
-        <ul class="fail">
-          <li><b>Weather closes the route above MBC</b><p>We hold at MBC, not Deurali: better teahouses, better acclimatisation. If the window doesn't open in 24 hours we descend. ABC is the goal; getting back is the priority.</p></li>
-          <li><b>Altitude affects a member of the group</b><p>The lead guide makes the call. Mild AMS: rest day, hydration, monitoring. Moderate or worsening: descent, no negotiation. The kit covers stabilisation; the trail covers the rest.</p></li>
-          <li><b>A teahouse is full or closed</b><p>The trail has redundancies: Sinuwa instead of Bamboo on the descent, Himalaya instead of Deurali. Days flex by an hour either way; the journey doesn't.</p></li>
-        </ul>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1745,16 +1729,17 @@ if(readyList&&readyTally){
   });
 }
 
-/* hover-to-play sound clip */
+/* hover to preview, click to keep playing with sound */
 const gradeVidWrap=document.getElementById('gradeVidWrap'),gradeVid=document.getElementById('gradeVid');
 if(gradeVidWrap&&gradeVid){
-  gradeVidWrap.addEventListener('mouseenter',()=>{
-    gradeVid.muted=false;gradeVid.volume=.3;
-    const pr=gradeVid.play();
-    if(pr)pr.then(()=>gradeVidWrap.classList.add('playing')).catch(()=>{});
-  });
-  gradeVidWrap.addEventListener('mouseleave',()=>{
-    gradeVid.pause();gradeVid.muted=true;gradeVidWrap.classList.remove('playing');
+  let latched=false;
+  const playSound=vol=>{gradeVid.muted=false;gradeVid.volume=vol;const pr=gradeVid.play();if(pr)pr.then(()=>gradeVidWrap.classList.add('playing')).catch(()=>{})};
+  gradeVidWrap.addEventListener('mouseenter',()=>{if(!latched)playSound(.3)});
+  gradeVidWrap.addEventListener('mouseleave',()=>{if(!latched){gradeVid.pause();gradeVid.muted=true;gradeVidWrap.classList.remove('playing')}});
+  gradeVidWrap.addEventListener('click',()=>{
+    latched=!latched;
+    if(latched){playSound(.6);gradeVidWrap.classList.add('latched')}
+    else{gradeVid.pause();gradeVid.muted=true;gradeVidWrap.classList.remove('playing','latched')}
   });
 }
 
