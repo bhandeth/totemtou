@@ -280,7 +280,7 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
 <!-- HERO -->
 <section class="hero" aria-label="Intro">
   <div class="hero-media" id="heroMedia">
-    <video autoplay muted loop playsinline preload="metadata" poster="posters/hero.jpg">
+    <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="posters/hero.jpg">
       <source src="https://storage.zopuai.com/video-conversions/converted-1782424788803-YSIG.webm" type="video/webm">
     </video>
   </div>
@@ -556,13 +556,51 @@ if(elCap){
 if(!anim){document.querySelectorAll('.rv,.rv-img').forEach(el=>{el.style.opacity=1;el.style.transform='none';el.style.clipPath='none'});return}
 gsap.registerPlugin(ScrollTrigger);
 
-/* loader: altitude count then reveal */
+/* loader: altitude tracks the ACTUAL hero-video load, reveals only when it can play through */
 const loader=document.getElementById('loader'),altN=document.getElementById('altN');
-const intro=gsap.timeline();
-intro.to({v:822},{v:4130,duration:1.4,ease:'power2.inOut',onUpdate:function(){altN.textContent=Math.round(this.targets()[0].v).toLocaleString()}})
-.to(loader,{opacity:0,duration:.6,onComplete:()=>loader.classList.add('done')},'+=0.15')
-.from('#heroTitle .line>span',{yPercent:110,duration:1.1,ease:'power4.out',stagger:.12},'-=0.35')
-.to('.hero .rv',{opacity:1,y:0,duration:.9,ease:'power3.out',stagger:.12},'-=0.6');
+const heroVideo=document.getElementById('heroVideo');
+const L_START=822,L_END=4130;
+let lShown=L_START,lReady=false,lRevealed=false,lRaf;
+const setAlt=v=>{altN.textContent=Math.round(v).toLocaleString()};
+
+function loadFrac(){
+  const v=heroVideo;
+  if(!v)return 1;
+  if(lReady)return 1;
+  let f=0;
+  if(v.duration&&isFinite(v.duration)&&v.buffered.length){
+    f=v.buffered.end(v.buffered.length-1)/v.duration;
+  }
+  // readyState (0→4) gives coarse progress before buffered ranges settle
+  f=Math.max(f,(v.readyState/4)*0.9);
+  return Math.min(f,0.99); // never hit 100% until the video is truly ready
+}
+function loaderTick(){
+  const target=L_START+(L_END-L_START)*loadFrac();
+  lShown+=(target-lShown)*0.1;
+  if(lReady){lShown+=(L_END-lShown)*0.28;if(L_END-lShown<1)lShown=L_END;}
+  setAlt(lShown);
+  if(lReady&&Math.round(lShown)>=L_END){finishLoader();return}
+  lRaf=requestAnimationFrame(loaderTick);
+}
+function markReady(){lReady=true}
+function finishLoader(){
+  if(lRevealed)return;lRevealed=true;
+  cancelAnimationFrame(lRaf);
+  setAlt(L_END);
+  gsap.timeline()
+    .to(loader,{opacity:0,duration:.6,onComplete:()=>loader.classList.add('done')})
+    .from('#heroTitle .line>span',{yPercent:110,duration:1.1,ease:'power4.out',stagger:.12},'-=0.2')
+    .to('.hero .rv',{opacity:1,y:0,duration:.9,ease:'power3.out',stagger:.12},'-=0.6');
+}
+if(heroVideo){
+  if(heroVideo.readyState>=4)markReady();
+  heroVideo.addEventListener('canplaythrough',markReady,{once:true});
+  heroVideo.addEventListener('playing',markReady,{once:true});
+  heroVideo.addEventListener('error',markReady,{once:true}); // fail-safe: never trap the page
+}else{markReady()}
+setTimeout(markReady,12000); // hard cap for very slow / blocked networks
+loaderTick();
 
 /* hero parallax + pointer drift */
 const hm=document.getElementById('heroMedia');

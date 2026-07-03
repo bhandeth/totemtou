@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Annapurna Base Camp · 4,130 m · Totemtou</title>
-<meta name="description" content="A seven-day walk into the Annapurna Sanctuary, through Gurung country, bamboo and rhododendron, to the amphitheatre at 4,130 m. Led by Deepak. Small cohort, tested route.">
+<meta name="description" content="A seven-day walk into the Annapurna Sanctuary, through Gurung country, bamboo and rhododendron, to the amphitheatre at 4,130 m. Led by Prabin. Small cohort, tested route.">
 <meta property="og:title" content="Annapurna Base Camp · 4,130 m · Totemtou">
 <meta property="og:image" content="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg">
 <link rel="icon" type="image/webp" href="https://storage.zopuai.com/converted/user-OJXX.webp">
@@ -173,7 +173,8 @@ h1 .alt{color:var(--river);font-style:italic;font-weight:380}
 .grade{background:var(--ink-0)}
 .grade-head .h2{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4em}
 .grade-sub{margin-top:.9rem;font:500 .78rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-2)}
-.grade-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(2.4rem,5vw,4.5rem);margin-top:2.6rem;align-items:stretch}
+.grade-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(2.4rem,5vw,4rem);margin-top:2.6rem;align-items:stretch}
+.grade-left{display:flex;flex-direction:column}
 .grade-head{margin-bottom:1.8rem}
 .scale{border:1px solid var(--line);border-radius:16px;padding:1.6rem 1.8rem;background:rgba(235,231,219,.02)}
 .scale .lab{display:flex;justify-content:space-between;font:500 .64rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-2);margin-bottom:1rem}
@@ -210,7 +211,7 @@ h1 .alt{color:var(--river);font-style:italic;font-weight:380}
 @media(max-width:820px){.grade-grid{grid-template-columns:1fr}.grade-vid{width:min(300px,100%);height:auto;min-height:0;aspect-ratio:9/16;margin:0 auto}}
 
 /* ===== ELIGIBILITY ===== */
-.elig-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:3rem}
+.elig-grid{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:minmax(min-content,1fr);gap:1rem;margin-top:1.4rem;flex:1 1 auto}
 .ecard{border:1px solid var(--line);border-radius:16px;padding:1.6rem 1.5rem;background:rgba(235,231,219,.02);transition:border-color .4s var(--ease),transform .4s var(--ease)}
 .ecard:hover{border-color:rgba(144,204,190,.35);transform:translateY(-3px)}
 .ecard .ei{display:block;width:30px;height:30px;color:var(--river);margin-bottom:1.1rem}
@@ -230,9 +231,13 @@ h1 .alt{color:var(--river);font-style:italic;font-weight:380}
 .gtk-wrap{margin-top:2.6rem}
 .gtk-tabs{display:flex;gap:.3rem;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:none}
 .gtk-tabs::-webkit-scrollbar{display:none}
-.gtab{flex:none;background:none;border:0;border-bottom:2px solid transparent;padding:.9rem 1.05rem;margin-bottom:-1px;font:500 .68rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--bone-3);cursor:pointer;white-space:nowrap;transition:color .3s,border-color .3s}
+.gtab{flex:none;display:inline-flex;align-items:center;gap:.55rem;background:none;border:0;border-bottom:2px solid transparent;padding:.9rem 1.05rem;margin-bottom:-1px;font:500 .68rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--bone-3);cursor:pointer;white-space:nowrap;transition:color .3s,border-color .3s}
+.gtab svg{width:15px;height:15px;flex:none;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s var(--ease),opacity .3s;opacity:.75}
 .gtab:hover{color:var(--bone-2)}
+.gtab:hover svg{transform:translateY(-2px);opacity:1}
 .gtab[aria-selected="true"]{color:var(--river);border-bottom-color:var(--river)}
+.gtab[aria-selected="true"] svg{opacity:1;animation:gtabPop .4s var(--ease)}
+@keyframes gtabPop{0%{transform:scale(.7)}55%{transform:scale(1.15)}100%{transform:scale(1)}}
 .gtk-panels{padding-top:2.2rem;min-height:240px}
 .gpanel[hidden]{display:none}
 .anim .gpanel{animation:gFade .5s var(--ease)}
@@ -432,7 +437,7 @@ details.faq p{padding:0 0 1.25rem;font-size:.95rem;line-height:1.65;color:var(--
 /* split-flap departures board */
 .board-wrap{margin:3rem 0 1.4rem;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .board-wrap::-webkit-scrollbar{display:none}
-.board{--fw:1.05rem;--fg:.18rem;min-width:min-content;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,#0d1712,#090e0b);padding:clamp(1.2rem,2.6vw,2rem);box-shadow:inset 0 1px 0 rgba(235,231,219,.05),0 24px 60px rgba(0,0,0,.45)}
+.board{--fw:1.16rem;--fg:.2rem;min-width:min-content;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,#0d1712,#090e0b);padding:clamp(1.2rem,2.6vw,2rem);box-shadow:inset 0 1px 0 rgba(235,231,219,.05),0 24px 60px rgba(0,0,0,.45)}
 .board-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-bottom:1rem;margin-bottom:1.1rem;border-bottom:1px solid var(--line)}
 .bt-title{font:500 .68rem var(--f-mono);letter-spacing:.24em;text-transform:uppercase;color:var(--river);display:flex;align-items:center;gap:.6rem}
 .bt-title::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--river);box-shadow:0 0 9px var(--river)}
@@ -447,13 +452,13 @@ button.dep:hover{background:rgba(144,204,190,.06)}
 button.dep[aria-pressed="true"]{background:rgba(144,204,190,.1);box-shadow:inset 0 0 0 1px rgba(144,204,190,.45)}
 .dep--closed{padding:.5rem .55rem;opacity:.4}
 .field{display:flex;gap:var(--fg);flex:none;width:calc(var(--n)*var(--fw) + (var(--n) - 1)*var(--fg))}
-.flap{position:relative;display:grid;place-items:center;width:var(--fw);height:1.55rem;flex:none;font:600 .92rem/1 var(--f-mono);color:var(--bone);background:linear-gradient(#2a362f,#1c2721 49%,#0d1410 51%,#18211b);border-radius:3px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.5);overflow:hidden;will-change:transform}
-.flap::after{content:"";position:absolute;left:2px;right:2px;top:50%;height:1px;background:rgba(0,0,0,.62);transform:translateY(-.5px)}
-.flap--amber{color:var(--marigold)}
-.flap--open{color:var(--river)}
+.flap{position:relative;display:grid;place-items:center;width:var(--fw);height:1.92rem;flex:none;font:700 1.06rem/1 var(--f-mono);color:var(--bone);background:linear-gradient(180deg,#3a4a41 0%,#2b3831 49%,#131c17 51%,#1e2822 100%);border-radius:3px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.55),inset 0 1px 0 rgba(235,231,219,.07);overflow:hidden;will-change:transform;text-shadow:0 1px 2px rgba(0,0,0,.55)}
+.flap::after{content:"";position:absolute;left:2px;right:2px;top:50%;height:1px;background:rgba(0,0,0,.42);transform:translateY(-.5px)}
+.flap--amber{color:#F1C069}
+.flap--open{color:#A9E2D4}
 .flap--closed{color:var(--bone-3)}
 .board-hint{font:500 .62rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-3);text-align:center;margin-bottom:2.4rem}
-@media(max-width:760px){.board{--fw:.92rem;--fg:.14rem}.flap{font-size:.8rem;height:1.4rem}}
+@media(max-width:760px){.board{--fw:1rem;--fg:.15rem}.flap{font-size:.9rem;height:1.68rem}}
 
 .apply{background:linear-gradient(var(--ink-1),var(--ink-0))}
 .apply-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(2.4rem,5vw,5rem);margin-top:3rem;align-items:start}
@@ -520,6 +525,251 @@ form.app.sent .ok{display:block}
 footer{padding:2.2rem 0;border-top:1px solid var(--line);background:var(--ink-1)}
 .foot-base{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font:400 .68rem var(--f-mono);letter-spacing:.12em;color:var(--bone-3)}
 .foot-base a:hover{color:var(--river)}
+
+/* trimmed board heading */
+.board-title{max-width:none}
+
+/* booking summary card (in reserve grid) */
+.bcard{border:1px solid var(--line);border-radius:18px;background:rgba(11,20,16,.5);padding:clamp(1.6rem,3vw,2.2rem);display:flex;flex-direction:column;gap:.5rem}
+.bcard-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:.2rem}
+.bcard-eyebrow{font:500 .6rem var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--bone-3)}
+.bcard-icons{display:flex;gap:.55rem;flex:none}
+.bcard-approx{display:block;font:600 .58rem var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--marigold);margin-bottom:.2rem}
+.bcard-approx[hidden]{display:none}
+.bcard-priceline{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.bcard-price{display:flex;align-items:baseline;gap:.5rem}
+.bcard-amt{font-family:var(--f-disp);font-weight:460;font-size:clamp(2.2rem,4vw,2.9rem);letter-spacing:-.02em;line-height:1}
+.bcard-unit{font:500 .66rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--bone-3)}
+.bcard-inr{font:400 .78rem var(--f-mono);letter-spacing:.04em;color:var(--bone-3);margin-bottom:.4rem}
+.bcard-cta{margin-top:.7rem}
+.bcard-fine{font-size:.78rem;color:var(--bone-3);font-style:italic;line-height:1.5;margin-top:.2rem}
+.sel-ic--sm{width:38px;height:38px}
+.sel-ic--sm svg{width:17px;height:17px}
+
+/* sticky booking bar */
+.bookbar{position:fixed;left:0;right:0;bottom:0;z-index:150;background:rgba(11,20,16,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid var(--line);transform:translateY(112%);transition:transform .5s var(--ease);will-change:transform}
+.bookbar.show{transform:none}
+.bookbar-in{display:flex;align-items:center;justify-content:space-between;gap:1.4rem;padding:.9rem 0}
+.bookbar-name{font-weight:500;font-size:1rem;letter-spacing:-.01em}
+.bookbar-name span{color:var(--bone-3);font-weight:400}
+.bookbar-meta{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-top:.2rem;font:500 .68rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--bone-3)}
+.bookbar-price{color:var(--bone);font-size:.82rem}
+.bookbar-sep{opacity:.5}
+.bookbar-cta{flex:none;padding:1em 1.7em}
+@media(max-width:560px){.bookbar-in{gap:.8rem}.bookbar-name span{display:none}.bookbar-meta{gap:.4rem}.bookbar-cta{padding:.95em 1.2em}}
+
+/* ===== booking modal ===== */
+.modal{position:fixed;inset:0;z-index:300;display:none}
+.modal.open{display:block}
+.modal-scrim{position:absolute;inset:0;background:rgba(6,11,9,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .4s var(--ease)}
+.modal.open .modal-scrim{opacity:1}
+.modal-panel{position:absolute;top:0;right:0;bottom:0;width:min(560px,100%);background:linear-gradient(180deg,var(--ink-1),var(--ink-0));border-left:1px solid var(--line);box-shadow:-30px 0 80px rgba(0,0,0,.5);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .5s var(--ease);overflow:hidden}
+.modal.open .modal-panel{transform:none}
+@media(max-width:600px){.modal-panel{width:100%;top:auto;height:96svh;border-left:0;border-top:1px solid var(--line);border-radius:20px 20px 0 0;transform:translateY(100%)}.modal.open .modal-panel{transform:none}}
+.modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:clamp(1.4rem,3vw,2rem) clamp(1.4rem,3vw,2.2rem) 1rem;border-bottom:1px solid var(--line)}
+.modal-kicker{font:500 .58rem var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--river)}
+.modal-crumb{font:500 .66rem var(--f-mono);letter-spacing:.08em;color:var(--bone-2);margin-top:.4rem}
+.modal-x{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--bone-2);cursor:pointer;font-size:.9rem;transition:.3s}
+.modal-x:hover{border-color:var(--river);color:var(--bone)}
+.modal-steps{display:flex;gap:.4rem;padding:1rem clamp(1.4rem,3vw,2.2rem);border-bottom:1px solid var(--line)}
+.modal-steps .ms{flex:1;text-align:center;font:500 .56rem var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--bone-3);padding-bottom:.6rem;border-bottom:2px solid var(--line);transition:.35s}
+.modal-steps .ms.on{color:var(--river);border-bottom-color:var(--river)}
+.modal-steps .ms.done{color:var(--bone-2);border-bottom-color:rgba(144,204,190,.4)}
+.modal-body{flex:1;overflow-y:auto;padding:clamp(1.5rem,3.5vw,2.2rem);scrollbar-width:thin}
+.mstep{display:none;padding:0;animation:mfade .45s var(--ease)}
+.mstep.on{display:block}
+@keyframes mfade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.mstep-h{font-weight:480;font-size:clamp(1.4rem,3vw,1.85rem);letter-spacing:-.014em;line-height:1.1}
+.mstep-sub{margin:.7rem 0 1.6rem;color:var(--bone-2);font-size:.95rem}
+.mstep-sub b{color:var(--bone);font-weight:500}
+.mfield{margin-bottom:1.1rem}
+.mfield label{display:block;font:500 .58rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-3);margin-bottom:.5rem}
+.mfield input,.mfield select{width:100%;background:rgba(235,231,219,.04);border:1px solid var(--line);border-radius:10px;padding:.9em 1em;color:var(--bone);transition:border-color .3s}
+.mfield input:focus,.mfield select:focus{outline:none;border-color:var(--river)}
+.phone-row{display:flex;gap:.6rem}
+.phone-row select{width:auto;flex:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23EBE7DB' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .8em center;padding-right:2.2em}
+.phone-row input{flex:1}
+.mtravellers{display:flex;align-items:center;justify-content:space-between;gap:1rem;border:1px solid var(--line);border-radius:12px;padding:.9rem 1.1rem;margin-bottom:1.2rem}
+.mt-label{font:500 .58rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-2)}
+.stepper{display:flex;align-items:center;gap:1.1rem}
+.stepper span{font:500 1.05rem var(--f-mono);min-width:1.2ch;text-align:center}
+.stp{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--bone);font-size:1.1rem;cursor:pointer;display:grid;place-items:center;transition:.3s}
+.stp:hover{border-color:var(--river);color:var(--river)}
+.stp:disabled{opacity:.3;cursor:not-allowed}
+.mnext{margin-top:.4rem}
+.mstep-fine{font-size:.78rem;color:var(--bone-3);font-style:italic;text-align:center;margin-top:.9rem;line-height:1.5}
+.mstep-err{color:#E6A19A;font:500 .8rem var(--f-mono);letter-spacing:.02em;min-height:1.1em;margin-bottom:.4rem}
+.linkbtn{background:none;border:0;color:var(--river);cursor:pointer;font:inherit;text-decoration:underline;text-underline-offset:2px;padding:0}
+/* otp */
+.otp{display:flex;gap:.6rem;justify-content:space-between;margin:.4rem 0 1rem}
+.otp-d{flex:1;min-width:0;aspect-ratio:1/1.15;text-align:center;font:500 1.5rem var(--f-mono);background:rgba(235,231,219,.04);border:1px solid var(--line);border-radius:12px;color:var(--bone);transition:border-color .25s,background .25s}
+.otp-d:focus{outline:none;border-color:var(--river);background:rgba(144,204,190,.06)}
+.otp-d.filled{border-color:rgba(144,204,190,.5)}
+.otp-demo{font:400 .78rem var(--f-mono);letter-spacing:.04em;color:var(--bone-3);text-align:center;margin-bottom:1.1rem}
+.otp-demo b{color:var(--marigold);letter-spacing:.14em}
+/* review */
+.review{border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:1.3rem}
+.rv-hero{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.2rem 1.3rem;background:rgba(144,204,190,.05);border-bottom:1px solid var(--line)}
+.rv-trip{font-weight:500;font-size:1.12rem}
+.rv-tag{font:500 .6rem var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--bone-3);margin-top:.3rem}
+.rv-verified{flex:none;font:500 .6rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--river);border:1px solid rgba(144,204,190,.4);border-radius:99px;padding:.4em .8em}
+.rv-rows{padding:.4rem 1.3rem}
+.rv-r{display:flex;justify-content:space-between;gap:1rem;padding:.75rem 0;border-bottom:1px solid var(--line);font-size:.9rem}
+.rv-r:last-child{border-bottom:0}
+.rv-r dt{font:500 .6rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--bone-3);align-self:center}
+.rv-r dd{color:var(--bone);text-align:right;font-weight:500}
+.rv-bill{padding:1.1rem 1.3rem;background:rgba(235,231,219,.02);border-top:1px solid var(--line)}
+.rv-b{display:flex;justify-content:space-between;font:400 .88rem var(--f-mono);color:var(--bone-2);margin-bottom:.6rem}
+.rv-total{font-weight:600;font-size:1.05rem;color:var(--bone);border-top:1px solid var(--line);padding-top:.7rem;margin-top:.2rem}
+.rv-inr{text-align:right;font:400 .76rem var(--f-mono);color:var(--bone-3);margin-top:.3rem}
+.rv-agree{display:flex;gap:.7rem;align-items:flex-start;font-size:.86rem;color:var(--bone-2);line-height:1.5;margin-bottom:1.1rem;cursor:pointer}
+.rv-agree input{margin-top:.15rem;accent-color:var(--river);width:16px;height:16px;flex:none}
+/* razorpay mock */
+.rzp{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#0e1a14}
+.rzp-head{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.2rem;background:#0b1d3a;border-bottom:1px solid rgba(255,255,255,.08)}
+.rzp-logo .rzp-r{font-weight:700;font-size:1.05rem;color:#fff;letter-spacing:-.01em}
+.rzp-logo .rzp-r::before{content:"";display:inline-block;width:9px;height:14px;background:#3395FF;border-radius:1px;margin-right:.45em;transform:skewX(-12deg);vertical-align:-1px}
+.rzp-secure{font:500 .62rem var(--f-mono);letter-spacing:.06em;color:rgba(255,255,255,.75)}
+.rzp-merchant{display:flex;align-items:center;gap:.9rem;padding:1.1rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.rzp-mlogo{width:40px;height:40px;border-radius:10px;background:var(--river);color:var(--ink-0);display:grid;place-items:center;font-weight:700;font-size:1.2rem;flex:none}
+.rzp-mname{font-weight:500;font-size:.98rem}
+.rzp-mamt{font:400 .82rem var(--f-mono);color:var(--bone-3);margin-top:.2rem}
+.rzp-mamt b{color:var(--bone);font-weight:500}
+.rzp-label{font:500 .58rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-3);padding:1.1rem 1.2rem .6rem}
+.rzp-methods{padding:0 1rem;display:grid;gap:.6rem}
+.rzp-m{display:flex;align-items:center;gap:.9rem;width:100%;text-align:left;background:rgba(235,231,219,.02);border:1px solid var(--line);border-radius:12px;padding:.9rem 1rem;color:inherit;cursor:pointer;transition:.3s}
+.rzp-m:hover{border-color:rgba(144,204,190,.5)}
+.rzp-m.on{border-color:var(--river);background:rgba(144,204,190,.08)}
+.rzp-mi{flex:none;width:26px;text-align:center;font-size:1.1rem;color:var(--river)}
+.rzp-mt{flex:1;display:flex;flex-direction:column;gap:.15rem}
+.rzp-mt b{font-weight:500;font-size:.95rem}
+.rzp-mt small{font:400 .74rem var(--f-mono);color:var(--bone-3)}
+.rzp-mc{flex:none;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--line);transition:.3s;position:relative}
+.rzp-m.on .rzp-mc{border-color:var(--river);background:var(--river)}
+.rzp-m.on .rzp-mc::after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--ink-0)}
+.rzp-pay{width:calc(100% - 2rem);margin:1.2rem 1rem;padding:1.05em 1em;border:0;border-radius:12px;background:#3395FF;color:#fff;font:600 .95rem var(--f-disp);letter-spacing:.01em;cursor:pointer;transition:.3s}
+.rzp-pay:disabled{background:rgba(51,149,255,.35);cursor:not-allowed}
+.rzp-pay.paying{background:#2a7fdd;pointer-events:none}
+.rzp-foot{text-align:center;font:400 .72rem var(--f-mono);color:var(--bone-3);padding:0 1rem 1.2rem}
+/* success */
+.done{text-align:center;padding:1.5rem .5rem 1rem}
+.done-tick{width:76px;height:76px;margin:0 auto 1.4rem}
+.done-tick svg{width:100%;height:100%}
+.dt-c{stroke:var(--river);stroke-width:2;stroke-dasharray:151;stroke-dashoffset:151}
+.dt-p{stroke:var(--river);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:44;stroke-dashoffset:44}
+.modal.open #step4.on .dt-c{animation:draw .6s var(--ease) forwards}
+.modal.open #step4.on .dt-p{animation:draw .4s .5s var(--ease) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.done-h{font-weight:480;font-size:clamp(1.6rem,4vw,2.1rem);letter-spacing:-.016em}
+.done-sub{margin:.9rem auto 1.6rem;max-width:38ch;color:var(--bone-2);line-height:1.6}
+.done-sub b{color:var(--bone);font-weight:500}
+.done-ref{border:1px dashed var(--line);border-radius:12px;padding:1rem;margin-bottom:1.6rem;display:flex;flex-direction:column;gap:.4rem}
+.done-ref span{font:500 .58rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-3)}
+.done-ref b{font:500 1.05rem var(--f-mono);letter-spacing:.1em;color:var(--river)}
+body.modal-open{overflow:hidden}
+
+/* ===== choose: departures + custom journey (2 columns) ===== */
+.choose-grid{display:grid;grid-template-columns:minmax(0,1.72fr) minmax(280px,1fr);gap:clamp(1.6rem,3vw,2.6rem);margin-top:2.6rem;align-items:stretch}
+@media(max-width:900px){.choose-grid{grid-template-columns:1fr}}
+.choose-col .dep{justify-content:space-between}
+.choose-col{display:flex;flex-direction:column}
+.choose-lbl{font:500 .6rem var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--bone-3);margin-bottom:1.1rem}
+.choose-col .board-wrap{margin:0 0 1rem}
+.choose-col .board-hint{text-align:left;margin:0}
+.custom-card{display:flex;flex-direction:column;gap:.9rem;text-align:left;width:100%;flex:1;border:1px solid var(--line);border-radius:18px;background:linear-gradient(158deg,rgba(217,162,59,.07),rgba(235,231,219,.02) 60%);padding:clamp(1.5rem,3vw,2rem);color:inherit;transition:border-color .35s var(--ease),background .35s var(--ease)}
+.custom-card:hover{border-color:rgba(217,162,59,.45)}
+.custom-card[aria-pressed="true"]{border-color:var(--marigold);background:linear-gradient(158deg,rgba(217,162,59,.14),rgba(235,231,219,.03) 60%)}
+.cc-top{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.cc-eyebrow{font:500 .6rem var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--marigold)}
+.cc-badge{font:500 .55rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-0);background:var(--marigold);border-radius:99px;padding:.4em .85em}
+.cc-title{font-weight:480;font-size:clamp(1.5rem,2.6vw,2rem);letter-spacing:-.014em;line-height:1.08}
+.cc-title em{font-style:italic;color:var(--marigold)}
+.cc-lede{color:var(--bone-2);font-size:.95rem;line-height:1.55}
+.cc-list{list-style:none;display:grid;gap:.5rem;margin-top:.05rem}
+.cc-list li{position:relative;padding-left:1.5rem;font-size:.88rem;color:var(--bone-2);line-height:1.4}
+.cc-list li::before{content:"+";position:absolute;left:0;top:-.05em;color:var(--marigold);font:600 1rem var(--f-mono)}
+/* neobrutalism retro pickers */
+.cc-pickers{display:flex;flex-wrap:wrap;gap:1.1rem;margin-top:.5rem}
+.nb-field{display:flex;flex-direction:column;gap:.55rem}
+.nb-field>span{font:600 .56rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-2)}
+.nb-stepper{display:inline-flex;align-items:stretch;border:2px solid var(--bone);border-radius:3px;box-shadow:3px 3px 0 var(--marigold);overflow:hidden;background:var(--ink-0);width:max-content}
+.nb-stepper button{width:2.5rem;font:600 1.2rem/1 var(--f-mono);color:var(--bone);background:none;border:0;cursor:pointer;transition:background .18s,color .18s}
+.nb-stepper button:hover{background:var(--marigold);color:var(--ink-0)}
+.nb-stepper input{width:2.8rem;text-align:center;border:0;border-inline:2px solid var(--bone);background:none;color:var(--bone);font:600 1.02rem var(--f-mono);-moz-appearance:textfield}
+.nb-stepper input::-webkit-outer-spin-button,.nb-stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.nb-stepper input:focus{outline:none}
+.nb-select{border:2px solid var(--bone);border-radius:3px;box-shadow:3px 3px 0 var(--marigold);background:var(--ink-0);color:var(--bone);font:600 .82rem var(--f-mono);letter-spacing:.03em;padding:.7em 2.3em .7em .85em;appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23D9A23B' stroke-width='1.4' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .8em center}
+.nb-select:focus{outline:none}
+.cc-go{align-self:flex-start;margin-top:.4rem;border:2px solid var(--bone);border-radius:3px;background:var(--marigold);color:var(--ink-0);box-shadow:4px 4px 0 var(--bone);font:600 .68rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;padding:.9em 1.5em;cursor:pointer;display:inline-flex;align-items:center;gap:.6rem;transition:transform .15s var(--ease),box-shadow .15s var(--ease)}
+.cc-go:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--bone)}
+.cc-go:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--bone)}
+
+/* reveal-on-selection reserve area */
+.reserve-wrap{margin-top:clamp(2.6rem,5vw,3.8rem)}
+.reserve-wrap[hidden]{display:none}
+.selstrip{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:1.7rem;margin-bottom:1.8rem}
+.sel-hold{font:500 .8rem var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--bone-2)}
+.sel-hold strong{color:var(--river);font-weight:600}
+.sel-change{background:none;border:0;margin-left:.7rem;font:500 .62rem var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--bone-3);cursor:pointer;border-bottom:1px solid var(--line);padding:0 0 2px}
+.sel-change:hover{color:var(--bone-2)}
+.sel-icons{display:flex;gap:.7rem}
+.sel-ic{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--bone-2);background:rgba(235,231,219,.02);cursor:pointer;transition:.3s}
+.sel-ic svg{width:20px;height:20px}
+.sel-ic:hover{border-color:var(--river);color:var(--bone);background:rgba(144,204,190,.06)}
+.sel-ic.wa:hover{border-color:#25D366;color:#25D366;background:rgba(37,211,102,.06)}
+
+/* ===== video testimonials ===== */
+.voices{background:var(--ink-0)}
+.voices-head{max-width:640px;margin-bottom:1rem}
+.voice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.1rem,2.4vw,1.7rem);margin:2.8rem 0 2.6rem}
+@media(max-width:820px){.voice-grid{grid-template-columns:1fr}}
+.voice{display:block;position:relative;border:1px solid var(--line);border-radius:16px;overflow:hidden;color:inherit;background:var(--ink-1);transition:border-color .35s var(--ease),transform .35s var(--ease)}
+.voice:hover{border-color:rgba(144,204,190,.4);transform:translateY(-3px)}
+.voice-thumb{position:relative;aspect-ratio:16/10;overflow:hidden}
+.voice-thumb img{width:100%;height:100%;object-fit:cover;filter:saturate(.9) brightness(.78);transition:transform .6s var(--ease)}
+.voice:hover .voice-thumb img{transform:scale(1.05)}
+.voice-play{position:absolute;inset:0;display:grid;place-items:center}
+.voice-play span{width:54px;height:54px;border-radius:50%;background:rgba(11,20,16,.5);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border:1px solid rgba(235,231,219,.55);display:grid;place-items:center;color:var(--bone);padding-left:3px;transition:.3s}
+.voice:hover .voice-play span{background:var(--river);color:var(--ink-0);border-color:var(--river)}
+.voice-dur{position:absolute;bottom:.7rem;right:.7rem;font:500 .58rem var(--f-mono);letter-spacing:.06em;color:var(--bone);background:rgba(11,20,16,.72);border-radius:5px;padding:.35em .6em}
+.voice-body{padding:1.2rem 1.3rem 1.35rem}
+.voice-q{font-size:1rem;line-height:1.5;font-style:italic;color:var(--bone)}
+.voice-who{margin-top:.85rem;font:500 .6rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--bone-3)}
+.voice-who b{color:var(--river);font-weight:500}
+.voices-more{display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap}
+
+/* ===== traditional footer ===== */
+.site-foot{background:var(--ink-1);border-top:1px solid var(--line);padding:clamp(3.6rem,7vw,5.5rem) 0 2.2rem}
+.foot-top{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.7fr);gap:clamp(2.4rem,6vw,5rem)}
+@media(max-width:820px){.foot-top{grid-template-columns:1fr;gap:2.8rem}}
+.foot-brand .fbrand{display:flex;align-items:center;gap:.7rem;font:600 1.2rem var(--f-disp);letter-spacing:.02em;margin-bottom:1.1rem}
+.foot-brand .fbrand img{width:1.9rem;height:1.9rem;border-radius:50%}
+.foot-tag{color:var(--bone-2);font-size:.95rem;line-height:1.65;max-width:36ch;margin-bottom:1.6rem}
+.foot-social{display:flex;gap:.7rem}
+.foot-social a{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--bone-2);transition:.3s}
+.foot-social a svg{width:17px;height:17px}
+.foot-social a:hover{border-color:var(--river);color:var(--river);transform:translateY(-2px)}
+.foot-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+@media(max-width:560px){.foot-cols{grid-template-columns:1fr 1fr}}
+.foot-col h4{font:500 .6rem var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--bone-3);margin-bottom:1.1rem}
+.foot-col a{display:block;color:var(--bone-2);font-size:.92rem;margin-bottom:.75rem;transition:color .3s}
+.foot-col a:hover{color:var(--river)}
+.foot-col address{font-style:normal;color:var(--bone-2);font-size:.9rem;line-height:1.7}
+.foot-col address a{display:inline;margin:0}
+.site-foot .foot-base{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font:400 .68rem var(--f-mono);letter-spacing:.1em;color:var(--bone-3);border-top:1px solid var(--line);margin-top:clamp(2.6rem,5vw,3.6rem);padding-top:1.9rem}
+.site-foot .foot-base a:hover{color:var(--river)}
+
+/* ===== floating bar controls ===== */
+.bookbar-ctrls{display:flex;align-items:center;gap:.85rem}
+.cur-toggle{display:inline-flex;border:1px solid var(--line);border-radius:99px;overflow:hidden;flex:none}
+.cur-toggle button{background:none;border:0;padding:.55em .9em;font:600 .62rem var(--f-mono);letter-spacing:.08em;color:var(--bone-3);cursor:pointer;transition:.3s}
+.cur-toggle button.on{background:var(--river);color:var(--ink-0)}
+.bar-dep{position:relative;flex:none}
+.bar-dep select{appearance:none;background:rgba(235,231,219,.05);border:1px solid var(--line);border-radius:99px;color:var(--bone);font:500 .68rem var(--f-mono);letter-spacing:.04em;padding:.72em 2.3em .72em 1.15em;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2390CCBE' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1.05em center}
+.bar-dep select:focus{outline:none;border-color:var(--river)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:780px){.bookbar-in{flex-wrap:wrap;gap:.7rem}.bookbar-info{flex:1 1 auto}.bookbar-ctrls{flex:1 1 100%;justify-content:space-between;gap:.6rem}.bookbar-cta{flex:1 1 auto;justify-content:center}}
+@media(max-width:440px){.bar-dep select{max-width:8.5rem;padding:.62em 2em .62em .8em}.cur-toggle button{padding:.55em .7em}}
 
 .anim .rv{opacity:0;transform:translateY(34px)}
 </style>
@@ -962,8 +1212,8 @@ footer{padding:2.2rem 0;border-top:1px solid var(--line);background:var(--ink-1)
   </div>
 </section>
 
-<!-- GRADE -->
-<section class="grade" aria-label="Difficulty">
+<!-- IS THIS FOR YOU (grade + eligibility, merged) -->
+<section class="grade" id="eligibility" aria-label="Is this for you">
   <div class="wrap">
     <p class="eyebrow">Is this for you?</p>
     <div class="grade-grid">
@@ -977,82 +1227,37 @@ footer{padding:2.2rem 0;border-top:1px solid var(--line);background:var(--ink-1)
           <div class="bar"><i id="gbar"></i></div>
           <div class="ends"><span>1 · Easy</span><span>6 · Expedition</span></div>
         </div>
-        <div class="ready rv">
-          <h4>You're ready if you can</h4>
-          <ul class="ready-list" id="readyList">
-            <li class="ritem" tabindex="0" role="checkbox" aria-checked="false">
-              <span class="ricon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 13V9"/><path d="M9 2h6"/><path d="M19.5 5.5 18 7"/></svg></span>
-              <span class="rtext">Walk 5 km in under 45 minutes without stopping</span>
-              <span class="rcheck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-            </li>
-            <li class="ritem" tabindex="0" role="checkbox" aria-checked="false">
-              <span class="ricon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h4v-5h4v-5h4v-5h5"/></svg></span>
-              <span class="rtext">Climb ten flights of stairs without your breath catching for long</span>
-              <span class="rcheck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-            </li>
-            <li class="ritem" tabindex="0" role="checkbox" aria-checked="false">
-              <span class="ricon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9a5 5 0 0 1 10 0v10a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2z"/><path d="M9 9a3 3 0 0 1 6 0"/><path d="M9 14h6"/></svg></span>
-              <span class="rtext">Carry a 5–7 kg daypack for a full day</span>
-              <span class="rcheck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-            </li>
-            <li class="ritem" tabindex="0" role="checkbox" aria-checked="false">
-              <span class="ricon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></span>
-              <span class="rtext">Be six to eight weeks out from departure, with time to train</span>
-              <span class="rcheck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
-            </li>
-          </ul>
-          <p class="ready-tally" id="readyTally"><b>0</b> of 4 · tap each one that's true for you</p>
+        <div class="elig-grid">
+          <div class="ecard rv">
+            <span class="ei"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M5 21v-1a7 7 0 0 1 14 0v1"/></svg></span>
+            <h3>Age</h3>
+            <p class="ebig">14 to 65</p>
+            <p class="edesc">Under 16 walks with a parent or guardian. Over 60 is welcome with recent activity and a doctor's note. The trail counts the legs and the lungs, not the years.</p>
+          </div>
+          <div class="ecard rv">
+            <span class="ei"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h4l2 5 4-12 2 7h6"/></svg></span>
+            <h3>Fitness</h3>
+            <p class="ebig">5 to 6 hrs, daily</p>
+            <p class="edesc">Be comfortable walking five to six hours on stepped trails, day after day, with a light pack. Six weeks of steady preparation builds the base.</p>
+          </div>
+          <div class="ecard rv">
+            <span class="ei"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><path d="m9.5 14.5 5-5M9.5 9.5l5 5" opacity=".55"/><circle cx="12" cy="12" r="1.6"/></svg></span>
+            <h3>Experience</h3>
+            <p class="ebig">None required</p>
+            <p class="edesc">No technical skill, no ropes, no prior summit. A first multi-day trek is fine with preparation. We ask about altitude history and plan around it.</p>
+          </div>
+          <div class="ecard rv">
+            <span class="ei"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c-2.5 3-7 6-7 6s-4.5-3-7-6a4 4 0 0 1 7-3 4 4 0 0 1 7 3Z"/><path d="M12 7V4M10.5 5.5h3" opacity=".55"/></svg></span>
+            <h3>Medical</h3>
+            <p class="ebig">Disclosed, screened</p>
+            <p class="edesc">Heart, lung and blood-pressure conditions, past altitude sickness, pregnancy, recent surgery: tell us. A few need a doctor's clearance, very few are disqualifying.</p>
+          </div>
         </div>
       </div>
       <figure class="grade-vid rv" id="gradeVidWrap">
-        <video id="gradeVid" src="https://storage.zopuai.com/video-conversions/converted-1782705502868-BVNE.webm" muted loop playsinline preload="none" aria-label="On the trail into the Annapurna Sanctuary"></video>
-        <span class="vid-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 7a8 8 0 0 1 0 10"/></svg>Hover to play · tap for sound</span>
+        <video id="gradeVid" src="https://storage.zopuai.com/video-conversions/converted-1782705502868-BVNE.webm" loop playsinline preload="auto" aria-label="On the trail into the Annapurna Sanctuary"></video>
+        <span class="vid-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 7a8 8 0 0 1 0 10"/></svg>Tap for sound</span>
       </figure>
-    </div>
-  </div>
-</section>
-
-<!-- ELIGIBILITY -->
-<section class="elig" id="eligibility" aria-label="Eligibility">
-  <div class="wrap">
-    <p class="eyebrow">Eligibility</p>
-    <h2 class="h2 rv">Who the trail takes, <em>and who it turns back.</em></h2>
-    <p class="lede rv" style="margin-top:1.4rem">The grade tells you how hard the walk is. This tells you whether you can come. We screen honestly, both ways, before anyone books a flight.</p>
-    <div class="elig-grid">
-      <div class="ecard rv">
-        <span class="ei"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M5 21v-1a7 7 0 0 1 14 0v1"/></svg></span>
-        <h3>Age</h3>
-        <p class="ebig">14 to 65</p>
-        <p class="edesc">Under 16 walks with a parent or guardian. Over 60 is welcome with recent activity and a doctor's note. The trail doesn't count the years; it counts the legs and the lungs.</p>
-      </div>
-      <div class="ecard rv">
-        <span class="ei"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13h4l2 5 4-12 2 7h6"/></svg></span>
-        <h3>Fitness</h3>
-        <p class="ebig">5 to 6 hrs, daily</p>
-        <p class="edesc">You should be comfortable walking five to six hours on stepped trails, day after day, with a light pack. Six weeks of preparation builds the base; the readiness check above is the bar.</p>
-      </div>
-      <div class="ecard rv">
-        <span class="ei"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><path d="m9.5 14.5 5-5M9.5 9.5l5 5" opacity=".55"/><circle cx="12" cy="12" r="1.6"/></svg></span>
-        <h3>Experience</h3>
-        <p class="ebig">None required</p>
-        <p class="edesc">No technical skill, no ropes, no prior summit. A first multi-day trek is fine with preparation. No altitude history is needed, but we ask about it and plan around it.</p>
-      </div>
-      <div class="ecard rv">
-        <span class="ei"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c-2.5 3-7 6-7 6s-4.5-3-7-6a4 4 0 0 1 7-3 4 4 0 0 1 7 3Z"/><path d="M12 7V4M10.5 5.5h3" opacity=".55"/></svg></span>
-        <h3>Medical</h3>
-        <p class="ebig">Disclosed, screened</p>
-        <p class="edesc">Heart, lung and blood-pressure conditions, past altitude sickness, pregnancy, recent surgery: tell us. A few need a doctor's clearance, very few are disqualifying. Honesty here keeps the trail safe.</p>
-      </div>
-    </div>
-    <div class="elig-not rv">
-      <h3>This walk isn't for you if:</h3>
-      <ul>
-        <li>You can't give the six weeks of preparation the altitude asks for.</li>
-        <li>You need a guaranteed summit, or won't turn back when a guide makes the call.</li>
-        <li>You have an uncontrolled heart or respiratory condition.</li>
-        <li>You want hotel comfort every night. This is a teahouse trek, twin-share and simple.</li>
-        <li>A week off-grid, out of signal, isn't something you can do right now.</li>
-      </ul>
     </div>
   </div>
 </section>
@@ -1060,40 +1265,19 @@ footer{padding:2.2rem 0;border-top:1px solid var(--line);background:var(--ink-1)
 <!-- LEADER -->
 <section class="leader" id="leader" aria-label="Trip leader">
   <div class="wrap leader-grid">
-    <figure class="ph rv"><img src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-FOP0.jpeg" alt="Deepak, trip leader, Annapurna Base Camp" loading="lazy"><figcaption>Deepak · above Muktinath, Mustang · 2025</figcaption></figure>
+    <figure class="ph rv"><img src="https://storage.zopuai.com/converted/user-69E9.webp" alt="Prabin, trek leader, Annapurna Base Camp" loading="lazy"><figcaption>Prabin · Annapurna Base Camp · 2025</figcaption></figure>
     <div>
       <p class="eyebrow">Walking with you</p>
-      <h2 class="rv">Deepak</h2>
-      <p class="role rv">Lead operator · Annapurna Base Camp</p>
-      <p class="rv">Deepak has walked the Annapurna Sanctuary trail more times than he keeps count of, in every season the route runs. He is the person making the calls when weather turns above MBC, when someone in the group is moving too slow, when a teahouse on the planned route is unexpectedly full, when the descent on Day 5 has to be paced differently for someone whose knees are protesting. The work of leadership on a trek is mostly invisible. It is the absence of problems you didn't know to worry about.</p>
-      <p class="rv">He is also the person you eat with. The brand is built around the idea that the leader is not a service provider; the leader is the journey. From your first call to the last dinner in Pokhara, three people carry you through it.</p>
+      <h2 class="rv">Prabin</h2>
+      <p class="role rv">Trek leader · Annapurna Base Camp</p>
+      <p class="rv">Prabin has walked the Annapurna Sanctuary trail more times than he keeps count of, in every season the route runs. He is the person making the calls when weather turns above MBC, when someone in the group is moving too slow, when a teahouse on the planned route is unexpectedly full, when the descent on Day 5 has to be paced differently for someone whose knees are protesting. The work of leadership on a trek is mostly invisible. It is the absence of problems you didn't know to worry about.</p>
+      <p class="rv">He is also the person you eat with. The brand is built around the idea that the leader is not a service provider; the leader is the journey. Prabin sets the pace, reads the group, and knows every teahouse kitchen by first name — from the first morning on the trail to the last dinner in Pokhara.</p>
       <div class="creds">
         <div class="cred rv"><p class="k">Mountaineering</p><p class="v">NMA-certified<em>Nepal Mountaineering Association</em></p></div>
         <div class="cred rv"><p class="k">Medical</p><p class="v">Wilderness First Responder<em>WFR-certified</em></p></div>
         <div class="cred rv"><p class="k">Summit record</p><p class="v">Multiple peaks<em>6,000 m+</em></p></div>
-      
       </div>
     </div>
-  </div>
-  <div class="wrap">
-      <div class="team-sub">
-        <div class="tcard">
-          <p class="av" aria-hidden="true">S</p>
-          <div>
-            <h3>Swapnil</h3>
-            <p class="tr">Your person, pre-arrival</p>
-            <p>From your first application call to the day you fly, Swapnil, alongside Deepak, is who you actually talk to. Gear questions at 11 pm, training doubts, the nervous week before departure. One name, not a ticket queue.</p>
-          </div>
-        </div>
-        <div class="tcard gold">
-          <p class="av" aria-hidden="true">P</p>
-          <div>
-            <h3>Trip leaders, like Pravin</h3>
-            <p class="tr">On the trek, every day</p>
-            <p>Each cohort walks with a dedicated trip leader. Pravin sets the pace, reads the group, watches the weather above MBC, and knows every teahouse kitchen by first name. Your six weeks of notes are in his pocket before you land.</p>
-          </div>
-        </div>
-      </div>
   </div>
 </section>
 
@@ -1105,12 +1289,12 @@ footer{padding:2.2rem 0;border-top:1px solid var(--line);background:var(--ink-1)
     <p class="lede rv" style="margin-top:1.4rem">Everything you would otherwise dig through a dozen pages for: costs, kit, getting there, the fine print. Pick a tab.</p>
     <div class="gtk-wrap rv">
       <div class="gtk-tabs" role="tablist" aria-label="Practical detail">
-        <button class="gtab" role="tab" aria-selected="true" data-tab="reach" id="gt-reach">Getting there</button>
-        <button class="gtab" role="tab" aria-selected="false" data-tab="cost" id="gt-cost">What's included</button>
-        <button class="gtab" role="tab" aria-selected="false" data-tab="pack" id="gt-pack">What to pack</button>
-        <button class="gtab" role="tab" aria-selected="false" data-tab="cancel" id="gt-cancel">Cancellation</button>
-        <button class="gtab" role="tab" aria-selected="false" data-tab="links" id="gt-links">Permits &amp; links</button>
-        <button class="gtab" role="tab" aria-selected="false" data-tab="faq" id="gt-faq">Questions</button>
+        <button class="gtab" role="tab" aria-selected="true" data-tab="reach" id="gt-reach"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>Getting there</button>
+        <button class="gtab" role="tab" aria-selected="false" data-tab="cost" id="gt-cost"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05"/><path d="M12 22.08V12"/></svg>What's included</button>
+        <button class="gtab" role="tab" aria-selected="false" data-tab="pack" id="gt-pack"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M8 21v-5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v5"/><path d="M8 11h8"/></svg>What to pack</button>
+        <button class="gtab" role="tab" aria-selected="false" data-tab="cancel" id="gt-cancel"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M8 2v4"/><path d="M16 2v4"/><path d="m10 14 4 4"/><path d="m14 14-4 4"/></svg>Cancellation</button>
+        <button class="gtab" role="tab" aria-selected="false" data-tab="links" id="gt-links"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>Permits &amp; links</button>
+        <button class="gtab" role="tab" aria-selected="false" data-tab="faq" id="gt-faq"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>Questions</button>
       </div>
       <div class="gtk-panels">
         <!-- GETTING THERE -->
@@ -1125,7 +1309,7 @@ footer{padding:2.2rem 0;border-top:1px solid var(--line);background:var(--ink-1)
         </div>
         <!-- COST -->
         <div class="gpanel" data-panel="cost" role="tabpanel" aria-labelledby="gt-cost" hidden>
-          <p class="gprice"><span>From</span>$400<small>per person · twin-share</small></p>
+          <p class="gprice"><span>From</span>$469.00<small>per person · twin-share</small></p>
           <div class="cost-cols">
             <div class="cost-col inc">
               <h4>Included</h4>
@@ -1238,127 +1422,333 @@ footer{padding:2.2rem 0;border-top:1px solid var(--line);background:var(--ink-1)
 <!-- APPLY -->
 <section class="apply" id="apply" aria-label="Departures and application">
   <div class="wrap">
-    <p class="eyebrow">Reserve your place</p>
-    <h2 class="h2 rv">Pick a date. <em>The rest unfolds.</em></h2>
-    <p class="lede rv" style="margin-top:1.4rem">Departures run in the dry windows: late winter and post-monsoon. Each cohort caps at twelve. Choose one, and we take you from there, by hand.</p>
-    <div class="board-wrap rv">
-      <div class="board" id="board" role="group" aria-label="Scheduled departures board">
-        <div class="board-top">
-          <span class="bt-title">Departures</span>
-          <span class="bt-meta">Pokhara · ABC · cohort of 12</span>
-        </div>
-      </div>
-    </div>
-    <p class="board-hint">Tap an open departure to hold your place</p>
-    <div class="next rv" id="next" hidden aria-live="polite">
-      <div class="next-head">
-        <p class="next-sel">You're holding <strong id="nextDate">your cohort</strong></p>
-        <button class="next-clear" id="nextClear" type="button">change date</button>
-      </div>
-      <div class="next-actions">
-        <a class="nact primary" id="actPay" href="#reserve">
-          <span class="nai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18"/><circle cx="16.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></span>
-          <span class="nat"><b>Pay a deposit to hold it</b><small>25% now · balance after your first call</small></span>
-          <span class="naa" aria-hidden="true">→</span>
-        </a>
-        <button class="nact" id="actFaq" type="button">
-          <span class="nai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.3 9.2a2.7 2.7 0 0 1 5.1 1.1c0 1.8-2.4 2.2-2.4 3.7"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg></span>
-          <span class="nat"><b>Read the FAQ first</b><small>The practical questions, answered</small></span>
-          <span class="naa" aria-hidden="true">→</span>
-        </button>
-        <a class="nact wa" id="actWa" target="_blank" rel="noopener" href="https://wa.me/919258583023">
-          <span class="nai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4A8 8 0 1 1 8 18.6z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5.5 0 .9-.5.6-1l-1-1.4-1.6.6-1.8-1.8.6-1.6L10.5 8c-.5-.3-1 .1-1 .6z" fill="currentColor" stroke="none"/></svg></span>
-          <span class="nat"><b>Message us on WhatsApp</b><small>A real person, usually within minutes</small></span>
-          <span class="naa" aria-hidden="true">→</span>
-        </a>
-      </div>
-
-      <div class="headstart">
-        <p class="hs-eyebrow">While we get back to you</p>
-        <h3 class="hs-title">Get a head start on <em>call one.</em></h3>
-        <p class="hs-lede">Tell us where you're starting from. We'll have it in front of us when we talk, so the first call is about you, not a form.</p>
-        <form class="intake" id="intakeForm">
-          <div class="intake-fields">
-            <div class="field"><label for="iAlt">Highest altitude reached</label><input id="iAlt" name="altitude" placeholder="3,200 m, or none yet"></div>
-            <div class="field"><label for="iFit">Current weekly activity</label><input id="iFit" name="fitness" placeholder="run twice a week, gym, desk"></div>
-            <div class="field"><label for="iWalk">Comfortable walk today</label><input id="iWalk" name="walk" placeholder="2 hours, 5 km, not sure"></div>
-          </div>
-          <button class="btn" type="submit" style="justify-content:center">Save for my call →</button>
-          <p class="intake-ok" id="intakeOk">Saved. You're set for call one — we'll pick up right where this leaves off.</p>
-        </form>
-
-        <div class="hs-sep">
-          <p class="hs-eyebrow">What comes after</p>
-          <h3 class="hs-title">Your journey, <em>call by call.</em></h3>
-          <p class="hs-lede">From the first hello to the handover in Pokhara. Tap any step to see what it covers.</p>
-          <div class="prep">
-            <div class="prep-track" role="tablist" aria-label="The weeks ahead" id="prepTrack">
-              <div class="pfill" id="pfill"></div>
-              <button class="pw" role="tab" aria-selected="true" data-i="0"><i></i><span class="wl">W−6</span></button>
-              <button class="pw" role="tab" aria-selected="false" data-i="1"><i></i><span class="wl">W−5</span></button>
-              <button class="pw" role="tab" aria-selected="false" data-i="2"><i></i><span class="wl">W−4</span></button>
-              <button class="pw" role="tab" aria-selected="false" data-i="3"><i></i><span class="wl">W−3</span></button>
-              <button class="pw" role="tab" aria-selected="false" data-i="4"><i></i><span class="wl">W−2</span></button>
-              <button class="pw" role="tab" aria-selected="false" data-i="5"><i></i><span class="wl">W−1</span></button>
-              <button class="pw" role="tab" aria-selected="false" data-i="6"><i></i><span class="wl">FLY</span></button>
+    <h2 class="h2 rv board-title">Pick a date, <em>or shape your own.</em></h2>
+    <div class="choose-grid">
+      <div class="choose-col rv">
+        <p class="choose-lbl">Fixed departures</p>
+        <div class="board-wrap">
+          <div class="board" id="board" role="group" aria-label="Upcoming departures board">
+            <div class="board-top">
+              <span class="bt-title">Upcoming departures</span>
+              <span class="bt-meta">Pokhara · ABC · cohort of 12</span>
             </div>
-            <div class="prep-card" id="prepCard" aria-live="polite">
-              <p class="big" id="pcBig">W−6<small id="pcStage">Apply &amp; talk</small></p>
-              <div>
-                <h3 id="pcTitle">A call, by name, <em>within days.</em></h3>
-                <p id="pcBody">You apply. We schedule a video call with Swapnil and Deepak, not a bot, not an auto-reply. We talk about the trek, about you, about whether the fit is right both ways.</p>
-                <div class="tags" id="pcTags"><span>Real conversation</span><span>Fit, both ways</span></div>
+          </div>
+        </div>
+        <p class="board-hint">Tap an open departure to hold your place</p>
+      </div>
+      <div class="choose-col rv">
+        <p class="choose-lbl">Private &amp; bespoke</p>
+        <div class="custom-card" id="customCard" aria-pressed="false" role="group" aria-label="Design a custom private journey">
+          <span class="cc-top">
+            <span class="cc-eyebrow">Private journey</span>
+            <span class="cc-badge">Bonus</span>
+          </span>
+          <span class="cc-title">Shape your own <em>trail.</em></span>
+          <span class="cc-lede">A private departure built with an experience leader — for you, your family, or a small group of your own. Flexible dates, days and added experiences.</span>
+          <div class="cc-pickers">
+            <div class="nb-field">
+              <span>Travellers</span>
+              <div class="nb-stepper">
+                <button type="button" id="ccMinus" aria-label="Fewer travellers">−</button>
+                <input id="ccQty" type="number" inputmode="numeric" min="1" max="16" value="2" aria-label="Number of travellers">
+                <button type="button" id="ccPlus" aria-label="More travellers">+</button>
               </div>
             </div>
+            <div class="nb-field">
+              <span>Approx. month</span>
+              <select id="ccMonth" class="nb-select" aria-label="Approximate month of travel">
+                <option value="Flexible dates">Flexible / not sure</option>
+                <option>Oct 2026</option>
+                <option>Nov 2026</option>
+                <option>Dec 2026</option>
+                <option>Feb 2027</option>
+                <option>Mar 2027</option>
+                <option>Apr 2027</option>
+                <option>Oct 2027</option>
+              </select>
+            </div>
           </div>
+          <button class="cc-go" id="ccGo" type="button">Shape my journey <span aria-hidden="true">→</span></button>
         </div>
       </div>
     </div>
 
-    <div class="apply-grid" id="reserve" style="grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)">
-      <div class="rv">
-        <h3 style="font-weight:480;font-size:1.6rem;letter-spacing:-.014em">Hold your place <em>with a deposit.</em></h3>
-        <p style="margin-top:1rem;color:var(--bone-2);max-width:46ch">A 25% deposit reserves your spot in the cohort of twelve. The balance is due only after your first call, once the fit is right both ways. Cancel within seven days for a full refund.</p>
+    <div class="reserve-wrap" id="reserveWrap" hidden aria-live="polite">
+      <div class="selstrip">
+        <p class="sel-hold">Holding <strong id="selHold">—</strong><button class="sel-change" id="selChange" type="button">change</button></p>
       </div>
-      <form class="app" id="appForm" novalidate>
-        <h3 style="font-weight:480;font-size:1.45rem">Reserve <em>your place.</em></h3>
-        <p class="sel" id="selDate">No date selected</p>
-        <div class="field"><label for="fName">Full name</label><input id="fName" name="name" autocomplete="name" required></div>
-        <div class="field"><label for="fEmail">Email</label><input id="fEmail" type="email" name="email" autocomplete="email" required></div>
-        <div class="field"><label for="fPhone">Phone (with country code)</label><input id="fPhone" type="tel" name="phone" autocomplete="tel"></div>
-        <div class="field"><label for="fExp">Trekking / altitude experience</label>
-          <select id="fExp" name="experience" required>
-            <option value="">Choose one…</option>
-            <option>None · first multi-day trek</option>
-            <option>Some · done day hikes, light multi-day</option>
-            <option>Comfortable · multiple treks, some altitude</option>
-            <option>Experienced · regular at 4,000 m+</option>
-          </select></div>
-        <div class="field"><label for="fMsg">Anything you want us to know</label><textarea id="fMsg" name="message"></textarea></div>
-        <p class="fine">We confirm by hand and send your secure deposit link within one business day. No charge is taken on this page.</p>
-        <button class="btn btn--solid" type="submit" style="justify-content:center">Request deposit link →</button>
-        <div class="ok">
-          <h4>Reservation request received.</h4>
-          <p>We'll send your deposit link and your first-call invite within one business day, from <em>hello@totemtou.com</em>.</p>
+
+      <div class="apply-grid" id="reserve">
+        <div>
+          <h3 id="reserveTitle" style="font-weight:480;font-size:1.6rem;letter-spacing:-.014em">Reserve <em>your place.</em></h3>
+          <p id="reserveCopy" style="margin-top:1rem;color:var(--bone-2);max-width:46ch">One seat in a cohort of twelve. Pay in full to confirm — checkout takes about two minutes, and you're set. Cancel within seven days for a full refund; see the cancellation terms in the details above.</p>
         </div>
-      </form>
+        <aside class="bcard" aria-label="Booking summary">
+          <div class="bcard-head">
+            <p class="bcard-eyebrow" id="bcardEyebrow">Annapurna Base Camp · 7 days</p>
+            <div class="bcard-icons">
+              <button class="sel-ic sel-ic--sm" id="actFaq" type="button" aria-label="Read the FAQ" title="Read the FAQ">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.3 9.2a2.7 2.7 0 0 1 5.1 1.1c0 1.8-2.4 2.2-2.4 3.7"/><circle cx="12" cy="17" r=".6" fill="currentColor" stroke="none"/></svg>
+              </button>
+              <a class="sel-ic sel-ic--sm wa" id="actWa" target="_blank" rel="noopener" href="https://wa.me/919258583023" aria-label="Message us on WhatsApp" title="Message us on WhatsApp">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4A8 8 0 1 1 8 18.6z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5.5 0 .9-.5.6-1l-1-1.4-1.6.6-1.8-1.8.6-1.6L10.5 8c-.5-.3-1 .1-1 .6z" fill="currentColor" stroke="none"/></svg>
+              </a>
+            </div>
+          </div>
+          <p class="bcard-approx" id="bcardApprox" hidden>Approximate</p>
+          <div class="bcard-priceline">
+            <div class="bcard-price">
+              <span class="bcard-amt" id="bcardAmt">₹44,555</span>
+              <span class="bcard-unit" id="bcardUnit">per person</span>
+            </div>
+            <div class="cur-toggle" role="group" aria-label="Currency">
+              <button type="button" data-cur="INR" class="on">INR</button>
+              <button type="button" data-cur="USD">USD</button>
+            </div>
+          </div>
+          <p class="bcard-inr" id="bcardInr">≈ $469.00 · +5% GST at checkout</p>
+          <button class="btn btn--solid bcard-cta" id="bookNow" type="button" style="justify-content:center;width:100%">Book now →</button>
+          <p class="bcard-fine">Secure payment via Razorpay. Phone verification keeps your seat tied to you.</p>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO TESTIMONIALS -->
+<section class="voices" id="voices" aria-label="Video testimonials">
+  <div class="wrap">
+    <div class="voices-head">
+      <p class="eyebrow">Voices from the trail</p>
+      <h2 class="h2 rv">What they <em>carried back.</em></h2>
+      <p class="lede rv" style="margin-top:1.2rem">Not reviews. Short films from people who walked it — the morning at base camp, the hot springs, the cohort that stopped being strangers.</p>
+    </div>
+    <div class="voice-grid rv">
+      <a class="voice" href="https://www.youtube.com/playlist?list=PL-totemtou-abc" target="_blank" rel="noopener">
+        <span class="voice-thumb"><img src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg" alt="" loading="lazy"><span class="voice-play"><span aria-hidden="true">▶</span></span><span class="voice-dur">2:14</span></span>
+        <span class="voice-body">
+          <span class="voice-q">“I'd never been past 3,000 m. The six weeks before mattered as much as the trail.”</span>
+          <span class="voice-who"><b>Ananya</b> · Bengaluru · Feb 2026</span>
+        </span>
+      </a>
+      <a class="voice" href="https://www.youtube.com/playlist?list=PL-totemtou-abc" target="_blank" rel="noopener">
+        <span class="voice-thumb"><img src="https://storage.zopuai.com/converted/user-UOPJ.webp" alt="" loading="lazy"><span class="voice-play"><span aria-hidden="true">▶</span></span><span class="voice-dur">3:02</span></span>
+        <span class="voice-body">
+          <span class="voice-q">“Machhapuchhre at first light. Nobody said a word for ten minutes.”</span>
+          <span class="voice-who"><b>Rohan &amp; Meera</b> · Mumbai · Mar 2026</span>
+        </span>
+      </a>
+      <a class="voice" href="https://www.youtube.com/playlist?list=PL-totemtou-abc" target="_blank" rel="noopener">
+        <span class="voice-thumb"><img src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg" alt="" loading="lazy"><span class="voice-play"><span aria-hidden="true">▶</span></span><span class="voice-dur">1:48</span></span>
+        <span class="voice-body">
+          <span class="voice-q">“Small group, real guides. It felt like walking with friends who knew the mountain.”</span>
+          <span class="voice-who"><b>Devika</b> · Delhi · Nov 2025</span>
+        </span>
+      </a>
+    </div>
+    <div class="voices-more">
+      <a class="btn" href="https://www.youtube.com/playlist?list=PL-totemtou-abc" target="_blank" rel="noopener">Watch the full playlist <span aria-hidden="true">→</span></a>
+      <span class="mono">Totemtou on YouTube</span>
     </div>
   </div>
 </section>
 </main>
 
-<div class="price">
-  <div class="wrap price-in">
-    <div>
-      <p class="mono" style="margin-bottom:.6rem">From</p>
-      <p class="amt">$400 <small>per person</small></p>
-      <p class="inc">Includes all stays, meals, transport from Pokhara, permits, guide and porter, travel insurance and the medical kit on the trail. International flights, beverages, tips and 5% GST sit outside.</p>
+<!-- STICKY BOOKING BAR -->
+<div class="bookbar" id="bookbar" aria-hidden="true">
+  <div class="wrap bookbar-in">
+    <div class="bookbar-info">
+      <p class="bookbar-name">Annapurna Base Camp <span>· 7 days</span></p>
+      <p class="bookbar-meta"><span class="bookbar-price" id="barPrice">₹44,555</span><span class="bookbar-unit">/ person</span></p>
     </div>
-    <p class="tag">Annapurna Base Camp · 7 days · Walk the Land<br>Departures · Feb · Mar · Oct · Nov</p>
+    <div class="bookbar-ctrls">
+      <div class="cur-toggle" id="curToggle" role="group" aria-label="Currency">
+        <button type="button" data-cur="INR" class="on">INR</button>
+        <button type="button" data-cur="USD">USD</button>
+      </div>
+      <div class="bar-dep">
+        <label class="sr-only" for="barDep">Choose departure</label>
+        <select id="barDep" aria-label="Choose departure"></select>
+      </div>
+      <button class="btn btn--solid bookbar-cta" id="bookbarCta" type="button">Book now →</button>
+    </div>
   </div>
 </div>
-<footer>
-  <div class="wrap foot-base"><span>© 2026 Totemtou Experiences</span><a href="index.html">← All journeys</a></div>
+
+<!-- BOOKING MODAL -->
+<div class="modal" id="bookModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="modal-scrim" data-close></div>
+  <div class="modal-panel" role="document">
+    <header class="modal-head">
+      <div class="modal-head-l">
+        <p class="modal-kicker">Annapurna Base Camp · 4,130 m</p>
+        <p class="modal-crumb" id="mCrumb">Step 1 of 4 · Your details</p>
+      </div>
+      <button class="modal-x" type="button" data-close aria-label="Close">✕</button>
+    </header>
+    <div class="modal-steps" id="mSteps" aria-hidden="true">
+      <span class="ms on" data-s="0">Details</span>
+      <span class="ms" data-s="1">Verify</span>
+      <span class="ms" data-s="2">Review</span>
+      <span class="ms" data-s="3">Pay</span>
+    </div>
+
+    <div class="modal-body">
+      <!-- STEP 0: details -->
+      <section class="mstep on" id="step0">
+        <h3 id="mTitle" class="mstep-h">Who's coming along?</h3>
+        <p class="mstep-sub" id="mDepLine">Departure · <b>—</b></p>
+        <div class="mfield"><label for="mName">Full name</label><input id="mName" autocomplete="name" placeholder="As on your passport"></div>
+        <div class="mfield"><label for="mEmail">Email</label><input id="mEmail" type="email" autocomplete="email" placeholder="you@email.com"></div>
+        <div class="mfield mfield-phone">
+          <label for="mPhone">Mobile number</label>
+          <div class="phone-row">
+            <select id="mCc" aria-label="Country code"><option>+91</option><option>+1</option><option>+44</option><option>+61</option><option>+971</option><option>+65</option></select>
+            <input id="mPhone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="98765 43210">
+          </div>
+        </div>
+        <div class="mtravellers">
+          <span class="mt-label">Travellers</span>
+          <div class="stepper">
+            <button type="button" class="stp" id="mQtyMinus" aria-label="Fewer travellers">−</button>
+            <span id="mQty">1</span>
+            <button type="button" class="stp" id="mQtyPlus" aria-label="More travellers">+</button>
+          </div>
+        </div>
+        <p class="mstep-err" id="err0"></p>
+        <button class="btn btn--solid mnext" id="toVerify" type="button" style="justify-content:center;width:100%">Send verification code →</button>
+        <p class="mstep-fine">We'll text a 6-digit code to verify your number and create your booking account.</p>
+      </section>
+
+      <!-- STEP 1: OTP -->
+      <section class="mstep" id="step1">
+        <h3 class="mstep-h">Verify your number</h3>
+        <p class="mstep-sub">We sent a 6-digit code to <b id="otpTo">your phone</b>. <button type="button" class="linkbtn" id="editPhone">Edit</button></p>
+        <div class="otp" id="otpInputs">
+          <input class="otp-d" maxlength="1" inputmode="numeric" aria-label="Digit 1">
+          <input class="otp-d" maxlength="1" inputmode="numeric" aria-label="Digit 2">
+          <input class="otp-d" maxlength="1" inputmode="numeric" aria-label="Digit 3">
+          <input class="otp-d" maxlength="1" inputmode="numeric" aria-label="Digit 4">
+          <input class="otp-d" maxlength="1" inputmode="numeric" aria-label="Digit 5">
+          <input class="otp-d" maxlength="1" inputmode="numeric" aria-label="Digit 6">
+        </div>
+        <p class="otp-demo">Demo code · <b id="otpDemo">000000</b> — autofilled for you</p>
+        <p class="mstep-err" id="err1"></p>
+        <button class="btn btn--solid mnext" id="toReview" type="button" style="justify-content:center;width:100%">Verify &amp; continue →</button>
+        <p class="mstep-fine"><span id="otpTimer">Resend code in 0:30</span></p>
+      </section>
+
+      <!-- STEP 2: review / confirmation -->
+      <section class="mstep" id="step2">
+        <h3 class="mstep-h">Review your booking</h3>
+        <div class="review">
+          <div class="rv-hero">
+            <div class="rv-hero-txt">
+              <p class="rv-trip">Annapurna Base Camp</p>
+              <p class="rv-tag">Walk the Land · 7 days · cohort of 12</p>
+            </div>
+            <span class="rv-verified" id="rvVerified">✓ Verified</span>
+          </div>
+          <dl class="rv-rows">
+            <div class="rv-r"><dt>Departure</dt><dd id="rvDep">—</dd></div>
+            <div class="rv-r"><dt>Lead traveller</dt><dd id="rvName">—</dd></div>
+            <div class="rv-r"><dt>Contact</dt><dd id="rvContact">—</dd></div>
+            <div class="rv-r"><dt>Travellers</dt><dd id="rvQty">1</dd></div>
+          </dl>
+          <div class="rv-bill">
+            <div class="rv-b"><span id="rvUnitLine">₹44,555 × 1 traveller</span><span id="rvSub">₹44,555</span></div>
+            <div class="rv-b"><span>GST (5%)</span><span id="rvGst">₹2,228</span></div>
+            <div class="rv-b rv-total"><span id="rvTotalLabel">Total due now</span><span id="rvTotal">₹46,783</span></div>
+            <p class="rv-inr" id="rvInr">≈ $492.45</p>
+          </div>
+        </div>
+        <label class="rv-agree"><input type="checkbox" id="rvTerms"><span>I've read the cancellation terms and agree to pay in full to confirm my seat.</span></label>
+        <p class="mstep-err" id="err2"></p>
+        <button class="btn btn--solid mnext" id="toPay" type="button" style="justify-content:center;width:100%">Confirm and pay →</button>
+      </section>
+
+      <!-- STEP 3: razorpay mock -->
+      <section class="mstep" id="step3">
+        <div class="rzp">
+          <div class="rzp-head">
+            <span class="rzp-logo"><span class="rzp-r">Razorpay</span></span>
+            <span class="rzp-secure">🔒 Secured</span>
+          </div>
+          <div class="rzp-merchant">
+            <div class="rzp-mlogo">T</div>
+            <div>
+              <p class="rzp-mname">Totemtou Experiences</p>
+              <p class="rzp-mamt">Paying <b id="rzpAmt">₹46,783</b></p>
+            </div>
+          </div>
+          <p class="rzp-label">Choose a payment method</p>
+          <div class="rzp-methods" id="rzpMethods">
+            <button type="button" class="rzp-m" data-m="upi"><span class="rzp-mi">▣</span><span class="rzp-mt"><b>UPI</b><small>GPay, PhonePe, Paytm &amp; more</small></span><span class="rzp-mc"></span></button>
+            <button type="button" class="rzp-m" data-m="card"><span class="rzp-mi">▭</span><span class="rzp-mt"><b>Cards</b><small>Visa, Mastercard, RuPay, Amex</small></span><span class="rzp-mc"></span></button>
+            <button type="button" class="rzp-m" data-m="nb"><span class="rzp-mi">🏛</span><span class="rzp-mt"><b>Netbanking</b><small>All major banks</small></span><span class="rzp-mc"></span></button>
+            <button type="button" class="rzp-m" data-m="wallet"><span class="rzp-mi">◉</span><span class="rzp-mt"><b>Wallets</b><small>Amazon Pay, Mobikwik, Freecharge</small></span><span class="rzp-mc"></span></button>
+          </div>
+          <button class="rzp-pay" id="rzpPay" type="button" disabled>Select a method to pay</button>
+          <p class="rzp-foot">Demo checkout · no real payment is processed</p>
+        </div>
+      </section>
+
+      <!-- STEP 4: success -->
+      <section class="mstep" id="step4">
+        <div class="done">
+          <div class="done-tick" aria-hidden="true"><svg viewBox="0 0 52 52"><circle class="dt-c" cx="26" cy="26" r="24" fill="none"/><path class="dt-p" fill="none" d="M14 27l8 8 16-18"/></svg></div>
+          <h3 class="done-h">You're on the trail.</h3>
+          <p class="done-sub">Your seat on the <b id="doneDep">—</b> cohort is confirmed. A receipt and your first-call invite are on the way to <b id="doneEmail">your email</b>.</p>
+          <div class="done-ref"><span>Booking reference</span><b id="doneRef">TT–ABC–000000</b></div>
+          <button class="btn btn--solid" type="button" data-close style="justify-content:center">Done</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="fbrand" href="index.html"><img src="https://storage.zopuai.com/converted/user-OJXX.webp" alt="" width="32" height="32" aria-hidden="true">Totemtou</a>
+        <p class="foot-tag">Walking journeys through the Himalaya, led by the people who call it home. Small cohorts, tested routes, nothing left to chance.</p>
+        <div class="foot-social">
+          <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://youtube.com" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="6" width="19" height="12" rx="3.5"/><path d="M10 9.2l5 2.8-5 2.8z" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://wa.me/919258583023" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1.4-4A8 8 0 1 1 8 18.6z"/></svg></a>
+          <a href="https://x.com" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 3h3l-6.6 7.5L21.8 21h-6l-4.3-5.6L6.5 21h-3l7-8-6.8-10h6.1l3.9 5.2zm-1 16h1.7L8.1 4.8H6.3z"/></svg></a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 17v-7" stroke-linecap="round"/></svg></a>
+        </div>
+      </div>
+      <nav class="foot-cols" aria-label="Footer">
+        <div class="foot-col">
+          <h4>Explore</h4>
+          <a href="index.html#journeys">All journeys</a>
+          <a href="#trail">The trail</a>
+          <a href="#days">The days</a>
+          <a href="#apply">Dates &amp; booking</a>
+        </div>
+        <div class="foot-col">
+          <h4>Company</h4>
+          <a href="index.html">About Totemtou</a>
+          <a href="#leader">Our leaders</a>
+          <a href="#details">Responsible travel</a>
+          <a href="#details">Terms &amp; cancellation</a>
+        </div>
+        <div class="foot-col">
+          <h4>Get in touch</h4>
+          <address>
+            Pokhara, Nepal · Bengaluru, India<br>
+            <a href="mailto:hello@totemtou.com">hello@totemtou.com</a><br>
+            <a href="https://wa.me/919258583023">+91 92585 83023</a><br>
+            Mon–Sat · 10:00–18:00 IST
+          </address>
+        </div>
+      </nav>
+    </div>
+    <div class="foot-base"><span>© 2026 Totemtou Experiences</span><a href="index.html">← All journeys</a></div>
+  </div>
 </footer>
 
 <svg id="bridge" aria-hidden="true" preserveAspectRatio="none">
@@ -1397,20 +1787,20 @@ document.querySelectorAll('video.seq').forEach(v=>{
 });
 
 /* ===== split-flap departures board ===== */
-const sel=document.getElementById('selDate');
-const nextBlock=document.getElementById('next'),nextDate=document.getElementById('nextDate'),actWa=document.getElementById('actWa');
 const WA_NUM='919258583023';
+const DEPARTURES=[
+  {f:'ABC 01',d:'11 OCT 26',w:'POST-MONSOON',s:'12',st:'OPEN',  date:'11 – 17 Oct 2026',short:'11 Oct 2026'},
+  {f:'ABC 02',d:'08 NOV 26',w:'CLEAR SKIES', s:'12',st:'OPEN',  date:'08 – 14 Nov 2026',short:'08 Nov 2026'},
+  {f:'-- --', d:'DEC – JAN', w:'WINTER SNOW', s:'--',st:'CLOSED'},
+  {f:'ABC 03',d:'22 FEB 27',w:'LATE WINTER', s:'12',st:'OPEN',  date:'22 – 28 Feb 2027',short:'22 Feb 2027'},
+  {f:'ABC 04',d:'15 MAR 27',w:'SPRING BLOOM',s:'12',st:'OPEN',  date:'15 – 21 Mar 2027',short:'15 Mar 2027'},
+  {f:'-- --', d:'APR – SEP', w:'MONSOON',     s:'--',st:'CLOSED'}
+];
+const OPEN_DEPS=DEPARTURES.filter(x=>x.st==='OPEN');
 const board=document.getElementById('board');
 if(board){
-  const DEPS=[
-    {f:'ABC 01',d:'11 OCT 26',w:'POST-MONSOON',s:'12',st:'OPEN',  date:'11 – 17 Oct 2026'},
-    {f:'ABC 02',d:'08 NOV 26',w:'CLEAR SKIES', s:'12',st:'OPEN',  date:'08 – 14 Nov 2026'},
-    {f:'-- --', d:'DEC – JAN', w:'WINTER SNOW', s:'--',st:'CLOSED'},
-    {f:'ABC 03',d:'22 FEB 27',w:'LATE WINTER', s:'12',st:'OPEN',  date:'22 – 28 Feb 2027'},
-    {f:'ABC 04',d:'15 MAR 27',w:'SPRING BLOOM',s:'12',st:'OPEN',  date:'15 – 21 Mar 2027'},
-    {f:'-- --', d:'APR – SEP', w:'MONSOON',     s:'--',st:'CLOSED'}
-  ];
-  const COLS=[{k:'f',n:6,label:'Flight'},{k:'d',n:9,label:'Departs',cls:'flap--amber'},{k:'w',n:12,label:'Window'},{k:'s',n:2,label:'Seats'},{k:'st',n:6,label:'Status'}];
+  const DEPS=DEPARTURES;
+  const COLS=[{k:'d',n:9,label:'Departs',cls:'flap--amber'},{k:'w',n:12,label:'Window'},{k:'s',n:2,label:'Seats'}];
   const head=document.createElement('div');head.className='dep dep--head';
   COLS.forEach(c=>{const hl=document.createElement('div');hl.className='hl';hl.style.setProperty('--n',c.n);hl.textContent=c.label;head.appendChild(hl)});
   board.appendChild(head);
@@ -1457,37 +1847,30 @@ if(board){
     }),{threshold:.25});
     bio.observe(board);
   }
-  /* select an open departure → reveal next steps */
+  /* select an open departure → reveal reserve */
   board.addEventListener('click',e=>{
     const row=e.target.closest('.dep--row[data-date]');if(!row)return;
-    board.querySelectorAll('.dep--row').forEach(x=>x.setAttribute('aria-pressed','false'));
-    row.setAttribute('aria-pressed','true');
-    const d=row.dataset.date;
-    if(sel)sel.textContent='Reserving · '+d;
-    if(nextDate)nextDate.textContent=d;
-    if(actWa)actWa.href='https://wa.me/'+WA_NUM+'?text='+encodeURIComponent("Hi Totemtou, I'm holding the "+d+" Annapurna Base Camp cohort and have a couple of questions.");
-    if(nextBlock){nextBlock.hidden=false;nextBlock.scrollIntoView({behavior:'smooth',block:'start'})}
+    Booking.select(row.dataset.date,{reveal:true});
   });
 }
+/* custom-journey pickers (neobrutalism) */
+const ccQty=document.getElementById('ccQty'),ccMonth=document.getElementById('ccMonth');
+function clampQty(){let v=parseInt(ccQty.value,10);if(isNaN(v))v=1;v=Math.max(1,Math.min(16,v));ccQty.value=v;return v;}
+const ccMinus=document.getElementById('ccMinus'),ccPlus=document.getElementById('ccPlus');
+if(ccMinus)ccMinus.addEventListener('click',()=>{ccQty.value=Math.max(1,clampQty()-1);});
+if(ccPlus)ccPlus.addEventListener('click',()=>{ccQty.value=Math.min(16,clampQty()+1);});
+if(ccQty)ccQty.addEventListener('change',clampQty);
+const ccGo=document.getElementById('ccGo');
+if(ccGo)ccGo.addEventListener('click',()=>Booking.select('__custom__',{reveal:true,qty:clampQty(),month:ccMonth?ccMonth.value:''}));
 const actFaq=document.getElementById('actFaq');
 if(actFaq)actFaq.addEventListener('click',()=>{
   const t=document.querySelector('.gtab[data-tab="faq"]');if(t)t.click();
   document.getElementById('details').scrollIntoView({behavior:'smooth',block:'start'});
 });
-const actPay=document.getElementById('actPay');
-if(actPay)actPay.addEventListener('click',e=>{
-  e.preventDefault();
-  document.getElementById('reserve').scrollIntoView({behavior:'smooth',block:'center'});
-});
-const nextClear=document.getElementById('nextClear');
-if(nextClear)nextClear.addEventListener('click',()=>{
-  document.querySelectorAll('.dep--row').forEach(x=>x.setAttribute('aria-pressed','false'));
-  if(nextBlock)nextBlock.hidden=true;
-  if(sel)sel.textContent='No date selected';
+const selChange=document.getElementById('selChange');
+if(selChange)selChange.addEventListener('click',()=>{
   document.getElementById('apply').scrollIntoView({behavior:'smooth',block:'start'});
 });
-const intakeForm=document.getElementById('intakeForm');
-if(intakeForm)intakeForm.addEventListener('submit',e=>{e.preventDefault();intakeForm.classList.add('saved');});
 
 /* ===== continuous journey spine + HUD + day nav ===== */
 const dayMeta={
@@ -1621,49 +2004,226 @@ function journeyTick(){
 }
 function onJourneyScroll(){if(!jRaf)jRaf=requestAnimationFrame(journeyTick)}
 
-/* ===== six-week prep infographic ===== */
-const prepData=[
- {w:'W−6',stage:'Apply & talk',t:'A call, by name, <em>within days.</em>',b:'You apply. We schedule a video call with Swapnil and Deepak, not a bot, not an auto-reply. We talk about the trek, about you, about whether the fit is right both ways.',tags:['Real conversation','Fit, both ways']},
- {w:'W−5',stage:'Confirm the cohort',t:'The circle <em>opens.</em>',b:'If we go ahead, you join the group. The WhatsApp circle opens as soon as the first two or three are in. Early signups become informal hosts for later joiners.',tags:['Cohort caps at 12','WhatsApp circle']},
- {w:'W−4',stage:'Health & fitness intake',t:'We learn <em>your baseline.</em>',b:'A structured intake: altitude history, medical flags, current fitness, what you can comfortably do today. No judgement, just calibration. Everything you tell us shapes the next four weeks.',tags:['Altitude history','Medical flags','Baseline']},
- {w:'W−3',stage:'Training & gear',t:'A plan for <em>your body,</em> a list for your pack.',b:'A week-by-week training plan built off your intake, and a personalised gear list: what to buy, what to rent in Pokhara, what to leave behind. Stairs become a tool.',tags:['Training plan','Personalised gear list']},
- {w:'W−2',stage:'Group check-ins',t:'The cohort <em>meets itself.</em>',b:'Weekly group calls. Questions get answered before they become worries, and the people you will walk with stop being strangers two weeks before the trail.',tags:['Weekly calls','Questions answered']},
- {w:'W−1',stage:'Logistics briefing',t:'The practical <em>knowledge.</em>',b:'Permits, transfers, domestic flights, teahouse etiquette, tipping, trail-day expectations. The knowledge that separates a confident traveller from an anxious one.',tags:['Permits','Transfers','Teahouse etiquette']},
- {w:'FLY',stage:'On the ground',t:'Handed over, <em>in person.</em>',b:'Every intake, flag, and note from six weeks of conversation is handed to your trip leader, Pravin and the guide team, before you land. They know who has been to altitude, who is nervous, who is quietly experienced.',tags:['Handover to trip leader','Pokhara · day 0']}
-];
-const pws=[...document.querySelectorAll('.pw')],pfill=document.getElementById('pfill'),
-pcBig=document.getElementById('pcBig'),pcStage=document.getElementById('pcStage'),
-pcTitle=document.getElementById('pcTitle'),pcBody=document.getElementById('pcBody'),
-pcTags=document.getElementById('pcTags'),pcCard=document.getElementById('prepCard');
-let prepIdx=0,prepAuto=null;
-function setPrep(i,user){
-  prepIdx=i;const d=prepData[i];
-  pws.forEach((b,k)=>{b.setAttribute('aria-selected',k===i?'true':'false');b.classList.toggle('done',k<i)});
-  if(pfill)pfill.style.width=(i/(prepData.length-1)*(100-100/7))+'%';
-  pcBig.firstChild.textContent=d.w;pcStage.textContent=d.stage;
-  pcTitle.innerHTML=d.t;pcBody.textContent=d.b;
-  pcTags.innerHTML=d.tags.map(t=>'<span>'+t+'</span>').join('');
-  pcCard.classList.toggle('gold',i===prepData.length-1);
-  pcCard.classList.remove('pc-fade');void pcCard.offsetWidth;pcCard.classList.add('pc-fade');
-  if(user&&prepAuto){clearInterval(prepAuto);prepAuto=null}
-}
-if(pws.length){
-  pws.forEach(b=>b.addEventListener('click',()=>setPrep(+b.dataset.i,true)));
-  const pio=new IntersectionObserver(es=>es.forEach(e=>{
-    if(e.isIntersecting&&!prepAuto&&prepIdx===0){
-      prepAuto=setInterval(()=>{if(prepIdx>=prepData.length-1){clearInterval(prepAuto);prepAuto=null;return}setPrep(prepIdx+1,false)},2600);
-    }
-  }),{threshold:.5});
-  pio.observe(document.getElementById('prepTrack'));
-}
+/* ===== booking flow (front-end simulation) ===== */
+const Booking=(function(){
+  const USD=469, RATE=95, GST=0.05, CUSTOM='__custom__';
+  /* group-size pricing (USD per person) — smaller private groups pay more */
+  const TIER={1:750,2:675,3:625,4:599,5:569,6:539,7:499,8:469};
+  const tierUSD=n=>n<=1?TIER[1]:(n>=8?TIER[8]:TIER[n]);
+  const modal=document.getElementById('bookModal');
+  const $=id=>document.getElementById(id);
+  const steps=[...document.querySelectorAll('.mstep')];
+  const stepPips=[...document.querySelectorAll('#mSteps .ms')];
+  const crumbLabels=['Your details','Verify phone','Review','Payment','Confirmed'];
+  const bookbar=$('bookbar'), barPrice=$('barPrice'), barDep=$('barDep');
+  const curBtns=[...document.querySelectorAll('.cur-toggle button')];
+  const bcardAmt=$('bcardAmt'), bcardUnit=$('bcardUnit'), bcardInr=$('bcardInr'), bcardEyebrow=$('bcardEyebrow'), bcardApprox=$('bcardApprox');
+  const reserveWrap=$('reserveWrap'), selHold=$('selHold'), reserveTitle=$('reserveTitle'), reserveCopy=$('reserveCopy'), bookNowBtn=$('bookNow'), actWa=$('actWa');
+  let date=OPEN_DEPS[0].date, currency='INR', cur=0, qty=1, customQty=2, customMonth='Flexible dates', otpTimer=null, lastFocus=null, barSync=null;
 
-/* application form (front-end only) */
-const form=document.getElementById('appForm');
-form.addEventListener('submit',e=>{
-  e.preventDefault();
-  if(!form.reportValidity())return;
-  form.classList.add('sent');
-});
+  const money=(n,c)=>c==='USD'?'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):'₹'+Math.round(n).toLocaleString('en-IN');
+  const fmtINR=n=>money(n,'INR');
+  const isCustom=()=>date===CUSTOM;
+  /* per person on the card/bar: private uses the picker group size, fixed uses the cohort rate */
+  const cardPerUSD=()=>isCustom()?tierUSD(customQty):USD;
+  const totals=()=>{const perU=isCustom()?tierUSD(qty):USD;const subU=perU*qty,gstU=subU*GST,totU=subU+gstU;return{perU,subU,gstU,totU,subI:subU*RATE,gstI:gstU*RATE,totI:totU*RATE};};
+
+  function renderPrices(){
+    const perU=cardPerUSD(), perI=perU*RATE;
+    const pStr=money(currency==='INR'?perI:perU,currency);
+    const aStr=money(currency==='INR'?perU:perI,currency==='INR'?'USD':'INR');
+    if(barPrice)barPrice.textContent=(isCustom()?'approx. ':'')+pStr;
+    if(bcardAmt)bcardAmt.textContent=pStr;
+    if(bcardApprox)bcardApprox.hidden=!isCustom();
+    if(bcardUnit)bcardUnit.textContent='per person';
+    if(bcardInr)bcardInr.textContent='≈ '+aStr+' · +5% GST at checkout';
+    curBtns.forEach(b=>b.classList.toggle('on',b.dataset.cur===currency));
+  }
+  const trav=n=>n+(n>1?' travellers':' traveller');
+  function renderSelection(){
+    const c=isCustom();
+    if(selHold)selHold.textContent=c?('a custom journey · '+trav(customQty)+' · '+customMonth):date;
+    if(reserveTitle)reserveTitle.innerHTML=c?'Design <em>your journey.</em>':'Reserve <em>your place.</em>';
+    if(reserveCopy)reserveCopy.textContent=c
+      ?"A private departure shaped with your experience leader — your dates, your pace, your people. Start here and we build the rest together on a call."
+      :"One seat in a cohort of twelve. Pay in full to confirm — checkout takes about two minutes, and you're set. Cancel within seven days for a full refund; see the cancellation terms in the details above.";
+    if(bcardEyebrow)bcardEyebrow.textContent=c?('Private journey · '+customMonth):'Annapurna Base Camp · 7 days';
+    if(bookNowBtn)bookNowBtn.textContent=(c?'Start planning ':'Book now ')+'→';
+  }
+  function updateWa(){
+    if(!actWa)return;
+    const msg=isCustom()
+      ?("Hi Totemtou, I'd like to design a custom private Annapurna Base Camp journey — "+trav(customQty)+", approx "+customMonth+".")
+      :"Hi Totemtou, I'm holding the "+date+" Annapurna Base Camp cohort and have a couple of questions.";
+    actWa.href='https://wa.me/'+WA_NUM+'?text='+encodeURIComponent(msg);
+  }
+  function reflectBoard(){
+    document.querySelectorAll('.dep--row').forEach(r=>r.setAttribute('aria-pressed',(!isCustom()&&r.dataset.date===date)?'true':'false'));
+    const cc=$('customCard');if(cc)cc.setAttribute('aria-pressed',isCustom()?'true':'false');
+    if(barDep)barDep.value=isCustom()?CUSTOM:date;
+  }
+  function select(d,opts){
+    opts=opts||{};date=d;
+    if(d===CUSTOM){if(opts.qty)customQty=opts.qty;if(opts.month)customMonth=opts.month;}
+    if(!opts.silent)reflectBoard();
+    updateWa();renderSelection();renderPrices();
+    if(opts.reveal&&reserveWrap){reserveWrap.hidden=false;reserveWrap.scrollIntoView({behavior:'smooth',block:'start'});}
+    if(barSync)barSync();
+  }
+  function setCurrency(c){
+    currency=c;renderPrices();
+    if(modal.classList.contains('open')){if(cur===2)fillReview();if(cur===3)fillPay();}
+  }
+
+  function go(i){
+    cur=i;
+    steps.forEach((s,k)=>s.classList.toggle('on',k===i));
+    stepPips.forEach((p,k)=>{p.classList.toggle('on',k===i);p.classList.toggle('done',k<i);});
+    const shown=Math.min(i,3);
+    $('mCrumb').textContent=(i<4?('Step '+(shown+1)+' of 4 · '):'')+crumbLabels[i];
+    $('mSteps').style.visibility=i>=4?'hidden':'visible';
+    modal.querySelector('.modal-body').scrollTop=0;
+    const focusEl=steps[i].querySelector('input,button.btn,.rzp-m,[data-close]');
+    if(focusEl)setTimeout(()=>focusEl.focus({preventScroll:true}),80);
+  }
+
+  function open(){
+    lastFocus=document.activeElement;
+    $('mDepLine').innerHTML=isCustom()?('Custom journey · <b>'+customMonth+'</b>'):'Departure · <b>'+date+'</b>';
+    resetForms();
+    if(isCustom()){qty=Math.max(1,Math.min(12,customQty));$('mQty').textContent=qty;syncQty();}
+    modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open');
+    if(barSync)barSync();
+    go(0);
+  }
+  function close(){
+    modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.classList.remove('modal-open');
+    if(otpTimer){clearInterval(otpTimer);otpTimer=null;}
+    if(barSync)barSync();
+    if(lastFocus)lastFocus.focus();
+  }
+  function resetForms(){
+    ['mName','mEmail','mPhone'].forEach(id=>$(id).value='');
+    qty=1;$('mQty').textContent='1';syncQty();
+    otpDigits().forEach(d=>{d.value='';d.classList.remove('filled');});
+    ['err0','err1','err2'].forEach(id=>$(id).textContent='');
+    $('rvTerms').checked=false;
+    document.querySelectorAll('.rzp-m').forEach(m=>m.classList.remove('on'));
+    const pay=$('rzpPay');pay.disabled=true;pay.textContent='Select a method to pay';pay.classList.remove('paying');
+  }
+  function syncQty(){$('mQtyMinus').disabled=qty<=1;$('mQtyPlus').disabled=qty>=12;$('mQty').textContent=qty;}
+
+  /* step 0 → 1 */
+  $('mQtyMinus').onclick=()=>{if(qty>1){qty--;syncQty();}};
+  $('mQtyPlus').onclick=()=>{if(qty<12){qty++;syncQty();}};
+  $('toVerify').onclick=()=>{
+    const name=$('mName').value.trim(), email=$('mEmail').value.trim(), phone=$('mPhone').value.trim();
+    const err=$('err0');
+    if(!name){err.textContent='Please enter your name.';return;}
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){err.textContent='Please enter a valid email.';return;}
+    if(phone.replace(/\D/g,'').length<7){err.textContent='Please enter a valid mobile number.';return;}
+    err.textContent='';
+    const code=String(Math.floor(100000+Math.random()*900000));
+    $('otpTo').textContent=$('mCc').value+' '+phone;
+    $('otpDemo').textContent=code;
+    const ds=otpDigits();ds.forEach((d,i)=>{d.value=code[i];d.classList.add('filled');});
+    go(1);startOtpTimer();
+  };
+  $('editPhone').onclick=()=>go(0);
+
+  /* OTP inputs */
+  function otpDigits(){return [...document.querySelectorAll('.otp-d')];}
+  otpDigits().forEach((d,i,arr)=>{
+    d.addEventListener('input',()=>{d.value=d.value.replace(/\D/g,'').slice(0,1);d.classList.toggle('filled',!!d.value);if(d.value&&arr[i+1])arr[i+1].focus();});
+    d.addEventListener('keydown',e=>{if(e.key==='Backspace'&&!d.value&&arr[i-1])arr[i-1].focus();});
+  });
+  function startOtpTimer(){
+    let t=30;const el=$('otpTimer');el.textContent='Resend code in 0:30';
+    if(otpTimer)clearInterval(otpTimer);
+    otpTimer=setInterval(()=>{t--;if(t<=0){clearInterval(otpTimer);otpTimer=null;el.innerHTML='<button type="button" class="linkbtn" id="resend">Resend code</button>';const rb=$('resend');if(rb)rb.onclick=()=>{$('toVerify').click();};}else{el.textContent='Resend code in 0:'+String(t).padStart(2,'0');}},1000);
+  }
+  function fillReview(){
+    const t=totals(),c=currency;
+    $('rvDep').textContent=isCustom()?('Custom journey · '+customMonth):date;
+    $('rvName').textContent=$('mName').value.trim();
+    $('rvContact').textContent=$('mCc').value+' '+$('mPhone').value.trim();
+    $('rvQty').textContent=qty+(qty>1?' travellers':' traveller');
+    $('rvUnitLine').textContent=money(c==='INR'?t.perU*RATE:t.perU,c)+' × '+qty+(qty>1?' travellers':' traveller');
+    $('rvSub').textContent=money(c==='INR'?t.subI:t.subU,c);
+    $('rvGst').textContent=money(c==='INR'?t.gstI:t.gstU,c);
+    $('rvTotal').textContent=(isCustom()?'≈ ':'')+money(c==='INR'?t.totI:t.totU,c);
+    $('rvInr').textContent='≈ '+money(c==='INR'?t.totU:t.totI,c==='INR'?'USD':'INR');
+    const tl=$('rvTotalLabel');if(tl)tl.textContent=isCustom()?'Approximate total':'Total due now';
+  }
+  function fillPay(){
+    const totI=totals().totI;
+    $('rzpAmt').textContent=fmtINR(totI);
+    const on=document.querySelector('.rzp-m.on'),pay=$('rzpPay');
+    if(on&&pay&&!pay.classList.contains('paying'))pay.textContent='Pay '+fmtINR(totI);
+  }
+  $('toReview').onclick=()=>{
+    const code=otpDigits().map(d=>d.value).join('');
+    const err=$('err1');
+    if(code.length<6){err.textContent='Enter the 6-digit code.';return;}
+    if(code!==$('otpDemo').textContent){err.textContent='That code doesn’t match. Try the demo code shown.';return;}
+    err.textContent='';fillReview();go(2);
+  };
+  $('toPay').onclick=()=>{
+    const err=$('err2');
+    if(!$('rvTerms').checked){err.textContent='Please agree to the terms to continue.';return;}
+    err.textContent='';fillPay();go(3);
+  };
+
+  /* razorpay mock — always charged in INR */
+  document.querySelectorAll('.rzp-m').forEach(m=>m.addEventListener('click',()=>{
+    document.querySelectorAll('.rzp-m').forEach(x=>x.classList.remove('on'));
+    m.classList.add('on');
+    const pay=$('rzpPay');pay.disabled=false;pay.textContent='Pay '+fmtINR(totals().totI);
+  }));
+  $('rzpPay').onclick=function(){
+    if(this.disabled)return;
+    this.classList.add('paying');this.textContent='Processing…';
+    setTimeout(()=>{
+      const ref='TT–ABC–'+String(Math.floor(100000+Math.random()*900000));
+      $('doneDep').textContent=isCustom()?'custom journey':date;
+      $('doneEmail').textContent=$('mEmail').value.trim();
+      $('doneRef').textContent=ref;
+      go(4);
+    },1400);
+  };
+
+  /* currency toggles (bar + card, kept in sync) */
+  curBtns.forEach(b=>b.addEventListener('click',()=>setCurrency(b.dataset.cur)));
+
+  /* floating-bar departure selector */
+  if(barDep){
+    OPEN_DEPS.forEach(o=>{const op=document.createElement('option');op.value=o.date;op.textContent=o.short;barDep.appendChild(op);});
+    const opc=document.createElement('option');opc.value=CUSTOM;opc.textContent='Design your own';barDep.appendChild(opc);
+    barDep.value=date;
+    barDep.addEventListener('change',()=>select(barDep.value,{}));
+  }
+
+  /* open/close wiring */
+  modal.querySelectorAll('[data-close]').forEach(el=>el.addEventListener('click',close));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))close();});
+  const bn=$('bookNow');if(bn)bn.addEventListener('click',open);
+  const bc=$('bookbarCta');if(bc)bc.addEventListener('click',open);
+
+  /* sticky bar visibility */
+  const hero=document.querySelector('.hero'), applySec=document.getElementById('apply');
+  if(bookbar&&hero){
+    let pastHero=false, atApply=false;
+    const sync=()=>{const show=pastHero&&!atApply&&!modal.classList.contains('open');bookbar.classList.toggle('show',show);bookbar.setAttribute('aria-hidden',show?'false':'true');};
+    new IntersectionObserver(es=>{pastHero=!es[0].isIntersecting;sync();},{threshold:0}).observe(hero);
+    if(applySec)new IntersectionObserver(es=>{atApply=es[0].isIntersecting;sync();},{threshold:0}).observe(applySec);
+    barSync=sync;
+  }
+
+  /* default: next departure is held in the floating bar (no reveal, no board press) */
+  select(date,{silent:true});
+
+  return {open,close,select,setCurrency};
+})();
 
 /* trail readout data */
 const stops=[
@@ -1846,39 +2406,49 @@ if(bridge&&daysWrap&&isDesktop&&elMarker&&elSpine&&elProfile&&elIti){
   bridgeTick();
 }
 
-/* readiness self-check */
-const readyList=document.getElementById('readyList'),readyTally=document.getElementById('readyTally');
-if(readyList&&readyTally){
-  const items=[...readyList.querySelectorAll('.ritem')];
-  const lines=['tap each one that\'s true for you','one down · keep going','halfway there','almost ready for the hills','ready for Annapurna'];
-  function tally(){
-    const n=items.filter(it=>it.classList.contains('on')).length;
-    readyTally.innerHTML='<b>'+n+'</b> of 4 · '+lines[n];
-    readyTally.classList.toggle('full',n===4);
-  }
-  items.forEach(it=>{
-    const toggle=()=>{
-      const on=!it.classList.contains('on');
-      it.classList.toggle('on',on);
-      it.setAttribute('aria-checked',on);
-      tally();
-    };
-    it.addEventListener('click',toggle);
-    it.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();toggle()}});
-  });
-}
-
-/* hover to preview, click to keep playing with sound */
+/* grade video: autoplay with soft sound when the section is on screen,
+   fade the sound in to 15%, fade out on leave, tap to mute */
 const gradeVidWrap=document.getElementById('gradeVidWrap'),gradeVid=document.getElementById('gradeVid');
 if(gradeVidWrap&&gradeVid){
-  let latched=false;
-  const playSound=vol=>{gradeVid.muted=false;gradeVid.volume=vol;const pr=gradeVid.play();if(pr)pr.then(()=>gradeVidWrap.classList.add('playing')).catch(()=>{})};
-  gradeVidWrap.addEventListener('mouseenter',()=>{if(!latched)playSound(.3)});
-  gradeVidWrap.addEventListener('mouseleave',()=>{if(!latched){gradeVid.pause();gradeVid.muted=true;gradeVidWrap.classList.remove('playing')}});
+  const MAXVOL=0.15;
+  let userMuted=false,inView=false,fadeRaf=0;
+  gradeVid.volume=0;
+  const clearFade=()=>{if(fadeRaf)cancelAnimationFrame(fadeRaf);fadeRaf=0};
+  const fadeTo=(target,done)=>{
+    clearFade();
+    const step=()=>{
+      const d=target-gradeVid.volume;
+      if(Math.abs(d)<0.005){gradeVid.volume=target;fadeRaf=0;if(done)done();return}
+      gradeVid.volume=Math.min(1,Math.max(0,gradeVid.volume+d*0.08));
+      fadeRaf=requestAnimationFrame(step);
+    };
+    step();
+  };
+  const soundOn=()=>{
+    if(userMuted)return;
+    gradeVid.muted=false;
+    gradeVidWrap.classList.add('playing');
+    fadeTo(MAXVOL);
+  };
+  const enter=()=>{
+    inView=true;
+    if(!userMuted)gradeVid.muted=false;
+    const pr=gradeVid.play();
+    if(pr)pr.then(soundOn).catch(()=>{ /* browser blocked sound: fall back to muted playback */
+      gradeVid.muted=true;gradeVidWrap.classList.remove('playing');gradeVid.play().catch(()=>{});
+    });
+  };
+  const leave=()=>{
+    inView=false;
+    fadeTo(0,()=>{gradeVid.pause();gradeVidWrap.classList.remove('playing')});
+  };
+  new IntersectionObserver(es=>es.forEach(e=>{e.isIntersecting?enter():leave()}),{threshold:.45})
+    .observe(gradeVidWrap);
+  /* tap the video to mute; tap again to bring the sound back */
   gradeVidWrap.addEventListener('click',()=>{
-    latched=!latched;
-    if(latched){playSound(.6);gradeVidWrap.classList.add('latched')}
-    else{gradeVid.pause();gradeVid.muted=true;gradeVidWrap.classList.remove('playing','latched')}
+    userMuted=!userMuted;
+    if(userMuted){clearFade();gradeVid.muted=true;gradeVid.volume=0;gradeVidWrap.classList.remove('playing')}
+    else if(inView){gradeVid.play().catch(()=>{});soundOn()}
   });
 }
 
