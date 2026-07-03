@@ -559,7 +559,7 @@ gsap.registerPlugin(ScrollTrigger);
 /* loader: altitude tracks the ACTUAL hero-video load, reveals only when it can play through */
 const loader=document.getElementById('loader'),altN=document.getElementById('altN');
 const heroVideo=document.getElementById('heroVideo');
-const L_START=822,L_END=4130;
+const L_START=822,L_END=4800;
 let lShown=L_START,lReady=false,lRevealed=false,lRaf;
 const setAlt=v=>{altN.textContent=Math.round(v).toLocaleString()};
 
@@ -583,7 +583,7 @@ function loaderTick(){
   if(lReady&&Math.round(lShown)>=L_END){finishLoader();return}
   lRaf=requestAnimationFrame(loaderTick);
 }
-function markReady(){lReady=true}
+function markReady(){lReady=true;if(document.hidden&&!lRevealed)finishLoader();} // hidden tab: rAF is paused, so finish directly
 function finishLoader(){
   if(lRevealed)return;lRevealed=true;
   cancelAnimationFrame(lRaf);
@@ -592,6 +592,8 @@ function finishLoader(){
     .to(loader,{opacity:0,duration:.6,onComplete:()=>loader.classList.add('done')})
     .from('#heroTitle .line>span',{yPercent:110,duration:1.1,ease:'power4.out',stagger:.12},'-=0.2')
     .to('.hero .rv',{opacity:1,y:0,duration:.9,ease:'power3.out',stagger:.12},'-=0.6');
+  // safety: if the gsap ticker is paused (hidden tab), guarantee the overlay clears and the hero shows
+  setTimeout(()=>{if(!loader.classList.contains('done')){loader.style.opacity=0;loader.classList.add('done');gsap.set('#heroTitle .line>span',{yPercent:0});gsap.set('.hero .rv',{opacity:1,y:0});}},1400);
 }
 if(heroVideo){
   if(heroVideo.readyState>=4)markReady();
@@ -599,7 +601,8 @@ if(heroVideo){
   heroVideo.addEventListener('playing',markReady,{once:true});
   heroVideo.addEventListener('error',markReady,{once:true}); // fail-safe: never trap the page
 }else{markReady()}
-setTimeout(markReady,12000); // hard cap for very slow / blocked networks
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!lRevealed&&!lRaf)loaderTick();});
+setTimeout(()=>{markReady();finishLoader();},12000); // hard cap for very slow / blocked networks
 loaderTick();
 
 /* hero parallax + pointer drift */
