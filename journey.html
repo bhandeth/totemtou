@@ -65,7 +65,7 @@ header.nav.scrolled{background:rgba(11,20,16,.84);backdrop-filter:blur(14px);-we
 #prog{position:fixed;top:0;left:0;height:2px;width:100%;z-index:201;background:transparent;transform-origin:left;transform:scaleX(0)}
 #prog i{display:block;height:100%;background:var(--river)}
 
-/* loader — altitude climbs to 4,130 m as the trek videos buffer */
+/* loader - altitude climbs to 4,130 m as the trek videos buffer */
 #loader{position:fixed;inset:0;z-index:400;background:var(--ink-0);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1rem;transition:opacity .7s var(--ease),visibility .7s}
 #loader.done{opacity:0;visibility:hidden}
 #loader .alt{font:300 clamp(2.4rem,7vw,4.2rem) var(--f-mono);color:var(--bone);letter-spacing:-.02em}
@@ -121,7 +121,7 @@ h1 .alt{color:var(--river);font-style:italic;font-weight:380}
 .interlude .cap{width:min(1180px,92vw);margin:0 auto 2.4rem;font:500 .66rem var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--bone);text-shadow:0 1px 14px rgba(0,0,0,.5)}
 
 /* ====== SIGNATURE: the trail, scrubbed ====== */
-/* padding:0 — the section's default vertical padding would offset where the pin locks and push
+/* padding:0 - the section's default vertical padding would offset where the pin locks and push
    the content down under the booking bar; the .trail-pin owns its own spacing instead */
 .trail{background:var(--ink-1);overflow:clip;padding:0}
 /* top padding clears the fixed nav, bottom padding clears the fixed booking bar, so the pinned
@@ -259,7 +259,7 @@ h1 .alt{color:var(--river);font-style:italic;font-weight:380}
 @media(max-width:880px){.elig-grid{grid-template-columns:1fr 1fr}.elig-not ul{grid-template-columns:1fr}}
 @media(max-width:520px){.elig-grid{grid-template-columns:1fr}}
 
-/* ===== GOOD TO KNOW — tabbed detail ===== */
+/* ===== GOOD TO KNOW - tabbed detail ===== */
 .gtk-wrap{margin-top:2.6rem}
 .gtk-tabs{display:flex;gap:.3rem;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:none}
 .gtk-tabs::-webkit-scrollbar{display:none}
@@ -365,10 +365,10 @@ details.faq p{padding:0 0 1.25rem;font-size:.95rem;line-height:1.65;color:var(--
 .spine-lead::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);background:linear-gradient(rgba(144,204,190,0),rgba(144,204,190,.5))}
 .spine-lead span{position:absolute;left:50%;bottom:-1px;transform:translate(-50%,50%);font:500 .58rem var(--f-mono);letter-spacing:.24em;text-transform:uppercase;color:var(--river);background:var(--ink-1);padding:.5em 1.2em;border:1px solid rgba(144,204,190,.35);border-radius:99px;white-space:nowrap;z-index:2}
 .days .wrap{position:relative}
-/* organic journey line — traces silhouettes between days, lights the trek as you scroll */
+/* organic journey line - traces silhouettes between days, lights the trek as you scroll */
 .journey{position:absolute;top:0;left:0;width:clamp(70px,9vw,120px);height:100%;overflow:visible;pointer-events:none;z-index:1}
 .journey .track{fill:none;stroke:rgba(144,204,190,.14);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-/* soft halo via a translucent underlay — no per-frame filter, so the line never stutters while scrolling */
+/* soft halo via a translucent underlay - no per-frame filter, so the line never stutters while scrolling */
 .journey .lit-glow{fill:none;stroke:#90CCBE;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;opacity:.2;will-change:stroke-dashoffset}
 .journey .lit{fill:none;stroke:url(#jgrad);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;will-change:stroke-dashoffset}
 .journey .node{fill:var(--ink-1);stroke:rgba(144,204,190,.55);stroke-width:2;transition:fill .5s var(--ease),stroke .5s var(--ease)}
@@ -378,11 +378,11 @@ details.faq p{padding:0 0 1.25rem;font-size:.95rem;line-height:1.65;color:var(--
 .journey .head-ring{fill:rgba(144,204,190,.16)}
 .journey .head{fill:#CFF3E8;filter:drop-shadow(0 0 8px rgba(144,204,190,.9))}
 .day{position:relative}
-/* the line takes you along — days ahead wait dim, then light as the walk reaches them */
+/* the line takes you along - days ahead wait dim, then light as the walk reaches them */
 .days.journeying .day{opacity:.44;filter:saturate(.5);transition:opacity .8s var(--ease),filter .8s var(--ease)}
 .days.journeying .day.reached{opacity:1;filter:none}
 @media(max-width:640px){.journey{display:none}.spine-lead{height:64px}.days.journeying .day{opacity:1;filter:none}}
-/* expand — days 2–7 fold away until asked for; their media loads only on request */
+/* expand - days 2–7 fold away until asked for; their media loads only on request */
 .day-expand{display:none;position:relative;margin-top:1.5rem}
 .days-collapsed .day-expand{display:block}
 .days-collapsed .d2more,.days-collapsed #daysRest{display:none}
@@ -397,7 +397,7 @@ details.faq p{padding:0 0 1.25rem;font-size:.95rem;line-height:1.65;color:var(--
 @keyframes ebbob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
 .days-expanding .d2more,.days-expanding #daysRest{animation:daysUnfold .85s var(--ease)}
 @keyframes daysUnfold{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-/* connective bridge — one confident walker, flat on a single plane, from the map's end onto day 1 */
+/* connective bridge - one confident walker, flat on a single plane, from the map's end onto day 1 */
 #bridge{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:50;opacity:0;transition:opacity .4s var(--ease)}
 #bridge .btrack{fill:none;stroke:rgba(144,204,190,.16);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 #bridge .blit{fill:none;stroke:var(--river);stroke-width:2.75;stroke-linecap:round;stroke-linejoin:round}
@@ -499,7 +499,10 @@ details.faq p{padding:0 0 1.25rem;font-size:.95rem;line-height:1.65;color:var(--
 button.dep{border:0;background:none;color:inherit;border-radius:10px;padding:.5rem .55rem;margin:0 -.55rem;cursor:pointer;transition:background .3s,box-shadow .3s}
 button.dep:hover{background:rgba(144,204,190,.06)}
 button.dep[aria-pressed="true"]{background:rgba(144,204,190,.1);box-shadow:inset 0 0 0 1px rgba(144,204,190,.45)}
-.dep--closed{padding:.5rem .55rem;opacity:.4}
+.dep--closed{padding:.5rem .55rem;opacity:.4;cursor:default}
+/* seasonal ambience — themed particle wash on departure hover */
+#depFx{position:fixed;inset:0;z-index:55;pointer-events:none;opacity:0;transition:opacity .6s var(--ease)}
+#depFx.on{opacity:1}
 .field{display:flex;gap:var(--fg);flex:none;width:calc(var(--n)*var(--fw) + (var(--n) - 1)*var(--fg))}
 .flap{position:relative;display:grid;place-items:center;width:var(--fw);height:1.92rem;flex:none;font:700 1.06rem/1 var(--f-mono);color:var(--bone);background:linear-gradient(180deg,#3a4a41 0%,#2b3831 49%,#131c17 51%,#1e2822 100%);border-radius:3px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.55),inset 0 1px 0 rgba(235,231,219,.07);overflow:hidden;will-change:transform;text-shadow:0 1px 2px rgba(0,0,0,.55)}
 .flap::after{content:"";position:absolute;left:2px;right:2px;top:50%;height:1px;background:rgba(0,0,0,.42);transform:translateY(-.5px)}
@@ -986,7 +989,7 @@ body.modal-open{overflow:hidden}
           <p class="place" id="roPlace">Pokhara → Chomrong</p>
           <div class="row"><span>Altitude</span><b id="roAlt">1,650 m</b></div>
           <div class="row"><span>Effective oxygen</span><b class="o2" id="roO2">~83%</b></div>
-          <p class="view" id="roView">We drive out along the river and lace up where the road runs out. From here to the amphitheatre and back it is on foot — I keep the first day easy on purpose.</p>
+          <p class="view" id="roView">We drive out along the river and lace up where the road runs out. From here to the amphitheatre and back, it is on foot together; we keep the first day gentle on purpose.</p>
         </aside>
       </div>
     </div>
@@ -1023,7 +1026,7 @@ body.modal-open{overflow:hidden}
         <p>First night in a teahouse. Wholesome dinner. Early sleep.</p>
         <div class="vnotes">
           <p class="k">Notes from the trail <em>· 3 clips · drag →</em></p>
-          <!-- 1:1 video notes — swap each data-src with a square clip from the Totemtou video repository -->
+          <!-- 1:1 video notes - swap each data-src with a square clip from the Totemtou video repository -->
           <div class="vrow">
           <figure class="vn"><video data-src="https://storage.zopuai.com/video-conversions/converted-1782685402970-96QT.webm" muted loop playsinline preload="none"></video></figure>
           <figure class="vn"><video data-src="https://storage.zopuai.com/video-conversions/converted-1782685505887-7EFU.webm" muted loop playsinline preload="none"></video></figure>
@@ -1067,7 +1070,7 @@ body.modal-open{overflow:hidden}
         </div>
         <div class="vnotes">
           <p class="k">Notes from the trail <em>· 3 clips · drag →</em></p>
-          <!-- 1:1 video notes — swap each data-src with a square clip from the Totemtou video repository -->
+          <!-- 1:1 video notes - swap each data-src with a square clip from the Totemtou video repository -->
           <div class="vrow">
           <figure class="vn"><video data-src="https://storage.zopuai.com/video-conversions/converted-1782688483929-QO33.webm" muted loop playsinline preload="none"></video></figure>
           <figure class="vn"><video data-src="https://storage.zopuai.com/video-conversions/converted-1782688484671-AZG0.webm" muted loop playsinline preload="none"></video></figure>
@@ -1105,7 +1108,7 @@ body.modal-open{overflow:hidden}
         </div>
         <div class="vnotes">
           <p class="k">Notes from the trail <em>· 3 clips · drag →</em></p>
-          <!-- 1:1 video notes — swap each data-src with a square clip from the Totemtou video repository -->
+          <!-- 1:1 video notes - swap each data-src with a square clip from the Totemtou video repository -->
           <div class="vrow">
           <figure class="vn"><video data-src="https://storage.zopuai.com/video-conversions/converted-1782692143722-UEIU.webm" muted loop playsinline preload="none"></video></figure>
           <figure class="vn"><video data-src="https://storage.zopuai.com/video-conversions/converted-1782690931338-A2OX.webm" muted loop playsinline preload="none"></video></figure>
@@ -1149,7 +1152,7 @@ body.modal-open{overflow:hidden}
         </div>
         <div class="vnotes">
           <p class="k">Notes from the trail <em>· 4 clips · drag →</em></p>
-          <!-- 1:1 video notes — swap each data-src with a square clip from the Totemtou video repository -->
+          <!-- 1:1 video notes - swap each data-src with a square clip from the Totemtou video repository -->
           <div class="vrow">
           <figure class="vn"><video data-src="https://storage.zopuai.com/video-conversions/converted-1782695999447-FUUH.webm" muted loop playsinline preload="none"></video></figure>
           <figure class="vn"><video data-src="https://storage.zopuai.com/video-conversions/converted-1782696009628-AIYX.webm" muted loop playsinline preload="none"></video></figure>
@@ -1184,7 +1187,7 @@ body.modal-open{overflow:hidden}
         <p>This is also the day, somewhere on the descent, where the valley you walked into reveals itself as a place you have actually entered. Walking out, you notice what walking in did not have time to show.</p>
         <div class="vnotes">
           <p class="k">Notes from the trail <em>· 3 clips · drag →</em></p>
-          <!-- 1:1 video notes — swap each data-src with a square clip from the Totemtou video repository -->
+          <!-- 1:1 video notes - swap each data-src with a square clip from the Totemtou video repository -->
           <div class="vrow">
           <figure class="vn"><video data-src="https://storage.zopuai.com/video-conversions/converted-1782698175274-MWV2.webm" muted loop playsinline preload="none"></video></figure>
           <figure class="vn"><video data-src="https://storage.zopuai.com/video-conversions/converted-1782698176101-4AKL.webm" muted loop playsinline preload="none"></video></figure>
@@ -1215,7 +1218,7 @@ body.modal-open{overflow:hidden}
         <p>Ten minutes below the village sit the hot springs: three pools, fed from the cliff, looking onto the river. You sit in them. You stop talking. The walk has been six days; the heat undoes most of what it did.</p>
         <div class="vnotes">
           <p class="k">Notes from the trail <em>· 3 clips · drag →</em></p>
-          <!-- 1:1 video notes — swap each data-src with a square clip from the Totemtou video repository -->
+          <!-- 1:1 video notes - swap each data-src with a square clip from the Totemtou video repository -->
           <div class="vrow">
           <figure class="vn"><video data-src="https://storage.zopuai.com/video-conversions/converted-1782699146189-3UYO.webm" muted loop playsinline preload="none"></video></figure>
           <figure class="vn"><video data-src="https://storage.zopuai.com/video-conversions/converted-1782699147270-38FN.webm" muted loop playsinline preload="none"></video></figure>
@@ -1246,7 +1249,7 @@ body.modal-open{overflow:hidden}
         <p>Last night together. Goodbyes the next morning, by ten.</p>
         <div class="vnotes">
           <p class="k">Notes from the trail <em>· 3 clips · drag →</em></p>
-          <!-- 1:1 video notes — swap each data-src with a square clip from the Totemtou video repository -->
+          <!-- 1:1 video notes - swap each data-src with a square clip from the Totemtou video repository -->
           <div class="vrow">
           <figure class="vn"><video data-src="https://storage.zopuai.com/video-conversions/converted-1782701117588-MPRR.webm" muted loop playsinline preload="none"></video></figure>
           <figure class="vn"><video data-src="https://storage.zopuai.com/video-conversions/converted-1782701118343-F6LR.webm" muted loop playsinline preload="none"></video></figure>
@@ -1322,7 +1325,7 @@ body.modal-open{overflow:hidden}
       <h2 class="rv">Prabin</h2>
       <p class="role rv">Trek leader · Annapurna Base Camp</p>
       <p class="rv">Prabin has walked the Annapurna Sanctuary trail more times than he keeps count of, in every season the route runs. He is the person making the calls when weather turns above MBC, when someone in the group is moving too slow, when a teahouse on the planned route is unexpectedly full, when the descent on Day 5 has to be paced differently for someone whose knees are protesting. The work of leadership on a trek is mostly invisible. It is the absence of problems you didn't know to worry about.</p>
-      <p class="rv">He is also the person you eat with. The brand is built around the idea that the leader is not a service provider; the leader is the journey. Prabin sets the pace, reads the group, and knows every teahouse kitchen by first name — from the first morning on the trail to the last dinner in Pokhara.</p>
+      <p class="rv">He is also the person you eat with. The brand is built around the idea that the leader is not a service provider; the leader is the journey. Prabin sets the pace, reads the group, and knows every teahouse kitchen by first name, from the first morning on the trail to the last dinner in Pokhara.</p>
       <div class="creds">
         <div class="cred rv"><p class="k">Mountaineering</p><p class="v">NMA-certified<em>Nepal Mountaineering Association</em></p></div>
         <div class="cred rv"><p class="k">Medical</p><p class="v">Wilderness First Responder<em>WFR-certified</em></p></div>
@@ -1336,7 +1339,7 @@ body.modal-open{overflow:hidden}
 <section class="gtk" id="details" aria-label="Practical detail">
   <div class="wrap">
     <p class="eyebrow">Good to know</p>
-    <h2 class="h2 rv">The practical detail, <em>in one place.</em></h2>
+    <h2 class="h2 rv">Everything you <em>need to know.</em></h2>
     <p class="lede rv" style="margin-top:1.4rem">Everything you would otherwise dig through a dozen pages for: costs, kit, getting there, the fine print. Pick a tab.</p>
     <div class="gtk-wrap rv">
       <div class="gtk-tabs" role="tablist" aria-label="Practical detail">
@@ -1473,7 +1476,7 @@ body.modal-open{overflow:hidden}
 <!-- APPLY -->
 <section class="apply" id="apply" aria-label="Departures and application">
   <div class="wrap">
-    <h2 class="h2 rv board-title">Pick a date, <em>or shape your own.</em></h2>
+    <h2 class="h2 rv board-title">Expedition <em>calendar.</em></h2>
     <div class="choose-grid">
       <div class="choose-col rv">
         <p class="choose-lbl">Fixed departures</p>
@@ -1495,7 +1498,7 @@ body.modal-open{overflow:hidden}
             <span class="cc-badge">Bonus</span>
           </span>
           <span class="cc-title">Shape your own <em>trail.</em></span>
-          <span class="cc-lede">A private departure built with an experience leader — for you, your family, or a small group of your own. Flexible dates, days and added experiences.</span>
+          <span class="cc-lede">A private departure built with an experience leader, for you, your family, or a small group of your own. Flexible dates, days and added experiences.</span>
           <div class="cc-pickers">
             <div class="nb-field">
               <span>Travellers</span>
@@ -1526,13 +1529,13 @@ body.modal-open{overflow:hidden}
 
     <div class="reserve-wrap" id="reserveWrap" hidden aria-live="polite">
       <div class="selstrip">
-        <p class="sel-hold">Holding <strong id="selHold">—</strong><button class="sel-change" id="selChange" type="button">change</button></p>
+        <p class="sel-hold">Holding <strong id="selHold">-</strong><button class="sel-change" id="selChange" type="button">change</button></p>
       </div>
 
       <div class="apply-grid" id="reserve">
         <div>
           <h3 id="reserveTitle" style="font-weight:480;font-size:1.6rem;letter-spacing:-.014em">Reserve <em>your place.</em></h3>
-          <p id="reserveCopy" style="margin-top:1rem;color:var(--bone-2);max-width:46ch">One seat in a cohort of twelve. Pay in full to confirm — checkout takes about two minutes, and you're set. Cancel within seven days for a full refund; see the cancellation terms in the details above.</p>
+          <p id="reserveCopy" style="margin-top:1rem;color:var(--bone-2);max-width:46ch">One seat in a cohort of twelve. Pay in full to confirm. Checkout takes about two minutes, and you're set. Cancel within seven days for a full refund; see the cancellation terms in the details above.</p>
         </div>
         <aside class="bcard" aria-label="Booking summary">
           <div class="bcard-head">
@@ -1571,8 +1574,8 @@ body.modal-open{overflow:hidden}
   <div class="wrap">
     <div class="voices-head">
       <p class="eyebrow">Voices from the trail</p>
-      <h2 class="h2 rv">What they <em>carried back.</em></h2>
-      <p class="lede rv" style="margin-top:1.2rem">Not reviews. Short films from people who walked it — the morning at base camp, the hot springs, the cohort that stopped being strangers.</p>
+      <h2 class="h2 rv">They found <em>their totem…</em></h2>
+      <p class="lede rv" style="margin-top:1.2rem">Not reviews. Short films from people who walked it: the morning at base camp, the hot springs, the cohort that stopped being strangers.</p>
     </div>
     <div class="voice-grid rv">
       <a class="voice" href="https://www.youtube.com/playlist?list=PL-totemtou-abc" target="_blank" rel="noopener">
@@ -1648,7 +1651,7 @@ body.modal-open{overflow:hidden}
       <!-- STEP 0: details -->
       <section class="mstep on" id="step0">
         <h3 id="mTitle" class="mstep-h">Who's coming along?</h3>
-        <p class="mstep-sub" id="mDepLine">Departure · <b>—</b></p>
+        <p class="mstep-sub" id="mDepLine">Departure · <b>-</b></p>
         <div class="mfield"><label for="mName">Full name</label><input id="mName" autocomplete="name" placeholder="As on your passport"></div>
         <div class="mfield"><label for="mEmail">Email</label><input id="mEmail" type="email" autocomplete="email" placeholder="you@email.com"></div>
         <div class="mfield mfield-phone">
@@ -1683,7 +1686,7 @@ body.modal-open{overflow:hidden}
           <input class="otp-d" maxlength="1" inputmode="numeric" aria-label="Digit 5">
           <input class="otp-d" maxlength="1" inputmode="numeric" aria-label="Digit 6">
         </div>
-        <p class="otp-demo">Demo code · <b id="otpDemo">000000</b> — autofilled for you</p>
+        <p class="otp-demo">Demo code · <b id="otpDemo">000000</b>, autofilled for you</p>
         <p class="mstep-err" id="err1"></p>
         <button class="btn btn--solid mnext" id="toReview" type="button" style="justify-content:center;width:100%">Verify &amp; continue →</button>
         <p class="mstep-fine"><span id="otpTimer">Resend code in 0:30</span></p>
@@ -1701,9 +1704,9 @@ body.modal-open{overflow:hidden}
             <span class="rv-verified" id="rvVerified">✓ Verified</span>
           </div>
           <dl class="rv-rows">
-            <div class="rv-r"><dt>Departure</dt><dd id="rvDep">—</dd></div>
-            <div class="rv-r"><dt>Lead traveller</dt><dd id="rvName">—</dd></div>
-            <div class="rv-r"><dt>Contact</dt><dd id="rvContact">—</dd></div>
+            <div class="rv-r"><dt>Departure</dt><dd id="rvDep">-</dd></div>
+            <div class="rv-r"><dt>Lead traveller</dt><dd id="rvName">-</dd></div>
+            <div class="rv-r"><dt>Contact</dt><dd id="rvContact">-</dd></div>
             <div class="rv-r"><dt>Travellers</dt><dd id="rvQty">1</dd></div>
           </dl>
           <div class="rv-bill">
@@ -1749,7 +1752,7 @@ body.modal-open{overflow:hidden}
         <div class="done">
           <div class="done-tick" aria-hidden="true"><svg viewBox="0 0 52 52"><circle class="dt-c" cx="26" cy="26" r="24" fill="none"/><path class="dt-p" fill="none" d="M14 27l8 8 16-18"/></svg></div>
           <h3 class="done-h">You're on the trail.</h3>
-          <p class="done-sub">Your seat on the <b id="doneDep">—</b> cohort is confirmed. A receipt and your first-call invite are on the way to <b id="doneEmail">your email</b>.</p>
+          <p class="done-sub">Your seat on the <b id="doneDep">-</b> cohort is confirmed. A receipt and your first-call invite are on the way to <b id="doneEmail">your email</b>.</p>
           <div class="done-ref"><span>Booking reference</span><b id="doneRef">TT–ABC–000000</b></div>
           <button class="btn btn--solid" type="button" data-close style="justify-content:center">Done</button>
         </div>
@@ -1826,7 +1829,7 @@ const vio=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;
 }),{rootMargin:'160px'});
 document.querySelectorAll('video[data-src]').forEach(v=>vio.observe(v));
 
-/* sequencing videos — play a list of clips back-to-back, looping */
+/* sequencing videos - play a list of clips back-to-back, looping */
 document.querySelectorAll('video.seq').forEach(v=>{
   const list=(v.dataset.seq||'').split(',').filter(Boolean);if(!list.length)return;
   let i=0;
@@ -1857,12 +1860,12 @@ document.querySelectorAll('video.seq').forEach(v=>{
 /* ===== split-flap departures board ===== */
 const WA_NUM='919258583023';
 const DEPARTURES=[
-  {f:'ABC 01',d:'11 OCT 26',w:'POST-MONSOON',s:'12',st:'OPEN',  date:'11 – 17 Oct 2026',short:'11 Oct 2026'},
-  {f:'ABC 02',d:'08 NOV 26',w:'CLEAR SKIES', s:'12',st:'OPEN',  date:'08 – 14 Nov 2026',short:'08 Nov 2026'},
-  {f:'-- --', d:'DEC – JAN', w:'WINTER SNOW', s:'--',st:'CLOSED'},
-  {f:'ABC 03',d:'22 FEB 27',w:'LATE WINTER', s:'12',st:'OPEN',  date:'22 – 28 Feb 2027',short:'22 Feb 2027'},
-  {f:'ABC 04',d:'15 MAR 27',w:'SPRING BLOOM',s:'12',st:'OPEN',  date:'15 – 21 Mar 2027',short:'15 Mar 2027'},
-  {f:'-- --', d:'APR – SEP', w:'MONSOON',     s:'--',st:'CLOSED'}
+  {f:'ABC 01',d:'11 OCT 26',w:'POST-MONSOON',s:'12',st:'OPEN',  date:'11 – 17 Oct 2026',short:'11 Oct 2026',fx:'motes'},
+  {f:'ABC 02',d:'08 NOV 26',w:'CLEAR SKIES', s:'12',st:'OPEN',  date:'08 – 14 Nov 2026',short:'08 Nov 2026',fx:'stars'},
+  {f:'-- --', d:'DEC – JAN', w:'WINTER SNOW', s:'--',st:'CLOSED',fx:'snow'},
+  {f:'ABC 03',d:'22 FEB 27',w:'LATE WINTER', s:'12',st:'OPEN',  date:'22 – 28 Feb 2027',short:'22 Feb 2027',fx:'snow'},
+  {f:'ABC 04',d:'15 MAR 27',w:'SPRING BLOOM',s:'12',st:'OPEN',  date:'15 – 21 Mar 2027',short:'15 Mar 2027',fx:'petals'},
+  {f:'-- --', d:'APR – SEP', w:'MONSOON',     s:'--',st:'CLOSED',fx:'rain'}
 ];
 const OPEN_DEPS=DEPARTURES.filter(x=>x.st==='OPEN');
 const board=document.getElementById('board');
@@ -1877,6 +1880,7 @@ if(board){
     const open=dep.st==='OPEN';
     const row=document.createElement(open?'button':'div');
     row.className='dep '+(open?'dep--row':'dep--closed');
+    if(dep.fx)row.dataset.fx=dep.fx;
     if(open){row.type='button';row.setAttribute('aria-pressed','false');row.dataset.date=dep.date;row.setAttribute('aria-label','Reserve the '+dep.date+' cohort');}
     let pos=0;
     COLS.forEach(col=>{
@@ -1920,6 +1924,63 @@ if(board){
     const row=e.target.closest('.dep--row[data-date]');if(!row)return;
     Booking.select(row.dataset.date,{reveal:true});
   });
+
+  /* ===== departure ambience — hovering a cohort washes the screen with that season ===== */
+  if(!reduce){
+    const cv=document.createElement('canvas');cv.id='depFx';cv.setAttribute('aria-hidden','true');document.body.appendChild(cv);
+    const ctx=cv.getContext('2d');const dpr=Math.min(2,window.devicePixelRatio||1);
+    let W=innerWidth,H=innerHeight;
+    function size(){W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);}
+    size();addEventListener('resize',size,{passive:true});
+    const rnd=(a,b)=>a+Math.random()*(b-a);
+    const TH={
+      /* post-monsoon: still, golden dust rising in clear air */
+      motes:{wash:'rgba(217,162,59,.045)',rate:1,cap:64,spawn:()=>({shape:'dot',x:rnd(0,W),y:H+10,r:rnd(.8,2.2),vx:rnd(-.2,.2),vy:-rnd(.15,.55),sway:rnd(0,6.28),sw:rnd(.006,.02),a:rnd(.25,.5),col:Math.random()<.5?'217,162,59':'235,231,219'})},
+      /* clear skies: crisp, cool specks that twinkle */
+      stars:{wash:'rgba(144,204,190,.04)',rate:1.4,cap:90,spawn:()=>({shape:'star',x:rnd(0,W),y:rnd(0,H),r:rnd(.6,1.6),vx:0,vy:-rnd(.04,.18),tw:rnd(0,6.28),tsp:rnd(.02,.05),a:rnd(.25,.7),col:'207,243,232'})},
+      /* winter / late winter: windswept snowfall */
+      snow:{wash:'rgba(150,180,205,.05)',rate:2.4,cap:130,spawn:()=>({shape:'dot',x:rnd(-40,W),y:-12,r:rnd(1,3),vx:rnd(-.4,1.3),vy:rnd(.7,1.8),sway:rnd(0,6.28),sw:rnd(.012,.028),a:rnd(.45,.95),col:Math.random()<.35?'255,255,255':'235,231,219'})},
+      /* spring bloom: rhododendron petals fluttering down */
+      petals:{wash:'rgba(205,120,150,.05)',rate:1.3,cap:66,spawn:()=>({shape:'petal',x:rnd(0,W),y:-14,r:rnd(3,6),vx:rnd(-.5,.7),vy:rnd(.8,1.7),rot:rnd(0,6.28),vr:rnd(-.05,.05),sway:rnd(0,6.28),sw:rnd(.02,.035),a:rnd(.5,.85),col:Math.random()<.22?'217,162,59':'224,150,176'})},
+      /* monsoon: fast, slanted rain */
+      rain:{wash:'rgba(120,150,170,.06)',rate:5,cap:170,spawn:()=>({shape:'rain',x:rnd(-W*.05,W*1.05),y:-24,len:rnd(10,26),vx:1.4,vy:rnd(9,15),a:rnd(.2,.5),col:'165,205,210'})}
+    };
+    let parts=[],cur=null,active=false,raf=0;
+    function step(){
+      raf=requestAnimationFrame(step);
+      ctx.clearRect(0,0,W,H);
+      const th=cur&&TH[cur];
+      if(active&&th){
+        ctx.fillStyle=th.wash;ctx.fillRect(0,0,W,H);
+        let s=th.rate;while(s-->0&&parts.length<th.cap)parts.push(th.spawn());
+      }
+      for(let i=parts.length-1;i>=0;i--){
+        const p=parts[i];
+        if(p.shape==='rain'){p.x+=p.vx;p.y+=p.vy;}
+        else if(p.shape==='star'){p.y+=p.vy;p.tw+=p.tsp;}
+        else{p.sway+=p.sw;p.x+=p.vx+Math.sin(p.sway)*.7;p.y+=p.vy;if(p.vr!=null)p.rot+=p.vr;}
+        if(!active)p.a-=.014;
+        let al=p.shape==='star'?p.a*(.35+.65*(.5+.5*Math.sin(p.tw))):p.a;
+        if(al<=0||p.y>H+40||p.x<-80||p.x>W+80){parts.splice(i,1);continue;}
+        ctx.globalAlpha=al<0?0:al>1?1:al;
+        ctx.fillStyle='rgb('+p.col+')';ctx.strokeStyle='rgb('+p.col+')';
+        if(p.shape==='rain'){ctx.lineWidth=1.1;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x-p.vx*1.4,p.y-p.len);ctx.stroke();}
+        else if(p.shape==='petal'){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.beginPath();ctx.ellipse(0,0,p.r,p.r*.52,0,0,6.283);ctx.fill();ctx.restore();}
+        else{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);ctx.fill();}
+      }
+      ctx.globalAlpha=1;
+      if(!active&&!parts.length){cancelAnimationFrame(raf);raf=0;}
+    }
+    const activate=fx=>{if(!TH[fx])return;cur=fx;active=true;cv.classList.add('on');if(!raf)raf=requestAnimationFrame(step);};
+    const deactivate=()=>{active=false;cv.classList.remove('on');};
+    board.querySelectorAll('.dep--row,.dep--closed').forEach(r=>{
+      const fx=r.dataset.fx;if(!fx)return;
+      r.addEventListener('mouseenter',()=>activate(fx));
+      r.addEventListener('mouseleave',deactivate);
+      r.addEventListener('focus',()=>activate(fx));
+      r.addEventListener('blur',deactivate);
+    });
+  }
 }
 /* custom-journey pickers (neobrutalism) */
 const ccQty=document.getElementById('ccQty'),ccMonth=document.getElementById('ccMonth');
@@ -1967,14 +2028,14 @@ const dio=new IntersectionObserver(es=>{es.forEach(e=>{
     hudTk.style.width=((idx+1)/7*100)+'%';
   }else liveSet.delete(e.target);
 });
-  /* the HUD only appears once a day is actually being read — not during the intro heading */
+  /* the HUD only appears once a day is actually being read - not during the intro heading */
   hud.classList.toggle('on',liveSet.size>0);
 },{rootMargin:'-40% 0px -50% 0px'});
 dayEls.forEach(d=>dio.observe(d));
 dnavLinks.forEach(a=>a.addEventListener('click',e=>{e.preventDefault();
   document.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth',block:'start'})}));
 
-/* ===== expand — days 2–7 (and their media) stay folded until asked for ===== */
+/* ===== expand - days 2–7 (and their media) stay folded until asked for ===== */
 if(daysSec){
   daysSec.classList.add('days-collapsed');
   const expandBtn=document.getElementById('expandBtn');
@@ -1990,17 +2051,17 @@ if(daysSec){
       buildJourney(!(document.documentElement.classList.contains('anim')&&window.gsap));
     }
     if(window.ScrollTrigger)ScrollTrigger.refresh();
-    /* now play the reveal — the line geometry is already locked in */
+    /* now play the reveal - the line geometry is already locked in */
     daysSec.classList.add('days-expanding');
     setTimeout(()=>daysSec.classList.remove('days-expanding'),900);
   });
 }
 
-/* ===== organic journey line — silhouette-tracing, scroll-lit ===== */
+/* ===== organic journey line - silhouette-tracing, scroll-lit ===== */
 const SVGNS='http://www.w3.org/2000/svg';
 const jSvg=document.getElementById('journey');
 const daysWrap=daysSec?daysSec.querySelector('.wrap'):null;
-/* the line itself bends into the shapes of the trek — each motif is [progress, x-offset],
+/* the line itself bends into the shapes of the trek - each motif is [progress, x-offset],
    progress strictly rising 0→1, x-offset −1..1, starting and ending at 0 so they tile cleanly */
 function mWater(){const a=[];for(let i=0;i<=30;i++){const t=i/30;a.push([t,Math.sin(t*Math.PI*4)*0.95]);}return a;}
 const MOTIF={
@@ -2011,20 +2072,20 @@ const MOTIF={
   stairs:()=>[[0,0],[0.04,0.26],[0.20,0.26],[0.24,0.52],[0.40,0.52],[0.44,0.80],[0.56,0.80],[0.60,0.55],[0.74,0.55],[0.78,0.3],[0.92,0.3],[0.96,0.06],[1,0]],
   pebbles:()=>[[0,0],[0.16,0.34],[0.32,0],[0.5,0.5],[0.68,0],[0.84,0.3],[1,0]]
 };
-/* the trek, in order — denser and more varied than before (≈4× the symbols) */
+/* the trek, in order - denser and more varied than before (≈4× the symbols) */
 const MOTIF_SEQ=['stairs','trees','trees','mountains','trees','water','stairs','mountains','peak','trees','water','stairs','mountains','trees','pebbles','water'];
 let jPts=[],jLens=[],jTotal=0,jNodes=[],jHead=null,jRing=null,jLit=null,jGlow=null,jBuilt=false,jRaf=0,jFirstY=0,jCx=0,jCol=0;
 function elns(tag,attrs){const e=document.createElementNS(SVGNS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);return e}
 function buildJourney(staticMode){
   if(!jSvg||!daysWrap||!dayEls.length)return;
-  /* only trace the days currently in the layout — days 2–7 may be folded away behind the expand button */
+  /* only trace the days currently in the layout - days 2–7 may be folded away behind the expand button */
   const days=dayEls.filter(d=>d.offsetParent!==null&&d.offsetHeight>2);
   while(jSvg.firstChild)jSvg.removeChild(jSvg.firstChild);
   jPts=[];jLens=[];jNodes=[];jBuilt=false;
   if(days.length<2){daysSec.classList.remove('journeying');return}
   const col=Math.max(70,Math.min(innerWidth*0.09,120));
   const gap=Math.max(22.4,Math.min(innerWidth*0.04,57.6));
-  /* run the line in the clear band to the RIGHT of the big ghost day numbers — never over them */
+  /* run the line in the clear band to the RIGHT of the big ghost day numbers - never over them */
   const numRight=col*0.8,clearL=numRight+5,clearR=col+gap-10;
   const cx=(clearL+clearR)/2,maxA=Math.max(16,(clearR-clearL)/2),vbW=col+gap;
   const nt=Math.max(64,Math.min(innerWidth*0.074,94.4))+6;
@@ -2040,7 +2101,7 @@ function buildJourney(staticMode){
   defs.appendChild(lg);jSvg.appendChild(defs);
   const ny=days.map(d=>d.offsetTop+nt);
   jFirstY=ny[0];jCx=cx;jCol=col;
-  /* start exactly on node 1 — no stub above it — then let the line trace motif after motif */
+  /* start exactly on node 1 - no stub above it - then let the line trace motif after motif */
   const pts=[{x:cx,y:ny[0]}];
   let mi=0;
   for(let i=0;i<days.length-1;i++){
@@ -2050,7 +2111,7 @@ function buildJourney(staticMode){
       const ca=ya+segH*(c/cells),cb=ya+segH*((c+1)/cells);
       const shape=MOTIF[MOTIF_SEQ[mi%MOTIF_SEQ.length]]();
       const side=(mi%2)?-1:1;mi++;
-      for(let s=1;s<shape.length;s++){           /* skip [0] — it's the previous point */
+      for(let s=1;s<shape.length;s++){           /* skip [0] - it's the previous point */
         pts.push({x:cx+shape[s][1]*maxA*side,y:ca+(cb-ca)*shape[s][0]});
       }
     }
@@ -2105,7 +2166,7 @@ function onJourneyScroll(){if(!jRaf)jRaf=requestAnimationFrame(journeyTick)}
 /* ===== booking flow (front-end simulation) ===== */
 const Booking=(function(){
   const USD=469, RATE=95, GST=0.05, CUSTOM='__custom__';
-  /* group-size pricing (USD per person) — smaller private groups pay more */
+  /* group-size pricing (USD per person) - smaller private groups pay more */
   const TIER={1:750,2:675,3:625,4:599,5:569,6:539,7:499,8:469};
   const tierUSD=n=>n<=1?TIER[1]:(n>=8?TIER[8]:TIER[n]);
   const modal=document.getElementById('bookModal');
@@ -2143,15 +2204,15 @@ const Booking=(function(){
     if(selHold)selHold.textContent=c?('a custom journey · '+trav(customQty)+' · '+customMonth):date;
     if(reserveTitle)reserveTitle.innerHTML=c?'Design <em>your journey.</em>':'Reserve <em>your place.</em>';
     if(reserveCopy)reserveCopy.textContent=c
-      ?"A private departure shaped with your experience leader — your dates, your pace, your people. Start here and we build the rest together on a call."
-      :"One seat in a cohort of twelve. Pay in full to confirm — checkout takes about two minutes, and you're set. Cancel within seven days for a full refund; see the cancellation terms in the details above.";
+      ?"A private departure shaped with your experience leader: your dates, your pace, your people. Start here and we build the rest together on a call."
+      :"One seat in a cohort of twelve. Pay in full to confirm. Checkout takes about two minutes, and you're set. Cancel within seven days for a full refund; see the cancellation terms in the details above.";
     if(bcardEyebrow)bcardEyebrow.textContent=c?('Private journey · '+customMonth):'Annapurna Base Camp · 7 days';
     if(bookNowBtn)bookNowBtn.textContent=(c?'Start planning ':'Book now ')+'→';
   }
   function updateWa(){
     if(!actWa)return;
     const msg=isCustom()
-      ?("Hi Totemtou, I'd like to design a custom private Annapurna Base Camp journey — "+trav(customQty)+", approx "+customMonth+".")
+      ?("Hi Totemtou, I'd like to design a custom private Annapurna Base Camp journey, "+trav(customQty)+", approx "+customMonth+".")
       :"Hi Totemtou, I'm holding the "+date+" Annapurna Base Camp cohort and have a couple of questions.";
     actWa.href='https://wa.me/'+WA_NUM+'?text='+encodeURIComponent(msg);
   }
@@ -2272,7 +2333,7 @@ const Booking=(function(){
     err.textContent='';fillPay();go(3);
   };
 
-  /* razorpay mock — always charged in INR */
+  /* razorpay mock - always charged in INR */
   document.querySelectorAll('.rzp-m').forEach(m=>m.addEventListener('click',()=>{
     document.querySelectorAll('.rzp-m').forEach(x=>x.classList.remove('on'));
     m.classList.add('on');
@@ -2325,13 +2386,13 @@ const Booking=(function(){
 
 /* trail readout data */
 const stops=[
-  {t:0.00,day:'Day 1 · km 0',  place:'Pokhara → Chomrong',alt:'1,650 m',o2:'~83%',view:'We drive out along the river and lace up where the road runs out. From here to the amphitheatre and back it is on foot — I keep the first day easy on purpose.'},
-  {t:0.07,day:'Day 1 · km 2.5',place:'Chomrong',          alt:'2,170 m',o2:'~78%',view:'Our first real climb earns the ridge. Before we sleep I will point out the notch in the skyline we walk into — worth seeing what is coming.'},
-  {t:0.26,day:'Day 2 · km 12', place:'Dovan',             alt:'2,600 m',o2:'~74%',view:'We drop to cross the river low, then grind up the far side slow and steady. Past here I keep us close together; we are on ground the villages hold sacred.'},
-  {t:0.37,day:'Day 3 · km 17', place:'Deurali',           alt:'3,200 m',o2:'~68%',view:'The forest lets go and the cold arrives. Watch my pace here, not my effort — this is where the altitude starts asking real questions.'},
-  {t:0.52,day:'Day 4 · km 24', place:'Annapurna Base Camp',alt:'4,130 m',o2:'57%',view:'We walk into the bowl together and, mostly, we stop talking. My job is to get you here with air to spare — the standing still is the part you came for.'},
-  {t:0.80,day:'Day 5 · km 38', place:'Bamboo',            alt:'2,310 m',o2:'~77%',view:'The long way down is all knees, not lungs. I go first on the steep steps and set a rhythm; poles out, and we let the warmth come back around us.'},
-  {t:1.00,day:'Day 6 · km 48', place:'Jhinu Danda',       alt:'1,780 m',o2:'~82%',view:'One last drop to the springs, and I will have you soaking by mid-afternoon. Six days of trail comes out of the legs in that water — earned, all of it.'}
+  {t:0.00,day:'Day 1 · km 0',  place:'Pokhara → Chomrong',alt:'1,650 m',o2:'~83%',view:'We drive out along the river and lace up where the road runs out. From here to the amphitheatre and back, it is on foot together; we keep the first day gentle on purpose.'},
+  {t:0.07,day:'Day 1 · km 2.5',place:'Chomrong',          alt:'2,170 m',o2:'~78%',view:'Our first real climb earns the ridge. Before we sleep, we pick out the notch in the skyline we walk into together, worth seeing what is coming.'},
+  {t:0.26,day:'Day 2 · km 12', place:'Dovan',             alt:'2,600 m',o2:'~74%',view:'We drop to cross the river low, then grind up the far side slow and steady. Past here we stay close together; we are on ground the villages hold sacred.'},
+  {t:0.37,day:'Day 3 · km 17', place:'Deurali',           alt:'3,200 m',o2:'~68%',view:'The forest lets go and the cold arrives. We hold our pace here, not our effort; this is where the altitude starts asking real questions.'},
+  {t:0.52,day:'Day 4 · km 24', place:'Annapurna Base Camp',alt:'4,130 m',o2:'57%',view:'We walk into the bowl together and, mostly, we stop talking. We arrive here with air to spare; the standing still is the part we came for.'},
+  {t:0.80,day:'Day 5 · km 38', place:'Bamboo',            alt:'2,310 m',o2:'~77%',view:'The long way down is all knees, not lungs. We set a steady rhythm on the steep steps, poles out, and let the warmth come back around us.'},
+  {t:1.00,day:'Day 6 · km 48', place:'Jhinu Danda',       alt:'1,780 m',o2:'~82%',view:'One last drop to the springs, and we are soaking by mid-afternoon. Six days of trail come out of the legs in that water, earned by all of us.'}
 ];
 const ro={day:roDayEl('roDay'),place:roDayEl('roPlace'),alt:roDayEl('roAlt'),o2:roDayEl('roO2'),view:roDayEl('roView')};
 function roDayEl(id){return document.getElementById(id)}
@@ -2452,7 +2513,7 @@ document.querySelectorAll('.fimg img,.fimg video,.dimg img,.dimg video,.leader .
 /* interlude video parallax */
 gsap.fromTo('.interlude video',{yPercent:-8},{yPercent:8,ease:'none',scrollTrigger:{trigger:'.interlude',start:'top bottom',end:'bottom top',scrub:true}});
 
-/* SIGNATURE — pinned trail scrub */
+/* SIGNATURE - pinned trail scrub */
 const isDesktop=matchMedia('(min-width: 881px)').matches;
 const drawState={p:0};
 gsap.set(path,{strokeDasharray:total,strokeDashoffset:total});
@@ -2482,7 +2543,7 @@ document.querySelectorAll('.day .dn').forEach(dn=>{
   gsap.from(dn,{opacity:0,x:-14,duration:.9,ease:'power3.out',scrollTrigger:{trigger:dn.closest('.day'),start:'top 80%'}});
 });
 
-/* organic journey line — build interactive, light days as it travels */
+/* organic journey line - build interactive, light days as it travels */
 if(jSvg&&daysWrap&&!matchMedia('(max-width:640px)').matches){
   buildJourney(false);
   addEventListener('scroll',onJourneyScroll,{passive:true});
@@ -2495,7 +2556,7 @@ if(jSvg&&daysWrap&&!matchMedia('(max-width:640px)').matches){
   },220)});
 }
 
-/* ===== connective bridge — one glowing walker from the map into the days ===== */
+/* ===== connective bridge - one glowing walker from the map into the days ===== */
 const bridge=document.getElementById('bridge');
 const elMarker=document.getElementById('marker'),elSpine=document.querySelector('.spine-lead'),
       elProfile=document.querySelector('.profile'),elIti=document.querySelector('.iti');
@@ -2506,7 +2567,7 @@ if(bridge&&daysWrap&&isDesktop&&elMarker&&elSpine&&elProfile&&elIti){
   const bvb=()=>bridge.setAttribute('viewBox','0 0 '+innerWidth+' '+innerHeight);
   bvb();
   const f=n=>n.toFixed(1);
-  /* a deliberate, surveyed route — orthogonal, on a single flat plane, kept in clear channels:
+  /* a deliberate, surveyed route - orthogonal, on a single flat plane, kept in clear channels:
      down from Jhinu, one watershed rule across the chapter break, down the outer-left margin,
      then a short intake onto day 1's node where the journey line takes over. */
   function bWaypoints(){
@@ -2520,12 +2581,12 @@ if(bridge&&daysWrap&&isDesktop&&elMarker&&elSpine&&elProfile&&elIti){
     const nodeX=wr.left+jCx,nodeY=wr.top+jFirstY;
     const stepY=Math.max(turnY+44,nodeY-56);
     return [
-      {x:mx,y:my},                /* Jhinu — end of the trail line */
+      {x:mx,y:my},                /* Jhinu - end of the trail line */
       {x:mx,y:turnY},             /* straight down, just clear of the chart */
       {x:gx,y:turnY},             /* turn left before the legend, across to the margin */
       {x:gx,y:stepY},             /* down the outer-left margin */
       {x:nodeX,y:stepY},          /* intake toward day 1 */
-      {x:nodeX,y:nodeY}           /* land on day 1 — the journey line takes over */
+      {x:nodeX,y:nodeY}           /* land on day 1 - the journey line takes over */
     ];
   }
   /* straight orthogonal segments with lightly rounded corners */
@@ -2556,7 +2617,7 @@ if(bridge&&daysWrap&&isDesktop&&elMarker&&elSpine&&elProfile&&elIti){
   }
   function bridgeTick(){
     const startPx=trailTl.scrollTrigger.end;
-    /* end exactly where the days' head-dot reaches node 1 — same basis as journeyTick */
+    /* end exactly where the days' head-dot reaches node 1 - same basis as journeyTick */
     const endPx=daysWrap.getBoundingClientRect().top+scrollY+jFirstY-innerHeight*0.5;
     if(endPx<=startPx){bridge.style.opacity=0;return}
     const t=(scrollY-startPx)/(endPx-startPx);
