@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Spline+Sans+Mono:wght@300..700&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add('js');if(matchMedia('(prefers-reduced-motion: no-preference)').matches)document.documentElement.classList.add('anim');</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
 :root{
   --ink-0:#0B1410; --ink-1:#101D17; --ink-2:#15261E;
@@ -651,6 +652,23 @@ footer{padding:2.2rem 0;border-top:1px solid var(--line);background:var(--ink-1)
 .mnext{margin-top:.4rem}
 .mstep-fine{font-size:.78rem;color:var(--bone-3);font-style:italic;text-align:center;margin-top:.9rem;line-height:1.5}
 .mstep-err{color:#E6A19A;font:500 .8rem var(--f-mono);letter-spacing:.02em;min-height:1.1em;margin-bottom:.4rem}
+/* auth gate — sign in before the booking flow */
+.auth-gate{display:none;animation:mfade .45s var(--ease)}
+.auth-gate.on{display:block}
+.auth-gate .auth-sub{margin:.7rem 0 1.8rem;color:var(--bone-2);font-size:.95rem;line-height:1.6}
+.auth-btn{display:flex;align-items:center;justify-content:center;gap:.85rem;width:100%;padding:1em 1.3em;border:1px solid var(--line);border-radius:12px;background:rgba(235,231,219,.04);color:var(--bone);font:500 .95rem/1 var(--f-disp);cursor:pointer;transition:border-color .3s,background .3s,transform .2s;margin-bottom:.7rem}
+.auth-btn:hover{border-color:var(--river);background:rgba(144,204,190,.06)}
+.auth-btn:active{transform:scale(.99)}
+.auth-btn svg{width:20px;height:20px;flex:none}
+.auth-btn.busy{opacity:.6;pointer-events:none}
+.auth-strava{background:#FC4C02;border-color:#FC4C02;color:#fff}
+.auth-strava:hover{background:#E24500;border-color:#E24500}
+.auth-divider{display:flex;align-items:center;gap:.9rem;margin:1.1rem 0;color:var(--bone-3);font:500 .58rem var(--f-mono);letter-spacing:.2em;text-transform:uppercase}
+.auth-divider::before,.auth-divider::after{content:"";flex:1;height:1px;background:var(--line)}
+.auth-hold{padding:.9rem 1rem;border:1px dashed var(--line);border-radius:10px;margin-bottom:1.4rem;font:500 .68rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--bone-2)}
+.auth-hold b{color:var(--river);font-weight:500}
+.signed-in{display:inline-flex;align-items:center;gap:.5rem;padding:.55em 1em;margin:0 0 1.4rem;border:1px solid rgba(144,204,190,.35);border-radius:99px;background:rgba(144,204,190,.08);font:500 .68rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--river)}
+.signed-in b{color:var(--bone);font-weight:500;text-transform:none;letter-spacing:.02em}
 .linkbtn{background:none;border:0;color:var(--river);cursor:pointer;font:inherit;text-decoration:underline;text-underline-offset:2px;padding:0}
 /* otp */
 .otp{display:flex;gap:.6rem;justify-content:space-between;margin:.4rem 0 1rem}
@@ -1648,10 +1666,27 @@ body.modal-open{overflow:hidden}
     </div>
 
     <div class="modal-body">
+      <!-- AUTH GATE — shown only when the user isn't signed in -->
+      <section class="auth-gate" id="authGate" aria-labelledby="authTitle">
+        <h3 id="authTitle" class="mstep-h">Save your seat.</h3>
+        <p class="auth-sub">Sign in so we can hold your intent and pick up where you leave off. One tap; we never post anything to your account.</p>
+        <p class="auth-hold" id="authHold">Holding · <b id="authHoldDate">-</b></p>
+        <button class="auth-btn" id="authGoogle" type="button">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          Continue with Google
+        </button>
+        <button class="auth-btn auth-strava" id="authStrava" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.599h4.172L10.463 0l-7 13.828h4.172"/></svg>
+          Continue with Strava
+        </button>
+        <p class="mstep-err" id="errAuth"></p>
+        <p class="mstep-fine">Your booking intent is recorded when you sign in. Cancel anytime.</p>
+      </section>
       <!-- STEP 0: details -->
       <section class="mstep on" id="step0">
         <h3 id="mTitle" class="mstep-h">Who's coming along?</h3>
         <p class="mstep-sub" id="mDepLine">Departure · <b>-</b></p>
+        <p class="signed-in" id="signedIn" hidden>✓ Signed in as <b id="signedInEmail"></b></p>
         <div class="mfield"><label for="mName">Full name</label><input id="mName" autocomplete="name" placeholder="As on your passport"></div>
         <div class="mfield"><label for="mEmail">Email</label><input id="mEmail" type="email" autocomplete="email" placeholder="you@email.com"></div>
         <div class="mfield mfield-phone">
@@ -2164,6 +2199,31 @@ function journeyTick(){
 function onJourneyScroll(){if(!jRaf)jRaf=requestAnimationFrame(journeyTick)}
 
 /* ===== booking flow (front-end simulation) ===== */
+/* ===== auth (Supabase) — Google native, Strava via Edge Function ===== */
+const SB_URL='https://isaxaudiijfnupugajxh.supabase.co';
+const SB_KEY='sb_publishable_Sv9qgr9aA5bMzJ8mJpItMQ_JZJFtcDk';
+const STRAVA_CLIENT_ID=window.STRAVA_CLIENT_ID||''; /* set window.STRAVA_CLIENT_ID before this script, or edit inline */
+const STRAVA_EDGE_URL=SB_URL+'/functions/v1/strava-exchange';
+const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,detectSessionInUrl:true}}):null;
+const INTENT_KEY='tt.intent';
+async function currentUser(){if(!sb)return null;try{const {data}=await sb.auth.getUser();return data.user||null;}catch(_){return null;}}
+async function recordIntent(user,extra){
+  if(!sb||!user)return;
+  const p=(sessionStorage.getItem(INTENT_KEY)?JSON.parse(sessionStorage.getItem(INTENT_KEY)):{})||{};
+  try{
+    await sb.from('booking_intents').insert({
+      user_id:user.id,
+      email:user.email||null,
+      provider:(user.app_metadata&&user.app_metadata.provider)||'unknown',
+      journey:'Annapurna Base Camp',
+      departure:p.isCustom?('Custom · '+(p.customMonth||'flexible')):p.date||null,
+      travellers:p.isCustom?p.customQty:p.qty,
+      status:(extra&&extra.status)||'signed_in',
+      booking_ref:(extra&&extra.ref)||null
+    });
+  }catch(e){console.warn('booking_intents insert failed',e);}
+}
+
 const Booking=(function(){
   const USD=469, RATE=95, GST=0.05, CUSTOM='__custom__';
   /* group-size pricing (USD per person) - smaller private groups pay more */
@@ -2246,15 +2306,64 @@ const Booking=(function(){
     if(focusEl)setTimeout(()=>focusEl.focus({preventScroll:true}),80);
   }
 
-  function open(){
+  async function open(){
     lastFocus=document.activeElement;
     $('mDepLine').innerHTML=isCustom()?('Custom journey · <b>'+customMonth+'</b>'):'Departure · <b>'+date+'</b>';
     resetForms();
     if(isCustom()){qty=Math.max(1,Math.min(12,customQty));$('mQty').textContent=qty;syncQty();}
     modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open');
     if(barSync)barSync();
-    go(0);
+    /* gate on auth: if not signed in, show the auth gate; otherwise straight to details */
+    const user=await currentUser();
+    const gate=$('authGate');
+    if(user){
+      if(gate){gate.classList.remove('on');gate.style.display='';}
+      if(user.user_metadata){
+        const nm=user.user_metadata.full_name||user.user_metadata.name||user.user_metadata.firstname||'';
+        if(nm&&!$('mName').value)$('mName').value=nm;
+      }
+      if(user.email&&!$('mEmail').value)$('mEmail').value=user.email;
+      const chip=$('signedIn');if(chip){$('signedInEmail').textContent=user.email||'—';chip.hidden=false;}
+      go(0);
+    }else{
+      const chip=$('signedIn');if(chip)chip.hidden=true;
+      steps.forEach(s=>s.classList.remove('on'));
+      if(gate){gate.classList.add('on');gate.style.display='block';}
+      $('authHoldDate').textContent=isCustom()?('custom · '+customMonth):date;
+      $('mCrumb').textContent='Sign in to continue';
+      $('mSteps').style.visibility='hidden';
+    }
   }
+  function stashIntent(){
+    sessionStorage.setItem(INTENT_KEY,JSON.stringify({date,qty,customQty,customMonth,isCustom:isCustom()}));
+  }
+  function restoreIntent(){
+    const raw=sessionStorage.getItem(INTENT_KEY);if(!raw)return null;
+    try{const s=JSON.parse(raw);select(s.isCustom?CUSTOM:s.date,{qty:s.customQty,month:s.customMonth,silent:true});if(!s.isCustom&&s.qty){qty=s.qty;syncQty();}return s;}catch(_){return null;}
+  }
+  /* auth buttons */
+  const gErr=()=>$('errAuth');
+  const bGoogle=$('authGoogle'),bStrava=$('authStrava');
+  if(bGoogle)bGoogle.onclick=async()=>{
+    gErr().textContent='';
+    if(!sb){gErr().textContent='Auth is unavailable. Please try again.';return;}
+    stashIntent();
+    bGoogle.classList.add('busy');
+    const {error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+location.pathname+'?book=1'}});
+    if(error){bGoogle.classList.remove('busy');gErr().textContent=error.message||'Could not start Google sign-in.';}
+  };
+  if(bStrava)bStrava.onclick=()=>{
+    gErr().textContent='';
+    if(!STRAVA_CLIENT_ID){gErr().textContent='Strava is not configured yet. Please use Google for now.';return;}
+    stashIntent();
+    bStrava.classList.add('busy');
+    const redirect=location.origin+location.pathname;
+    location.href='https://www.strava.com/oauth/authorize'
+      +'?client_id='+encodeURIComponent(STRAVA_CLIENT_ID)
+      +'&response_type=code&approval_prompt=auto&scope=read'
+      +'&redirect_uri='+encodeURIComponent(redirect)
+      +'&state=tt-book';
+  };
   function close(){
     modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.classList.remove('modal-open');
     if(otpTimer){clearInterval(otpTimer);otpTimer=null;}
@@ -2342,12 +2451,14 @@ const Booking=(function(){
   $('rzpPay').onclick=function(){
     if(this.disabled)return;
     this.classList.add('paying');this.textContent='Processing…';
-    setTimeout(()=>{
+    setTimeout(async()=>{
       const ref='TT–ABC–'+String(Math.floor(100000+Math.random()*900000));
       $('doneDep').textContent=isCustom()?'custom journey':date;
       $('doneEmail').textContent=$('mEmail').value.trim();
       $('doneRef').textContent=ref;
       go(4);
+      /* update the booking_intent to confirmed */
+      const u=await currentUser();if(u)recordIntent(u,{status:'paid',ref});
     },1400);
   };
 
@@ -2380,6 +2491,47 @@ const Booking=(function(){
 
   /* default: next departure is held in the floating bar (no reveal, no board press) */
   select(date,{silent:true});
+
+  /* ===== OAuth callback pickup ===== */
+  async function waitForUser(tries){
+    tries=tries||14; /* ~2.1s worst case */
+    for(let i=0;i<tries;i++){
+      const u=await currentUser();
+      if(u)return u;
+      await new Promise(r=>setTimeout(r,150));
+    }
+    return null;
+  }
+  (async function pickupOAuth(){
+    if(!sb)return;
+    const params=new URLSearchParams(location.search);
+    /* Google (Supabase native): we tag the redirect with ?book=1; the auth tokens
+       arrive in the URL hash and Supabase parses them via detectSessionInUrl. */
+    if(params.get('book')==='1'){
+      const user=await waitForUser();
+      params.delete('book');
+      const q=params.toString();
+      history.replaceState(null,'',location.pathname+(q?('?'+q):''));
+      if(user){restoreIntent();recordIntent(user,{status:'signed_in'});open();}
+      else{console.warn('Google auth: no session on return');}
+      return;
+    }
+    /* Strava callback: ?code=…&state=tt-book — exchange via Supabase Edge Function */
+    if(params.get('state')==='tt-book'&&params.get('code')){
+      const code=params.get('code');
+      history.replaceState(null,'',location.pathname);
+      try{
+        const r=await fetch(STRAVA_EDGE_URL,{method:'POST',headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY},body:JSON.stringify({code})});
+        if(!r.ok)throw new Error('Strava exchange failed ('+r.status+')');
+        const j=await r.json();
+        if(j&&j.session&&j.session.access_token&&j.session.refresh_token){
+          await sb.auth.setSession({access_token:j.session.access_token,refresh_token:j.session.refresh_token});
+        }
+        const u=await currentUser();
+        if(u){restoreIntent();recordIntent(u,{status:'signed_in'});open();}
+      }catch(e){console.warn('Strava callback failed',e);}
+    }
+  })();
 
   return {open,close,select,setCurrency};
 })();
