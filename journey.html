@@ -485,9 +485,10 @@ details.faq p{padding:0 0 1.25rem;font-size:.95rem;line-height:1.65;color:var(--
 @keyframes pcin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media(max-width:700px){.prep-track{grid-template-columns:repeat(7,minmax(46px,1fr))}.prep{overflow:hidden}.prep-card{grid-template-columns:1fr;min-height:0}.prep-card .big{font-size:3rem}}
 /* split-flap departures board */
-.board-wrap{margin:3rem 0 1.4rem;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.board-wrap{position:relative;margin:3rem 0 1.4rem;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .board-wrap::-webkit-scrollbar{display:none}
-.board{--fw:1.16rem;--fg:.2rem;min-width:min-content;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,#0d1712,#090e0b);padding:clamp(1.2rem,2.6vw,2rem);box-shadow:inset 0 1px 0 rgba(235,231,219,.05),0 24px 60px rgba(0,0,0,.45)}
+.board{position:relative;--fw:1.16rem;--fg:.2rem;min-width:min-content;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,#0d1712,#090e0b);padding:clamp(1.2rem,2.6vw,2rem);box-shadow:inset 0 1px 0 rgba(235,231,219,.05),0 24px 60px rgba(0,0,0,.45);overflow:hidden;isolation:isolate}
+.board>*{position:relative;z-index:2}
 .board-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-bottom:1rem;margin-bottom:1.1rem;border-bottom:1px solid var(--line)}
 .bt-title{font:500 .68rem var(--f-mono);letter-spacing:.24em;text-transform:uppercase;color:var(--river);display:flex;align-items:center;gap:.6rem}
 .bt-title::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--river);box-shadow:0 0 9px var(--river)}
@@ -497,19 +498,24 @@ details.faq p{padding:0 0 1.25rem;font-size:.95rem;line-height:1.65;color:var(--
 .dep{display:flex;gap:clamp(.8rem,1.7vw,1.6rem);align-items:center;width:100%;text-align:left}
 .dep--head{padding-bottom:.7rem;margin-bottom:.55rem;border-bottom:1px dashed rgba(235,231,219,.13)}
 .dep--head .hl{font:500 .56rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-3);flex:none;width:calc(var(--n)*var(--fw) + (var(--n) - 1)*var(--fg))}
-button.dep{border:0;background:none;color:inherit;border-radius:10px;padding:.5rem .55rem;margin:0 -.55rem;cursor:pointer;transition:background .3s,box-shadow .3s}
-button.dep:hover{background:rgba(144,204,190,.06)}
+button.dep{border:0;background:none;color:inherit;border-radius:10px;padding:.5rem .55rem;margin:0 -.55rem;cursor:pointer;transition:background .18s,box-shadow .18s}
+button.dep:hover{background:rgba(144,204,190,.08)}
+button.dep[data-peak]:hover{background:rgba(217,162,59,.09)}
+button.dep[data-winter]:hover{background:rgba(180,205,215,.09)}
 button.dep[aria-pressed="true"]{background:rgba(144,204,190,.1);box-shadow:inset 0 0 0 1px rgba(144,204,190,.45)}
+button.dep[data-winter][aria-pressed="true"]{background:rgba(180,205,215,.12);box-shadow:inset 0 0 0 1px rgba(180,205,215,.5)}
 .dep--closed{padding:.5rem .55rem;opacity:.4;cursor:default}
-/* seasonal ambience — themed particle wash on departure hover */
-#depFx{position:fixed;inset:0;z-index:55;pointer-events:none;opacity:0;transition:opacity .6s var(--ease)}
-#depFx.on{opacity:1}
+/* seasonal ambience — contained particle wash on departure hover */
+.dep-fx{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;transition:opacity .5s var(--ease);border-radius:inherit}
+.dep-fx.on{opacity:1}
 .field{display:flex;gap:var(--fg);flex:none;width:calc(var(--n)*var(--fw) + (var(--n) - 1)*var(--fg))}
 .flap{position:relative;display:grid;place-items:center;width:var(--fw);height:1.92rem;flex:none;font:700 1.06rem/1 var(--f-mono);color:var(--bone);background:linear-gradient(180deg,#3a4a41 0%,#2b3831 49%,#131c17 51%,#1e2822 100%);border-radius:3px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.55),inset 0 1px 0 rgba(235,231,219,.07);overflow:hidden;will-change:transform;text-shadow:0 1px 2px rgba(0,0,0,.55)}
 .flap::after{content:"";position:absolute;left:2px;right:2px;top:50%;height:1px;background:rgba(0,0,0,.42);transform:translateY(-.5px)}
 .flap--amber{color:#F1C069}
 .flap--open{color:#A9E2D4}
 .flap--closed{color:var(--bone-3)}
+.flap--peak{color:#F1C069}
+.flap--winter{color:#B7D4C8}
 .board-hint{font:500 .62rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-3);text-align:center;margin-bottom:2.4rem}
 @media(max-width:760px){.board{--fw:1rem;--fg:.15rem}.flap{font-size:.9rem;height:1.68rem}}
 
@@ -669,6 +675,16 @@ footer{padding:2.2rem 0;border-top:1px solid var(--line);background:var(--ink-1)
 .auth-hold b{color:var(--river);font-weight:500}
 .signed-in{display:inline-flex;align-items:center;gap:.5rem;padding:.55em 1em;margin:0 0 1.4rem;border:1px solid rgba(144,204,190,.35);border-radius:99px;background:rgba(144,204,190,.08);font:500 .68rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--river)}
 .signed-in b{color:var(--bone);font-weight:500;text-transform:none;letter-spacing:.02em}
+/* back button inside a step */
+.mback{display:inline-flex;align-items:center;gap:.4rem;margin:-.4rem 0 1rem -.5rem;padding:.45em .8em;background:none;border:0;color:var(--bone-2);font:500 .62rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border-radius:99px;transition:color .3s,background .3s}
+.mback:hover{color:var(--river);background:rgba(144,204,190,.06)}
+/* WhatsApp help link on OTP screen */
+.otp-help{display:flex;align-items:center;gap:.7rem;margin-top:1.2rem;padding:.9em 1em;border:1px solid var(--line);border-radius:12px;color:var(--bone-2);font-size:.85rem;line-height:1.4;transition:border-color .3s,background .3s}
+.otp-help:hover{border-color:rgba(37,211,102,.55);background:rgba(37,211,102,.05);color:var(--bone)}
+.otp-help svg{width:22px;height:22px;flex:none}
+.otp-help b{color:var(--bone);font-weight:500}
+/* Verify pip is hidden once the phone has been verified */
+#mSteps.verified .ms[data-s="1"]{display:none}
 .linkbtn{background:none;border:0;color:var(--river);cursor:pointer;font:inherit;text-decoration:underline;text-underline-offset:2px;padding:0}
 /* otp */
 .otp{display:flex;gap:.6rem;justify-content:space-between;margin:.4rem 0 1rem}
@@ -770,6 +786,9 @@ body.modal-open{overflow:hidden}
 .nb-stepper input:focus{outline:none}
 .nb-select{border:2px solid var(--bone);border-radius:3px;box-shadow:3px 3px 0 var(--marigold);background:var(--ink-0);color:var(--bone);font:600 .82rem var(--f-mono);letter-spacing:.03em;padding:.7em 2.3em .7em .85em;appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23D9A23B' stroke-width='1.4' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .8em center}
 .nb-select:focus{outline:none}
+.cc-hint{margin:.1rem 0 -.2rem;font:500 .72rem/1.4 var(--f-mono);letter-spacing:.02em;color:#B7D4C8;display:inline-flex;align-items:center;gap:.5rem}
+.cc-hint::before{content:"❄";color:#B7D4C8;font-size:.85rem;line-height:1}
+.cc-hint[hidden]{display:none}
 .cc-go{align-self:flex-start;margin-top:.4rem;border:2px solid var(--bone);border-radius:3px;background:var(--marigold);color:var(--ink-0);box-shadow:4px 4px 0 var(--bone);font:600 .68rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;padding:.9em 1.5em;cursor:pointer;display:inline-flex;align-items:center;gap:.6rem;transition:transform .15s var(--ease),box-shadow .15s var(--ease)}
 .cc-go:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--bone)}
 .cc-go:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--bone)}
@@ -1327,7 +1346,7 @@ body.modal-open{overflow:hidden}
         </div>
       </div>
       <figure class="grade-vid rv" id="gradeVidWrap">
-        <video id="gradeVid" src="https://storage.zopuai.com/video-conversions/converted-1782705502868-BVNE.webm" loop playsinline preload="auto" aria-label="On the trail into the Annapurna Sanctuary"></video>
+        <video id="gradeVid" src="https://storage.zopuai.com/video-conversions/converted-1782705502868-BVNE.webm" autoplay muted loop playsinline preload="auto" aria-label="On the trail into the Annapurna Sanctuary"></video>
         <span class="vid-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 7a8 8 0 0 1 0 10"/></svg>Tap for sound</span>
       </figure>
     </div>
@@ -1358,7 +1377,6 @@ body.modal-open{overflow:hidden}
   <div class="wrap">
     <p class="eyebrow">Good to know</p>
     <h2 class="h2 rv">Everything you <em>need to know.</em></h2>
-    <p class="lede rv" style="margin-top:1.4rem">Everything you would otherwise dig through a dozen pages for: costs, kit, getting there, the fine print. Pick a tab.</p>
     <div class="gtk-wrap rv">
       <div class="gtk-tabs" role="tablist" aria-label="Practical detail">
         <button class="gtab" role="tab" aria-selected="true" data-tab="reach" id="gt-reach"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>Getting there</button>
@@ -1381,18 +1399,20 @@ body.modal-open{overflow:hidden}
         </div>
         <!-- COST -->
         <div class="gpanel" data-panel="cost" role="tabpanel" aria-labelledby="gt-cost" hidden>
-          <p class="gprice"><span>From</span>$469.00<small>per person · twin-share</small></p>
+          <p class="gprice"><span>From</span>$469.00<small>per person · shared teahouse · winter departures from $600</small></p>
           <div class="cost-cols">
             <div class="cost-col inc">
               <h4>Included</h4>
               <ul>
                 <li>Six nights' teahouse accommodation on the trail</li>
                 <li>All meals on the trek: breakfast, lunch, dinner, tea</li>
+                <li>A community dinner on the last day of the trek in Pokhara</li>
                 <li>Ground transport from and back to Pokhara</li>
+                <li>Hot showers, charging and wifi on the trail</li>
                 <li>ACAP and TIMS permits, arranged for you</li>
                 <li>Licensed lead guide and porters</li>
-                <li>Group medical kit, oximeter and emergency oxygen on the trail</li>
-                <li>Rescue and evacuation insurance for the trek</li>
+                <li>Group medical kit and oximeter on the trail</li>
+                <li>Travel insurance for the trek</li>
                 <li>Six weeks of preparation: calls, training plan, gear list</li>
               </ul>
             </div>
@@ -1403,7 +1423,7 @@ body.modal-open{overflow:hidden}
                 <li>Nights and meals in Pokhara, before and after</li>
                 <li>Trip-cancellation and baggage insurance (recommended)</li>
                 <li>Personal gear and any rentals in Pokhara</li>
-                <li>Beverages, snacks, hot showers, charging and wifi on the trail</li>
+                <li>Beverages and snacks on the trail</li>
                 <li>Tips for the guide and porter team</li>
                 <li>5% government tax (GST)</li>
               </ul>
@@ -1430,12 +1450,11 @@ body.modal-open{overflow:hidden}
               <h4>In the pack</h4>
               <ul>
                 <li>30–40 L daypack with rain cover</li>
-                <li>Sleeping bag to −10 °C, rentable in Pokhara</li>
                 <li>Trekking poles</li>
                 <li>Headtorch and spare batteries</li>
                 <li>Two to three litres of water capacity, plus purification</li>
                 <li>Sunglasses, SPF 50, lip balm</li>
-                <li>Power bank; charging on the trail is paid and patchy</li>
+                <li>Power bank for backup on the trail</li>
               </ul>
             </div>
             <div class="pack-col">
@@ -1470,7 +1489,7 @@ body.modal-open{overflow:hidden}
             <li><span class="lk">ACAP permit</span><p>Annapurna Conservation Area Permit. Required, and arranged by us.</p></li>
             <li><span class="lk">TIMS card</span><p>Trekkers' Information Management System card. Required, and arranged by us.</p></li>
             <li><span class="lk">Nepal visa</span><p>On arrival at Kathmandu for most nationalities. <a href="https://www.immigration.gov.np" target="_blank" rel="noopener">immigration.gov.np ↗</a></p></li>
-            <li><span class="lk">Insurance</span><p>Rescue and evacuation on the trek is covered by us. Trip-cancellation and baggage cover is yours to arrange; we can suggest providers.</p></li>
+            <li><span class="lk">Insurance</span><p>Rescue and evacuation on the trek is covered by insurance. Trip-cancellation and baggage cover is yours to arrange; we can suggest providers.</p></li>
             <li><span class="lk">Gear rental</span><p>Sleeping bags, down jackets and poles rent cheaply in Pokhara. We send you to shops we trust.</p></li>
             <li><span class="lk">Talk to us</span><p>Questions before you apply? <a href="mailto:hello@totemtou.com">hello@totemtou.com</a></p></li>
           </ul>
@@ -1479,12 +1498,12 @@ body.modal-open{overflow:hidden}
         <div class="gpanel" data-panel="faq" role="tabpanel" aria-labelledby="gt-faq" hidden>
           <details class="faq"><summary>Do I need trekking experience?</summary><p>No. No technical skill is required, and a first multi-day trek is common on this route. What you do need is the six-week preparation and a basic cardio base, both of which we build with you.</p></details>
           <details class="faq"><summary>How fit do I need to be?</summary><p>Comfortable on five to six hours of stepped walking, several days running, carrying a light daypack. The readiness self-check earlier on this page is the honest bar.</p></details>
-          <details class="faq"><summary>Will I get altitude sickness?</summary><p>Day 4 sleeps at 4,130 m. Mild symptoms are common and usually pass with rest and water. Guides carry an oximeter and emergency oxygen, and a worsening case descends, no negotiation.</p></details>
+          <details class="faq"><summary>Will I get altitude sickness?</summary><p>Day 4 sleeps at 4,130 m. Mild symptoms are common and usually pass with rest and water. Guides carry an oximeter, and a worsening case descends, no negotiation.</p></details>
           <details class="faq"><summary>Is it safe for solo travellers and women?</summary><p>Yes. Cohorts cap at twelve, guides are licensed, and this is among the most travelled trails in Nepal. Many walk it solo and join the group on day zero.</p></details>
           <details class="faq"><summary>What is the food like?</summary><p>Teahouse cooking: dal bhat, fried potatoes, thukpa, eggs and endless tea. Above Dovan the inner sanctuary is vegetarian by long tradition.</p></details>
-          <details class="faq"><summary>Will I have phone signal?</summary><p>Patchily, and less the higher you go. Treat the week as off-grid and carry a power bank; charging is paid and slow on the trail.</p></details>
+          <details class="faq"><summary>Will I have phone signal?</summary><p>Patchily, and less the higher you go. Treat the week as off-grid and carry a power bank; charging and wifi at teahouses are included, though patchy higher up.</p></details>
           <details class="faq"><summary>When does it run?</summary><p>Two dry windows: October to November for clear skies, February to March for late winter and spring bloom. We don't run the monsoon.</p></details>
-          <details class="faq"><summary>Do I get my own room?</summary><p>On the trail it's simple twin-share teahouse rooms. A single room can sometimes be arranged lower down; higher up it cannot be guaranteed.</p></details>
+          <details class="faq"><summary>Do I get my own room?</summary><p>On the trail it's simple shared teahouse rooms, often triple or quadruple share. A single room can sometimes be arranged lower down; higher up it cannot be guaranteed.</p></details>
         </div>
       </div>
     </div>
@@ -1530,16 +1549,18 @@ body.modal-open{overflow:hidden}
               <span>Approx. month</span>
               <select id="ccMonth" class="nb-select" aria-label="Approximate month of travel">
                 <option value="Flexible dates">Flexible / not sure</option>
+                <option>Sep 2026</option>
                 <option>Oct 2026</option>
                 <option>Nov 2026</option>
                 <option>Dec 2026</option>
+                <option>Jan 2027</option>
                 <option>Feb 2027</option>
                 <option>Mar 2027</option>
-                <option>Apr 2027</option>
                 <option>Oct 2027</option>
               </select>
             </div>
           </div>
+          <p class="cc-hint" id="ccHint" hidden>Winter departures (Dec – Feb) carry a cold-weather premium.</p>
           <button class="cc-go" id="ccGo" type="button">Shape my journey <span aria-hidden="true">→</span></button>
         </div>
       </div>
@@ -1587,43 +1608,6 @@ body.modal-open{overflow:hidden}
   </div>
 </section>
 
-<!-- VIDEO TESTIMONIALS -->
-<section class="voices" id="voices" aria-label="Video testimonials">
-  <div class="wrap">
-    <div class="voices-head">
-      <p class="eyebrow">Voices from the trail</p>
-      <h2 class="h2 rv">They found <em>their totem…</em></h2>
-      <p class="lede rv" style="margin-top:1.2rem">Not reviews. Short films from people who walked it: the morning at base camp, the hot springs, the cohort that stopped being strangers.</p>
-    </div>
-    <div class="voice-grid rv">
-      <a class="voice" href="https://www.youtube.com/playlist?list=PL-totemtou-abc" target="_blank" rel="noopener">
-        <span class="voice-thumb"><img src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg" alt="" loading="lazy"><span class="voice-play"><span aria-hidden="true">▶</span></span><span class="voice-dur">2:14</span></span>
-        <span class="voice-body">
-          <span class="voice-q">“I'd never been past 3,000 m. The six weeks before mattered as much as the trail.”</span>
-          <span class="voice-who"><b>Ananya</b> · Bengaluru · Feb 2026</span>
-        </span>
-      </a>
-      <a class="voice" href="https://www.youtube.com/playlist?list=PL-totemtou-abc" target="_blank" rel="noopener">
-        <span class="voice-thumb"><img src="https://storage.zopuai.com/converted/user-UOPJ.webp" alt="" loading="lazy"><span class="voice-play"><span aria-hidden="true">▶</span></span><span class="voice-dur">3:02</span></span>
-        <span class="voice-body">
-          <span class="voice-q">“Machhapuchhre at first light. Nobody said a word for ten minutes.”</span>
-          <span class="voice-who"><b>Rohan &amp; Meera</b> · Mumbai · Mar 2026</span>
-        </span>
-      </a>
-      <a class="voice" href="https://www.youtube.com/playlist?list=PL-totemtou-abc" target="_blank" rel="noopener">
-        <span class="voice-thumb"><img src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg" alt="" loading="lazy"><span class="voice-play"><span aria-hidden="true">▶</span></span><span class="voice-dur">1:48</span></span>
-        <span class="voice-body">
-          <span class="voice-q">“Small group, real guides. It felt like walking with friends who knew the mountain.”</span>
-          <span class="voice-who"><b>Devika</b> · Delhi · Nov 2025</span>
-        </span>
-      </a>
-    </div>
-    <div class="voices-more">
-      <a class="btn" href="https://www.youtube.com/playlist?list=PL-totemtou-abc" target="_blank" rel="noopener">Watch the full playlist <span aria-hidden="true">→</span></a>
-      <span class="mono">Totemtou on YouTube</span>
-    </div>
-  </div>
-</section>
 </main>
 
 <!-- STICKY BOOKING BAR -->
@@ -1705,14 +1689,14 @@ body.modal-open{overflow:hidden}
           </div>
         </div>
         <p class="mstep-err" id="err0"></p>
-        <button class="btn btn--solid mnext" id="toVerify" type="button" style="justify-content:center;width:100%">Send verification code →</button>
-        <p class="mstep-fine">We'll text a 6-digit code to verify your number and create your booking account.</p>
+        <button class="btn btn--solid mnext" id="toVerify" type="button" style="justify-content:center;width:100%">Send WhatsApp code →</button>
+        <p class="mstep-fine">We'll message a 6-digit code to your WhatsApp to confirm the number.</p>
       </section>
 
       <!-- STEP 1: OTP -->
       <section class="mstep" id="step1">
         <h3 class="mstep-h">Verify your number</h3>
-        <p class="mstep-sub">We sent a 6-digit code to <b id="otpTo">your phone</b>. <button type="button" class="linkbtn" id="editPhone">Edit</button></p>
+        <p class="mstep-sub">We sent a 6-digit code on WhatsApp to <b id="otpTo">your phone</b>. <button type="button" class="linkbtn" id="editPhone">Edit</button></p>
         <div class="otp" id="otpInputs">
           <input class="otp-d" maxlength="1" inputmode="numeric" aria-label="Digit 1">
           <input class="otp-d" maxlength="1" inputmode="numeric" aria-label="Digit 2">
@@ -1721,14 +1705,19 @@ body.modal-open{overflow:hidden}
           <input class="otp-d" maxlength="1" inputmode="numeric" aria-label="Digit 5">
           <input class="otp-d" maxlength="1" inputmode="numeric" aria-label="Digit 6">
         </div>
-        <p class="otp-demo">Demo code · <b id="otpDemo">000000</b>, autofilled for you</p>
+        <p class="otp-demo" id="otpDemoLine">Demo code · <b id="otpDemo">000000</b>, autofilled for you</p>
         <p class="mstep-err" id="err1"></p>
         <button class="btn btn--solid mnext" id="toReview" type="button" style="justify-content:center;width:100%">Verify &amp; continue →</button>
         <p class="mstep-fine"><span id="otpTimer">Resend code in 0:30</span></p>
+        <a class="otp-help" id="otpHelp" href="#" target="_blank" rel="noopener" aria-label="Trouble receiving the code? Message us on WhatsApp.">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#25D366" d="M16.02 3.5c-6.9 0-12.5 5.6-12.5 12.5 0 2.2.6 4.3 1.6 6.15L3.5 28.5l6.5-1.7c1.78.97 3.78 1.48 5.98 1.48h.05c6.9 0 12.5-5.6 12.5-12.5S22.92 3.5 16.02 3.5zm0 22.94h-.04c-1.96 0-3.87-.52-5.52-1.5l-.4-.24-4.14 1.08 1.1-4.03-.26-.42a10.4 10.4 0 0 1-1.6-5.57c0-5.75 4.68-10.43 10.43-10.43 5.75 0 10.43 4.68 10.43 10.43-.01 5.75-4.69 10.43-10.44 10.68zm5.72-7.8c-.31-.16-1.85-.91-2.14-1.02-.29-.1-.5-.16-.71.16-.21.31-.82 1.02-1 1.23-.19.21-.37.23-.68.08-.31-.16-1.32-.49-2.51-1.55-.93-.83-1.55-1.86-1.73-2.17-.18-.31-.02-.48.14-.63.14-.14.31-.37.47-.55.16-.19.21-.32.31-.53.1-.21.05-.4-.03-.55-.08-.16-.71-1.71-.97-2.34-.25-.61-.51-.53-.7-.54-.18-.01-.4-.01-.61-.01-.21 0-.55.08-.84.4-.29.31-1.1 1.08-1.1 2.63 0 1.55 1.13 3.05 1.29 3.26.16.21 2.22 3.4 5.39 4.77.75.32 1.34.52 1.8.66.76.24 1.44.21 1.99.13.61-.09 1.85-.75 2.11-1.48.26-.73.26-1.35.18-1.48-.08-.14-.29-.21-.6-.37z"/></svg>
+          <span>Haven't received the code? <b>Message us on WhatsApp</b></span>
+        </a>
       </section>
 
       <!-- STEP 2: review / confirmation -->
       <section class="mstep" id="step2">
+        <button class="mback" type="button" data-back="0">← Edit details</button>
         <h3 class="mstep-h">Review your booking</h3>
         <div class="review">
           <div class="rv-hero">
@@ -1758,6 +1747,7 @@ body.modal-open{overflow:hidden}
 
       <!-- STEP 3: razorpay mock -->
       <section class="mstep" id="step3">
+        <button class="mback" type="button" data-back="2">← Back to review</button>
         <div class="rzp">
           <div class="rzp-head">
             <span class="rzp-logo"><span class="rzp-r">Razorpay</span></span>
@@ -1895,12 +1885,16 @@ document.querySelectorAll('video.seq').forEach(v=>{
 /* ===== split-flap departures board ===== */
 const WA_NUM='919258583023';
 const DEPARTURES=[
-  {f:'ABC 01',d:'11 OCT 26',w:'POST-MONSOON',s:'12',st:'OPEN',  date:'11 – 17 Oct 2026',short:'11 Oct 2026',fx:'motes'},
-  {f:'ABC 02',d:'08 NOV 26',w:'CLEAR SKIES', s:'12',st:'OPEN',  date:'08 – 14 Nov 2026',short:'08 Nov 2026',fx:'stars'},
-  {f:'-- --', d:'DEC – JAN', w:'WINTER SNOW', s:'--',st:'CLOSED',fx:'snow'},
-  {f:'ABC 03',d:'22 FEB 27',w:'LATE WINTER', s:'12',st:'OPEN',  date:'22 – 28 Feb 2027',short:'22 Feb 2027',fx:'snow'},
-  {f:'ABC 04',d:'15 MAR 27',w:'SPRING BLOOM',s:'12',st:'OPEN',  date:'15 – 21 Mar 2027',short:'15 Mar 2027',fx:'petals'},
-  {f:'-- --', d:'APR – SEP', w:'MONSOON',     s:'--',st:'CLOSED',fx:'rain'}
+  {f:'ABC 01',d:'25 SEP 26',w:'POST-MONSOON',s:'12',st:'OPEN',  date:'25 Sep – 01 Oct 2026',short:'25 Sep 2026',fx:'drizzle',price:469},
+  {f:'ABC 02',d:'05 OCT 26',w:'CLEARING SKY',s:'12',st:'OPEN',  date:'05 – 11 Oct 2026',      short:'05 Oct 2026',fx:'motes',price:469},
+  {f:'ABC 03',d:'15 OCT 26',w:'GOLDEN DAYS', s:'12',st:'OPEN',  date:'15 – 21 Oct 2026',      short:'15 Oct 2026',fx:'petals',price:469,peak:true},
+  {f:'ABC 04',d:'25 OCT 26',w:'STILL SKIES', s:'12',st:'OPEN',  date:'25 – 31 Oct 2026',      short:'25 Oct 2026',fx:'moon', price:469,peak:true},
+  {f:'ABC 05',d:'04 NOV 26',w:'CRISP DAWNS', s:'12',st:'OPEN',  date:'04 – 10 Nov 2026',      short:'04 Nov 2026',fx:'stars',price:469,peak:true},
+  {f:'ABC 06',d:'14 NOV 26',w:'CLEAR SKIES', s:'12',st:'OPEN',  date:'14 – 20 Nov 2026',      short:'14 Nov 2026',fx:'pines',price:469,peak:true},
+  {f:'ABC 07',d:'24 NOV 26',w:'FROSTY DAWNS',s:'12',st:'OPEN',  date:'24 – 30 Nov 2026',      short:'24 Nov 2026',fx:'wind', price:469,peak:true},
+  {f:'ABC 08',d:'04 DEC 26',w:'COOL AND DRY',s:'12',st:'OPEN',  date:'04 – 10 Dec 2026',      short:'04 Dec 2026',fx:'stars',price:469},
+  {f:'ABC 09',d:'14 DEC 26',w:'COLD NIGHTS', s:'12',st:'OPEN',  date:'14 – 20 Dec 2026',      short:'14 Dec 2026',fx:'stars',price:469},
+  {f:'ABC 10',d:'24 DEC 26',w:'HOLIDAY COLD',s:'12',st:'OPEN',  date:'24 – 30 Dec 2026',      short:'24 Dec 2026',fx:'snow', price:600,winter:true}
 ];
 const OPEN_DEPS=DEPARTURES.filter(x=>x.st==='OPEN');
 const board=document.getElementById('board');
@@ -1916,6 +1910,8 @@ if(board){
     const row=document.createElement(open?'button':'div');
     row.className='dep '+(open?'dep--row':'dep--closed');
     if(dep.fx)row.dataset.fx=dep.fx;
+    if(dep.peak)row.dataset.peak='1';
+    if(dep.winter)row.dataset.winter='1';
     if(open){row.type='button';row.setAttribute('aria-pressed','false');row.dataset.date=dep.date;row.setAttribute('aria-label','Reserve the '+dep.date+' cohort');}
     let pos=0;
     COLS.forEach(col=>{
@@ -1923,10 +1919,12 @@ if(board){
       const raw=(dep[col.k]||'');const val=(raw+' '.repeat(col.n)).slice(0,col.n);
       for(let i=0;i<col.n;i++){
         const fl=document.createElement('span');
-        fl.className='flap'+(col.cls?' '+col.cls:'')+(col.k==='st'?(open?' flap--open':' flap--closed'):'');
+        const winterFlap=dep.winter&&col.k==='w';
+        const peakFlap=dep.peak&&col.k==='w';
+        fl.className='flap'+(col.cls?' '+col.cls:'')+(col.k==='st'?(open?' flap--open':' flap--closed'):'')+(winterFlap?' flap--winter':'')+(peakFlap?' flap--peak':'');
         fl.textContent=' ';
         field.appendChild(fl);
-        flaps.push({el:fl,ch:val[i]||' ',delay:ri*150+pos*22});
+        flaps.push({el:fl,ch:val[i]||' ',delay:ri*90+pos*18});
         pos++;
       }
       row.appendChild(field);
@@ -1960,70 +1958,173 @@ if(board){
     Booking.select(row.dataset.date,{reveal:true});
   });
 
-  /* ===== departure ambience — hovering a cohort washes the screen with that season ===== */
+  /* ===== departure ambience — hovering a cohort tints the board with that season =====
+     Effects are contained to the board container (no full-screen overlay, no wash filter).
+     Switching rows cross-fades: old particles' spawn class is retired and fades in 0.5s
+     while the new class starts spawning immediately. Pointer delegation on the board
+     keeps hover reactive even across the row-to-row gaps. */
   if(!reduce){
-    const cv=document.createElement('canvas');cv.id='depFx';cv.setAttribute('aria-hidden','true');document.body.appendChild(cv);
+    const cv=document.createElement('canvas');cv.className='dep-fx';cv.setAttribute('aria-hidden','true');board.appendChild(cv);
     const ctx=cv.getContext('2d');const dpr=Math.min(2,window.devicePixelRatio||1);
-    let W=innerWidth,H=innerHeight;
-    function size(){W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);}
-    size();addEventListener('resize',size,{passive:true});
+    let W=board.clientWidth,H=board.clientHeight;
+    function size(){W=board.clientWidth;H=board.clientHeight;cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);}
+    size();
+    const ro=('ResizeObserver'in window)?new ResizeObserver(size):null;
+    if(ro)ro.observe(board);else addEventListener('resize',size,{passive:true});
     const rnd=(a,b)=>a+Math.random()*(b-a);
     const TH={
-      /* post-monsoon: still, golden dust rising in clear air */
-      motes:{wash:'rgba(217,162,59,.045)',rate:1,cap:64,spawn:()=>({shape:'dot',x:rnd(0,W),y:H+10,r:rnd(.8,2.2),vx:rnd(-.2,.2),vy:-rnd(.15,.55),sway:rnd(0,6.28),sw:rnd(.006,.02),a:rnd(.25,.5),col:Math.random()<.5?'217,162,59':'235,231,219'})},
-      /* clear skies: crisp, cool specks that twinkle */
-      stars:{wash:'rgba(144,204,190,.04)',rate:1.4,cap:90,spawn:()=>({shape:'star',x:rnd(0,W),y:rnd(0,H),r:rnd(.6,1.6),vx:0,vy:-rnd(.04,.18),tw:rnd(0,6.28),tsp:rnd(.02,.05),a:rnd(.25,.7),col:'207,243,232'})},
-      /* winter / late winter: windswept snowfall */
-      snow:{wash:'rgba(150,180,205,.05)',rate:2.4,cap:130,spawn:()=>({shape:'dot',x:rnd(-40,W),y:-12,r:rnd(1,3),vx:rnd(-.4,1.3),vy:rnd(.7,1.8),sway:rnd(0,6.28),sw:rnd(.012,.028),a:rnd(.45,.95),col:Math.random()<.35?'255,255,255':'235,231,219'})},
-      /* spring bloom: rhododendron petals fluttering down */
-      petals:{wash:'rgba(205,120,150,.05)',rate:1.3,cap:66,spawn:()=>({shape:'petal',x:rnd(0,W),y:-14,r:rnd(3,6),vx:rnd(-.5,.7),vy:rnd(.8,1.7),rot:rnd(0,6.28),vr:rnd(-.05,.05),sway:rnd(0,6.28),sw:rnd(.02,.035),a:rnd(.5,.85),col:Math.random()<.22?'217,162,59':'224,150,176'})},
+      /* dust motes: still, golden dust rising in clear air */
+      motes:{rate:1.2,cap:60,spawn:()=>({shape:'dot',x:rnd(0,W),y:H+10,r:rnd(.8,2.2),vx:rnd(-.2,.2),vy:-rnd(.18,.6),sway:rnd(0,6.28),sw:rnd(.008,.022),a:rnd(.35,.7),col:Math.random()<.5?'217,162,59':'235,231,219'})},
+      /* clear/peak skies: crisp specks that twinkle */
+      stars:{rate:1.6,cap:80,spawn:()=>({shape:'star',x:rnd(0,W),y:rnd(0,H),r:rnd(.6,1.6),vx:0,vy:-rnd(.04,.18),tw:rnd(0,6.28),tsp:rnd(.02,.05),a:rnd(.35,.85),col:'207,243,232'})},
+      /* winter: windswept snowfall */
+      snow:{rate:2.4,cap:120,spawn:()=>({shape:'dot',x:rnd(-40,W),y:-12,r:rnd(1,2.6),vx:rnd(-.4,1.3),vy:rnd(.9,1.9),sway:rnd(0,6.28),sw:rnd(.014,.03),a:rnd(.55,1),col:Math.random()<.4?'255,255,255':'235,231,219'})},
+      /* autumn petals: golden and amber, fluttering down */
+      petals:{rate:1.1,cap:52,spawn:()=>({shape:'petal',x:rnd(0,W),y:-14,r:rnd(3,6),vx:rnd(-.5,.7),vy:rnd(.9,1.7),rot:rnd(0,6.28),vr:rnd(-.05,.05),sway:rnd(0,6.28),sw:rnd(.02,.035),a:rnd(.55,.9),col:Math.random()<.55?'217,162,59':(Math.random()<.5?'220,140,70':'235,231,219')})},
+      /* post-monsoon drizzle: light, slow, thin rain */
+      drizzle:{rate:1.4,cap:55,spawn:()=>({shape:'rain',x:rnd(-W*.05,W*1.05),y:-14,len:rnd(6,12),vx:.5,vy:rnd(3.5,6.5),a:rnd(.22,.42),col:'170,195,205'})},
+      /* still skies: a full moon overhead, with a wash of faint background stars */
+      moon:{rate:0.5,cap:34,
+        once:()=>({shape:'moon',x:W*0.82,y:H*0.22,r:Math.min(26,Math.max(16,H*0.075)),vx:0,vy:0,a:0.95,col:'245,240,220'}),
+        spawn:()=>({shape:'star',x:rnd(0,W),y:rnd(0,H),r:rnd(.5,1.2),vx:0,vy:0,tw:rnd(0,6.28),tsp:rnd(.01,.03),a:rnd(.18,.42),col:'207,243,232'})},
+      /* clear skies: a pine treeline along the base, faint stars in the sky above */
+      pines:{rate:0.6,cap:30,
+        once:()=>{
+          const trees=[],n=9;
+          for(let i=0;i<n;i++){
+            trees.push({px:(i/(n-1))*W+rnd(-W*0.03,W*0.03),ph:rnd(H*0.24,H*0.42),pw:rnd(H*0.11,H*0.19)});
+          }
+          return {shape:'pinerow',trees,x:0,y:H,vx:0,vy:0,a:0.85,col:'45,62,55'};
+        },
+        spawn:()=>({shape:'star',x:rnd(0,W),y:rnd(0,H*0.55),r:rnd(.5,1.3),vx:0,vy:0,tw:rnd(0,6.28),tsp:rnd(.012,.032),a:rnd(.22,.5),col:'207,243,232'})},
+      /* frosty dawns: horizontal wind streaks and small ice motes drifting across */
+      wind:{rate:2.6,cap:95,spawn:()=>{
+        const y=rnd(0,H),icy=Math.random()<.35;
+        if(icy)return{shape:'dot',x:-8,y,r:rnd(.7,1.6),vx:rnd(5.5,9),vy:rnd(-.15,.15),sway:0,sw:0,a:rnd(.35,.7),col:'215,232,232'};
+        return{shape:'wind',x:-40,y,len:rnd(28,110),vx:rnd(5,10),vy:0,a:rnd(.22,.55),col:'205,222,222',lw:rnd(.55,1.15)};
+      }},
       /* monsoon: fast, slanted rain */
-      rain:{wash:'rgba(120,150,170,.06)',rate:5,cap:170,spawn:()=>({shape:'rain',x:rnd(-W*.05,W*1.05),y:-24,len:rnd(10,26),vx:1.4,vy:rnd(9,15),a:rnd(.2,.5),col:'165,205,210'})}
+      rain:{rate:4,cap:140,spawn:()=>({shape:'rain',x:rnd(-W*.05,W*1.05),y:-24,len:rnd(10,26),vx:1.4,vy:rnd(9,15),a:rnd(.3,.6),col:'165,205,210'})}
     };
+    /* particles remember the theme that spawned them; when the theme changes the old
+       particles are marked stale and fade out in ~0.5s while the new theme spawns fresh. */
     let parts=[],cur=null,active=false,raf=0;
+    /* at 60fps, alpha step of 1/30 ≈ 0.033 = 0.5s fade from full opacity to zero */
+    const STALE_FADE=1/30;
     function step(){
       raf=requestAnimationFrame(step);
       ctx.clearRect(0,0,W,H);
       const th=cur&&TH[cur];
       if(active&&th){
-        ctx.fillStyle=th.wash;ctx.fillRect(0,0,W,H);
-        let s=th.rate;while(s-->0&&parts.length<th.cap)parts.push(th.spawn());
+        let s=th.rate,live=0;
+        for(let k=0;k<parts.length;k++)if(parts[k].th===cur)live++;
+        while(s-->0&&live<th.cap&&parts.length<th.cap*1.5){
+          const np=th.spawn();np.th=cur;parts.push(np);live++;
+        }
       }
       for(let i=parts.length-1;i>=0;i--){
         const p=parts[i];
         if(p.shape==='rain'){p.x+=p.vx;p.y+=p.vy;}
         else if(p.shape==='star'){p.y+=p.vy;p.tw+=p.tsp;}
+        else if(p.shape==='moon'||p.shape==='pinerow'){/* static — no motion */}
+        else if(p.shape==='wind'){p.x+=p.vx;}
         else{p.sway+=p.sw;p.x+=p.vx+Math.sin(p.sway)*.7;p.y+=p.vy;if(p.vr!=null)p.rot+=p.vr;}
-        if(!active)p.a-=.014;
+        const stale=!active||p.th!==cur;
+        if(stale)p.a-=STALE_FADE;
         let al=p.shape==='star'?p.a*(.35+.65*(.5+.5*Math.sin(p.tw))):p.a;
         if(al<=0||p.y>H+40||p.x<-80||p.x>W+80){parts.splice(i,1);continue;}
         ctx.globalAlpha=al<0?0:al>1?1:al;
         ctx.fillStyle='rgb('+p.col+')';ctx.strokeStyle='rgb('+p.col+')';
         if(p.shape==='rain'){ctx.lineWidth=1.1;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x-p.vx*1.4,p.y-p.len);ctx.stroke();}
+        else if(p.shape==='wind'){ctx.lineWidth=p.lw||1;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x-p.len,p.y);ctx.stroke();}
+        else if(p.shape==='pinerow'){
+          /* soft ground haze under the treeline */
+          const gr=ctx.createLinearGradient(0,H*0.45,0,H);
+          gr.addColorStop(0,'rgba('+p.col+',0)');
+          gr.addColorStop(1,'rgba('+p.col+','+(al*0.55)+')');
+          ctx.fillStyle=gr;ctx.globalAlpha=1;
+          ctx.fillRect(0,H*0.45,W,H*0.55);
+          /* pine silhouettes: stepped triangles for a stylised, distant treeline */
+          ctx.globalAlpha=al;ctx.fillStyle='rgb('+p.col+')';
+          (p.trees||[]).forEach(t=>{
+            const baseY=H,tipY=H-t.ph,halfW=t.pw/2;
+            /* stepped triangle: three tiers narrowing to the tip */
+            ctx.beginPath();
+            ctx.moveTo(t.px-halfW,baseY);
+            ctx.lineTo(t.px-halfW*0.72,baseY-t.ph*0.42);
+            ctx.lineTo(t.px-halfW*0.85,baseY-t.ph*0.42);
+            ctx.lineTo(t.px-halfW*0.5,baseY-t.ph*0.72);
+            ctx.lineTo(t.px-halfW*0.62,baseY-t.ph*0.72);
+            ctx.lineTo(t.px,tipY);
+            ctx.lineTo(t.px+halfW*0.62,baseY-t.ph*0.72);
+            ctx.lineTo(t.px+halfW*0.5,baseY-t.ph*0.72);
+            ctx.lineTo(t.px+halfW*0.85,baseY-t.ph*0.42);
+            ctx.lineTo(t.px+halfW*0.72,baseY-t.ph*0.42);
+            ctx.lineTo(t.px+halfW,baseY);
+            ctx.closePath();ctx.fill();
+          });
+        }
         else if(p.shape==='petal'){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.beginPath();ctx.ellipse(0,0,p.r,p.r*.52,0,0,6.283);ctx.fill();ctx.restore();}
+        else if(p.shape==='moon'){
+          /* soft outer glow */
+          const gr=ctx.createRadialGradient(p.x,p.y,p.r*0.7,p.x,p.y,p.r*3.2);
+          gr.addColorStop(0,'rgba('+p.col+','+(al*0.32)+')');
+          gr.addColorStop(1,'rgba('+p.col+',0)');
+          ctx.fillStyle=gr;ctx.globalAlpha=1;
+          ctx.fillRect(p.x-p.r*3.2,p.y-p.r*3.2,p.r*6.4,p.r*6.4);
+          /* moon disc */
+          ctx.globalAlpha=al;ctx.fillStyle='rgb('+p.col+')';
+          ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);ctx.fill();
+          /* subtle mare hints */
+          ctx.globalAlpha=al*0.18;ctx.fillStyle='rgb(150,140,110)';
+          ctx.beginPath();ctx.arc(p.x-p.r*.28,p.y-p.r*.18,p.r*.17,0,6.283);ctx.fill();
+          ctx.beginPath();ctx.arc(p.x+p.r*.24,p.y+p.r*.26,p.r*.11,0,6.283);ctx.fill();
+          ctx.beginPath();ctx.arc(p.x-p.r*.05,p.y+p.r*.32,p.r*.08,0,6.283);ctx.fill();
+        }
         else{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);ctx.fill();}
       }
       ctx.globalAlpha=1;
-      if(!active&&!parts.length){cancelAnimationFrame(raf);raf=0;}
+      if(!active&&!parts.length){cancelAnimationFrame(raf);raf=0;cv.classList.remove('on');}
     }
-    const activate=fx=>{if(!TH[fx])return;cur=fx;active=true;cv.classList.add('on');if(!raf)raf=requestAnimationFrame(step);};
-    const deactivate=()=>{active=false;cv.classList.remove('on');};
-    board.querySelectorAll('.dep--row,.dep--closed').forEach(r=>{
-      const fx=r.dataset.fx;if(!fx)return;
-      r.addEventListener('mouseenter',()=>activate(fx));
-      r.addEventListener('mouseleave',deactivate);
-      r.addEventListener('focus',()=>activate(fx));
-      r.addEventListener('blur',deactivate);
+    const activate=fx=>{
+      if(!TH[fx])return;
+      const changed=fx!==cur;
+      cur=fx;active=true;cv.classList.add('on');
+      if(changed&&TH[fx].once){const p=TH[fx].once();p.th=cur;parts.push(p);}
+      if(!raf)raf=requestAnimationFrame(step);
+    };
+    const deactivate=()=>{active=false;};
+    /* delegate pointer events on the board — hovering across rows now switches instantly,
+       and the small padding gap between rows no longer breaks the effect. */
+    let hoveredFx=null;
+    board.addEventListener('pointerover',e=>{
+      const row=e.target.closest('.dep');if(!row||!row.dataset.fx)return;
+      const fx=row.dataset.fx;
+      if(fx!==hoveredFx){hoveredFx=fx;activate(fx);}
+    });
+    board.addEventListener('pointerleave',()=>{hoveredFx=null;deactivate();});
+    /* keyboard focus keeps parity */
+    board.addEventListener('focusin',e=>{
+      const row=e.target.closest('.dep');if(!row||!row.dataset.fx)return;
+      const fx=row.dataset.fx;
+      if(fx!==hoveredFx){hoveredFx=fx;activate(fx);}
+    });
+    board.addEventListener('focusout',e=>{
+      if(board.contains(e.relatedTarget))return;
+      hoveredFx=null;deactivate();
     });
   }
 }
 /* custom-journey pickers (neobrutalism) */
-const ccQty=document.getElementById('ccQty'),ccMonth=document.getElementById('ccMonth');
+const ccQty=document.getElementById('ccQty'),ccMonth=document.getElementById('ccMonth'),ccHint=document.getElementById('ccHint');
 function clampQty(){let v=parseInt(ccQty.value,10);if(isNaN(v))v=1;v=Math.max(1,Math.min(16,v));ccQty.value=v;return v;}
 const ccMinus=document.getElementById('ccMinus'),ccPlus=document.getElementById('ccPlus');
 if(ccMinus)ccMinus.addEventListener('click',()=>{ccQty.value=Math.max(1,clampQty()-1);});
 if(ccPlus)ccPlus.addEventListener('click',()=>{ccQty.value=Math.min(16,clampQty()+1);});
 if(ccQty)ccQty.addEventListener('change',clampQty);
+function refreshCcHint(){if(!ccHint||!ccMonth)return;const winter=/dec|jan|feb/i.test(ccMonth.value||'');ccHint.hidden=!winter;}
+if(ccMonth)ccMonth.addEventListener('change',refreshCcHint);
+refreshCcHint();
 const ccGo=document.getElementById('ccGo');
 if(ccGo)ccGo.addEventListener('click',()=>Booking.select('__custom__',{reveal:true,qty:clampQty(),month:ccMonth?ccMonth.value:''}));
 const actFaq=document.getElementById('actFaq');
@@ -2225,10 +2326,14 @@ async function recordIntent(user,extra){
 }
 
 const Booking=(function(){
-  const USD=469, RATE=95, GST=0.05, CUSTOM='__custom__';
+  const USD=469, WINTER_USD=600, WINTER_PREMIUM=WINTER_USD-USD, RATE=95, GST=0.05, CUSTOM='__custom__';
   /* group-size pricing (USD per person) - smaller private groups pay more */
   const TIER={1:750,2:675,3:625,4:599,5:569,6:539,7:499,8:469};
   const tierUSD=n=>n<=1?TIER[1]:(n>=8?TIER[8]:TIER[n]);
+  const WINTER_MONTHS=/dec|jan|feb/i;
+  const isWinterMonth=m=>!!m&&WINTER_MONTHS.test(m);
+  const depFor=d=>DEPARTURES.find(x=>x.date===d);
+  const cohortUSD=d=>{const x=depFor(d);return x&&x.price?x.price:USD;};
   const modal=document.getElementById('bookModal');
   const $=id=>document.getElementById(id);
   const steps=[...document.querySelectorAll('.mstep')];
@@ -2243,9 +2348,12 @@ const Booking=(function(){
   const money=(n,c)=>c==='USD'?'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):'₹'+Math.round(n).toLocaleString('en-IN');
   const fmtINR=n=>money(n,'INR');
   const isCustom=()=>date===CUSTOM;
-  /* per person on the card/bar: private uses the picker group size, fixed uses the cohort rate */
-  const cardPerUSD=()=>isCustom()?tierUSD(customQty):USD;
-  const totals=()=>{const perU=isCustom()?tierUSD(qty):USD;const subU=perU*qty,gstU=subU*GST,totU=subU+gstU;return{perU,subU,gstU,totU,subI:subU*RATE,gstI:gstU*RATE,totI:totU*RATE};};
+  let verified=false, verifiedFor='';
+  const fullPhone=()=>($('mCc').value.replace(/\D/g,'')+$('mPhone').value.replace(/\D/g,''));
+  /* per person on the card/bar: private uses the picker group size (+ winter premium if a winter month),
+     fixed uses that departure's cohort rate ($469 default, $600 winter) */
+  const cardPerUSD=()=>isCustom()?(tierUSD(customQty)+(isWinterMonth(customMonth)?WINTER_PREMIUM:0)):cohortUSD(date);
+  const totals=()=>{const perU=isCustom()?(tierUSD(qty)+(isWinterMonth(customMonth)?WINTER_PREMIUM:0)):cohortUSD(date);const subU=perU*qty,gstU=subU*GST,totU=subU+gstU;return{perU,subU,gstU,totU,subI:subU*RATE,gstI:gstU*RATE,totI:totU*RATE};};
 
   function renderPrices(){
     const perU=cardPerUSD(), perI=perU*RATE;
@@ -2298,13 +2406,24 @@ const Booking=(function(){
     cur=i;
     steps.forEach((s,k)=>s.classList.toggle('on',k===i));
     stepPips.forEach((p,k)=>{p.classList.toggle('on',k===i);p.classList.toggle('done',k<i);});
-    const shown=Math.min(i,3);
-    $('mCrumb').textContent=(i<4?('Step '+(shown+1)+' of 4 · '):'')+crumbLabels[i];
+    /* once verified, the Verify pip is hidden — renumber the crumb as "Step X of 3" */
+    let displayIndex, displayTotal;
+    if(verified){
+      displayTotal=3;
+      const map={0:1,2:2,3:3,4:3};
+      displayIndex=map[i]||1;
+    }else{
+      displayTotal=4;
+      displayIndex=Math.min(i,3)+1;
+    }
+    $('mCrumb').textContent=(i<4?('Step '+displayIndex+' of '+displayTotal+' · '):'')+crumbLabels[i];
     $('mSteps').style.visibility=i>=4?'hidden':'visible';
     modal.querySelector('.modal-body').scrollTop=0;
     const focusEl=steps[i].querySelector('input,button.btn,.rzp-m,[data-close]');
     if(focusEl)setTimeout(()=>focusEl.focus({preventScroll:true}),80);
   }
+  /* back buttons (Review ← Details, Pay ← Review) */
+  modal.querySelectorAll('.mback').forEach(b=>b.addEventListener('click',()=>go(Number(b.dataset.back))));
 
   async function open(){
     lastFocus=document.activeElement;
@@ -2378,23 +2497,57 @@ const Booking=(function(){
     $('rvTerms').checked=false;
     document.querySelectorAll('.rzp-m').forEach(m=>m.classList.remove('on'));
     const pay=$('rzpPay');pay.disabled=true;pay.textContent='Select a method to pay';pay.classList.remove('paying');
+    verified=false;verifiedFor='';$('mSteps').classList.remove('verified');
   }
   function syncQty(){$('mQtyMinus').disabled=qty<=1;$('mQtyPlus').disabled=qty>=12;$('mQty').textContent=qty;}
 
   /* step 0 → 1 */
   $('mQtyMinus').onclick=()=>{if(qty>1){qty--;syncQty();}};
   $('mQtyPlus').onclick=()=>{if(qty<12){qty++;syncQty();}};
-  $('toVerify').onclick=()=>{
+  /* WhatsApp support link on the OTP screen — same number as the site footer */
+  const WA_SUPPORT='919258583023';
+  const helpLink=$('otpHelp');
+  if(helpLink)helpLink.href='https://wa.me/'+WA_SUPPORT+'?text='+encodeURIComponent("Hi Totemtou, I haven't received my WhatsApp verification code. Can you help?");
+  async function sendWhatsAppOtp(phone){
+    try{
+      const r=await fetch(SB_URL+'/functions/v1/wa-send-otp',{method:'POST',headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY},body:JSON.stringify({phone})});
+      if(r.ok){const j=await r.json();if(j&&j.sent)return{real:true};}
+    }catch(_){}
+    /* fallback: demo autofill until the Edge Function is deployed */
+    return{real:false,code:String(Math.floor(100000+Math.random()*900000))};
+  }
+  async function verifyWhatsAppOtp(phone,code){
+    try{
+      const r=await fetch(SB_URL+'/functions/v1/wa-verify-otp',{method:'POST',headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY},body:JSON.stringify({phone,code})});
+      if(r.ok){const j=await r.json();return !!(j&&j.ok);}
+    }catch(_){}
+    return null; /* signals: endpoint unavailable, caller should fall back to local check */
+  }
+  $('toVerify').onclick=async()=>{
     const name=$('mName').value.trim(), email=$('mEmail').value.trim(), phone=$('mPhone').value.trim();
     const err=$('err0');
     if(!name){err.textContent='Please enter your name.';return;}
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){err.textContent='Please enter a valid email.';return;}
     if(phone.replace(/\D/g,'').length<7){err.textContent='Please enter a valid mobile number.';return;}
     err.textContent='';
-    const code=String(Math.floor(100000+Math.random()*900000));
+    const fp=fullPhone();
+    /* already verified this exact number in this session — skip straight to review */
+    if(verified&&verifiedFor===fp){fillReview();go(2);return;}
+    /* new/changed number — clear any prior verification so the pip returns */
+    verified=false;verifiedFor='';$('mSteps').classList.remove('verified');
     $('otpTo').textContent=$('mCc').value+' '+phone;
-    $('otpDemo').textContent=code;
-    const ds=otpDigits();ds.forEach((d,i)=>{d.value=code[i];d.classList.add('filled');});
+    $('toVerify').disabled=true;
+    const res=await sendWhatsAppOtp(fp);
+    $('toVerify').disabled=false;
+    const demo=$('otpDemoLine');
+    if(res.real){
+      if(demo)demo.hidden=true;
+      otpDigits().forEach(d=>{d.value='';d.classList.remove('filled');});
+    }else{
+      if(demo){demo.hidden=false;}
+      $('otpDemo').textContent=res.code;
+      const ds=otpDigits();ds.forEach((d,i)=>{d.value=res.code[i];d.classList.add('filled');});
+    }
     go(1);startOtpTimer();
   };
   $('editPhone').onclick=()=>go(0);
@@ -2429,12 +2582,24 @@ const Booking=(function(){
     const on=document.querySelector('.rzp-m.on'),pay=$('rzpPay');
     if(on&&pay&&!pay.classList.contains('paying'))pay.textContent='Pay '+fmtINR(totI);
   }
-  $('toReview').onclick=()=>{
+  $('toReview').onclick=async()=>{
     const code=otpDigits().map(d=>d.value).join('');
     const err=$('err1');
     if(code.length<6){err.textContent='Enter the 6-digit code.';return;}
-    if(code!==$('otpDemo').textContent){err.textContent='That code doesn’t match. Try the demo code shown.';return;}
-    err.textContent='';fillReview();go(2);
+    err.textContent='';
+    const fp=fullPhone();
+    const remote=await verifyWhatsAppOtp(fp,code);
+    let ok;
+    if(remote===null){
+      /* endpoint unavailable — fall back to the demo code shown on-screen */
+      ok=(code===$('otpDemo').textContent);
+    }else{
+      ok=remote;
+    }
+    if(!ok){err.textContent='That code doesn\'t match. Try again or resend.';return;}
+    verified=true;verifiedFor=fp;
+    $('mSteps').classList.add('verified');
+    fillReview();go(2);
   };
   $('toPay').onclick=()=>{
     const err=$('err2');
@@ -2580,10 +2745,10 @@ gsap.to('#prog',{scaleX:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:.3}
 /* loader: altitude climbs 822 → 4,130 m, gated on the trek's key videos buffering
    (hero video + Modi Khola / trail interlude video). Only tops out once both can play through. */
 const loaderEl=document.getElementById('loader'),altNEl=document.getElementById('altN');
-const heroVideo=document.getElementById('heroVideo'),valleyVideo=document.getElementById('valleyVideo');
+const heroVideo=document.getElementById('heroVideo'),valleyVideo=document.getElementById('valleyVideo'),gradeVidPreload=document.getElementById('gradeVid');
 const L_START=822,L_END=4130;
 let lShown=L_START,lRevealed=false,lRaf=0;
-const loadVids=[heroVideo,valleyVideo].filter(Boolean);
+const loadVids=[heroVideo,valleyVideo,gradeVidPreload].filter(Boolean);
 const readySet=new Set();
 const setAlt=v=>{altNEl.textContent=Math.round(v).toLocaleString()};
 function vidFrac(v){
@@ -2782,49 +2947,57 @@ if(bridge&&daysWrap&&isDesktop&&elMarker&&elSpine&&elProfile&&elIti){
   bridgeTick();
 }
 
-/* grade video: autoplay with soft sound when the section is on screen,
-   fade the sound in to 15%, fade out on leave, tap to mute */
+/* grade video: the HTML sets `autoplay muted`, so the browser plays the video
+   silently as soon as it can — this side-steps the strict autoplay-with-sound
+   policy that was previously stopping playback entirely. When the section
+   scrolls into view we unmute and ramp volume from 0 → 0.7 over ~1s. On leave,
+   fade back to 0 over ~0.6s and re-mute (keeps playback going invisibly). */
 const gradeVidWrap=document.getElementById('gradeVidWrap'),gradeVid=document.getElementById('gradeVid');
 if(gradeVidWrap&&gradeVid){
-  const MAXVOL=0.15;
-  let userMuted=false,inView=false,fadeRaf=0;
+  const MAXVOL=0.7;
+  let userMuted=false,inView=false,fadeRaf=0,fadeStart=0,fadeFrom=0,fadeDur=1000,fadeTarget=0,fadeDone=null;
   gradeVid.volume=0;
+  /* Some browsers pause a `muted autoplay` video if the tab was inactive at load —
+     nudge it back to playing whenever we get a chance. */
+  const ensurePlaying=()=>{if(gradeVid.paused){const pr=gradeVid.play();if(pr&&pr.catch)pr.catch(()=>{});}};
   const clearFade=()=>{if(fadeRaf)cancelAnimationFrame(fadeRaf);fadeRaf=0};
-  const fadeTo=(target,done)=>{
+  const fadeTo=(target,dur,done)=>{
     clearFade();
-    const step=()=>{
-      const d=target-gradeVid.volume;
-      if(Math.abs(d)<0.005){gradeVid.volume=target;fadeRaf=0;if(done)done();return}
-      gradeVid.volume=Math.min(1,Math.max(0,gradeVid.volume+d*0.08));
+    fadeStart=performance.now();fadeFrom=gradeVid.volume;fadeTarget=target;fadeDur=Math.max(1,dur||1000);fadeDone=done||null;
+    const step=(now)=>{
+      const t=Math.min(1,(now-fadeStart)/fadeDur);
+      /* ease-in-out for a natural fade */
+      const e=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+      gradeVid.volume=Math.min(1,Math.max(0,fadeFrom+(fadeTarget-fadeFrom)*e));
+      if(t>=1){fadeRaf=0;const d=fadeDone;fadeDone=null;if(d)d();return}
       fadeRaf=requestAnimationFrame(step);
     };
-    step();
-  };
-  const soundOn=()=>{
-    if(userMuted)return;
-    gradeVid.muted=false;
-    gradeVidWrap.classList.add('playing');
-    fadeTo(MAXVOL);
+    fadeRaf=requestAnimationFrame(step);
   };
   const enter=()=>{
     inView=true;
-    if(!userMuted)gradeVid.muted=false;
-    const pr=gradeVid.play();
-    if(pr)pr.then(soundOn).catch(()=>{ /* browser blocked sound: fall back to muted playback */
-      gradeVid.muted=true;gradeVidWrap.classList.remove('playing');gradeVid.play().catch(()=>{});
-    });
+    ensurePlaying();
+    if(userMuted)return;
+    gradeVid.muted=false;
+    gradeVidWrap.classList.add('playing');
+    fadeTo(MAXVOL,1000);
   };
   const leave=()=>{
     inView=false;
-    fadeTo(0,()=>{gradeVid.pause();gradeVidWrap.classList.remove('playing')});
+    fadeTo(0,600,()=>{gradeVid.muted=true;gradeVidWrap.classList.remove('playing');});
   };
-  new IntersectionObserver(es=>es.forEach(e=>{e.isIntersecting?enter():leave()}),{threshold:.45})
+  /* threshold .25 fires sooner (shorter viewport / mobile) so audio fade begins
+     before the video is fully centred */
+  new IntersectionObserver(es=>es.forEach(e=>{e.isIntersecting?enter():leave()}),{threshold:.25})
     .observe(gradeVidWrap);
+  /* browsers pause videos when the tab is hidden/backgrounded — resume playback
+     when the tab comes back and the section is on screen */
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&inView)ensurePlaying();});
   /* tap the video to mute; tap again to bring the sound back */
   gradeVidWrap.addEventListener('click',()=>{
     userMuted=!userMuted;
-    if(userMuted){clearFade();gradeVid.muted=true;gradeVid.volume=0;gradeVidWrap.classList.remove('playing')}
-    else if(inView){gradeVid.play().catch(()=>{});soundOn()}
+    if(userMuted){clearFade();gradeVid.muted=true;gradeVid.volume=0;gradeVidWrap.classList.remove('playing');}
+    else if(inView){ensurePlaying();gradeVid.muted=false;gradeVidWrap.classList.add('playing');fadeTo(MAXVOL,1000);}
   });
 }
 
