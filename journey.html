@@ -66,6 +66,9 @@ header.nav.scrolled{background:rgba(11,20,16,.84);backdrop-filter:blur(14px);-we
 .nav-user{flex:none;width:2.35rem;height:2.35rem;border-radius:50%;border:1px solid var(--line);background:rgba(235,231,219,.04);color:var(--bone);cursor:pointer;display:grid;place-items:center;overflow:hidden;padding:0;transition:border-color .3s,transform .2s}
 .nav-user:hover{border-color:var(--river);transform:translateY(-1px)}
 .nav-user[hidden]{display:none}
+.nav-signin{flex:none;border:1px solid var(--line);background:none;color:var(--bone-2);cursor:pointer;border-radius:999px;padding:.62rem 1.1rem;font:500 .66rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;transition:border-color .3s,color .3s,transform .2s}
+.nav-signin:hover{border-color:var(--river);color:var(--bone);transform:translateY(-1px)}
+.nav-signin[hidden]{display:none}
 .nav-user-img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .nav-user-init{font:600 .8rem var(--f-mono);letter-spacing:.02em;color:var(--river)}
 /* progress bar */
@@ -938,6 +941,7 @@ body.modal-open{overflow:hidden}
       <a href="index.html#journeys">Journeys</a><a href="#trail">The trail</a><a href="#days">The days</a><a href="#eligibility">Eligibility</a><a href="#leader">Who</a><a href="#details">Details</a><a href="#apply">Dates</a>
     </nav>
     <div class="nav-actions">
+      <button class="nav-signin" id="navSignin" type="button" hidden>Sign in</button>
       <button class="nav-user" id="navUser" type="button" hidden aria-label="Open your profile">
         <img class="nav-user-img" id="navUserImg" alt="" hidden>
         <span class="nav-user-init" id="navUserInit" aria-hidden="true"></span>
@@ -1844,6 +1848,34 @@ body.modal-open{overflow:hidden}
   </div>
 </div>
 
+<!-- SIGN-IN SHEET — lets a returning traveller sign in to check past applications -->
+<div class="modal signin-modal" id="signinModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="siTitle">
+  <div class="modal-scrim" data-siclose></div>
+  <div class="modal-panel" role="document">
+    <header class="modal-head">
+      <div class="modal-head-l">
+        <p class="modal-kicker">Welcome back</p>
+        <p class="modal-crumb">Check your trip</p>
+      </div>
+      <button class="modal-x" type="button" data-siclose aria-label="Close">✕</button>
+    </header>
+    <div class="modal-body">
+      <h3 id="siTitle" class="mstep-h">Pick up where you left off.</h3>
+      <p class="auth-sub">Sign in with the same account you applied with to see your journeys, status and next steps. One tap; we never post anything to your account.</p>
+      <button class="auth-btn" id="siGoogle" type="button">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        Continue with Google
+      </button>
+      <button class="auth-btn auth-strava" id="siStrava" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.599h4.172L10.463 0l-7 13.828h4.172"/></svg>
+        Continue with Strava
+      </button>
+      <p class="mstep-err" id="siErr"></p>
+      <p class="mstep-fine">Haven't applied yet? Tap “Apply” to hold a seat.</p>
+    </div>
+  </div>
+</div>
+
 <!-- PROFILE DRAWER — shown when a signed-in traveller taps their avatar -->
 <div class="modal profile-modal" id="profileModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pfCrumb">
   <div class="modal-scrim" data-pclose></div>
@@ -2412,6 +2444,11 @@ const STRAVA_CLIENT_ID=window.STRAVA_CLIENT_ID||''; /* set window.STRAVA_CLIENT_
 const STRAVA_EDGE_URL=SB_URL+'/functions/v1/strava-exchange';
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,detectSessionInUrl:true}}):null;
 const INTENT_KEY='tt.intent';
+const AUTH_RETURN_KEY='tt.authReturn';
+/* Supabase may ignore redirectTo and bounce OAuth back to the project Site URL
+   (the site root). We stash the page we want to land on so index.html can forward
+   the token hash back here. mode is 'book' (resume booking) or 'trip' (open profile). */
+function stashAuthReturn(mode){try{localStorage.setItem(AUTH_RETURN_KEY,location.pathname+'?'+mode+'=1');}catch(_){}}
 async function currentUser(){if(!sb)return null;try{const {data}=await sb.auth.getUser();return data.user||null;}catch(_){return null;}}
 async function recordIntent(user,extra){
   if(!sb||!user)return;
@@ -2596,7 +2633,7 @@ const Booking=(function(){
   if(bGoogle)bGoogle.onclick=async()=>{
     gErr().textContent='';
     if(!sb){gErr().textContent='Auth is unavailable. Please try again.';return;}
-    stashIntent();
+    stashIntent();stashAuthReturn('book');
     bGoogle.classList.add('busy');
     const {error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+location.pathname+'?book=1'}});
     if(error){bGoogle.classList.remove('busy');gErr().textContent=error.message||'Could not start Google sign-in.';}
@@ -2803,17 +2840,22 @@ const Booking=(function(){
     const params=new URLSearchParams(location.search);
     /* Google (Supabase native): we tag the redirect with ?book=1; the auth tokens
        arrive in the URL hash and Supabase parses them via detectSessionInUrl. */
-    if(params.get('book')==='1'){
+    if(params.get('book')==='1'||params.get('trip')==='1'){
+      const toProfile=params.get('trip')==='1';
       const user=await waitForUser();
-      params.delete('book');
+      params.delete('book');params.delete('trip');
       const q=params.toString();
       history.replaceState(null,'',location.pathname+(q?('?'+q):''));
-      if(user){restoreIntent();recordIntent(user,{status:'signed_in'});open();}
+      if(user){
+        if(toProfile){Profile.open();} /* returning traveller checking their applications */
+        else{restoreIntent();recordIntent(user,{status:'signed_in'});open();}
+      }
       else{console.warn('Google auth: no session on return');}
       return;
     }
-    /* Strava callback: ?code=…&state=tt-book — exchange via Supabase Edge Function */
-    if(params.get('state')==='tt-book'&&params.get('code')){
+    /* Strava callback: ?code=…&state=tt-book (booking) or tt-trip (profile check) */
+    const st=params.get('state');
+    if((st==='tt-book'||st==='tt-trip')&&params.get('code')){
       const code=params.get('code');
       history.replaceState(null,'',location.pathname);
       try{
@@ -2824,7 +2866,10 @@ const Booking=(function(){
           await sb.auth.setSession({access_token:j.session.access_token,refresh_token:j.session.refresh_token});
         }
         const u=await currentUser();
-        if(u){restoreIntent();recordIntent(u,{status:'signed_in'});open();}
+        if(u){
+          if(st==='tt-trip'){Profile.open();}
+          else{restoreIntent();recordIntent(u,{status:'signed_in'});open();}
+        }
       }catch(e){console.warn('Strava callback failed',e);}
     }
   })();
@@ -2837,7 +2882,7 @@ const Profile=(function(){
   const $=id=>document.getElementById(id);
   const modal=$('profileModal');
   if(!modal)return{refresh(){}};
-  const navUser=$('navUser'),navImg=$('navUserImg'),navInit=$('navUserInit');
+  const navUser=$('navUser'),navImg=$('navUserImg'),navInit=$('navUserInit'),navSignin=$('navSignin');
   const STAGES=[
     {key:'applied',   lbl:'Applied'},
     {key:'payment',   lbl:'Payment'},
@@ -2864,7 +2909,8 @@ const Profile=(function(){
 
   function paintNav(u){
     curUser=u||null;
-    if(!u){navUser.hidden=true;return;}
+    if(!u){navUser.hidden=true;if(navSignin)navSignin.hidden=false;return;}
+    if(navSignin)navSignin.hidden=true;
     const nm=userName(u)||u.email||'';
     const img=avatarUrl(u);
     if(img){navImg.src=img;navImg.hidden=false;navInit.hidden=true;}
@@ -2944,7 +2990,9 @@ const Profile=(function(){
   }
 
   async function open(){
-    const u=await currentUser();
+    /* fall back to the painted session so a shown avatar never bounces to booking
+       if a transient getUser() check fails */
+    const u=await currentUser()||curUser;
     if(!u){Booking.open();return;} /* not signed in — send them through sign-in */
     curUser=u;
     $('pfName').textContent=userName(u)||'Traveller';
@@ -2979,6 +3027,52 @@ const Profile=(function(){
   refresh();
 
   return {refresh,open,paintNav};
+})();
+
+/* ===== sign-in sheet — returning traveller checks past applications =====
+   Unlike the booking auth gate, this signs in with no booking intent and
+   returns to the profile drawer (redirect tagged ?trip=1 / Strava state tt-trip). */
+const Signin=(function(){
+  const $=id=>document.getElementById(id);
+  const modal=$('signinModal');
+  if(!modal)return{open(){}};
+  let lastFocus=null;
+  function open(){
+    lastFocus=document.activeElement;
+    if($('siErr'))$('siErr').textContent='';
+    modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open');
+    const f=$('siGoogle');if(f)setTimeout(()=>f.focus({preventScroll:true}),80);
+  }
+  function close(){
+    modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.classList.remove('modal-open');
+    if(lastFocus)lastFocus.focus();
+  }
+  const err=()=>$('siErr');
+  const bGoogle=$('siGoogle'),bStrava=$('siStrava');
+  if(bGoogle)bGoogle.onclick=async()=>{
+    err().textContent='';
+    if(!sb){err().textContent='Sign-in is unavailable right now. Please try again.';return;}
+    stashAuthReturn('trip');
+    bGoogle.classList.add('busy');
+    const {error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+location.pathname+'?trip=1'}});
+    if(error){bGoogle.classList.remove('busy');err().textContent=error.message||'Could not start Google sign-in.';}
+  };
+  if(bStrava)bStrava.onclick=()=>{
+    err().textContent='';
+    if(!STRAVA_CLIENT_ID){err().textContent='Strava is not configured yet. Please use Google for now.';return;}
+    bStrava.classList.add('busy');
+    const redirect=location.origin+location.pathname;
+    location.href='https://www.strava.com/oauth/authorize'
+      +'?client_id='+encodeURIComponent(STRAVA_CLIENT_ID)
+      +'&response_type=code&approval_prompt=auto&scope=read'
+      +'&redirect_uri='+encodeURIComponent(redirect)
+      +'&state=tt-trip';
+  };
+  modal.querySelectorAll('[data-siclose]').forEach(el=>el.addEventListener('click',close));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))close();});
+  const navSignin=$('navSignin');
+  if(navSignin)navSignin.addEventListener('click',open);
+  return {open,close};
 })();
 
 /* trail readout data */

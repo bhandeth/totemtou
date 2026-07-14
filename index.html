@@ -3,6 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* OAuth landing catcher — runs before anything renders.
+   Supabase may return the sign-in token hash to the site root instead of the page
+   that started it. If we see an auth hash here and a stashed return page, forward
+   the hash (intact) back to that page so it can establish the session and resume. */
+(function(){try{
+  var h=location.hash||"";
+  if(/[#&](access_token|error|error_description)=/.test(h)){
+    var ret=localStorage.getItem("tt.authReturn");
+    if(ret){
+      localStorage.removeItem("tt.authReturn");
+      if(ret.charAt(0)!=="/")ret="/"+ret;
+      location.replace(ret+h);
+    }
+  }
+}catch(e){}})();
+</script>
 <title>Totemtou · Curated adventures, led with experience.</title>
 <meta name="description" content="Small groups. Tested routes. Calm leadership. Trekking, 4×4 and expedition MTB journeys across the Nepal Himalaya, designed end to end.">
 <meta property="og:title" content="Totemtou · Curated adventures, led with experience.">
