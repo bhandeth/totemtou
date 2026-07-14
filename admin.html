@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signups · Totemtou Admin</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/webp" href="https://storage.zopuai.com/converted/user-OJXX.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Spline+Sans+Mono:wght@300..700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink-0:#0B1410; --ink-1:#101D17; --ink-2:#15261E;
+  --bone:#EBE7DB; --bone-2:rgba(235,231,219,.66); --bone-3:rgba(235,231,219,.4);
+  --river:#90CCBE; --marigold:#D9A23B;
+  --line:rgba(235,231,219,.14);
+  --f-disp:"Newsreader",Georgia,serif;
+  --f-mono:"Spline Sans Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--ink-0);color:var(--bone);font:400 1rem/1.6 var(--f-disp);-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:var(--river)}
+.wrap{width:min(1180px,92vw);margin-inline:auto;padding:2.4rem 0 5rem}
+
+/* header */
+.ad-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:1.4rem 0;border-bottom:1px solid var(--line);margin-bottom:2rem}
+.ad-brand{display:flex;align-items:center;gap:.7rem;font:600 1.05rem var(--f-disp)}
+.ad-brand img{width:1.7rem;height:1.7rem;border-radius:50%}
+.ad-kick{font:500 .62rem var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--river)}
+.ad-tools{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.ad-count{font:500 .68rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--bone-3)}
+.ad-count b{color:var(--river)}
+.ad-btn{border:1px solid var(--line);border-radius:10px;background:none;color:var(--bone-2);font:500 .66rem var(--f-mono);letter-spacing:.12em;text-transform:uppercase;padding:.7em 1.1em;cursor:pointer;transition:.3s}
+.ad-btn:hover{border-color:var(--river);color:var(--river)}
+
+/* login gate */
+.gate{max-width:420px;margin:14vh auto 0;text-align:center}
+.gate h1{font-weight:470;font-size:clamp(1.8rem,5vw,2.6rem);letter-spacing:-.02em;margin-bottom:.6rem}
+.gate h1 em{font-style:italic;color:var(--marigold)}
+.gate p{color:var(--bone-2);font-size:.95rem;margin-bottom:1.8rem}
+.gate form{display:flex;flex-direction:column;gap:.9rem}
+.gate input{background:rgba(235,231,219,.04);border:1px solid var(--line);border-radius:12px;padding:1em 1.1em;color:var(--bone);font-size:1rem;text-align:center;letter-spacing:.05em;transition:border-color .3s}
+.gate input:focus{outline:none;border-color:var(--river)}
+.gate button{border:1px solid var(--river);border-radius:12px;background:var(--river);color:var(--ink-0);font:600 .75rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;padding:1em;cursor:pointer;transition:.3s}
+.gate button:hover{filter:brightness(1.06)}
+.gate button:disabled{opacity:.5;cursor:wait}
+.gate .err{color:#E6A19A;font:500 .82rem var(--f-mono);min-height:1.2em}
+
+/* table */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,var(--ink-1),var(--ink-0))}
+table{border-collapse:collapse;width:100%;min-width:820px}
+th,td{text-align:left;padding:.95rem 1.1rem;border-bottom:1px solid var(--line);font-size:.9rem;vertical-align:top}
+th{font:500 .58rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--bone-3);white-space:nowrap;position:sticky;top:0;background:var(--ink-1)}
+tr:last-child td{border-bottom:0}
+tr:hover td{background:rgba(144,204,190,.03)}
+td.mono,.time,.phone{font-family:var(--f-mono);font-size:.82rem;color:var(--bone-2)}
+.email{color:var(--bone-2);word-break:break-all}
+.badge{display:inline-block;font:500 .58rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;padding:.3em .7em;border-radius:99px;border:1px solid var(--line);color:var(--bone-2)}
+.badge.applied{border-color:rgba(217,162,59,.4);color:var(--marigold)}
+.badge.paid,.badge.payment{border-color:rgba(144,204,190,.45);color:var(--river)}
+.prov{font:500 .58rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--bone-3)}
+.empty,.loading{padding:3rem 1rem;text-align:center;color:var(--bone-3);font-style:italic}
+.filter{background:rgba(235,231,219,.04);border:1px solid var(--line);border-radius:10px;padding:.6em .9em;color:var(--bone);font:400 .85rem var(--f-mono);min-width:200px}
+.filter:focus{outline:none;border-color:var(--river)}
+@media(max-width:640px){.ad-tools{width:100%;justify-content:space-between}.filter{flex:1;min-width:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- LOGIN GATE -->
+  <section class="gate" id="gate">
+    <div class="ad-kick" style="margin-bottom:1rem">Totemtou · Admin</div>
+    <h1>Signups <em>ledger.</em></h1>
+    <p>Enter the admin password to view traveller signups. The password is checked on the server; no data loads until it clears.</p>
+    <form id="gateForm" autocomplete="off">
+      <input id="pw" type="password" placeholder="Admin password" aria-label="Admin password" autocomplete="current-password">
+      <button type="submit" id="gateBtn">Unlock →</button>
+      <p class="err" id="gateErr"></p>
+    </form>
+  </section>
+
+  <!-- DASHBOARD -->
+  <main id="dash" hidden>
+    <div class="ad-top">
+      <div>
+        <div class="ad-kick">Totemtou · Admin</div>
+        <div class="ad-brand"><img src="https://storage.zopuai.com/converted/user-OJXX.webp" alt="">Signups ledger</div>
+      </div>
+      <div class="ad-tools">
+        <input class="filter" id="filter" type="search" placeholder="Filter name / email / phone…" aria-label="Filter rows">
+        <span class="ad-count" id="count">— signups</span>
+        <button class="ad-btn" id="refresh" type="button">Refresh</button>
+        <button class="ad-btn" id="csv" type="button">Export CSV</button>
+        <button class="ad-btn" id="lock" type="button">Lock</button>
+      </div>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th>Name</th><th>Email</th><th>WhatsApp</th><th>Journey</th>
+          <th>Departure</th><th>Travellers</th><th>Status</th><th>Provider</th><th>Signed in</th>
+        </tr></thead>
+        <tbody id="rows"><tr><td colspan="9" class="loading">Loading…</td></tr></tbody>
+      </table>
+    </div>
+  </main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+(function(){
+  "use strict";
+  /* same project the site uses; only the admin-list Edge Function is called and
+     it enforces the password server-side before returning any rows. */
+  const SB_URL='https://isaxaudiijfnupugajxh.supabase.co';
+  const SB_KEY='sb_publishable_Sv9qgr9aA5bMzJ8mJpItMQ_JZJFtcDk';
+  const $=id=>document.getElementById(id);
+  let allRows=[], pw='';
+
+  const fmtTime=iso=>{
+    if(!iso)return '—';
+    try{
+      const d=new Date(iso);
+      return d.toLocaleString('en-IN',{day:'2-digit',month:'short',year:'2-digit',hour:'2-digit',minute:'2-digit'});
+    }catch(_){return iso;}
+  };
+  const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  function render(rows){
+    const tb=$('rows');
+    if(!rows.length){tb.innerHTML='<tr><td colspan="9" class="empty">No signups yet.</td></tr>';return;}
+    tb.innerHTML=rows.map(r=>{
+      const st=(r.status||'applied').toLowerCase();
+      return '<tr>'
+        +'<td>'+esc(r.name||'—')+'</td>'
+        +'<td class="email">'+esc(r.email||'—')+'</td>'
+        +'<td class="phone">'+esc(r.phone||'—')+'</td>'
+        +'<td>'+esc(r.journey||'—')+(r.journey_code?' <span class="prov">'+esc(r.journey_code)+'</span>':'')+'</td>'
+        +'<td class="mono">'+esc(r.departure||'—')+'</td>'
+        +'<td class="mono">'+esc(r.travellers!=null?r.travellers:'—')+'</td>'
+        +'<td><span class="badge '+esc(st)+'">'+esc(st)+'</span></td>'
+        +'<td class="prov">'+esc(r.provider||'—')+'</td>'
+        +'<td class="time">'+esc(fmtTime(r.created_at))+'</td>'
+        +'</tr>';
+    }).join('');
+  }
+
+  function applyFilter(){
+    const q=$('filter').value.trim().toLowerCase();
+    const rows=!q?allRows:allRows.filter(r=>
+      [r.name,r.email,r.phone,r.journey,r.departure,r.status].some(v=>String(v||'').toLowerCase().includes(q))
+    );
+    render(rows);
+    $('count').innerHTML='<b>'+rows.length+'</b> '+(rows.length===1?'signup':'signups')+(q?' (filtered)':'');
+  }
+
+  /* returns 'ok' (authorised, rows loaded) | 'bad' (wrong password) | 'error' (service down) */
+  async function load(){
+    $('rows').innerHTML='<tr><td colspan="9" class="loading">Loading…</td></tr>';
+    try{
+      const r=await fetch(SB_URL+'/functions/v1/admin-list',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY},
+        body:JSON.stringify({password:pw})
+      });
+      if(r.status===401)return 'bad';
+      if(!r.ok)return 'error';
+      const j=await r.json();
+      allRows=(j&&j.rows)||[];
+      applyFilter();
+      return 'ok';
+    }catch(e){return 'error';}
+  }
+
+  function showDash(){$('gate').hidden=true;$('dash').hidden=false;try{sessionStorage.setItem('tt.admin',pw);}catch(_){}}
+
+  $('gateForm').addEventListener('submit',async e=>{
+    e.preventDefault();
+    const err=$('gateErr');err.textContent='';
+    pw=$('pw').value;
+    if(!pw){err.textContent='Enter the password.';return;}
+    $('gateBtn').disabled=true;$('gateBtn').textContent='Checking…';
+    const res=await load();
+    $('gateBtn').disabled=false;$('gateBtn').textContent='Unlock →';
+    if(res==='ok'){showDash();}
+    else if(res==='bad'){err.textContent='That password didn’t work.';}
+    else{err.textContent='Couldn’t reach the admin service. Is the admin-list function deployed?';}
+  });
+
+  $('filter').addEventListener('input',applyFilter);
+  $('refresh').addEventListener('click',load);
+  $('lock').addEventListener('click',()=>{
+    pw='';allRows=[];try{sessionStorage.removeItem('tt.admin');}catch(_){}
+    $('dash').hidden=true;$('gate').hidden=false;$('pw').value='';
+  });
+  $('csv').addEventListener('click',()=>{
+    const cols=['name','email','phone','journey','journey_code','departure','travellers','status','provider','created_at'];
+    const head=cols.join(',');
+    const body=allRows.map(r=>cols.map(c=>{
+      const v=String(r[c]==null?'':r[c]).replace(/"/g,'""');
+      return /[",\n]/.test(v)?('"'+v+'"'):v;
+    }).join(',')).join('\n');
+    const blob=new Blob([head+'\n'+body],{type:'text/csv'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+    a.download='totemtou-signups.csv';a.click();URL.revokeObjectURL(a.href);
+  });
+
+  /* resume within the same tab session */
+  try{
+    const saved=sessionStorage.getItem('tt.admin');
+    if(saved){pw=saved;load().then(res=>{if(res==='ok')showDash();else{try{sessionStorage.removeItem('tt.admin');}catch(_){}}});}
+  }catch(_){}
+})();
+</script>
+</body>
+</html>

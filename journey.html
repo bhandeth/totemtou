@@ -62,6 +62,12 @@ header.nav.scrolled{background:rgba(11,20,16,.84);backdrop-filter:blur(14px);-we
 .nav-links a{font:500 .7rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-2);transition:color .3s}
 .nav-links a:hover{color:var(--bone)}
 @media(max-width:760px){.nav-links{display:none}}
+.nav-actions{display:flex;align-items:center;gap:.9rem}
+.nav-user{flex:none;width:2.35rem;height:2.35rem;border-radius:50%;border:1px solid var(--line);background:rgba(235,231,219,.04);color:var(--bone);cursor:pointer;display:grid;place-items:center;overflow:hidden;padding:0;transition:border-color .3s,transform .2s}
+.nav-user:hover{border-color:var(--river);transform:translateY(-1px)}
+.nav-user[hidden]{display:none}
+.nav-user-img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.nav-user-init{font:600 .8rem var(--f-mono);letter-spacing:.02em;color:var(--river)}
 /* progress bar */
 #prog{position:fixed;top:0;left:0;height:2px;width:100%;z-index:201;background:transparent;transform-origin:left;transform:scaleX(0)}
 #prog i{display:block;height:100%;background:var(--river)}
@@ -675,6 +681,54 @@ footer{padding:2.2rem 0;border-top:1px solid var(--line);background:var(--ink-1)
 .auth-hold b{color:var(--river);font-weight:500}
 .signed-in{display:inline-flex;align-items:center;gap:.5rem;padding:.55em 1em;margin:0 0 1.4rem;border:1px solid rgba(144,204,190,.35);border-radius:99px;background:rgba(144,204,190,.08);font:500 .68rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--river)}
 .signed-in b{color:var(--bone);font-weight:500;text-transform:none;letter-spacing:.02em}
+/* ===== profile drawer ===== */
+.pf-id{display:flex;align-items:center;gap:1.1rem;padding-bottom:1.5rem;border-bottom:1px solid var(--line);margin-bottom:1.6rem}
+.pf-avatar{flex:none;width:64px;height:64px;border-radius:50%;overflow:hidden;border:1px solid var(--line);background:rgba(144,204,190,.08);display:grid;place-items:center}
+.pf-avatar-img{width:100%;height:100%;object-fit:cover}
+.pf-avatar-init{font:600 1.3rem var(--f-disp);color:var(--river)}
+.pf-name{font-family:var(--f-disp);font-size:1.4rem;font-weight:480;letter-spacing:-.01em;line-height:1.1}
+.pf-email{font:400 .82rem var(--f-mono);color:var(--bone-3);margin-top:.3rem;word-break:break-all}
+.pf-block{padding:1.4rem 0;border-bottom:1px solid var(--line)}
+.pf-block:last-of-type{border-bottom:0}
+.pf-block-head{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.pf-h{font:500 .64rem var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--bone-3);margin-bottom:.4rem}
+.pf-block-head .pf-h{margin-bottom:0}
+.pf-note{font-size:.85rem;color:var(--bone-3);line-height:1.5;margin-bottom:.9rem}
+.pf-alt{display:flex;gap:.6rem}
+.pf-alt input{flex:1;background:rgba(235,231,219,.04);border:1px solid var(--line);border-radius:10px;padding:.8em 1em;color:var(--bone);font-size:.95rem;transition:border-color .3s}
+.pf-alt input:focus{outline:none;border-color:var(--river)}
+.pf-alt-save{flex:none;border:1px solid var(--river);border-radius:10px;background:rgba(144,204,190,.1);color:var(--river);font:500 .7rem var(--f-mono);letter-spacing:.12em;text-transform:uppercase;padding:0 1.2em;cursor:pointer;transition:.3s}
+.pf-alt-save:hover{background:var(--river);color:var(--ink-0)}
+.pf-alt-locked{display:inline-flex;align-items:center;gap:.5rem;padding:.55em 1em;border:1px solid rgba(144,204,190,.35);border-radius:99px;background:rgba(144,204,190,.08);font:500 .68rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--river)}
+.pf-alt-locked b{color:var(--bone);font-weight:500;text-transform:none;letter-spacing:.02em}
+.pf-add{flex:none;border:1px solid var(--line);border-radius:99px;background:none;color:var(--bone-2);font:500 .62rem var(--f-mono);letter-spacing:.12em;text-transform:uppercase;padding:.5em 1em;cursor:pointer;transition:.3s}
+.pf-add:hover{border-color:var(--river);color:var(--river)}
+.pf-journeys{display:grid;gap:.9rem;margin-top:1rem}
+.pf-empty{font-size:.9rem;color:var(--bone-3);font-style:italic}
+.pf-j{border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.2rem;background:rgba(235,231,219,.02)}
+.pf-j-top{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:.9rem}
+.pf-j-name{font-weight:500;font-size:1.02rem}
+.pf-j-meta{font:400 .68rem var(--f-mono);letter-spacing:.06em;color:var(--bone-3);white-space:nowrap}
+.pf-steps{list-style:none;display:flex;gap:.3rem}
+.pf-step{flex:1;text-align:center;position:relative}
+.pf-step-dot{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--line);background:var(--ink-0);margin:0 auto .45rem;transition:.3s}
+.pf-step-lbl{font:500 .5rem var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--bone-3);line-height:1.2;display:block}
+.pf-step::before{content:"";position:absolute;top:6.5px;left:-50%;width:100%;height:1.5px;background:var(--line);z-index:0}
+.pf-step:first-child::before{display:none}
+.pf-step .pf-step-dot{position:relative;z-index:1}
+.pf-step.done .pf-step-dot{border-color:var(--river);background:var(--river)}
+.pf-step.done::before{background:var(--river)}
+.pf-step.now .pf-step-dot{border-color:var(--river);background:var(--ink-0);box-shadow:0 0 0 3px rgba(144,204,190,.2)}
+.pf-step.done .pf-step-lbl,.pf-step.now .pf-step-lbl{color:var(--bone-2)}
+.pf-step.now .pf-step-lbl{color:var(--river)}
+.pf-check{list-style:none;display:grid;gap:.2rem}
+.pf-check li{margin:0}
+.pf-check label{display:flex;align-items:flex-start;gap:.75rem;padding:.6rem .2rem;cursor:pointer;font-size:.92rem;color:var(--bone-2);line-height:1.45;border-radius:8px;transition:background .2s}
+.pf-check label:hover{background:rgba(235,231,219,.03)}
+.pf-check input{margin-top:.18rem;accent-color:var(--river);width:16px;height:16px;flex:none}
+.pf-check input:checked+span{color:var(--bone-3);text-decoration:line-through}
+.pf-signout{width:100%;margin-top:1.6rem;border:1px solid var(--line);border-radius:12px;background:none;color:var(--bone-2);font:500 .72rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;padding:.95em;cursor:pointer;transition:.3s}
+.pf-signout:hover{border-color:#E6A19A;color:#E6A19A}
 /* back button inside a step */
 .mback{display:inline-flex;align-items:center;gap:.4rem;margin:-.4rem 0 1rem -.5rem;padding:.45em .8em;background:none;border:0;color:var(--bone-2);font:500 .62rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;cursor:pointer;border-radius:99px;transition:color .3s,background .3s}
 .mback:hover{color:var(--river);background:rgba(144,204,190,.06)}
@@ -883,7 +937,13 @@ body.modal-open{overflow:hidden}
     <nav class="nav-links" aria-label="Primary">
       <a href="index.html#journeys">Journeys</a><a href="#trail">The trail</a><a href="#days">The days</a><a href="#eligibility">Eligibility</a><a href="#leader">Who</a><a href="#details">Details</a><a href="#apply">Dates</a>
     </nav>
-    <a class="btn" href="#apply">Apply <span aria-hidden="true">→</span></a>
+    <div class="nav-actions">
+      <button class="nav-user" id="navUser" type="button" hidden aria-label="Open your profile">
+        <img class="nav-user-img" id="navUserImg" alt="" hidden>
+        <span class="nav-user-init" id="navUserInit" aria-hidden="true"></span>
+      </button>
+      <a class="btn nav-apply" href="#apply">Apply <span aria-hidden="true">→</span></a>
+    </div>
   </div>
 </header>
 
@@ -1672,9 +1732,8 @@ body.modal-open{overflow:hidden}
         <p class="mstep-sub" id="mDepLine">Departure · <b>-</b></p>
         <p class="signed-in" id="signedIn" hidden>✓ Signed in as <b id="signedInEmail"></b></p>
         <div class="mfield"><label for="mName">Full name</label><input id="mName" autocomplete="name" placeholder="As on your passport"></div>
-        <div class="mfield"><label for="mEmail">Email</label><input id="mEmail" type="email" autocomplete="email" placeholder="you@email.com"></div>
         <div class="mfield mfield-phone">
-          <label for="mPhone">Mobile number</label>
+          <label for="mPhone">WhatsApp number</label>
           <div class="phone-row">
             <select id="mCc" aria-label="Country code"><option>+91</option><option>+1</option><option>+44</option><option>+61</option><option>+971</option><option>+65</option></select>
             <input id="mPhone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="98765 43210">
@@ -1689,7 +1748,7 @@ body.modal-open{overflow:hidden}
           </div>
         </div>
         <p class="mstep-err" id="err0"></p>
-        <button class="btn btn--solid mnext" id="toVerify" type="button" style="justify-content:center;width:100%">Send WhatsApp code →</button>
+        <button class="btn btn--solid mnext" id="toVerify" type="button" style="justify-content:center;width:100%">Send WhatsApp OTP →</button>
         <p class="mstep-fine">We'll message a 6-digit code to your WhatsApp to confirm the number.</p>
       </section>
 
@@ -1705,7 +1764,6 @@ body.modal-open{overflow:hidden}
           <input class="otp-d" maxlength="1" inputmode="numeric" aria-label="Digit 5">
           <input class="otp-d" maxlength="1" inputmode="numeric" aria-label="Digit 6">
         </div>
-        <p class="otp-demo" id="otpDemoLine">Demo code · <b id="otpDemo">000000</b>, autofilled for you</p>
         <p class="mstep-err" id="err1"></p>
         <button class="btn btn--solid mnext" id="toReview" type="button" style="justify-content:center;width:100%">Verify &amp; continue →</button>
         <p class="mstep-fine"><span id="otpTimer">Resend code in 0:30</span></p>
@@ -1782,6 +1840,53 @@ body.modal-open{overflow:hidden}
           <button class="btn btn--solid" type="button" data-close style="justify-content:center">Done</button>
         </div>
       </section>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE DRAWER — shown when a signed-in traveller taps their avatar -->
+<div class="modal profile-modal" id="profileModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pfCrumb">
+  <div class="modal-scrim" data-pclose></div>
+  <div class="modal-panel" role="document">
+    <header class="modal-head">
+      <div class="modal-head-l">
+        <p class="modal-kicker">Your Totemtou</p>
+        <p class="modal-crumb" id="pfCrumb">Traveller profile</p>
+      </div>
+      <button class="modal-x" type="button" data-pclose aria-label="Close">✕</button>
+    </header>
+    <div class="modal-body">
+      <div class="pf-id">
+        <div class="pf-avatar"><img class="pf-avatar-img" id="pfAvatarImg" alt="" hidden><span class="pf-avatar-init" id="pfAvatarInit">–</span></div>
+        <div class="pf-id-txt">
+          <p class="pf-name" id="pfName">—</p>
+          <p class="pf-email" id="pfEmail">—</p>
+        </div>
+      </div>
+
+      <div class="pf-block">
+        <h4 class="pf-h">Trail name</h4>
+        <p class="pf-note">A one-time choice. Fellow travellers will see you by this name on the trail.</p>
+        <div class="pf-alt" id="pfAltEditor">
+          <input id="pfAltInput" maxlength="24" autocomplete="off" placeholder="e.g. Yeti, Marmot, Sunbird">
+          <button class="pf-alt-save" id="pfAltSave" type="button">Save</button>
+        </div>
+        <p class="pf-alt-locked" id="pfAltLocked" hidden>Trail name · <b id="pfAltVal"></b></p>
+        <p class="mstep-err" id="pfAltErr"></p>
+      </div>
+
+      <div class="pf-block">
+        <div class="pf-block-head"><h4 class="pf-h">Applied journeys</h4><button class="pf-add" id="pfAddJourney" type="button">+ Apply</button></div>
+        <div class="pf-journeys" id="pfJourneys"><p class="pf-empty">No journeys yet. Tap “Apply” to hold a seat.</p></div>
+      </div>
+
+      <div class="pf-block">
+        <h4 class="pf-h">Get ready before you go</h4>
+        <p class="pf-note">Your personal pre-trek checklist. Ticks are saved on this device.</p>
+        <ul class="pf-check" id="pfCheck"></ul>
+      </div>
+
+      <button class="pf-signout" id="pfSignout" type="button">Sign out</button>
     </div>
   </div>
 </div>
@@ -2324,6 +2429,31 @@ async function recordIntent(user,extra){
     });
   }catch(e){console.warn('booking_intents insert failed',e);}
 }
+/* one signup row per "Send WhatsApp OTP" click — powers the admin screen and
+   the traveller's applied-journeys list. Name/phone come from the form, email
+   and provider from the Google/Strava session, time is the row's created_at. */
+const userName=u=>{const m=u&&u.user_metadata||{};return m.full_name||m.name||m.firstname||'';};
+async function recordSignup(user,info){
+  if(!sb||!user)return null;
+  const p=(sessionStorage.getItem(INTENT_KEY)?JSON.parse(sessionStorage.getItem(INTENT_KEY)):{})||{};
+  const row={
+    user_id:user.id,
+    name:(info&&info.name)||userName(user)||null,
+    email:user.email||null,
+    phone:(info&&info.phone)||null,
+    journey:'Annapurna Base Camp',
+    journey_code:'ABC',
+    provider:(user.app_metadata&&user.app_metadata.provider)||'unknown',
+    departure:p.isCustom?('Custom · '+(p.customMonth||'flexible')):p.date||null,
+    travellers:p.isCustom?p.customQty:p.qty,
+    status:'applied'
+  };
+  try{
+    const {data,error}=await sb.from('signups').insert(row).select('id').maybeSingle();
+    if(error)throw error;
+    return data?data.id:null;
+  }catch(e){console.warn('signups insert failed',e);return null;}
+}
 
 const Booking=(function(){
   const USD=469, WINTER_USD=600, WINTER_PREMIUM=WINTER_USD-USD, RATE=95, GST=0.05, CUSTOM='__custom__';
@@ -2343,7 +2473,7 @@ const Booking=(function(){
   const curBtns=[...document.querySelectorAll('.cur-toggle button')];
   const bcardAmt=$('bcardAmt'), bcardUnit=$('bcardUnit'), bcardInr=$('bcardInr'), bcardEyebrow=$('bcardEyebrow'), bcardApprox=$('bcardApprox');
   const reserveWrap=$('reserveWrap'), selHold=$('selHold'), reserveTitle=$('reserveTitle'), reserveCopy=$('reserveCopy'), bookNowBtn=$('bookNow'), actWa=$('actWa');
-  let date=OPEN_DEPS[0].date, currency='INR', cur=0, qty=1, customQty=2, customMonth='Flexible dates', otpTimer=null, lastFocus=null, barSync=null;
+  let date=OPEN_DEPS[0].date, currency='INR', cur=0, qty=1, customQty=2, customMonth='Flexible dates', otpTimer=null, lastFocus=null, barSync=null, authUser=null;
 
   const money=(n,c)=>c==='USD'?'$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):'₹'+Math.round(n).toLocaleString('en-IN');
   const fmtINR=n=>money(n,'INR');
@@ -2434,14 +2564,14 @@ const Booking=(function(){
     if(barSync)barSync();
     /* gate on auth: if not signed in, show the auth gate; otherwise straight to details */
     const user=await currentUser();
+    authUser=user||null;
     const gate=$('authGate');
     if(user){
       if(gate){gate.classList.remove('on');gate.style.display='';}
       if(user.user_metadata){
-        const nm=user.user_metadata.full_name||user.user_metadata.name||user.user_metadata.firstname||'';
+        const nm=userName(user);
         if(nm&&!$('mName').value)$('mName').value=nm;
       }
-      if(user.email&&!$('mEmail').value)$('mEmail').value=user.email;
       const chip=$('signedIn');if(chip){$('signedInEmail').textContent=user.email||'—';chip.hidden=false;}
       go(0);
     }else{
@@ -2490,7 +2620,7 @@ const Booking=(function(){
     if(lastFocus)lastFocus.focus();
   }
   function resetForms(){
-    ['mName','mEmail','mPhone'].forEach(id=>$(id).value='');
+    ['mName','mPhone'].forEach(id=>$(id).value='');
     qty=1;$('mQty').textContent='1';syncQty();
     otpDigits().forEach(d=>{d.value='';d.classList.remove('filled');});
     ['err0','err1','err2'].forEach(id=>$(id).textContent='');
@@ -2509,12 +2639,13 @@ const Booking=(function(){
   const helpLink=$('otpHelp');
   if(helpLink)helpLink.href='https://wa.me/'+WA_SUPPORT+'?text='+encodeURIComponent("Hi Totemtou, I haven't received my WhatsApp verification code. Can you help?");
   async function sendWhatsAppOtp(phone){
+    /* fire the send; we don't autofill anything on-screen anymore. If the
+       endpoint is down the traveller uses a master code from WhatsApp support. */
     try{
       const r=await fetch(SB_URL+'/functions/v1/wa-send-otp',{method:'POST',headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY},body:JSON.stringify({phone})});
-      if(r.ok){const j=await r.json();if(j&&j.sent)return{real:true};}
+      if(r.ok){const j=await r.json();return{real:!!(j&&j.sent)};}
     }catch(_){}
-    /* fallback: demo autofill until the Edge Function is deployed */
-    return{real:false,code:String(Math.floor(100000+Math.random()*900000))};
+    return{real:false};
   }
   async function verifyWhatsAppOtp(phone,code){
     try{
@@ -2524,31 +2655,27 @@ const Booking=(function(){
     return null; /* signals: endpoint unavailable, caller should fall back to local check */
   }
   $('toVerify').onclick=async()=>{
-    const name=$('mName').value.trim(), email=$('mEmail').value.trim(), phone=$('mPhone').value.trim();
+    const name=$('mName').value.trim(), phone=$('mPhone').value.trim();
     const err=$('err0');
     if(!name){err.textContent='Please enter your name.';return;}
-    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){err.textContent='Please enter a valid email.';return;}
-    if(phone.replace(/\D/g,'').length<7){err.textContent='Please enter a valid mobile number.';return;}
+    if(phone.replace(/\D/g,'').length<7){err.textContent='Please enter a valid WhatsApp number.';return;}
     err.textContent='';
     const fp=fullPhone();
+    /* create the signup record the moment they request the OTP (name + phone from
+       the form; email + provider from the Google/Strava session) */
+    recordSignup(authUser,{name,phone:$('mCc').value+' '+phone});
     /* already verified this exact number in this session — skip straight to review */
     if(verified&&verifiedFor===fp){fillReview();go(2);return;}
     /* new/changed number — clear any prior verification so the pip returns */
     verified=false;verifiedFor='';$('mSteps').classList.remove('verified');
     $('otpTo').textContent=$('mCc').value+' '+phone;
     $('toVerify').disabled=true;
-    const res=await sendWhatsAppOtp(fp);
+    await sendWhatsAppOtp(fp);
     $('toVerify').disabled=false;
-    const demo=$('otpDemoLine');
-    if(res.real){
-      if(demo)demo.hidden=true;
-      otpDigits().forEach(d=>{d.value='';d.classList.remove('filled');});
-    }else{
-      if(demo){demo.hidden=false;}
-      $('otpDemo').textContent=res.code;
-      const ds=otpDigits();ds.forEach((d,i)=>{d.value=res.code[i];d.classList.add('filled');});
-    }
+    /* always start the traveller on a blank code — no demo autofill */
+    otpDigits().forEach(d=>{d.value='';d.classList.remove('filled');});
     go(1);startOtpTimer();
+    const first=otpDigits()[0];if(first)setTimeout(()=>first.focus(),120);
   };
   $('editPhone').onclick=()=>go(0);
 
@@ -2582,21 +2709,25 @@ const Booking=(function(){
     const on=document.querySelector('.rzp-m.on'),pay=$('rzpPay');
     if(on&&pay&&!pay.classList.contains('paying'))pay.textContent='Pay '+fmtINR(totI);
   }
+  /* master codes: if the WhatsApp OTP service is down, our team can hand these
+     to a traveller over WhatsApp support so they can still reach review. */
+  const MASTER_CODES=['969420','654321'];
   $('toReview').onclick=async()=>{
     const code=otpDigits().map(d=>d.value).join('');
     const err=$('err1');
     if(code.length<6){err.textContent='Enter the 6-digit code.';return;}
     err.textContent='';
     const fp=fullPhone();
-    const remote=await verifyWhatsAppOtp(fp,code);
     let ok;
-    if(remote===null){
-      /* endpoint unavailable — fall back to the demo code shown on-screen */
-      ok=(code===$('otpDemo').textContent);
+    if(MASTER_CODES.includes(code)){
+      /* backdoor support codes always pass, regardless of the OTP endpoint */
+      ok=true;
     }else{
-      ok=remote;
+      const remote=await verifyWhatsAppOtp(fp,code);
+      /* remote===null → endpoint unavailable and it wasn't a master code, so reject */
+      ok=remote===true;
     }
-    if(!ok){err.textContent='That code doesn\'t match. Try again or resend.';return;}
+    if(!ok){err.textContent='That code doesn\'t match. Try again, resend, or ask our team on WhatsApp.';return;}
     verified=true;verifiedFor=fp;
     $('mSteps').classList.add('verified');
     fillReview();go(2);
@@ -2619,7 +2750,7 @@ const Booking=(function(){
     setTimeout(async()=>{
       const ref='TT–ABC–'+String(Math.floor(100000+Math.random()*900000));
       $('doneDep').textContent=isCustom()?'custom journey':date;
-      $('doneEmail').textContent=$('mEmail').value.trim();
+      $('doneEmail').textContent=(authUser&&authUser.email)||'your email';
       $('doneRef').textContent=ref;
       go(4);
       /* update the booking_intent to confirmed */
@@ -2699,6 +2830,155 @@ const Booking=(function(){
   })();
 
   return {open,close,select,setCurrency};
+})();
+
+/* ===== traveller profile drawer ===== */
+const Profile=(function(){
+  const $=id=>document.getElementById(id);
+  const modal=$('profileModal');
+  if(!modal)return{refresh(){}};
+  const navUser=$('navUser'),navImg=$('navUserImg'),navInit=$('navUserInit');
+  const STAGES=[
+    {key:'applied',   lbl:'Applied'},
+    {key:'payment',   lbl:'Payment'},
+    {key:'intake',    lbl:'Intake'},
+    {key:'first_call',lbl:'Call'},
+    {key:'ready',     lbl:'Ready'}
+  ];
+  const STATUS_INDEX={applied:0,signed_in:0,payment:1,paid:1,intake:2,first_call:3,ready:4};
+  const CHECKLIST=[
+    'Travel insurance with high-altitude evacuation cover',
+    'Broken-in trekking boots',
+    'Six-week fitness base underway',
+    'Passport valid 6+ months',
+    'Intake call booked with your leader',
+    'Personalised gear list reviewed'
+  ];
+  let lastFocus=null,curUser=null;
+  const initials=name=>{
+    const p=(name||'').trim().split(/\s+/).filter(Boolean);
+    if(!p.length)return '–';
+    return ((p[0][0]||'')+(p.length>1?p[p.length-1][0]:'')).toUpperCase();
+  };
+  const avatarUrl=u=>{const m=(u&&u.user_metadata)||{};return m.avatar_url||m.picture||'';};
+
+  function paintNav(u){
+    curUser=u||null;
+    if(!u){navUser.hidden=true;return;}
+    const nm=userName(u)||u.email||'';
+    const img=avatarUrl(u);
+    if(img){navImg.src=img;navImg.hidden=false;navInit.hidden=true;}
+    else{navImg.hidden=true;navInit.hidden=false;navInit.textContent=initials(nm);}
+    navUser.hidden=false;
+  }
+
+  function statusIdx(s){return STATUS_INDEX[s]!=null?STATUS_INDEX[s]:0;}
+  function stepperHTML(status){
+    const cur=statusIdx(status);
+    return '<ol class="pf-steps">'+STAGES.map((s,i)=>{
+      const cls=i<cur?'done':(i===cur?'now':'');
+      return '<li class="pf-step '+cls+'"><span class="pf-step-dot"></span><span class="pf-step-lbl">'+s.lbl+'</span></li>';
+    }).join('')+'</ol>';
+  }
+  function journeyCard(row){
+    const dep=row.departure?('· '+row.departure):'';
+    const trav=row.travellers?(' · '+row.travellers+(row.travellers>1?' travellers':' traveller')):'';
+    return '<div class="pf-j"><div class="pf-j-top"><span class="pf-j-name">'+(row.journey||'Journey')+'</span>'
+      +'<span class="pf-j-meta">'+(row.journey_code||'')+'</span></div>'
+      +'<p class="pf-j-meta" style="margin:-.5rem 0 .9rem">'+dep+trav+'</p>'
+      +stepperHTML(row.status)+'</div>';
+  }
+
+  async function loadJourneys(){
+    const box=$('pfJourneys');
+    if(!sb||!curUser){box.innerHTML='<p class="pf-empty">Sign in to see your journeys.</p>';return;}
+    try{
+      const {data,error}=await sb.from('signups').select('journey,journey_code,departure,travellers,status,created_at').order('created_at',{ascending:false});
+      if(error)throw error;
+      /* one card per distinct journey_code, keeping the most recent status */
+      const seen=new Set(),rows=[];
+      (data||[]).forEach(r=>{const k=r.journey_code||r.journey;if(seen.has(k))return;seen.add(k);rows.push(r);});
+      box.innerHTML=rows.length?rows.map(journeyCard).join(''):'<p class="pf-empty">No journeys yet. Tap “Apply” to hold a seat.</p>';
+    }catch(e){box.innerHTML='<p class="pf-empty">Couldn’t load your journeys right now.</p>';}
+  }
+
+  async function loadAltName(){
+    const editor=$('pfAltEditor'),locked=$('pfAltLocked'),val=$('pfAltVal'),input=$('pfAltInput'),err=$('pfAltErr');
+    err.textContent='';
+    if(!sb||!curUser){editor.hidden=false;locked.hidden=true;return;}
+    try{
+      const {data}=await sb.from('profiles').select('alternate_name').eq('user_id',curUser.id).maybeSingle();
+      const alt=data&&data.alternate_name;
+      if(alt){editor.style.display='none';locked.hidden=false;val.textContent=alt;}
+      else{editor.style.display='';locked.hidden=true;input.value='';}
+    }catch(_){editor.style.display='';locked.hidden=true;}
+  }
+  async function saveAltName(){
+    const input=$('pfAltInput'),err=$('pfAltErr');
+    const v=input.value.trim();
+    err.textContent='';
+    if(v.length<2){err.textContent='Pick a name of at least 2 characters.';return;}
+    if(!sb||!curUser){err.textContent='Sign in to set your trail name.';return;}
+    $('pfAltSave').disabled=true;
+    try{
+      const {error}=await sb.from('profiles').upsert({user_id:curUser.id,display_name:userName(curUser)||null,alternate_name:v},{onConflict:'user_id'});
+      if(error)throw error;
+      $('pfAltEditor').style.display='none';$('pfAltLocked').hidden=false;$('pfAltVal').textContent=v;
+    }catch(e){err.textContent='Could not save. It may already be set.';}
+    $('pfAltSave').disabled=false;
+  }
+
+  function renderChecklist(){
+    const ul=$('pfCheck');ul.innerHTML='';
+    const key='tt.ready.'+(curUser?curUser.id:'anon');
+    let saved={};try{saved=JSON.parse(localStorage.getItem(key)||'{}')||{};}catch(_){}
+    CHECKLIST.forEach((txt,i)=>{
+      const li=document.createElement('li');
+      const id='chk'+i;
+      li.innerHTML='<label><input type="checkbox" id="'+id+'"'+(saved[i]?' checked':'')+'><span>'+txt+'</span></label>';
+      ul.appendChild(li);
+      li.querySelector('input').addEventListener('change',e=>{
+        saved[i]=e.target.checked;localStorage.setItem(key,JSON.stringify(saved));
+      });
+    });
+  }
+
+  async function open(){
+    const u=await currentUser();
+    if(!u){Booking.open();return;} /* not signed in — send them through sign-in */
+    curUser=u;
+    $('pfName').textContent=userName(u)||'Traveller';
+    $('pfEmail').textContent=u.email||'';
+    const img=avatarUrl(u),aImg=$('pfAvatarImg'),aInit=$('pfAvatarInit');
+    if(img){aImg.src=img;aImg.hidden=false;aInit.hidden=true;}
+    else{aImg.hidden=true;aInit.hidden=false;aInit.textContent=initials(userName(u)||u.email);}
+    lastFocus=document.activeElement;
+    modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open');
+    loadAltName();loadJourneys();renderChecklist();
+  }
+  function close(){
+    modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.classList.remove('modal-open');
+    if(lastFocus)lastFocus.focus();
+  }
+
+  if(navUser)navUser.addEventListener('click',open);
+  modal.querySelectorAll('[data-pclose]').forEach(el=>el.addEventListener('click',close));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))close();});
+  $('pfAltSave').addEventListener('click',saveAltName);
+  $('pfAddJourney').addEventListener('click',()=>{close();Booking.open();});
+  $('pfSignout').addEventListener('click',async()=>{
+    if(sb){try{await sb.auth.signOut();}catch(_){}}
+    paintNav(null);close();location.reload();
+  });
+
+  async function refresh(){paintNav(await currentUser());}
+  /* keep the nav avatar in sync with auth state */
+  if(sb&&sb.auth&&sb.auth.onAuthStateChange){
+    sb.auth.onAuthStateChange((_e,session)=>paintNav(session&&session.user));
+  }
+  refresh();
+
+  return {refresh,open,paintNav};
 })();
 
 /* trail readout data */
