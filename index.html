@@ -200,6 +200,46 @@ h1 .line>span{display:block}
 #jcard img{width:100%;height:100%;object-fit:cover}
 #jcard .cap{position:absolute;left:0;right:0;bottom:0;padding:.8rem 1rem;font:500 .62rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;background:linear-gradient(transparent,rgba(11,20,16,.85));color:var(--bone)}
 @media(hover:none),(max-width:880px){#jcard{display:none}}
+/* mouse-reactive spotlight — every row tracks the cursor */
+.j-row{z-index:1}
+.j-row::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .5s var(--ease);
+  background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%),rgba(144,204,190,.13),transparent 68%)}
+.j-row:hover{z-index:6}
+.j-row:hover::before{opacity:1}
+/* live badge on the active journey */
+.j-row .live{font:500 .58rem var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--river);border:1px solid rgba(144,204,190,.45);padding:.35em .8em;border-radius:99px;margin-left:.8rem;vertical-align:middle;white-space:nowrap}
+/* active row — sits in a slot with the polaroid stack tucked behind it */
+.j-slot{position:relative}
+.j-row--active{border-radius:14px;border-bottom-color:transparent;margin:.3rem 0;position:relative;z-index:1;background:var(--ink-1)}
+.j-row--active::after{content:"";position:absolute;inset:0;border-radius:14px;padding:1.5px;pointer-events:none;z-index:0;
+  background:linear-gradient(115deg,#5B8FD9,#EBE7DB,#C9504A,#3C7E55,#D9A23B,#5B8FD9,#EBE7DB,#C9504A);
+  background-size:320% 100%;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;
+  opacity:.7;transition:opacity .5s var(--ease)}
+.j-slot:hover .j-row--active::after{opacity:1}
+.anim .j-row--active::after{animation:flagshift 11s linear infinite}
+@keyframes flagshift{to{background-position:320% 0}}
+.j-slot:hover .j-row--active{padding-left:1.6rem;background:#13241c}
+/* polaroid stack — pops out from behind the row's top-right edge */
+.polas{position:absolute;top:0;right:clamp(2rem,6vw,5rem);width:0;height:0;z-index:0;pointer-events:none}
+.pola{position:absolute;bottom:-12px;right:0;width:clamp(88px,9vw,120px);pointer-events:none;cursor:default;transform-origin:bottom center;
+  transform:translateY(26px) scale(.9);opacity:0;
+  transition:transform .55s var(--ease),opacity .45s var(--ease)}
+.pola-in{display:block;background:#EBE7DB;padding:6px 6px 18px;border-radius:3px;box-shadow:0 14px 34px rgba(0,0,0,.5);
+  transform:scale(1);transition:transform .35s var(--ease)}
+.pola-in img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;filter:saturate(.95)}
+.pola--1{transition-delay:.08s}
+.pola--2{transition-delay:.04s}
+/* opened when the pointer is on the row OR the stack */
+.j-slot:hover .pola{opacity:1;pointer-events:auto}
+.j-slot:hover .pola--1{transform:translateX(-98px) rotate(-9deg)}
+.j-slot:hover .pola--2{transform:translateX(-49px) rotate(1deg)}
+.j-slot:hover .pola--3{transform:translateX(0) rotate(10deg)}
+/* hovering a single polaroid enlarges it ~20% */
+.pola:hover{z-index:5}
+.pola:hover .pola-in{transform:scale(1.2)}
+@media(hover:none),(max-width:880px){.polas{display:none}}
 
 /* leaders */
 .leaders{background:var(--ink-0)}
@@ -302,7 +342,6 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
     </video>
   </div>
   <div class="hero-in">
-    <p class="kicker">Nepal Himalaya · Trek · 4×4 · MTB</p>
     <h1 id="heroTitle">
       <span class="line"><span>Curated adventures,</span></span>
       <span class="line"><span><em>led with experience.</em></span></span>
@@ -377,7 +416,6 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
   <div class="wrap">
     <p class="eyebrow">The four standards</p>
     <h2 class="h2 rv">What every Totemtou journey <em>delivers.</em></h2>
-    <p class="lede rv" style="margin-top:1.4rem">Regardless of way, region, or duration, every journey we run holds these four lines. They are non-negotiable.</p>
     <div class="std-grid">
       <div class="std rv"><p class="rn">I · Leadership</p><h3>A leader who has walked it</h3><p>Every group has a leader who has done the route, repeatedly, in the conditions we're going in. They walk what we publish.</p></div>
       <div class="std rv"><p class="rn">II · Routes</p><h3>Walked before published</h3><p>We publish only what we've tested. Every route has been walked end to end by a founder.</p></div>
@@ -394,12 +432,19 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
     <h2 class="h2 rv">Three journeys, walked <em>and tested.</em></h2>
     <p class="lede rv" style="margin-top:1.4rem">Our launch slate. Three journeys we run repeatedly, in the conditions they're meant for. We'd rather run three properly than thirty loosely.</p>
     <div class="j-list">
-      <a class="j-row rv" href="#apply" aria-disabled="true" data-img="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg" data-cap="Annapurna sanctuary · 4,130 m">
-        <span class="idx">01</span>
-        <h3>Annapurna Base Camp<span class="soon">Soon</span></h3>
-        <span class="meta">Walk the Land<br>Annapurna · 7 days · Level 3</span>
-        <span class="stat"><b>4,130 m</b><br>48 km · Moderate</span>
-      </a>
+      <div class="j-slot rv">
+        <a class="j-row j-row--active" href="abc.html" data-img="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg" data-cap="Annapurna sanctuary · 4,130 m">
+          <span class="idx">01</span>
+          <h3>Annapurna Base Camp<span class="live">Now booking</span></h3>
+          <span class="meta">Walk the Land<br>Annapurna · 7 days · Level 3</span>
+          <span class="stat"><b>4,130 m</b><br>48 km · Moderate</span>
+        </a>
+        <span class="polas" aria-hidden="true">
+          <span class="pola pola--1"><span class="pola-in"><img src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg" alt="" loading="lazy"></span></span>
+          <span class="pola pola--2"><span class="pola-in"><img src="https://storage.zopuai.com/converted/user-UOPJ.webp" alt="" loading="lazy"></span></span>
+          <span class="pola pola--3"><span class="pola-in"><img src="posters/walk.jpg" alt="" loading="lazy"></span></span>
+        </span>
+      </div>
       <a class="j-row rv" href="#apply" aria-disabled="true" data-img="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-0D0E.jpeg" data-cap="Upper Mustang · MTB">
         <span class="idx">02</span>
         <h3>Upper Mustang MTB<span class="soon">Soon</span></h3>
@@ -548,18 +593,28 @@ const vio=new IntersectionObserver(es=>es.forEach(e=>{
 }),{rootMargin:'120px'});
 document.querySelectorAll('.way .vid video').forEach(v=>vio.observe(v));
 
-/* journeys hover preview card */
+/* journeys: rows react to the cursor (spotlight), active row shows polaroids,
+   the rest show the cursor-following preview card */
 const jcard=document.getElementById('jcard');
-if(jcard&&matchMedia('(hover:hover)').matches){
-  const img=jcard.querySelector('img'),cap=jcard.querySelector('.cap');
+if(matchMedia('(hover:hover)').matches){
+  const hoverCard=jcard&&{img:jcard.querySelector('img'),cap:jcard.querySelector('.cap')};
   let raf,tx=0,ty=0,cx=0,cy=0;
   const loop=()=>{cx+=(tx-cx)*.12;cy+=(ty-cy)*.12;jcard.style.transform=`translate(${cx}px,${cy}px) translate(-50%,-110%)`;raf=requestAnimationFrame(loop)};
   document.querySelectorAll('.j-row').forEach(r=>{
-    r.addEventListener('mouseenter',()=>{img.src=r.dataset.img;cap.textContent=r.dataset.cap;jcard.style.opacity=1;jcard.style.scale=1;cancelAnimationFrame(raf);loop()});
-    r.addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});
-    r.addEventListener('mouseleave',()=>{jcard.style.opacity=0;jcard.style.scale=.85;cancelAnimationFrame(raf)});
+    const active=r.classList.contains('j-row--active');
+    // spotlight follows the pointer within every row
+    r.addEventListener('mousemove',e=>{
+      const b=r.getBoundingClientRect();
+      r.style.setProperty('--mx',`${e.clientX-b.left}px`);
+      r.style.setProperty('--my',`${e.clientY-b.top}px`);
+      if(!active&&hoverCard){tx=e.clientX;ty=e.clientY}
+    });
+    if(!active&&hoverCard){
+      r.addEventListener('mouseenter',()=>{hoverCard.img.src=r.dataset.img;hoverCard.cap.textContent=r.dataset.cap;jcard.style.opacity=1;jcard.style.scale=1;cancelAnimationFrame(raf);loop()});
+      r.addEventListener('mouseleave',()=>{jcard.style.opacity=0;jcard.style.scale=.85;cancelAnimationFrame(raf)});
+    }
   });
-  jcard.style.transition='opacity .35s,scale .45s cubic-bezier(.22,1,.36,1)';
+  if(jcard)jcard.style.transition='opacity .35s,scale .45s cubic-bezier(.22,1,.36,1)';
 }
 
 /* apply: elements caption */
