@@ -298,17 +298,37 @@ h1 .line>span{display:block}
 
 /* leaders */
 .leaders{background:var(--ink-0)}
-.lead-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1.3rem;margin-top:3.6rem}
-.lead{grid-column:span 2;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(235,231,219,.02)}
-.lead-grid .lead:nth-child(4):nth-last-child(2){grid-column:2 / span 2}
+.lead-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:1.3rem;margin-top:3.6rem}
+.lead{flex:0 1 calc((100% - 2.6rem)/3);border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(235,231,219,.02)}
 .lead .ph{aspect-ratio:3/3.6;overflow:hidden;position:relative;background:var(--ink-2)}
 .lead .ph img{width:100%;height:100%;object-fit:cover;filter:saturate(.85);transition:transform 1s var(--ease),filter .8s}
 .lead:hover .ph img{transform:scale(1.05);filter:saturate(1)}
 .lead .ph .pending{position:absolute;inset:0;display:grid;place-items:center;font:400 .68rem/1.8 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--bone-3);text-align:center;padding:1rem}
 .lead .nm{padding:1.1rem 1.2rem .35rem;font-weight:520;font-size:1.15rem}
 .lead .rl{padding:0 1.2rem 1.2rem;font:400 .66rem/1.6 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--bone-2)}
-@media(max-width:980px){.lead-grid{grid-template-columns:repeat(4,1fr)}.lead-grid .lead:nth-child(4):nth-last-child(2){grid-column:span 2}.lead-grid .lead:nth-last-child(1):nth-child(odd){grid-column:2 / span 2}}
-@media(max-width:520px){.lead-grid{grid-template-columns:repeat(4,1fr);gap:.8rem}.lead .nm{font-size:1rem}}
+@media(max-width:980px){.lead{flex-basis:calc((100% - 1.3rem)/2)}}
+@media(max-width:520px){.lead-grid{gap:.8rem}.lead{flex-basis:calc((100% - .8rem)/2)}.lead .nm{font-size:1rem}}
+
+/* unfiltered · instagram strip */
+.unfiltered{background:var(--ink-0)}
+.ig-strip{display:flex;gap:1rem;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;padding:2.6rem max(4vw,calc((100vw - 1280px)/2)) .6rem;margin-top:2.4rem;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.ig-strip::-webkit-scrollbar{display:none}
+.ig-item{flex:0 0 auto;width:clamp(220px,24vw,300px);aspect-ratio:1/1;scroll-snap-align:start;position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--ink-2);text-decoration:none}
+.ig-item img{width:100%;height:100%;object-fit:cover;filter:saturate(.9);transition:transform 1s var(--ease),filter .8s}
+.ig-item:hover img{transform:scale(1.06);filter:saturate(1)}
+.ig-item::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(11,20,16,.72),rgba(11,20,16,0) 46%);opacity:0;transition:opacity .5s}
+.ig-item:hover::after{opacity:1}
+.ig-cap{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:1rem;font:400 .68rem/1.5 var(--f-mono);letter-spacing:.02em;color:var(--bone);opacity:0;transform:translateY(8px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.ig-item:hover .ig-cap{opacity:1;transform:none}
+.ig-item.is-loading{background:linear-gradient(100deg,var(--ink-2) 30%,rgba(235,231,219,.06) 50%,var(--ink-2) 70%);background-size:220% 100%;animation:igshine 1.3s var(--ease) infinite}
+@keyframes igshine{to{background-position:-120% 0}}
+.ig-follow{display:grid;place-items:center;background:rgba(235,231,219,.02)}
+.ig-follow-in{text-align:center;font:500 .72rem/1.7 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--bone-2);transition:color .4s}
+.ig-follow:hover .ig-follow-in{color:var(--bone)}
+.ig-glyph{display:block;width:26px;height:26px;margin:0 auto .7rem;border:1.6px solid currentColor;border-radius:8px;position:relative}
+.ig-glyph::before{content:"";position:absolute;inset:5px;border:1.6px solid currentColor;border-radius:50%}
+.ig-glyph::after{content:"";position:absolute;top:4px;right:4px;width:3px;height:3px;border-radius:50%;background:currentColor}
+@media(max-width:520px){.ig-item{width:74vw}.ig-strip{scroll-snap-type:x mandatory;padding-left:4vw}}
 
 /* apply */
 .apply{background:linear-gradient(var(--ink-0),var(--ink-1));text-align:center}
@@ -398,7 +418,7 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
     <video id="heroVideo" class="hero-vid" autoplay muted loop playsinline preload="auto" poster="posters/hero.jpg">
       <source src="https://storage.zopuai.com/video-conversions/converted-1782424788803-YSIG.webm" type="video/webm">
     </video>
-    <video id="heroVideoB" class="hero-vid hero-vid--b" muted playsinline preload="auto" aria-hidden="true">
+    <video id="heroVideoB" class="hero-vid hero-vid--b" muted playsinline preload="none" aria-hidden="true">
       <source src="https://storage.zopuai.com/video-conversions/converted-1782424788803-YSIG.webm" type="video/webm">
     </video>
   </div>
@@ -588,6 +608,21 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
 </section>
 
 <!-- LEADERS -->
+<!-- UNFILTERED · instagram feed -->
+<section class="unfiltered" id="unfiltered" aria-label="From our Instagram">
+  <div class="wrap">
+    <p class="eyebrow">Straight from the trail</p>
+    <h2 class="h2 rv"><em>Unfiltered.</em></h2>
+    <p class="lede rv" style="margin-top:1.4rem">No staging, no gloss — the journeys exactly as they happen, straight off <a href="https://www.instagram.com/totemtou" target="_blank" rel="noopener">@totemtou</a>.</p>
+  </div>
+  <div class="ig-strip" id="igStrip" role="list" aria-live="polite">
+    <div class="ig-item is-loading" aria-hidden="true"></div>
+    <div class="ig-item is-loading" aria-hidden="true"></div>
+    <div class="ig-item is-loading" aria-hidden="true"></div>
+    <div class="ig-item is-loading" aria-hidden="true"></div>
+  </div>
+</section>
+
 <section class="leaders" id="leaders" aria-label="The people who lead">
   <div class="wrap">
     <p class="eyebrow">The people who lead</p>
@@ -613,10 +648,6 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
       <div class="lead rv">
         <div class="ph rv-img"><img src="https://storage.zopuai.com/converted/user-680J.webp" alt="Shivam, sales advisor" loading="lazy"></div>
         <p class="nm">Shivam</p><p class="rl">Advisor · Sales</p>
-      </div>
-      <div class="lead rv">
-        <div class="ph rv-img"><img src="https://storage.zopuai.com/converted/user-5YE1.webp" alt="Swapnil, strategy advisor" loading="lazy"></div>
-        <p class="nm">Swapnil</p><p class="rl">Advisor · Strategy</p>
       </div>
     </div>
   </div>
@@ -732,15 +763,27 @@ menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.class
   const A=document.getElementById('heroVideo'),B=document.getElementById('heroVideoB');
   if(!A||!B)return;
   const FADE=0.9;
-  let front=A,back=B,swapping=false;
+  let front=A,back=B,swapping=false,bReady=false;
   A.removeAttribute('loop');
   A.style.opacity=1;B.style.opacity=0;
   [A,B].forEach(v=>{v.loop=false;v.style.transition=`opacity ${FADE}s linear`;});
   const play=v=>{const p=v.play();if(p&&p.catch)p.catch(()=>{});};
+
+  /* robust autoplay: keep nudging the primary video until it is genuinely playing.
+     Multiple play() calls on a still-loading remote video reject with AbortError and
+     leave it paused, so we retry on every readiness signal, on tab focus, and on the
+     first user gesture as a last resort. */
+  ['loadeddata','canplay','canplaythrough'].forEach(ev=>A.addEventListener(ev,()=>play(A)));
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&front.paused)play(front);});
+  const onGesture=()=>{if(front.paused)play(front);};
+  window.addEventListener('pointerdown',onGesture,{once:true});
+  A.addEventListener('playing',()=>{B.load();},{once:true}); /* lazy-load crossfade buffer only after A is up */
+  B.addEventListener('canplay',()=>{bReady=true;},{once:true});
   play(A);
+
   function tick(){
     const d=front.duration;
-    if(!swapping&&d&&isFinite(d)&&front.currentTime>=d-FADE){
+    if(!swapping&&bReady&&d&&isFinite(d)&&front.currentTime>=d-FADE){
       swapping=true;
       back.currentTime=0;play(back);
       back.style.opacity=1;front.style.opacity=0;
@@ -750,6 +793,70 @@ menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.class
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
+})();
+
+/* Unfiltered · Instagram strip — powered by a Behold.so JSON feed.
+   SETUP: create a free feed at behold.so, connect Instagram, then paste the
+   feed URL below (looks like https://feeds.behold.so/XXXXXXXXXXXX).
+   Leave BEHOLD_FEED_URL empty to keep the built-in fallback tiles. */
+(function(){
+  const strip=document.getElementById('igStrip');
+  if(!strip)return;
+  const BEHOLD_FEED_URL='';            // <-- paste your Behold feed URL here
+  const HANDLE='totemtou';             // <-- your Instagram handle (no @)
+  const MAX=16;
+
+  const FALLBACK=[
+    {image:'https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg',permalink:'https://www.instagram.com/'+HANDLE,caption:'Annapurna Base Camp — the sanctuary opens up.'},
+    {image:'https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-0D0E.jpeg',permalink:'https://www.instagram.com/'+HANDLE,caption:'Upper Mustang, 4×4 — the road to Lo Manthang.'},
+    {image:'https://storage.zopuai.com/converted/user-B3IS.webp',permalink:'https://www.instagram.com/'+HANDLE,caption:'Deepak, reading the weather before a push.'},
+    {image:'https://storage.zopuai.com/converted/user-NLIU.webp',permalink:'https://www.instagram.com/'+HANDLE,caption:'Fabio on the ridgeline. Fresh tracks only.'},
+    {image:'https://storage.zopuai.com/converted/user-69E9.webp',permalink:'https://www.instagram.com/'+HANDLE,caption:'Prabin, calm as ever above 4,000m.'},
+    {image:'https://storage.zopuai.com/converted/user-DI7N.webp',permalink:'https://www.instagram.com/'+HANDLE,caption:'Camp mornings with Shilpa and the crew.'}
+  ];
+
+  const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const clip=(s,n)=>{s=String(s||'').replace(/\s+/g,' ').trim();return s.length>n?s.slice(0,n).trim()+'…':s;};
+
+  function tile(p){
+    const a=document.createElement('a');
+    a.className='ig-item';a.href=p.permalink||('https://www.instagram.com/'+HANDLE);
+    a.target='_blank';a.rel='noopener';a.setAttribute('role','listitem');
+    a.innerHTML='<img src="'+esc(p.image)+'" alt="'+(esc(clip(p.caption,110))||('Instagram post from @'+HANDLE))+'" loading="lazy">'+
+      (p.caption?'<span class="ig-cap">'+esc(clip(p.caption,90))+'</span>':'');
+    return a;
+  }
+  function followTile(){
+    const a=document.createElement('a');
+    a.className='ig-item ig-follow';a.href='https://www.instagram.com/'+HANDLE;
+    a.target='_blank';a.rel='noopener';a.setAttribute('role','listitem');
+    a.innerHTML='<span class="ig-follow-in"><span class="ig-glyph" aria-hidden="true"></span>Follow<br>@'+esc(HANDLE)+'</span>';
+    return a;
+  }
+  function render(posts){
+    strip.innerHTML='';
+    (posts||[]).slice(0,MAX).forEach(p=>strip.appendChild(tile(p)));
+    strip.appendChild(followTile());
+  }
+  /* Behold's JSON shape has shifted over versions — accept an array or an object
+     with media/posts/items, and pick the best available image field. */
+  function normalize(data){
+    const arr=Array.isArray(data)?data:(data&&(data.media||data.posts||data.items))||[];
+    return arr.map(m=>{
+      const sz=m.sizes||{};
+      const image=(sz.medium&&sz.medium.mediaUrl)||(sz.large&&sz.large.mediaUrl)||
+        (sz.small&&sz.small.mediaUrl)||m.thumbnailUrl||m.mediaUrl||m.thumbnail||m.image||m.url;
+      return {image:image,permalink:m.permalink||m.link,caption:m.caption||m.prompt||''};
+    }).filter(p=>p.image);
+  }
+
+  if(BEHOLD_FEED_URL){
+    fetch(BEHOLD_FEED_URL).then(r=>r.ok?r.json():Promise.reject()).then(d=>{
+      const posts=normalize(d);render(posts.length?posts:FALLBACK);
+    }).catch(()=>render(FALLBACK));
+  }else{
+    render(FALLBACK);
+  }
 })();
 
 /* journey cards: spotlight follows the cursor */
@@ -783,9 +890,7 @@ if(!anim){
 }
 gsap.registerPlugin(ScrollTrigger);
 
-/* hero reveals directly, no loader */
-const heroVideo=document.getElementById('heroVideo');
-heroVideo&&heroVideo.play().catch(()=>{});
+/* hero reveals directly, no loader (video playback is owned by the crossfade block above) */
 gsap.timeline()
   .from('#heroTitle .line>span',{yPercent:110,duration:1.1,ease:'power4.out',stagger:.12})
   .to('.hero .rv',{opacity:1,y:0,duration:.9,ease:'power3.out',stagger:.12},'-=0.6');
