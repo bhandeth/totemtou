@@ -458,7 +458,7 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
     <div class="j-cards" style="margin-top:2.4rem">
       <a class="j-card j-card--active rv" href="abc.html">
         <div class="j-img">
-          <img src="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg" alt="Annapurna Base Camp trek" loading="lazy">
+          <img src="https://storage.zopuai.com/converted/user-LJRM.webp" alt="Annapurna Base Camp trek" loading="lazy">
         </div>
         <span class="j-go" aria-hidden="true">→</span>
         <div class="j-body">
@@ -806,13 +806,15 @@ menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.class
   const HANDLE='totemtou';             // <-- your Instagram handle (no @)
   const MAX=16;
 
+  /* Real posts pulled from the Behold feed, hardcoded as the fallback until the
+     live BEHOLD_FEED_URL above is filled in (then these are replaced automatically). */
   const FALLBACK=[
-    {image:'https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg',permalink:'https://www.instagram.com/'+HANDLE,caption:'Annapurna Base Camp — the sanctuary opens up.'},
-    {image:'https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-0D0E.jpeg',permalink:'https://www.instagram.com/'+HANDLE,caption:'Upper Mustang, 4×4 — the road to Lo Manthang.'},
-    {image:'https://storage.zopuai.com/converted/user-B3IS.webp',permalink:'https://www.instagram.com/'+HANDLE,caption:'Deepak, reading the weather before a push.'},
-    {image:'https://storage.zopuai.com/converted/user-NLIU.webp',permalink:'https://www.instagram.com/'+HANDLE,caption:'Fabio on the ridgeline. Fresh tracks only.'},
-    {image:'https://storage.zopuai.com/converted/user-69E9.webp',permalink:'https://www.instagram.com/'+HANDLE,caption:'Prabin, calm as ever above 4,000m.'},
-    {image:'https://storage.zopuai.com/converted/user-DI7N.webp',permalink:'https://www.instagram.com/'+HANDLE,caption:'Camp mornings with Shilpa and the crew.'}
+    {image:'https://hop.behold.pictures/eyJ1IjoiSVVKcWN6Tk1kaVBmbTlqeWM0N2UxMmY1VU5HMyIsImYiOiJuTHcwcjhjTEFPSjBxaDh1cm9qeiIsInAiOiIxODI1NzI5Mjc2MzI0OTMxMyIsImgiOiIxOG5pZGowIn0.jpg?class=squareMedium',permalink:'https://www.instagram.com/p/DBS5MdnoQx0/',caption:'Yajna 2024 · Chamba'},
+    {image:'https://hop.behold.pictures/eyJ1IjoiSVVKcWN6Tk1kaVBmbTlqeWM0N2UxMmY1VU5HMyIsImYiOiJuTHcwcjhjTEFPSjBxaDh1cm9qeiIsInAiOiIxNzk1MjY2ODY0NTczMDAxNyIsImgiOiJheWxwMGUifQ.jpg?class=squareMedium',permalink:'https://www.instagram.com/reel/DAjdz2Zs-Qf/',caption:'Is this the call you’ve been waiting for?'},
+    {image:'https://hop.behold.pictures/eyJ1IjoiSVVKcWN6Tk1kaVBmbTlqeWM0N2UxMmY1VU5HMyIsImYiOiJuTHcwcjhjTEFPSjBxaDh1cm9qeiIsInAiOiIxODI3MDcyNzI2NDIyMzkyMCIsImgiOiIxajE1NGE5In0.jpg?class=squareMedium',permalink:'https://www.instagram.com/reel/DAgHnDkyx8B/',caption:'Discover rare Himalayan herbs at Zion.'},
+    {image:'https://hop.behold.pictures/eyJ1IjoiSVVKcWN6Tk1kaVBmbTlqeWM0N2UxMmY1VU5HMyIsImYiOiJuTHcwcjhjTEFPSjBxaDh1cm9qeiIsInAiOiIxODA2MzYzOTMwNzYzNzM4MSIsImgiOiJ5dW5tcHUifQ.jpg?class=squareMedium',permalink:'https://www.instagram.com/reel/DAdOnegSdVX/',caption:'The countdown has begun.'},
+    {image:'https://hop.behold.pictures/eyJ1IjoiSVVKcWN6Tk1kaVBmbTlqeWM0N2UxMmY1VU5HMyIsImYiOiJuTHcwcjhjTEFPSjBxaDh1cm9qeiIsInAiOiIxODA0Mjk3MTQyMDA3MjgwNyIsImgiOiIxeWdidWRkIn0.jpg?class=squareMedium',permalink:'https://www.instagram.com/reel/DAX_nYOyHNT/',caption:'Tell us your reason for escape.'},
+    {image:'https://hop.behold.pictures/eyJ1IjoiSVVKcWN6Tk1kaVBmbTlqeWM0N2UxMmY1VU5HMyIsImYiOiJuTHcwcjhjTEFPSjBxaDh1cm9qeiIsInAiOiIxODA4MjEyMDU0NjQ2MzgxMSIsImgiOiIxcnZrenVkIn0.jpg?class=squareMedium',permalink:'https://www.instagram.com/reel/DAVaIHpScyw/',caption:'What awaits you at Zion.'}
   ];
 
   const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
