@@ -123,18 +123,6 @@ header.nav.scrolled{background:rgba(11,20,16,.82);backdrop-filter:blur(14px);-we
   .menu.open a:nth-child(2){transition-delay:.05s}.menu.open a:nth-child(3){transition-delay:.1s}.menu.open a:nth-child(4){transition-delay:.15s}
 }
 
-/* loader */
-#loader{position:fixed;inset:0;z-index:400;background:var(--ink-0);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.6rem;transition:opacity .7s var(--ease),visibility .7s}
-#loader.done{opacity:0;visibility:hidden}
-#loader .range-wrap{position:relative;width:min(20rem,80vw);height:48px;margin-bottom:.2rem}
-#loader .range-svg{width:100%;height:100%}
-#loader .range-bg{fill:none;stroke:rgba(235,231,219,.1);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-#loader .range-fill{fill:none;stroke:var(--river);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px rgba(144,204,190,.5))}
-#loader .alt{font:300 clamp(2.4rem,7vw,4.2rem) var(--f-mono);color:var(--bone);letter-spacing:-.02em}
-#loader .alt b{font-weight:300;color:var(--river)}
-#loader .tag{font:500 .65rem var(--f-mono);letter-spacing:.3em;text-transform:uppercase;color:var(--bone-3)}
-html:not(.anim) #loader{display:none}
-
 /* hero */
 .hero{min-height:100svh;display:flex;align-items:flex-end;padding:0 0 clamp(9rem,18vh,13rem);overflow:hidden}
 .hero-media{position:absolute;inset:-6%;z-index:-2;will-change:transform}
@@ -373,17 +361,6 @@ footer{border-top:1px solid var(--line);padding:4rem 0 2.5rem;background:var(--i
 </head>
 <body id="top">
 <a class="skip" href="#main">Skip to content</a>
-
-<div id="loader" aria-hidden="true">
-  <div class="range-wrap">
-    <svg class="range-svg" viewBox="0 0 420 60" preserveAspectRatio="xMidYMid meet">
-      <path class="range-bg" d="M0,52 L18,48 L38,42 L52,46 L68,36 L82,40 L98,28 L118,34 L138,22 L158,30 L178,18 L198,24 L218,14 L238,20 L258,10 L278,16 L298,8 L318,14 L338,6 L358,12 L378,4 L398,10 L420,6"/>
-      <path id="rangeFill" class="range-fill" d="M0,52 L18,48 L38,42 L52,46 L68,36 L82,40 L98,28 L118,34 L138,22 L158,30 L178,18 L198,24 L218,14 L238,20 L258,10 L278,16 L298,8 L318,14 L338,6 L358,12 L378,4 L398,10 L420,6"/>
-    </svg>
-  </div>
-  <div class="alt"><span id="altN">822</span><b>&nbsp;m</b></div>
-  <div class="tag">Totemtou · Pokhara → the sanctuary</div>
-</div>
 
 <div id="cookie" class="cookie" role="dialog" aria-label="Media caching consent" hidden>
   <p>We store a little media on your device so Totemtou loads faster next time. No tracking, no third parties.</p>
@@ -806,68 +783,12 @@ if(!anim){
 }
 gsap.registerPlugin(ScrollTrigger);
 
-/* loader: altitude tracks the ACTUAL hero-video load + mountain range lights up */
-const loader=document.getElementById('loader'),altN=document.getElementById('altN');
+/* hero reveals directly, no loader */
 const heroVideo=document.getElementById('heroVideo');
-const rangeFill=document.getElementById('rangeFill');
-const L_START=822,L_END=4800;
-let lShown=L_START,lReady=false,lRevealed=false,lRaf;
-const setAlt=v=>{altN.textContent=Math.round(v).toLocaleString()};
-
-const rangeTotalLength=rangeFill?rangeFill.getTotalLength():0;
-if(rangeFill){
-  rangeFill.style.strokeDasharray=rangeTotalLength;
-  rangeFill.style.strokeDashoffset=rangeTotalLength;
-  rangeFill.style.transition='stroke-dashoffset .15s linear';
-}
-function updateRange(frac){
-  if(!rangeFill)return;
-  rangeFill.style.strokeDashoffset=rangeTotalLength*(1-frac);
-}
-
-function loadFrac(){
-  const v=heroVideo;
-  if(!v)return 1;
-  if(lReady)return 1;
-  let f=0;
-  if(v.duration&&isFinite(v.duration)&&v.buffered.length){
-    f=v.buffered.end(v.buffered.length-1)/v.duration;
-  }
-  f=Math.max(f,(v.readyState/4)*0.9);
-  return Math.min(f,0.99);
-}
-function loaderTick(){
-  const frac=loadFrac();
-  const target=L_START+(L_END-L_START)*frac;
-  lShown+=(target-lShown)*0.1;
-  if(lReady){lShown+=(L_END-lShown)*0.28;if(L_END-lShown<1)lShown=L_END;}
-  setAlt(lShown);
-  updateRange((lShown-L_START)/(L_END-L_START));
-  if(lReady&&Math.round(lShown)>=L_END){finishLoader();return}
-  lRaf=requestAnimationFrame(loaderTick);
-}
-function markReady(){lReady=true;if(document.hidden&&!lRevealed)finishLoader();}
-function finishLoader(){
-  if(lRevealed)return;lRevealed=true;
-  cancelAnimationFrame(lRaf);
-  setAlt(L_END);
-  updateRange(1);
-  heroVideo&&heroVideo.play().catch(()=>{});
-  gsap.timeline()
-    .to(loader,{opacity:0,duration:.6,onComplete:()=>loader.classList.add('done')})
-    .from('#heroTitle .line>span',{yPercent:110,duration:1.1,ease:'power4.out',stagger:.12},'-=0.2')
-    .to('.hero .rv',{opacity:1,y:0,duration:.9,ease:'power3.out',stagger:.12},'-=0.6');
-  setTimeout(()=>{if(!loader.classList.contains('done')){loader.style.opacity=0;loader.classList.add('done');gsap.set('#heroTitle .line>span',{yPercent:0});gsap.set('.hero .rv',{opacity:1,y:0});}},1400);
-}
-if(heroVideo){
-  if(heroVideo.readyState>=4)markReady();
-  heroVideo.addEventListener('canplaythrough',markReady,{once:true});
-  heroVideo.addEventListener('playing',markReady,{once:true});
-  heroVideo.addEventListener('error',markReady,{once:true});
-}else{markReady()}
-document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!lRevealed&&!lRaf)loaderTick();});
-setTimeout(()=>{markReady();finishLoader();},12000);
-loaderTick();
+heroVideo&&heroVideo.play().catch(()=>{});
+gsap.timeline()
+  .from('#heroTitle .line>span',{yPercent:110,duration:1.1,ease:'power4.out',stagger:.12})
+  .to('.hero .rv',{opacity:1,y:0,duration:.9,ease:'power3.out',stagger:.12},'-=0.6');
 
 /* hero parallax + pointer drift */
 const hm=document.getElementById('heroMedia');
