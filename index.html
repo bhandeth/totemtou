@@ -320,6 +320,23 @@ h1 .line>span{display:block}
 .ig-item:hover::after{opacity:1}
 .ig-cap{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:1rem;font:400 .68rem/1.5 var(--f-mono);letter-spacing:.02em;color:var(--bone);opacity:0;transform:translateY(8px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
 .ig-item:hover .ig-cap{opacity:1;transform:none}
+button.ig-item{padding:0;margin:0;cursor:pointer;font:inherit;color:inherit;display:block;-webkit-appearance:none;appearance:none}
+.ig-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;width:54px;height:54px;border-radius:50%;background:rgba(11,20,16,.42);backdrop-filter:blur(3px);border:1.5px solid rgba(235,231,219,.65);display:grid;place-items:center;transition:transform .45s var(--ease),background .45s}
+.ig-play::after{content:"";width:0;height:0;margin-left:3px;border-left:14px solid var(--bone);border-top:9px solid transparent;border-bottom:9px solid transparent}
+.ig-video:hover .ig-play{transform:translate(-50%,-50%) scale(1.08);background:rgba(11,20,16,.6)}
+/* inline video lightbox */
+html.ig-lb-open{overflow:hidden}
+.ig-lb{position:fixed;inset:0;z-index:900;display:grid;place-items:center;padding:clamp(1rem,4vw,3rem);background:rgba(6,11,9,.86);backdrop-filter:blur(8px);animation:iglbin .3s var(--ease)}
+@keyframes iglbin{from{opacity:0}to{opacity:1}}
+.ig-lb[hidden]{display:none}
+.ig-lb-stage{display:flex;flex-direction:column;align-items:center;gap:1rem;max-width:min(440px,92vw);width:100%}
+.ig-lb-video{width:100%;max-height:78vh;border-radius:16px;background:#000;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+.ig-lb-meta{text-align:center;max-width:40ch}
+.ig-lb-cap{font:400 .82rem/1.6 var(--f-sans,inherit);color:var(--bone-2);margin-bottom:.5rem}
+.ig-lb-link{font:500 .66rem var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--river);text-decoration:none;border-bottom:1px solid rgba(144,204,190,.4);padding-bottom:2px}
+.ig-lb-link:hover{color:var(--bone)}
+.ig-lb-close{position:absolute;top:clamp(1rem,3vw,2rem);right:clamp(1rem,3vw,2rem);z-index:2;width:2.8rem;height:2.8rem;border-radius:50%;border:1px solid rgba(235,231,219,.25);background:rgba(235,231,219,.06);color:var(--bone);font-size:1.5rem;line-height:1;cursor:pointer;display:grid;place-items:center;transition:.4s var(--ease)}
+.ig-lb-close:hover{background:var(--river);border-color:var(--river);color:var(--ink-0)}
 .ig-item.is-loading{background:linear-gradient(100deg,var(--ink-2) 30%,rgba(235,231,219,.06) 50%,var(--ink-2) 70%);background-size:220% 100%;animation:igshine 1.3s var(--ease) infinite}
 @keyframes igshine{to{background-position:-120% 0}}
 .ig-follow{display:grid;place-items:center;background:rgba(235,231,219,.02)}
@@ -802,7 +819,7 @@ menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.class
 (function(){
   const strip=document.getElementById('igStrip');
   if(!strip)return;
-  const BEHOLD_FEED_URL='';            // <-- paste your Behold feed URL here
+  const BEHOLD_FEED_URL='https://feeds.behold.so/q0w787CUAynbWSXBkEKU';  // <-- Behold feed URL
   const HANDLE='totemtou';             // <-- your Instagram handle (no @)
   const MAX=16;
 
@@ -820,12 +837,24 @@ menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.class
   const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const clip=(s,n)=>{s=String(s||'').replace(/\s+/g,' ').trim();return s.length>n?s.slice(0,n).trim()+'…':s;};
 
+  const inner=p=>'<img src="'+esc(p.image)+'" alt="'+(esc(clip(p.caption,110))||('Instagram post from @'+HANDLE))+'" loading="lazy">'+
+    (p.video?'<span class="ig-play" aria-hidden="true"></span>':'')+
+    (p.caption?'<span class="ig-cap">'+esc(clip(p.caption,90))+'</span>':'');
+
   function tile(p){
+    /* Videos play inline in a lightbox; images just link out to the post. */
+    if(p.video){
+      const b=document.createElement('button');
+      b.type='button';b.className='ig-item ig-video';b.setAttribute('role','listitem');
+      b.setAttribute('aria-label','Play video'+(p.caption?': '+clip(p.caption,80):''));
+      b.innerHTML=inner(p);
+      b.addEventListener('click',()=>openLightbox(p));
+      return b;
+    }
     const a=document.createElement('a');
     a.className='ig-item';a.href=p.permalink||('https://www.instagram.com/'+HANDLE);
     a.target='_blank';a.rel='noopener';a.setAttribute('role','listitem');
-    a.innerHTML='<img src="'+esc(p.image)+'" alt="'+(esc(clip(p.caption,110))||('Instagram post from @'+HANDLE))+'" loading="lazy">'+
-      (p.caption?'<span class="ig-cap">'+esc(clip(p.caption,90))+'</span>':'');
+    a.innerHTML=inner(p);
     return a;
   }
   function followTile(){
@@ -840,15 +869,55 @@ menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.class
     (posts||[]).slice(0,MAX).forEach(p=>strip.appendChild(tile(p)));
     strip.appendChild(followTile());
   }
+
+  /* --- inline video lightbox --- */
+  let lb,lbVideo,lbCap,lbLink;
+  function buildLightbox(){
+    lb=document.createElement('div');lb.className='ig-lb';lb.id='igLightbox';lb.hidden=true;
+    lb.innerHTML=
+      '<button class="ig-lb-close" type="button" aria-label="Close">&times;</button>'+
+      '<div class="ig-lb-stage" role="dialog" aria-modal="true" aria-label="Instagram video">'+
+        '<video class="ig-lb-video" controls playsinline preload="auto"></video>'+
+        '<div class="ig-lb-meta"><p class="ig-lb-cap"></p>'+
+          '<a class="ig-lb-link" target="_blank" rel="noopener">Open on Instagram &rarr;</a></div>'+
+      '</div>';
+    document.body.appendChild(lb);
+    lbVideo=lb.querySelector('.ig-lb-video');
+    lbCap=lb.querySelector('.ig-lb-cap');
+    lbLink=lb.querySelector('.ig-lb-link');
+    lb.querySelector('.ig-lb-close').addEventListener('click',closeLightbox);
+    lb.addEventListener('click',e=>{if(e.target===lb||e.target.classList.contains('ig-lb-stage'))closeLightbox();});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!lb.hidden)closeLightbox();});
+  }
+  function openLightbox(p){
+    if(!lb)buildLightbox();
+    lbVideo.poster=p.image||'';
+    lbVideo.src=p.video;
+    lbCap.textContent=p.caption||'';
+    lbCap.style.display=p.caption?'':'none';
+    if(p.permalink){lbLink.href=p.permalink;lbLink.style.display='';}else{lbLink.style.display='none';}
+    lb.hidden=false;
+    document.documentElement.classList.add('ig-lb-open');
+    lbVideo.currentTime=0;lbVideo.play().catch(()=>{});
+  }
+  function closeLightbox(){
+    if(!lb)return;
+    lbVideo.pause();lbVideo.removeAttribute('src');lbVideo.load();
+    lb.hidden=true;
+    document.documentElement.classList.remove('ig-lb-open');
+  }
+
   /* Behold's JSON shape has shifted over versions — accept an array or an object
-     with media/posts/items, and pick the best available image field. */
+     with media/posts/items. Use the square thumbnail as the poster and keep the
+     .mp4 for videos so they can play inline. */
   function normalize(data){
     const arr=Array.isArray(data)?data:(data&&(data.media||data.posts||data.items))||[];
     return arr.map(m=>{
       const sz=m.sizes||{};
       const image=(sz.medium&&sz.medium.mediaUrl)||(sz.large&&sz.large.mediaUrl)||
-        (sz.small&&sz.small.mediaUrl)||m.thumbnailUrl||m.mediaUrl||m.thumbnail||m.image||m.url;
-      return {image:image,permalink:m.permalink||m.link,caption:m.caption||m.prompt||''};
+        (sz.small&&sz.small.mediaUrl)||m.thumbnailUrl||m.image||m.url;
+      const isVideo=m.mediaType==='VIDEO'||m.isReel===true||/\.mp4(\?|$)/i.test(m.mediaUrl||'');
+      return {image:image,video:isVideo?m.mediaUrl:null,permalink:m.permalink||m.link,caption:m.caption||m.prompt||''};
     }).filter(p=>p.image);
   }
 
