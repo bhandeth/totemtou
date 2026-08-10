@@ -3,6 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Mobile visitors to /abc get the mobile app experience (abc-trek-app.html).
+     Runs before fonts/Supabase load so the desktop page never starts on a phone.
+     Escape hatch: append ?web=1 to force this (desktop) version on any device. -->
+<script>
+(function(){
+  try{
+    if(new URLSearchParams(location.search).has('web')) return;
+    var ua = navigator.userAgent || '';
+    var isMobile = (navigator.userAgentData && navigator.userAgentData.mobile === true)
+      || /Android|iPhone|iPod|Windows Phone|BlackBerry|BB10|webOS|Opera Mini|IEMobile|Mobile Safari/i.test(ua);
+    if(isMobile) location.replace('/abc-trek-app.html' + location.search + location.hash);
+  }catch(e){}
+})();
+</script>
 <title>Annapurna Base Camp · 4,130 m · Totemtou</title>
 <meta name="description" content="A seven-day walk into the Annapurna Sanctuary, through Gurung country, bamboo and rhododendron, to the amphitheatre at 4,130 m. Led by Prabin. Small cohort, tested route.">
 <meta property="og:title" content="Annapurna Base Camp · 4,130 m · Totemtou">

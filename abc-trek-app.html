@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Totemtou · Annapurna Base Camp</title>
+<!--
+  ABC Alpine Trek — mobile app.
+  Standalone implementation of the "ABC Trek App" design.
+  No build step, no framework: a small vanilla state → render loop.
+  Imported design source lives in design/ABC Trek App.dc.html.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Spline+Sans+Mono:wght@300..700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#d8d4c8;font-family:"Spline Sans Mono",ui-monospace,monospace;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px 0}
+  a{color:#90CCBE;text-decoration:none}
+  a:hover{color:#EBE7DB}
+  *{-webkit-tap-highlight-color:transparent}
+  .app-scroll{scrollbar-width:none}
+  .app-scroll::-webkit-scrollbar{display:none}
+  input,button,select{font-family:inherit}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  /* On a real phone (this page is served at /abc for mobile), drop the desktop
+     device mockup and let the app fill the viewport edge to edge. */
+  @media (max-width:480px){
+    body{padding:0;background:#0B1410;align-items:stretch;justify-content:stretch}
+    .tt-device{width:100%;height:100vh;height:100dvh;border-radius:0;padding:0;box-shadow:none;background:#0B1410}
+    .tt-screen{width:100%;height:100%;border-radius:0}
+    .tt-notch{display:none}          /* the OS draws the real notch */
+    .tt-statusbar{display:none}       /* and the real status bar */
+    #scroll{padding-top:env(safe-area-inset-top)}
+    #tabbar{padding-bottom:max(26px,env(safe-area-inset-bottom))}
+  }
+</style>
+</head>
+<body>
+<div class="tt-device" style="width:394px;height:834px;background:#050b08;border-radius:54px;padding:11px;box-shadow:0 2px 4px rgba(0,0,0,.35),0 30px 70px -20px rgba(0,0,0,.55)">
+  <div class="tt-screen" style="position:relative;width:372px;height:812px;border-radius:44px;overflow:hidden;background:#0B1410;display:flex;flex-direction:column">
+    <div class="tt-notch" style="position:absolute;top:11px;left:50%;transform:translateX(-50%);width:118px;height:30px;background:#050b08;border-radius:16px;z-index:60"></div>
+    <div class="tt-statusbar" style="position:absolute;top:0;left:0;right:0;z-index:55;display:flex;align-items:center;justify-content:space-between;padding:15px 26px 0;color:#EBE7DB;font:600 14px 'Spline Sans Mono',monospace;pointer-events:none">
+      <span>9:41</span>
+      <span style="display:flex;gap:6px;align-items:center;font-size:11px">●●●&nbsp;<svg width="24" height="12" viewBox="0 0 24 12" fill="none"><rect x="1" y="1.5" width="19" height="9" rx="2.5" stroke="#EBE7DB" stroke-opacity=".6"/><rect x="3" y="3.5" width="13" height="5" rx="1" fill="#EBE7DB"/><rect x="21" y="4" width="2" height="4" rx="1" fill="#EBE7DB" fill-opacity=".6"/></svg></span>
+    </div>
+
+    <div id="scroll" class="app-scroll" style="flex:1;overflow-y:auto;overflow-x:hidden"></div>
+
+    <div id="tabbar" style="display:flex;background:rgba(11,20,16,.94);backdrop-filter:blur(16px);border-top:1px solid rgba(235,231,219,.12);padding:9px 8px 26px;z-index:50"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var RATE = 95;
+
+  var DAYS = [
+    {n:'01',phase:'Ascent',route:'Pokhara → Chomrong',tag:'Drive in. The trail begins where the road ends.',alt:'2,170 m',o2:'~78%',walk:'2.5 km',meta:'2–3 hrs · +520 m · 0 m · Teahouse',elev:2170,discs:['Gurung village life','Terraced barley','First sight of the sanctuary'],clip:'https://storage.zopuai.com/video-conversions/converted-1782686017842-EJL1.webm',desc:'The drive follows the Modi Khola north into the foothills. We start walking at Jhinu and reach Chomrong by late afternoon — a Gurung village on a steep ridge, terraced barley fields, and a first view of the sanctuary you enter tomorrow.'},
+    {n:'02',phase:'Ascent',route:'Chomrong → Dovan',tag:'Down to the river, then up. Bamboo, oak, rhododendron.',alt:'2,600 m',o2:'~74%',walk:'9.6 km',meta:'6–7 hrs · +800 m · −370 m · Teahouse',elev:2600,discs:['Steel suspension bridges','Rhododendron forest','The boundary at Dovan'],clip:'https://storage.zopuai.com/video-conversions/converted-1782688487532-LKG8.webm',desc:'A long descent to the Chomrong Khola, a suspension-bridge crossing, then a steep climb to Sinuwa. The forest closes in — bamboo, then oak, then rhododendron. By mid-afternoon you reach Dovan, where dinner turns vegetarian: the trail enters the inner sanctuary.'},
+    {n:'03',phase:'Ascent',route:'Dovan → Deurali',tag:'Up the narrow valley. The treeline thins.',alt:'3,200 m',o2:'~68%',walk:'5 km',meta:'4–5 hrs · +600 m · 0 m · Teahouse',elev:3200,discs:['108 sacred waterfalls','Machhapuchhre reveals','Crossing the treeline'],clip:'https://storage.zopuai.com/video-conversions/converted-1782690935497-RPHW.webm',desc:'Shorter by distance, but the walk steepens and the air thins. The trail follows the Modi Khola through a narrow glacial valley. Past Himalaya the forest gives way to scrub and the first long views open: Machhapuchhre ahead, Annapurna South to the left. Layer up before sunset.'},
+    {n:'04',phase:'High point',route:'Deurali → ABC',tag:'Into the sanctuary. The amphitheatre opens.',alt:'4,130 m',o2:'~60%',walk:'7 km',meta:'6–7 hrs · +930 m · 0 m · Teahouse',elev:4130,discs:['The sanctuary bowl','The unclimbed peak','Stars at 4,130 m'],clip:'https://storage.zopuai.com/video-conversions/converted-1782696013768-NZX6.webm',desc:'The valley turns and Machhapuchhre Base Camp comes into view, the fishtail almost overhead. From MBC the trail bends into the sanctuary and the peaks circle you. There is no horizon, only mountain. You reach ABC by early afternoon. The four days were for this.'},
+    {n:'05',phase:'Descent',route:'ABC → Bamboo',tag:'Down into the forest. The valley closes again.',alt:'2,310 m',o2:'~76%',walk:'14 km',meta:'6–7 hrs · 0 m · −1,820 m · Teahouse',elev:2310,discs:['Blood pheasants','The forest returns','The valley, walked twice'],clip:'https://storage.zopuai.com/video-conversions/converted-1782698180520-RPQX.webm',desc:'The sanctuary releases you. Long but downhill, back through Deurali and the Himalaya teahouses. The bamboo and rhododendron return. By Bamboo it is warm again and the air is thick with green — the valley reveals itself as a place you have actually entered.'},
+    {n:'06',phase:'Descent',route:'Bamboo → Jhinu Danda',tag:'A long descent and a hot spring.',alt:'1,780 m',o2:'~82%',walk:'10 km',meta:'5–6 hrs · +250 m · −780 m · Teahouse',elev:1780,discs:['Jhinu hot springs','Kimrong Khola','Prayer flags over terraces'],clip:'https://storage.zopuai.com/video-conversions/converted-1782699155840-1M22.webm',desc:'The morning drops to the Kimrong Khola, then climbs through forest one last time to Jhinu Danda. Ten minutes below the village sit the hot springs: three pools fed from the cliff, looking onto the river. You sit in them. You stop talking. The heat undoes most of what the walk did.'},
+    {n:'07',phase:'Out',route:'Jhinu → Pokhara',tag:'Out. The road, then the lake.',alt:'822 m',o2:'~91%',walk:'~3 km',meta:'4–5 hr drive · 0 m · −960 m · Hostel',elev:822,discs:['Phewa Lake at dusk','Hill-village drive','Last dinner, full circle'],clip:'https://storage.zopuai.com/video-conversions/converted-1782701121991-L5RT.webm',desc:'A short walk to the jeep, then the long scenic drive back to Pokhara through hill villages and river valleys. By late afternoon you are by Phewa Lake — the mountains you walked through visible from your dinner table. Last night together, goodbyes by ten.'}
+  ];
+
+  var GTK = [
+    {q:"What's included",a:'Six nights teahouse stay, all trail meals, ground transport from Pokhara, ACAP & TIMS permits, licensed guide and porters, group medical kit and oximeter, trek insurance, and six weeks of preparation — calls, training plan, gear list.'},
+    {q:'What to pack',a:'Merino base layers, an insulated mid-layer, a waterproof shell, broken-in boots, a 30–40 L daypack, trekking poles, headtorch, 2–3 L water capacity with purification, SPF 50, and a power bank. A full personalised list lands six weeks out.'},
+    {q:'Cancellation',a:'A 25% deposit holds your place, refundable for seven days. Cancel 30+ days out for a refund less a small fee, or move dates in full. 15–29 days: half refundable. Under 14 days: non-refundable.'},
+    {q:'Will I get altitude sickness?',a:'Day 4 sleeps at 4,130 m. Mild symptoms are common and usually pass with rest and water. Guides carry an oximeter, and a worsening case descends — no negotiation.'},
+    {q:'Do I need experience?',a:'No technical skill, no ropes, no prior summit. A first multi-day trek is common on this route. What you need is the six-week preparation and a basic cardio base, both of which we build with you.'},
+    {q:'When does it run?',a:'Two dry windows: October to November for clear skies, February to March for late winter and spring bloom. We do not run the monsoon.'}
+  ];
+
+  var DEPS = [
+    {f:'ABC 01',d:'25 Sep 2026',w:'Post-monsoon',s:'12',price:469},
+    {f:'ABC 02',d:'05 Oct 2026',w:'Clearing sky',s:'12',price:469},
+    {f:'ABC 03',d:'15 Oct 2026',w:'Golden days',s:'9',price:469,peak:true},
+    {f:'ABC 04',d:'25 Oct 2026',w:'Still skies',s:'12',price:469,peak:true},
+    {f:'ABC 05',d:'04 Nov 2026',w:'Crisp dawns',s:'6',price:469,peak:true},
+    {f:'ABC 06',d:'14 Nov 2026',w:'Clear skies',s:'12',price:469,peak:true},
+    {f:'ABC 10',d:'24 Dec 2026',w:'Holiday cold',s:'12',price:600,winter:true}
+  ];
+
+  var state = { tab:'home', dayIndex:0, openGtk:0, dragX:0, dragging:false,
+                selIndex:2, currency:'INR', qty:1, bookStep:'browse', name:'', phone:'', bookRef:'' };
+
+  function setState(patch){ Object.assign(state, patch); render(); }
+
+  function money(usd){
+    var c = state.currency;
+    return c==='USD'
+      ? '$'+usd.toLocaleString('en-US',{minimumFractionDigits:0})
+      : '₹'+Math.round(usd*RATE).toLocaleString('en-IN');
+  }
+
+  // ---- screens -------------------------------------------------------------
+
+  function homeScreen(){
+    return '<div style="position:relative;height:732px;display:flex;flex-direction:column;justify-content:flex-end">'+
+      '<video autoplay muted loop playsinline poster="https://storage.zopuai.com/uploads/Xf4rwFTwTbQjKEP76YcWhKKkSP33-CLH4.jpeg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.92) brightness(.66)"><source src="https://storage.zopuai.com/video-conversions/converted-1782680990428-6SAT.webm" type="video/webm"></video>'+
+      '<div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,20,16,.55),rgba(11,20,16,.05) 34%,rgba(11,20,16,.2) 60%,rgba(11,20,16,.98))"></div>'+
+      '<div style="position:relative;padding:0 24px 26px;color:#EBE7DB">'+
+        '<p style="font:500 10px/1 \'Spline Sans Mono\',monospace;letter-spacing:.22em;text-transform:uppercase;color:rgba(235,231,219,.7);display:flex;gap:10px;align-items:center;margin:0 0 16px"><span style="width:22px;height:1px;background:rgba(235,231,219,.5)"></span>Walk the land · Annapurna</p>'+
+        '<h1 style="font:430 46px/.98 \'Newsreader\',serif;letter-spacing:-.03em;margin:0 0 14px">Annapurna<br>Base Camp <span style="color:#90CCBE;font-style:italic;font-weight:380">4,130 m</span></h1>'+
+        '<p style="font:400 15px/1.55 \'Newsreader\',serif;color:rgba(235,231,219,.74);max-width:31ch;margin:0 0 22px">Seven days into the sanctuary — through Gurung country, bamboo and rhododendron, to the amphitheatre of Annapurna.</p>'+
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;border:1px solid rgba(235,231,219,.16);border-radius:14px;overflow:hidden;background:rgba(235,231,219,.16);backdrop-filter:blur(8px)">'+
+          statCell('Distance','~48 km')+statCell('High point','4,130 m')+statCell('Difficulty','Moderate')+statCell('Cohort','12 max')+
+        '</div>'+
+        '<div style="display:flex;flex-direction:column;gap:10px;margin-top:22px">'+
+          '<button data-act="goOverview" style="width:100%;border:none;background:#90CCBE;color:#0B1410;font:500 11px \'Spline Sans Mono\',monospace;letter-spacing:.16em;text-transform:uppercase;padding:15px;border-radius:12px;cursor:pointer">Explore the journey →</button>'+
+          '<button data-act="goBook" style="width:100%;border:1px solid rgba(235,231,219,.28);background:rgba(11,20,16,.4);backdrop-filter:blur(6px);color:#EBE7DB;font:500 11px \'Spline Sans Mono\',monospace;letter-spacing:.16em;text-transform:uppercase;padding:14px;border-radius:12px;cursor:pointer">See departures</button>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }
+
+  function statCell(label,val){
+    return '<div style="padding:13px 15px;background:rgba(11,20,16,.5)"><p style="font:500 8.5px \'Spline Sans Mono\',monospace;letter-spacing:.16em;text-transform:uppercase;color:rgba(235,231,219,.42);margin:0 0 4px">'+label+'</p><p style="font:300 20px \'Spline Sans Mono\',monospace;margin:0">'+val+'</p></div>';
+  }
+
+  function factCard(label,big,note,bigFont){
+    return '<div style="border:1px solid rgba(235,231,219,.14);border-radius:14px;padding:14px;background:rgba(235,231,219,.03)"><p style="font:500 8.5px \'Spline Sans Mono\',monospace;letter-spacing:.12em;text-transform:uppercase;color:rgba(235,231,219,.4);margin:0 0 6px">'+label+'</p><p style="font:300 17px \''+bigFont+'\','+(bigFont==='Newsreader'?'serif':'monospace')+';color:#EBE7DB;margin:0 0 5px">'+big+'</p><p style="font:400 11px/1.4 \'Newsreader\',serif;color:rgba(235,231,219,.55);margin:0">'+note+'</p></div>';
+  }
+
+  function overviewScreen(){
+    var gtk = GTK.map(function(g,i){
+      var open = i===state.openGtk;
+      return '<div style="border:1px solid rgba(235,231,219,.14);border-radius:13px;background:rgba(235,231,219,.03);overflow:hidden">'+
+        '<button data-act="toggleGtk" data-i="'+i+'" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:none;border:none;padding:15px 15px;cursor:pointer;text-align:left;color:#EBE7DB">'+
+          '<span style="font:465 15px \'Newsreader\',serif">'+g.q+'</span>'+
+          '<span style="font:300 20px \'Spline Sans Mono\',monospace;color:#90CCBE;flex:none">'+(open?'–':'+')+'</span>'+
+        '</button>'+
+        (open?'<p style="font:400 12.5px/1.55 \'Newsreader\',serif;color:rgba(235,231,219,.62);margin:0;padding:0 15px 15px">'+g.a+'</p>':'')+
+      '</div>';
+    }).join('');
+
+    return '<div>'+
+      // The valley
+      '<div style="padding:70px 18px 6px;background:#0B1410">'+
+        '<p style="font:500 9.5px \'Spline Sans Mono\',monospace;letter-spacing:.18em;text-transform:uppercase;color:rgba(235,231,219,.4);margin:0 0 4px">The valley</p>'+
+        '<h2 style="font:465 24px/1.1 \'Newsreader\',serif;color:#EBE7DB;margin:0 0 16px">Know where <span style="font-style:italic;color:#90CCBE">you\'re walking.</span></h2>'+
+        '<div style="display:flex;flex-direction:column;gap:10px">'+
+          valleyRow('<video autoplay muted loop playsinline src="https://storage.zopuai.com/uploads/IhjtISImRdUQLJYTKZgVoB0cM773-JEFR.webm" style="width:78px;height:78px;border-radius:11px;object-fit:cover;flex:none;filter:saturate(.92)"></video>','Gurung country','The teahouses, the porters, the trail — a working community that shares its home with you.')+
+          valleyRow('<video autoplay muted loop playsinline src="https://storage.zopuai.com/video-conversions/converted-1782682118859-VWDV.webm" style="width:78px;height:78px;border-radius:11px;object-fit:cover;flex:none;filter:saturate(.92)"></video>','The conservation area','Nepal\'s first and largest. No fires, no plastic, vegetarian above Dovan — the cleanest trek in Nepal.')+
+          valleyRow('<img src="https://storage.zopuai.com/converted/user-UOPJ.webp" alt="Machhapuchhre" style="width:78px;height:78px;border-radius:11px;object-fit:cover;flex:none;filter:saturate(.92)">','The unclimbed fishtail','Machhapuchhre, sacred to Shiva, never summited. You\'ll see it for seven days.')+
+        '</div>'+
+      '</div>'+
+
+      // Is this for you?
+      '<div style="padding:26px 18px 6px;background:#0B1410">'+
+        '<p style="font:500 9.5px \'Spline Sans Mono\',monospace;letter-spacing:.18em;text-transform:uppercase;color:rgba(235,231,219,.4);margin:0 0 4px">Is this for you?</p>'+
+        '<h2 style="font:465 24px/1.1 \'Newsreader\',serif;color:#EBE7DB;margin:0 0 14px">Level 3 <span style="font-style:italic;color:#90CCBE">: Moderate</span></h2>'+
+        '<div style="border:1px solid rgba(235,231,219,.14);border-radius:14px;padding:15px;background:rgba(235,231,219,.03);margin-bottom:14px">'+
+          '<div style="display:flex;justify-content:space-between;font:500 9px \'Spline Sans Mono\',monospace;letter-spacing:.1em;text-transform:uppercase;color:rgba(235,231,219,.5);margin-bottom:8px"><span>Where ABC sits</span><span style="color:#D9A23B">3 / 6</span></div>'+
+          '<div style="height:7px;border-radius:99px;background:rgba(235,231,219,.1);overflow:hidden"><div style="width:50%;height:100%;background:linear-gradient(90deg,#90CCBE,#D9A23B)"></div></div>'+
+          '<div style="display:flex;justify-content:space-between;font:500 8px \'Spline Sans Mono\',monospace;letter-spacing:.08em;text-transform:uppercase;color:rgba(235,231,219,.35);margin-top:7px"><span>1 · Easy</span><span>6 · Expedition</span></div>'+
+        '</div>'+
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'+
+          factCard('Age','14 – 65','The trail counts legs and lungs, not years.','Spline Sans Mono')+
+          factCard('Fitness','5–6 hrs/day','Stepped trails, day after day, light pack.','Spline Sans Mono')+
+          factCard('Experience','None required','A first multi-day trek is fine with prep.','Newsreader')+
+          factCard('Medical','Screened','Disclose conditions; very few disqualify.','Newsreader')+
+        '</div>'+
+      '</div>'+
+
+      // Walking with you
+      '<div style="padding:26px 18px 6px;background:#0B1410">'+
+        '<p style="font:500 9.5px \'Spline Sans Mono\',monospace;letter-spacing:.18em;text-transform:uppercase;color:rgba(235,231,219,.4);margin:0 0 12px">Walking with you</p>'+
+        '<div style="border:1px solid rgba(235,231,219,.14);border-radius:16px;overflow:hidden;background:rgba(235,231,219,.03)">'+
+          '<img src="https://storage.zopuai.com/converted/user-69E9.webp" alt="Prabin" style="width:100%;height:200px;object-fit:cover;filter:saturate(.92)">'+
+          '<div style="padding:16px 16px 18px">'+
+            '<h3 style="font:460 26px \'Newsreader\',serif;color:#EBE7DB;margin:0 0 3px">Prabin</h3>'+
+            '<p style="font:500 9px \'Spline Sans Mono\',monospace;letter-spacing:.14em;text-transform:uppercase;color:#90CCBE;margin:0 0 12px">Trek leader · Annapurna Base Camp</p>'+
+            '<p style="font:400 13px/1.55 \'Newsreader\',serif;color:rgba(235,231,219,.66);margin:0 0 14px">He has walked the sanctuary more times than he keeps count of. The leader is not a service provider — the leader is the journey. He sets the pace, reads the group, and knows every teahouse kitchen by first name.</p>'+
+            '<div style="display:flex;gap:8px;flex-wrap:wrap">'+
+              chip('NMA-certified')+chip('WFR medical')+chip('6,000 m+ peaks')+
+            '</div>'+
+          '</div>'+
+        '</div>'+
+      '</div>'+
+
+      // Good to know
+      '<div style="padding:26px 18px 6px;background:#0B1410">'+
+        '<p style="font:500 9.5px \'Spline Sans Mono\',monospace;letter-spacing:.18em;text-transform:uppercase;color:rgba(235,231,219,.4);margin:0 0 12px">Good to know</p>'+
+        '<div style="display:flex;flex-direction:column;gap:8px">'+gtk+'</div>'+
+      '</div>'+
+
+      // CTA
+      '<div style="padding:22px 18px 30px;background:#0B1410">'+
+        '<div style="border:1px solid rgba(144,204,190,.35);border-radius:16px;padding:18px;background:rgba(144,204,190,.06);text-align:center">'+
+          '<p style="font:400 13px/1.5 \'Newsreader\',serif;font-style:italic;color:rgba(235,231,219,.7);margin:0 0 14px">Small cohort, tested route. Seats held once you both say yes.</p>'+
+          '<button data-act="goBook" style="width:100%;border:none;background:#90CCBE;color:#0B1410;font:500 11px \'Spline Sans Mono\',monospace;letter-spacing:.16em;text-transform:uppercase;padding:15px;border-radius:12px;cursor:pointer">See departures →</button>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }
+
+  function valleyRow(media,title,body){
+    return '<div style="display:flex;gap:14px;align-items:center;border:1px solid rgba(235,231,219,.14);border-radius:14px;padding:11px;background:rgba(235,231,219,.03)">'+media+'<div style="min-width:0"><p style="font:465 16px \'Newsreader\',serif;color:#EBE7DB;margin:0 0 3px">'+title+'</p><p style="font:400 12px/1.45 \'Newsreader\',serif;color:rgba(235,231,219,.6);margin:0">'+body+'</p></div></div>';
+  }
+  function chip(t){
+    return '<span style="font:500 9px \'Spline Sans Mono\',monospace;letter-spacing:.08em;text-transform:uppercase;color:rgba(235,231,219,.7);border:1px solid rgba(235,231,219,.16);border-radius:99px;padding:6px 11px">'+t+'</span>';
+  }
+
+  function trailScreen(){
+    var di = state.dayIndex;
+    var min=700,max=4250,W=300,H=100;
+    var xs = DAYS.map(function(d,i){ return i/(DAYS.length-1)*W; });
+    var ys = DAYS.map(function(d){ return H-8-(d.elev-min)/(max-min)*(H-20); });
+    var profPts = xs.map(function(x,i){ return x.toFixed(1)+','+ys[i].toFixed(1); }).join(' ');
+    var profArea = '0,'+H+' '+profPts+' '+W+','+H;
+
+    var cards = DAYS.map(function(day,i){
+      var active = i===di;
+      var media = active
+        ? '<video autoplay muted loop playsinline src="'+day.clip+'" style="width:100%;height:100%;object-fit:cover;filter:saturate(.9) brightness(.8)"></video>'
+        : '<div style="width:100%;height:100%;background:repeating-linear-gradient(135deg,rgba(144,204,190,.05) 0 10px,transparent 10px 20px)"></div>';
+      var discs = day.discs.map(function(d){
+        return '<span style="font:500 8.5px \'Spline Sans Mono\',monospace;letter-spacing:.06em;text-transform:uppercase;color:#90CCBE;border:1px solid rgba(144,204,190,.3);border-radius:99px;padding:5px 10px">'+d+'</span>';
+      }).join('');
+      return '<div style="flex:none;width:100%;padding:0 22px;box-sizing:border-box">'+
+        '<div style="border:1px solid rgba(235,231,219,.14);border-radius:18px;overflow:hidden;background:rgba(235,231,219,.03)">'+
+          '<div style="position:relative;height:180px;background:#0B1410">'+media+
+            '<div style="position:absolute;left:14px;top:12px;font:500 9px \'Spline Sans Mono\',monospace;letter-spacing:.14em;text-transform:uppercase;color:#EBE7DB;background:rgba(11,20,16,.55);backdrop-filter:blur(6px);padding:5px 10px;border-radius:99px">Day '+day.n+' · '+day.phase+'</div>'+
+          '</div>'+
+          '<div style="padding:16px 16px 18px">'+
+            '<h3 style="font:465 22px/1.1 \'Newsreader\',serif;color:#EBE7DB;margin:0 0 5px">'+day.route+'</h3>'+
+            '<p style="font:400 12.5px/1.5 \'Newsreader\',serif;font-style:italic;color:#90CCBE;margin:0 0 14px">'+day.tag+'</p>'+
+            '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;border:1px solid rgba(235,231,219,.12);border-radius:12px;overflow:hidden;background:rgba(235,231,219,.12);margin-bottom:14px">'+
+              trailStat('Sleep at',day.alt)+trailStat('Eff. O₂',day.o2)+trailStat('Walk',day.walk)+
+            '</div>'+
+            '<p style="font:400 11px/1.5 \'Spline Sans Mono\',monospace;letter-spacing:.02em;color:rgba(235,231,219,.5);margin:0 0 13px">'+day.meta+'</p>'+
+            '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:13px">'+discs+'</div>'+
+            '<p style="font:400 13px/1.6 \'Newsreader\',serif;color:rgba(235,231,219,.66);margin:0">'+day.desc+'</p>'+
+          '</div>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+
+    var dots = DAYS.map(function(day,i){
+      return '<button data-act="selectDay" data-i="'+i+'" style="width:'+(i===di?'22px':'8px')+';height:8px;border-radius:99px;border:none;cursor:pointer;transition:.3s;background:'+(i===di?'#90CCBE':'rgba(235,231,219,.22)')+'"></button>';
+    }).join('');
+
+    var trackTransform = 'translateX(calc('+(-di*100)+'% + '+state.dragX+'px))';
+    var trackTransition = state.dragging ? 'none' : 'transform .45s cubic-bezier(.22,1,.36,1)';
+
+    return '<div style="padding:64px 0 26px;background:#101D17;min-height:100%">'+
+      '<div style="padding:0 22px 16px">'+
+        '<p style="font:500 9.5px \'Spline Sans Mono\',monospace;letter-spacing:.18em;text-transform:uppercase;color:rgba(235,231,219,.4);margin:0 0 4px">The shape of the walk · drag →</p>'+
+        '<h2 style="font:465 24px/1.1 \'Newsreader\',serif;color:#EBE7DB;margin:0">What you\'ll <span style="font-style:italic;color:#90CCBE">walk through.</span></h2>'+
+      '</div>'+
+      '<div style="padding:0 22px 6px">'+
+        '<div style="border:1px solid rgba(235,231,219,.14);border-radius:16px;background:rgba(11,20,16,.5);padding:14px 14px 8px">'+
+          '<svg viewBox="0 0 300 100" style="width:100%;height:auto" preserveAspectRatio="none">'+
+            '<polyline points="'+profArea+'" fill="rgba(144,204,190,.12)" stroke="none"></polyline>'+
+            '<polyline points="'+profPts+'" fill="none" stroke="#90CCBE" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"></polyline>'+
+            '<circle cx="'+xs[di].toFixed(1)+'" cy="'+ys[di].toFixed(1)+'" r="14" fill="rgba(144,204,190,.14)"></circle>'+
+            '<circle cx="'+xs[di].toFixed(1)+'" cy="'+ys[di].toFixed(1)+'" r="4.5" fill="#D9A23B"></circle>'+
+          '</svg>'+
+          '<div style="display:flex;justify-content:space-between;font:500 8px \'Spline Sans Mono\',monospace;letter-spacing:.1em;text-transform:uppercase;color:rgba(235,231,219,.35);padding:0 2px"><span>822 m</span><span>Day '+DAYS[di].n+' · '+DAYS[di].alt+'</span><span>4,130 m</span></div>'+
+        '</div>'+
+      '</div>'+
+      '<div style="overflow:hidden;padding:16px 0 6px">'+
+        '<div id="trailTrack" style="display:flex;transform:'+trackTransform+';transition:'+trackTransition+';touch-action:pan-y;cursor:grab">'+cards+'</div>'+
+      '</div>'+
+      '<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 22px 0">'+
+        '<button data-act="prevDay" style="width:40px;height:40px;border-radius:50%;border:1px solid rgba(235,231,219,.18);background:rgba(235,231,219,.03);color:#EBE7DB;font-size:18px;cursor:pointer">‹</button>'+
+        '<div style="display:flex;gap:7px">'+dots+'</div>'+
+        '<button data-act="nextDay" style="width:40px;height:40px;border-radius:50%;border:1px solid rgba(235,231,219,.18);background:rgba(235,231,219,.03);color:#EBE7DB;font-size:18px;cursor:pointer">›</button>'+
+      '</div>'+
+    '</div>';
+  }
+
+  function trailStat(label,val){
+    return '<div style="padding:10px 11px;background:#101D17"><p style="font:500 7.5px \'Spline Sans Mono\',monospace;letter-spacing:.12em;text-transform:uppercase;color:rgba(235,231,219,.4);margin:0 0 3px">'+label+'</p><p style="font:300 15px \'Spline Sans Mono\',monospace;color:#EBE7DB;margin:0">'+val+'</p></div>';
+  }
+
+  function bookScreen(){
+    if(state.bookStep==='browse') return bookBrowse();
+    if(state.bookStep==='form') return bookForm();
+    return bookDone();
+  }
+
+  function bookBrowse(){
+    var sel = DEPS[state.selIndex];
+    var usd = sel.price;
+    var priceMain = money(usd);
+    var priceSub = state.currency==='USD' ? '≈ ₹'+Math.round(usd*RATE).toLocaleString('en-IN') : '≈ $'+usd;
+    var segBase = 'border:none;cursor:pointer;font:500 9px \'Spline Sans Mono\',monospace;letter-spacing:.1em;padding:8px 14px;';
+    var segOn = 'background:#90CCBE;color:#0B1410', segOff = 'background:none;color:rgba(235,231,219,.6)';
+
+    var deps = DEPS.map(function(d,i){
+      var tag = d.winter?'Winter':(d.peak?'Peak':'Open');
+      var rowStyle = 'display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left;cursor:pointer;padding:13px 15px;border-radius:12px;background:'+(i===state.selIndex?'rgba(144,204,190,.08)':'rgba(235,231,219,.03)')+';border:1px solid '+(i===state.selIndex?'#90CCBE':'rgba(235,231,219,.12)');
+      var tagStyle = 'font:500 8px \'Spline Sans Mono\',monospace;letter-spacing:.1em;text-transform:uppercase;padding:5px 9px;border-radius:99px;'+(d.winter?'color:#D9A23B;border:1px solid rgba(217,162,59,.4)':(d.peak?'color:#D9A23B;background:rgba(217,162,59,.12)':'color:#90CCBE;border:1px solid rgba(144,204,190,.3)'));
+      return '<button data-act="selectDep" data-i="'+i+'" style="'+rowStyle+'">'+
+        '<span style="display:flex;flex-direction:column;align-items:flex-start;gap:3px"><span style="font:400 14px \'Spline Sans Mono\',monospace;color:#EBE7DB">'+d.d+'</span><span style="font:500 8px \'Spline Sans Mono\',monospace;letter-spacing:.1em;text-transform:uppercase;color:rgba(235,231,219,.45)">'+d.w+' · '+d.s+' seats</span></span>'+
+        '<span style="'+tagStyle+'">'+tag+'</span>'+
+      '</button>';
+    }).join('');
+
+    return '<div>'+
+      '<p style="font:500 9.5px \'Spline Sans Mono\',monospace;letter-spacing:.2em;text-transform:uppercase;color:rgba(235,231,219,.45);margin:0 0 6px">Totemtou · boarding pass</p>'+
+      '<h2 style="font:430 28px/1.05 \'Newsreader\',serif;color:#EBE7DB;margin:0 0 18px">Your pass to <span style="font-style:italic;color:#90CCBE">the sanctuary.</span></h2>'+
+      '<div style="border-radius:20px;overflow:hidden;box-shadow:0 20px 40px -22px rgba(0,0,0,.7);margin-bottom:22px">'+
+        // ticket top
+        '<div style="background:#0B1410;border:1px solid rgba(235,231,219,.14);border-bottom:none;border-radius:20px 20px 0 0;padding:17px 20px 20px">'+
+          '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px"><span style="font:500 9px \'Spline Sans Mono\',monospace;letter-spacing:.18em;text-transform:uppercase;color:#D9A23B">Boarding pass</span><span style="font:500 9px \'Spline Sans Mono\',monospace;letter-spacing:.1em;color:rgba(235,231,219,.5)">'+sel.f+' · '+sel.w+'</span></div>'+
+          '<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-bottom:20px">'+
+            '<div><p style="font:500 8.5px \'Spline Sans Mono\',monospace;letter-spacing:.14em;text-transform:uppercase;color:rgba(235,231,219,.4);margin:0 0 4px">From</p><p style="font:430 24px \'Newsreader\',serif;color:#EBE7DB;margin:0;line-height:1">Pokhara</p><p style="font:400 10px \'Spline Sans Mono\',monospace;color:rgba(235,231,219,.45);margin:2px 0 0">822 m</p></div>'+
+            '<div style="flex:1;padding-bottom:6px"><svg width="100%" height="16" viewBox="0 0 120 16" fill="none" preserveAspectRatio="none"><path d="M2 12 Q40 -4 60 6 T118 4" stroke="#90CCBE" stroke-width="1.4" fill="none" stroke-dasharray="2 3"/><circle cx="118" cy="4" r="3" fill="#D9A23B"/></svg></div>'+
+            '<div style="text-align:right"><p style="font:500 8.5px \'Spline Sans Mono\',monospace;letter-spacing:.14em;text-transform:uppercase;color:rgba(235,231,219,.4);margin:0 0 4px">To</p><p style="font:430 24px \'Newsreader\',serif;color:#EBE7DB;margin:0;line-height:1">ABC</p><p style="font:400 10px \'Spline Sans Mono\',monospace;color:#90CCBE;margin:2px 0 0">4,130 m</p></div>'+
+          '</div>'+
+          '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">'+
+            passField('Departs',sel.d)+passField('Travellers',String(state.qty))+passField('Days','7')+
+          '</div>'+
+        '</div>'+
+        // perforation
+        '<div style="position:relative;height:24px;background:#0B1410;border-left:1px solid rgba(235,231,219,.14);border-right:1px solid rgba(235,231,219,.14)">'+
+          '<div style="position:absolute;left:-12px;top:50%;transform:translateY(-50%);width:24px;height:24px;border-radius:50%;background:#101D17"></div>'+
+          '<div style="position:absolute;right:-12px;top:50%;transform:translateY(-50%);width:24px;height:24px;border-radius:50%;background:#101D17"></div>'+
+          '<div style="position:absolute;left:16px;right:16px;top:50%;transform:translateY(-50%);border-top:1.5px dashed rgba(235,231,219,.22)"></div>'+
+        '</div>'+
+        // ticket bottom
+        '<div style="background:#0B1410;border:1px solid rgba(235,231,219,.14);border-top:none;border-radius:0 0 20px 20px;padding:17px 20px 20px">'+
+          '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:15px">'+
+            '<div><p style="font:500 8.5px \'Spline Sans Mono\',monospace;letter-spacing:.14em;text-transform:uppercase;color:rgba(235,231,219,.4);margin:0 0 4px">Fare · per person</p><p style="font:460 22px \'Newsreader\',serif;color:#EBE7DB;margin:0">'+priceMain+' <span style="font:400 11px \'Spline Sans Mono\',monospace;color:rgba(235,231,219,.5)">'+priceSub+'</span></p></div>'+
+            '<div style="height:36px;width:82px;background:repeating-linear-gradient(90deg,#EBE7DB 0 2px,transparent 2px 4px,#EBE7DB 4px 5px,transparent 5px 9px);opacity:.85;border-radius:2px"></div>'+
+          '</div>'+
+          '<div style="display:flex;gap:10px;align-items:center;margin-bottom:14px">'+
+            '<div style="display:flex;border:1px solid rgba(235,231,219,.16);border-radius:99px;overflow:hidden">'+
+              '<button data-act="setINR" style="'+segBase+(state.currency==='INR'?segOn:segOff)+'">INR</button>'+
+              '<button data-act="setUSD" style="'+segBase+(state.currency==='USD'?segOn:segOff)+'">USD</button>'+
+            '</div>'+
+            '<div style="margin-left:auto;display:flex;align-items:center;gap:12px;border:1px solid rgba(235,231,219,.16);border-radius:99px;padding:5px 6px">'+
+              '<button data-act="decQty" style="width:26px;height:26px;border-radius:50%;border:none;background:rgba(235,231,219,.08);color:#EBE7DB;font-size:16px;cursor:pointer">−</button>'+
+              '<span style="font:400 13px \'Spline Sans Mono\',monospace;color:#EBE7DB;min-width:14px;text-align:center">'+state.qty+'</span>'+
+              '<button data-act="incQty" style="width:26px;height:26px;border-radius:50%;border:none;background:rgba(235,231,219,.08);color:#EBE7DB;font-size:16px;cursor:pointer">+</button>'+
+            '</div>'+
+          '</div>'+
+          '<button data-act="startBook" style="width:100%;border:none;background:#90CCBE;color:#0B1410;font:500 11px \'Spline Sans Mono\',monospace;letter-spacing:.16em;text-transform:uppercase;padding:15px;border-radius:12px;cursor:pointer">Tap to board →</button>'+
+        '</div>'+
+      '</div>'+
+      '<p style="font:500 9.5px \'Spline Sans Mono\',monospace;letter-spacing:.18em;text-transform:uppercase;color:rgba(235,231,219,.4);margin:0 0 10px">Choose your departure</p>'+
+      '<div style="display:flex;flex-direction:column;gap:8px">'+deps+'</div>'+
+    '</div>';
+  }
+
+  function passField(label,val){
+    return '<div><p style="font:500 8px \'Spline Sans Mono\',monospace;letter-spacing:.12em;text-transform:uppercase;color:rgba(235,231,219,.4);margin:0 0 3px">'+label+'</p><p style="font:300 13px \'Spline Sans Mono\',monospace;color:#EBE7DB;margin:0">'+val+'</p></div>';
+  }
+
+  function bookForm(){
+    var sel = DEPS[state.selIndex];
+    var usd = sel.price, sub = usd*state.qty, gst = sub*0.05, total = sub+gst;
+    var ready = !!(state.name && state.phone);
+    var payLabel = ready ? 'Pay deposit →' : 'Enter your details';
+    var payStyle = 'width:100%;border:none;font:500 11px \'Spline Sans Mono\',monospace;letter-spacing:.16em;text-transform:uppercase;padding:15px;border-radius:12px;cursor:pointer;'+(ready?'background:#90CCBE;color:#0B1410':'background:rgba(235,231,219,.1);color:rgba(235,231,219,.4);cursor:not-allowed');
+
+    return '<div style="animation:fadeUp .4s ease both">'+
+      '<button data-act="backBook" style="display:flex;align-items:center;gap:7px;background:none;border:none;color:rgba(235,231,219,.6);font:500 9px \'Spline Sans Mono\',monospace;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;padding:0;margin-bottom:20px">‹ Back</button>'+
+      '<p style="font:500 9px \'Spline Sans Mono\',monospace;letter-spacing:.14em;text-transform:uppercase;color:#D9A23B;margin:0 0 6px">Holding · '+sel.d+'</p>'+
+      '<h2 style="font:465 26px/1.1 \'Newsreader\',serif;color:#EBE7DB;margin:0 0 20px">Who\'s coming <span style="font-style:italic;color:#90CCBE">along?</span></h2>'+
+      '<label style="display:block;font:500 9px \'Spline Sans Mono\',monospace;letter-spacing:.12em;text-transform:uppercase;color:rgba(235,231,219,.5);margin-bottom:7px">Full name</label>'+
+      '<input id="fName" value="'+attr(state.name)+'" placeholder="As on your passport" style="width:100%;box-sizing:border-box;background:rgba(235,231,219,.04);border:1px solid rgba(235,231,219,.18);border-radius:12px;padding:14px;color:#EBE7DB;font:400 15px \'Newsreader\',serif;margin-bottom:16px;outline:none">'+
+      '<label style="display:block;font:500 9px \'Spline Sans Mono\',monospace;letter-spacing:.12em;text-transform:uppercase;color:rgba(235,231,219,.5);margin-bottom:7px">WhatsApp number</label>'+
+      '<input id="fPhone" value="'+attr(state.phone)+'" placeholder="+91 …" style="width:100%;box-sizing:border-box;background:rgba(235,231,219,.04);border:1px solid rgba(235,231,219,.18);border-radius:12px;padding:14px;color:#EBE7DB;font:400 15px \'Spline Sans Mono\',monospace;margin-bottom:20px;outline:none">'+
+      '<div style="border:1px solid rgba(235,231,219,.12);border-radius:14px;background:rgba(235,231,219,.03);padding:15px;margin-bottom:18px">'+
+        '<div style="display:flex;justify-content:space-between;font:400 12px \'Spline Sans Mono\',monospace;color:rgba(235,231,219,.66);margin-bottom:8px"><span>'+money(usd)+' × '+state.qty+'</span><span>'+money(sub)+'</span></div>'+
+        '<div style="display:flex;justify-content:space-between;font:400 12px \'Spline Sans Mono\',monospace;color:rgba(235,231,219,.66);margin-bottom:10px"><span>GST (5%)</span><span>'+money(gst)+'</span></div>'+
+        '<div style="display:flex;justify-content:space-between;font:600 15px \'Spline Sans Mono\',monospace;color:#EBE7DB;border-top:1px solid rgba(235,231,219,.14);padding-top:10px"><span>Total due now</span><span>'+money(total)+'</span></div>'+
+      '</div>'+
+      '<button id="payBtn" data-act="submitBook" style="'+payStyle+'">'+payLabel+'</button>'+
+      '<p style="font:400 11px/1.5 \'Newsreader\',serif;font-style:italic;color:rgba(235,231,219,.45);text-align:center;margin:12px 0 0">Secure payment via Razorpay. A 25% deposit holds your place.</p>'+
+    '</div>';
+  }
+
+  function bookDone(){
+    var sel = DEPS[state.selIndex];
+    var usd = sel.price, sub = usd*state.qty, total = sub+sub*0.05;
+    return '<div style="animation:fadeUp .4s ease both;text-align:center;padding-top:24px">'+
+      '<div style="width:72px;height:72px;border-radius:50%;background:rgba(144,204,190,.14);display:grid;place-items:center;margin:0 auto 22px"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#90CCBE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4L19 7"/></svg></div>'+
+      '<h2 style="font:465 28px/1.1 \'Newsreader\',serif;color:#EBE7DB;margin:0 0 10px">You\'re <span style="font-style:italic;color:#90CCBE">on the trail.</span></h2>'+
+      '<p style="font:400 13px/1.55 \'Newsreader\',serif;color:rgba(235,231,219,.62);margin:0 0 24px;padding:0 14px">Seat held. We\'ve sent a WhatsApp to confirm your day-zero plan and start your six weeks of prep.</p>'+
+      '<div style="border:1px solid rgba(235,231,219,.14);border-radius:16px;background:rgba(235,231,219,.03);padding:18px;text-align:left;margin-bottom:22px">'+
+        doneRow('Booking ref','<span style="font:500 13px \'Spline Sans Mono\',monospace;color:#D9A23B">'+state.bookRef+'</span>')+
+        doneRow('Departure','<span style="font:400 13px \'Spline Sans Mono\',monospace;color:#EBE7DB">'+sel.d+'</span>')+
+        doneRow('Travellers','<span style="font:400 13px \'Spline Sans Mono\',monospace;color:#EBE7DB">'+state.qty+'</span>')+
+        '<div style="display:flex;justify-content:space-between;border-top:1px solid rgba(235,231,219,.14);padding-top:12px"><span style="font:500 9px \'Spline Sans Mono\',monospace;letter-spacing:.1em;text-transform:uppercase;color:rgba(235,231,219,.45)">Paid now</span><span style="font:600 14px \'Spline Sans Mono\',monospace;color:#EBE7DB">'+money(total)+'</span></div>'+
+      '</div>'+
+      '<button data-act="resetBook" style="width:100%;border:1px solid rgba(235,231,219,.2);background:none;color:#EBE7DB;font:500 11px \'Spline Sans Mono\',monospace;letter-spacing:.16em;text-transform:uppercase;padding:15px;border-radius:12px;cursor:pointer">Back to the trip</button>'+
+    '</div>';
+  }
+
+  function doneRow(label,valHtml){
+    return '<div style="display:flex;justify-content:space-between;margin-bottom:12px"><span style="font:500 9px \'Spline Sans Mono\',monospace;letter-spacing:.1em;text-transform:uppercase;color:rgba(235,231,219,.45)">'+label+'</span>'+valHtml+'</div>';
+  }
+
+  function attr(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;'); }
+
+  // ---- tab bar -------------------------------------------------------------
+
+  var TABS = [
+    {key:'home',label:'Home',icon:'<path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/>'},
+    {key:'overview',label:'Overview',icon:'<path d="M12 3 2 8l10 5 10-5z"/><path d="m2 13 10 5 10-5"/>'},
+    {key:'trail',label:'Trail',icon:'<path d="M3 18c4-1 4-9 8-9s5 6 9 4"/><circle cx="4" cy="18" r="1.4"/><circle cx="20" cy="13" r="1.4"/>'},
+    {key:'book',label:'Book',icon:'<path d="M4 5h13l3 3v11H4z"/><path d="M4 10h16M9 5v5"/>'}
+  ];
+
+  function tabbarHtml(){
+    var on='#90CCBE', off='rgba(235,231,219,.42)';
+    return TABS.map(function(t){
+      var col = state.tab===t.key ? on : off;
+      return '<button data-act="tab" data-tab="'+t.key+'" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;background:none;border:none;cursor:pointer;color:'+col+'">'+
+        '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'+t.icon+'</svg>'+
+        '<span style="font:500 8.5px \'Spline Sans Mono\',monospace;letter-spacing:.1em">'+t.label+'</span>'+
+      '</button>';
+    }).join('');
+  }
+
+  // ---- render + events -----------------------------------------------------
+
+  var scrollEl = document.getElementById('scroll');
+  var tabbarEl = document.getElementById('tabbar');
+
+  function screenHtml(){
+    switch(state.tab){
+      case 'home': return homeScreen();
+      case 'overview': return overviewScreen();
+      case 'trail': return trailScreen();
+      case 'book': return bookScreen();
+    }
+  }
+
+  function render(){
+    scrollEl.innerHTML = screenHtml();
+    tabbarEl.innerHTML = tabbarHtml();
+    if(state.tab==='trail') wireTrailDrag();
+    if(state.tab==='book' && state.bookStep==='form') wireForm();
+  }
+
+  var ACTIONS = {
+    goOverview: function(){ setState({tab:'overview'}); scrollEl.scrollTop=0; },
+    goBook: function(){ setState({tab:'book'}); scrollEl.scrollTop=0; },
+    tab: function(el){ setState({tab:el.getAttribute('data-tab')}); scrollEl.scrollTop=0; },
+    toggleGtk: function(el){ var i=+el.getAttribute('data-i'); setState({openGtk: state.openGtk===i?-1:i}); },
+    selectDay: function(el){ setState({dayIndex:+el.getAttribute('data-i')}); },
+    prevDay: function(){ setState({dayIndex:Math.max(0,state.dayIndex-1)}); },
+    nextDay: function(){ setState({dayIndex:Math.min(DAYS.length-1,state.dayIndex+1)}); },
+    selectDep: function(el){ setState({selIndex:+el.getAttribute('data-i')}); },
+    setINR: function(){ setState({currency:'INR'}); },
+    setUSD: function(){ setState({currency:'USD'}); },
+    incQty: function(){ setState({qty:Math.min(12,state.qty+1)}); },
+    decQty: function(){ setState({qty:Math.max(1,state.qty-1)}); },
+    startBook: function(){ setState({bookStep:'form'}); scrollEl.scrollTop=0; },
+    backBook: function(){ setState({bookStep:'browse'}); },
+    submitBook: function(){
+      if(!(state.name && state.phone)) return;
+      setState({bookStep:'done', bookRef:'TT-'+Math.random().toString(36).slice(2,7).toUpperCase()});
+      scrollEl.scrollTop=0;
+    },
+    resetBook: function(){ setState({bookStep:'browse', tab:'home'}); scrollEl.scrollTop=0; }
+  };
+
+  document.body.addEventListener('click', function(e){
+    var el = e.target.closest('[data-act]');
+    if(!el) return;
+    var fn = ACTIONS[el.getAttribute('data-act')];
+    if(fn) fn(el);
+  });
+
+  // Live-update the pay button on typing without a full re-render (keeps focus).
+  function wireForm(){
+    var nameEl = document.getElementById('fName');
+    var phoneEl = document.getElementById('fPhone');
+    function refreshPay(){
+      var ready = !!(state.name && state.phone);
+      var btn = document.getElementById('payBtn');
+      if(!btn) return;
+      btn.textContent = ready ? 'Pay deposit →' : 'Enter your details';
+      btn.style.background = ready ? '#90CCBE' : 'rgba(235,231,219,.1)';
+      btn.style.color = ready ? '#0B1410' : 'rgba(235,231,219,.4)';
+      btn.style.cursor = ready ? 'pointer' : 'not-allowed';
+    }
+    nameEl.addEventListener('input', function(){ state.name = nameEl.value; refreshPay(); });
+    phoneEl.addEventListener('input', function(){ state.phone = phoneEl.value; refreshPay(); });
+  }
+
+  // Swipeable day carousel — drag the track, snap on release.
+  function wireTrailDrag(){
+    var track = document.getElementById('trailTrack');
+    if(!track) return;
+    track.addEventListener('pointerdown', function(e){
+      state.dragging = true;
+      var startX = e.clientX;
+      track.style.transition = 'none';
+      function move(ev){
+        state.dragX = ev.clientX - startX;
+        track.style.transform = 'translateX(calc('+(-state.dayIndex*100)+'% + '+state.dragX+'px))';
+      }
+      function up(ev){
+        var dx = ev.clientX - startX;
+        var i = state.dayIndex;
+        if(dx < -55 && i < DAYS.length-1) i++;
+        if(dx > 55 && i > 0) i--;
+        window.removeEventListener('pointermove', move);
+        window.removeEventListener('pointerup', up);
+        setState({dayIndex:i, dragX:0, dragging:false});
+      }
+      window.addEventListener('pointermove', move);
+      window.addEventListener('pointerup', up);
+    });
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
