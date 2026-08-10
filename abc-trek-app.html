@@ -217,25 +217,87 @@
     return '<span style="font:500 9px \'Spline Sans Mono\',monospace;letter-spacing:.08em;text-transform:uppercase;color:rgba(235,231,219,.7);border:1px solid rgba(235,231,219,.16);border-radius:99px;padding:6px 11px">'+t+'</span>';
   }
 
-  function trailScreen(){
-    var di = state.dayIndex;
+  // Which card currently holds its (autoplaying) video. Only one is live at a
+  // time; the rest show the hatched placeholder. Tracked so day changes swap
+  // exactly one video in/out without rebuilding the carousel.
+  var trailVideoIndex = 0;
+
+  var TRAIL_EASE = 'transform .45s cubic-bezier(.22,1,.36,1)';
+
+  function trailGeom(){
     var min=700,max=4250,W=300,H=100;
     var xs = DAYS.map(function(d,i){ return i/(DAYS.length-1)*W; });
     var ys = DAYS.map(function(d){ return H-8-(d.elev-min)/(max-min)*(H-20); });
-    var profPts = xs.map(function(x,i){ return x.toFixed(1)+','+ys[i].toFixed(1); }).join(' ');
-    var profArea = '0,'+H+' '+profPts+' '+W+','+H;
+    return {xs:xs, ys:ys, W:W, H:H};
+  }
+
+  function dayMediaHTML(day, active){
+    return active
+      ? '<video autoplay muted loop playsinline src="'+day.clip+'" style="width:100%;height:100%;object-fit:cover;filter:saturate(.9) brightness(.8)"></video>'
+      : '<div style="width:100%;height:100%;background:repeating-linear-gradient(135deg,rgba(144,204,190,.05) 0 10px,transparent 10px 20px)"></div>';
+  }
+
+  function trailDotsHTML(active){
+    return DAYS.map(function(day,i){
+      return '<button data-act="selectDay" data-i="'+i+'" style="width:'+(i===active?'22px':'8px')+';height:8px;border-radius:99px;border:none;cursor:pointer;transition:.3s;background:'+(i===active?'#90CCBE':'rgba(235,231,219,.22)')+'"></button>';
+    }).join('');
+  }
+
+  // Animate to a day WITHOUT rebuilding the carousel: slide the existing track,
+  // move the elevation marker, refresh label + dots, then swap the one video in
+  // after the slide settles. This keeps the transition buttery even mid-drag.
+  function goToDay(i){
+    i = Math.max(0, Math.min(DAYS.length-1, i));
+    var track = document.getElementById('trailTrack');
+    if(!track){ state.dayIndex = i; return; }   // not mounted → just record
+    var prev = state.dayIndex;
+    state.dayIndex = i;
+    var g = trailGeom();
+
+    // slide the same node → real CSS transition from its current (possibly
+    // mid-drag) position to the target, instead of a fresh element snapping.
+    track.style.transition = TRAIL_EASE;
+    void track.offsetHeight;                     // commit current transform as the start
+    track.style.transform = 'translateX('+(-i*100)+'%)';
+
+    var ring = document.getElementById('trailMarkerRing');
+    var dot  = document.getElementById('trailMarkerDot');
+    if(ring){ ring.setAttribute('cx', g.xs[i].toFixed(1)); ring.setAttribute('cy', g.ys[i].toFixed(1)); }
+    if(dot){ dot.setAttribute('cx', g.xs[i].toFixed(1)); dot.setAttribute('cy', g.ys[i].toFixed(1)); }
+
+    var lbl = document.getElementById('trailDayLabel');
+    if(lbl) lbl.textContent = 'Day '+DAYS[i].n+' · '+DAYS[i].alt;
+
+    var dotsEl = document.getElementById('trailDots');
+    if(dotsEl) dotsEl.innerHTML = trailDotsHTML(i);
+
+    if(prev !== i){
+      setTimeout(function(){
+        if(state.dayIndex !== i || trailVideoIndex === i) return;  // superseded
+        var pm = document.getElementById('daymedia-'+trailVideoIndex);
+        if(pm) pm.innerHTML = dayMediaHTML(DAYS[trailVideoIndex], false);
+        var nm = document.getElementById('daymedia-'+i);
+        if(nm) nm.innerHTML = dayMediaHTML(DAYS[i], true);
+        trailVideoIndex = i;
+      }, 460);
+    }
+  }
+
+  function trailScreen(){
+    var di = state.dayIndex;
+    trailVideoIndex = di;
+    var g = trailGeom();
+    var profPts = g.xs.map(function(x,i){ return x.toFixed(1)+','+g.ys[i].toFixed(1); }).join(' ');
+    var profArea = '0,'+g.H+' '+profPts+' '+g.W+','+g.H;
 
     var cards = DAYS.map(function(day,i){
-      var active = i===di;
-      var media = active
-        ? '<video autoplay muted loop playsinline src="'+day.clip+'" style="width:100%;height:100%;object-fit:cover;filter:saturate(.9) brightness(.8)"></video>'
-        : '<div style="width:100%;height:100%;background:repeating-linear-gradient(135deg,rgba(144,204,190,.05) 0 10px,transparent 10px 20px)"></div>';
       var discs = day.discs.map(function(d){
         return '<span style="font:500 8.5px \'Spline Sans Mono\',monospace;letter-spacing:.06em;text-transform:uppercase;color:#90CCBE;border:1px solid rgba(144,204,190,.3);border-radius:99px;padding:5px 10px">'+d+'</span>';
       }).join('');
       return '<div style="flex:none;width:100%;padding:0 22px;box-sizing:border-box">'+
         '<div style="border:1px solid rgba(235,231,219,.14);border-radius:18px;overflow:hidden;background:rgba(235,231,219,.03)">'+
-          '<div style="position:relative;height:180px;background:#0B1410">'+media+
+          '<div style="position:relative;height:180px;background:#0B1410">'+
+            '<div id="daymedia-'+i+'" style="position:absolute;inset:0">'+dayMediaHTML(day, i===di)+'</div>'+
             '<div style="position:absolute;left:14px;top:12px;font:500 9px \'Spline Sans Mono\',monospace;letter-spacing:.14em;text-transform:uppercase;color:#EBE7DB;background:rgba(11,20,16,.55);backdrop-filter:blur(6px);padding:5px 10px;border-radius:99px">Day '+day.n+' · '+day.phase+'</div>'+
           '</div>'+
           '<div style="padding:16px 16px 18px">'+
@@ -252,12 +314,7 @@
       '</div>';
     }).join('');
 
-    var dots = DAYS.map(function(day,i){
-      return '<button data-act="selectDay" data-i="'+i+'" style="width:'+(i===di?'22px':'8px')+';height:8px;border-radius:99px;border:none;cursor:pointer;transition:.3s;background:'+(i===di?'#90CCBE':'rgba(235,231,219,.22)')+'"></button>';
-    }).join('');
-
-    var trackTransform = 'translateX(calc('+(-di*100)+'% + '+state.dragX+'px))';
-    var trackTransition = state.dragging ? 'none' : 'transform .45s cubic-bezier(.22,1,.36,1)';
+    var navBtn = 'width:40px;height:40px;border-radius:50%;border:1px solid rgba(235,231,219,.18);background:rgba(235,231,219,.03);color:#EBE7DB;font-size:18px;cursor:pointer;flex:none';
 
     return '<div style="padding:64px 0 26px;background:#101D17;min-height:100%">'+
       '<div style="padding:0 22px 16px">'+
@@ -269,19 +326,20 @@
           '<svg viewBox="0 0 300 100" style="width:100%;height:auto" preserveAspectRatio="none">'+
             '<polyline points="'+profArea+'" fill="rgba(144,204,190,.12)" stroke="none"></polyline>'+
             '<polyline points="'+profPts+'" fill="none" stroke="#90CCBE" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"></polyline>'+
-            '<circle cx="'+xs[di].toFixed(1)+'" cy="'+ys[di].toFixed(1)+'" r="14" fill="rgba(144,204,190,.14)"></circle>'+
-            '<circle cx="'+xs[di].toFixed(1)+'" cy="'+ys[di].toFixed(1)+'" r="4.5" fill="#D9A23B"></circle>'+
+            '<circle id="trailMarkerRing" cx="'+g.xs[di].toFixed(1)+'" cy="'+g.ys[di].toFixed(1)+'" r="14" fill="rgba(144,204,190,.14)"></circle>'+
+            '<circle id="trailMarkerDot" cx="'+g.xs[di].toFixed(1)+'" cy="'+g.ys[di].toFixed(1)+'" r="4.5" fill="#D9A23B"></circle>'+
           '</svg>'+
-          '<div style="display:flex;justify-content:space-between;font:500 8px \'Spline Sans Mono\',monospace;letter-spacing:.1em;text-transform:uppercase;color:rgba(235,231,219,.35);padding:0 2px"><span>822 m</span><span>Day '+DAYS[di].n+' · '+DAYS[di].alt+'</span><span>4,130 m</span></div>'+
+          '<div style="display:flex;justify-content:space-between;font:500 8px \'Spline Sans Mono\',monospace;letter-spacing:.1em;text-transform:uppercase;color:rgba(235,231,219,.35);padding:0 2px"><span>822 m</span><span id="trailDayLabel">Day '+DAYS[di].n+' · '+DAYS[di].alt+'</span><span>4,130 m</span></div>'+
         '</div>'+
       '</div>'+
-      '<div style="overflow:hidden;padding:16px 0 6px">'+
-        '<div id="trailTrack" style="display:flex;transform:'+trackTransform+';transition:'+trackTransition+';touch-action:pan-y;cursor:grab">'+cards+'</div>'+
+      // slider controls sit right under the map — slide to another day without scrolling
+      '<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 22px 4px">'+
+        '<button data-act="prevDay" style="'+navBtn+'">‹</button>'+
+        '<div id="trailDots" style="display:flex;gap:7px">'+trailDotsHTML(di)+'</div>'+
+        '<button data-act="nextDay" style="'+navBtn+'">›</button>'+
       '</div>'+
-      '<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 22px 0">'+
-        '<button data-act="prevDay" style="width:40px;height:40px;border-radius:50%;border:1px solid rgba(235,231,219,.18);background:rgba(235,231,219,.03);color:#EBE7DB;font-size:18px;cursor:pointer">‹</button>'+
-        '<div style="display:flex;gap:7px">'+dots+'</div>'+
-        '<button data-act="nextDay" style="width:40px;height:40px;border-radius:50%;border:1px solid rgba(235,231,219,.18);background:rgba(235,231,219,.03);color:#EBE7DB;font-size:18px;cursor:pointer">›</button>'+
+      '<div style="overflow:hidden;padding:6px 0 6px">'+
+        '<div id="trailTrack" style="display:flex;transform:translateX('+(-di*100)+'%);transition:'+TRAIL_EASE+';touch-action:pan-y;cursor:grab">'+cards+'</div>'+
       '</div>'+
     '</div>';
   }
@@ -291,9 +349,11 @@
   }
 
   function bookScreen(){
-    if(state.bookStep==='browse') return bookBrowse();
-    if(state.bookStep==='form') return bookForm();
-    return bookDone();
+    var inner = state.bookStep==='browse' ? bookBrowse()
+              : state.bookStep==='form'   ? bookForm()
+              :                             bookDone();
+    // Same padded, dark panel the other tabs use (was missing → content sat flush to the edges).
+    return '<div style="padding:64px 20px 30px;background:#101D17;min-height:100%">'+inner+'</div>';
   }
 
   function bookBrowse(){
@@ -459,9 +519,9 @@
     goBook: function(){ setState({tab:'book'}); scrollEl.scrollTop=0; },
     tab: function(el){ setState({tab:el.getAttribute('data-tab')}); scrollEl.scrollTop=0; },
     toggleGtk: function(el){ var i=+el.getAttribute('data-i'); setState({openGtk: state.openGtk===i?-1:i}); },
-    selectDay: function(el){ setState({dayIndex:+el.getAttribute('data-i')}); },
-    prevDay: function(){ setState({dayIndex:Math.max(0,state.dayIndex-1)}); },
-    nextDay: function(){ setState({dayIndex:Math.min(DAYS.length-1,state.dayIndex+1)}); },
+    selectDay: function(el){ goToDay(+el.getAttribute('data-i')); },
+    prevDay: function(){ goToDay(state.dayIndex-1); },
+    nextDay: function(){ goToDay(state.dayIndex+1); },
     selectDep: function(el){ setState({selIndex:+el.getAttribute('data-i')}); },
     setINR: function(){ setState({currency:'INR'}); },
     setUSD: function(){ setState({currency:'USD'}); },
@@ -508,10 +568,10 @@
     track.addEventListener('pointerdown', function(e){
       state.dragging = true;
       var startX = e.clientX;
-      track.style.transition = 'none';
+      track.style.transition = 'none';          // follow the finger 1:1, no lag
       function move(ev){
-        state.dragX = ev.clientX - startX;
-        track.style.transform = 'translateX(calc('+(-state.dayIndex*100)+'% + '+state.dragX+'px))';
+        var dx = ev.clientX - startX;
+        track.style.transform = 'translateX(calc('+(-state.dayIndex*100)+'% + '+dx+'px))';
       }
       function up(ev){
         var dx = ev.clientX - startX;
@@ -520,7 +580,10 @@
         if(dx > 55 && i > 0) i--;
         window.removeEventListener('pointermove', move);
         window.removeEventListener('pointerup', up);
-        setState({dayIndex:i, dragX:0, dragging:false});
+        state.dragging = false;
+        // Animate from wherever the finger let go to the target — same node, so
+        // the CSS transition runs smoothly (no rebuild, no snap).
+        goToDay(i);
       }
       window.addEventListener('pointermove', move);
       window.addEventListener('pointerup', up);
