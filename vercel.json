@@ -1,0 +1,19 @@
+{
+  "redirects": [
+    {
+      "source": "/the-maiden-voyage",
+      "destination": "/the-maiden-voyage/",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/the-maiden-voyage/",
+      "destination": "https://vikasnagpal.com/rinpoche/"
+    },
+    {
+      "source": "/the-maiden-voyage/:path*",
+      "destination": "https://vikasnagpal.com/rinpoche/:path*"
+    }
+  ]
+}
